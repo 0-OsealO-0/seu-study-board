@@ -833,6 +833,7 @@
               style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
             >
             <button class="tab" type="button" id="cloud-login-button">发送登录链接</button>
+            <button class="tab" type="button" id="cloud-github-button">使用 GitHub 登录</button>
           </div>
           <div class="small" id="cloud-login-message" style="margin-top:8px;"></div>
         </div>
@@ -1352,6 +1353,7 @@
     const cloudUserControls = document.querySelector("#cloud-user-controls");
     const cloudEmail = document.querySelector("#cloud-email");
     const cloudLoginButton = document.querySelector("#cloud-login-button");
+    const cloudGithubButton = document.querySelector("#cloud-github-button");
     const cloudLoginMessage = document.querySelector("#cloud-login-message");
     const cloudUserEmail = document.querySelector("#cloud-user-email");
     const cloudSignoutButton = document.querySelector("#cloud-signout-button");
@@ -1558,6 +1560,18 @@
       await supabaseClient.auth.signOut();
       cloudSession = null;
       updateCloudUi();
+    });
+
+    cloudGithubButton?.addEventListener("click", async () => {
+      if (!cloudEnabled) {
+        return;
+      }
+      await supabaseClient.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: location.href.split("#")[0]
+        }
+      });
     });
 
     todoChecks.forEach((item) => {
