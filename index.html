@@ -1,0 +1,1304 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大一上学习作战板</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-soft: #eef2f5;
+      --text: #18212b;
+      --muted: #5f6b76;
+      --line: #d9e0e6;
+      --blue: #1769aa;
+      --blue-soft: #e4f0f8;
+      --green: #2f7d5a;
+      --green-soft: #e5f3eb;
+      --amber: #9a6500;
+      --amber-soft: #fbf0d5;
+      --red: #a53345;
+      --red-soft: #f8e5e9;
+      --purple: #67549a;
+      --purple-soft: #ece8f7;
+      --gray-soft: #e9ecef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 6px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 22px;
+    }
+
+    .tab {
+      height: 34px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .tab:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .tab.active {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .callout {
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue-soft);
+    }
+
+    .callout.warning {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .callout.success {
+      border-left-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 23px;
+      line-height: 1.2;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    .priority {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 22px;
+      padding: 0 7px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .p0 {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .p1 {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .p2 {
+      color: var(--muted);
+      background: var(--gray-soft);
+    }
+
+    .budget {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .budget-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      display: flex;
+      width: 100%;
+      height: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--gray-soft);
+    }
+
+    .bar span {
+      display: block;
+      min-width: 3px;
+      border-right: 1px solid rgba(255, 255, 255, 0.75);
+    }
+
+    .bar span:last-child {
+      border-right: 0;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .phase-grid,
+    .rules-grid,
+    .method-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .phase-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rules-grid,
+    .method-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .phase,
+    .panel {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .phase {
+      border-left-width: 4px;
+    }
+
+    .phase.cyan {
+      border-left-color: #2587a7;
+    }
+
+    .phase.green {
+      border-left-color: var(--green);
+    }
+
+    .phase.amber {
+      border-left-color: var(--amber);
+    }
+
+    .phase-range {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .plain-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .plain-list li {
+      margin-bottom: 7px;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .check {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface-soft);
+    }
+
+    .check strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .todo-summary {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .todo-summary-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .todo-summary-head strong {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .todo-progress-track {
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--gray-soft);
+    }
+
+    .todo-progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--green);
+      transition: width 160ms ease;
+    }
+
+    .todo-group {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .todo-group-title {
+      margin: 0;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .todo-item {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .todo-item:last-child {
+      border-bottom: 0;
+    }
+
+    .todo-item:hover {
+      background: #fafbfc;
+    }
+
+    .todo-check {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin: 2px 0 0;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .todo-copy {
+      min-width: 0;
+    }
+
+    .todo-copy strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .todo-copy small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .todo-check:checked + .todo-copy strong {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        display: block;
+      }
+
+      .tag-row {
+        justify-content: flex-start;
+        margin-top: 14px;
+      }
+
+      .stats,
+      .phase-grid,
+      .rules-grid,
+      .method-grid,
+      .check-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-note {
+        display: block;
+        margin-top: 4px;
+      }
+
+      .stats,
+      .phase-grid,
+      .rules-grid,
+      .method-grid,
+      .check-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .budget-head {
+        display: block;
+      }
+
+      .budget-head span {
+        display: block;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .tabs {
+        display: none;
+      }
+
+      .view {
+        display: block;
+      }
+
+      .panel,
+      .phase,
+      .stat,
+      .table-wrap,
+      .budget {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <h1>大一上学习作战板</h1>
+        <p class="subtitle">依据当前课表、每周时间预算、保研目标与通信工程分流方向生成。重点是守住数学、C++、英语和睡眠，再安排活动与竞赛。</p>
+      </div>
+      <div class="tag-row">
+        <span class="tag">通信工程方向</span>
+        <span class="tag">保研优先</span>
+        <span class="tag">南京 / 长三角</span>
+        <span class="tag">第一版：2026-09-19</span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="学习计划页面">
+      <button class="tab active" type="button" data-view="overview">学期总览</button>
+      <button class="tab" type="button" data-view="todo">待办</button>
+      <button class="tab" type="button" data-view="week">周计划</button>
+      <button class="tab" type="button" data-view="method">学习方法</button>
+    </nav>
+
+    <section class="view active" id="overview">
+      <div class="callout">
+        <strong>本学期主线</strong>
+        以保研和通信工程分流为目标，把前 10% 至 15% 作为争取区间，把前 20% 作为必须守住的竞争力区间。
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>25 小时</strong>
+          <span>每周课堂外学习预算</span>
+        </div>
+        <div class="stat">
+          <strong>6-8 小时</strong>
+          <span>文学社、班委与社交合计</span>
+        </div>
+        <div class="stat">
+          <strong>5 小时</strong>
+          <span>竞赛与科研每周上限</span>
+        </div>
+        <div class="stat">
+          <strong>7 小时</strong>
+          <span>当前睡眠时长，不能再压缩</span>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课程优先级</h2>
+          <span class="section-note">P0 必须稳定推进，P1 保持优势，P2 按截止日期处理</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>课程</th>
+                <th>级别</th>
+                <th>时间预算</th>
+                <th>最关键动作</th>
+                <th>当前风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>工科数学分析 I</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>6-7 小时/周</td>
+                <td>每天跟课做题；记录定理条件；周六回炉错题</td>
+                <td>极限、严格定义与分析语言基础较少</td>
+              </tr>
+              <tr>
+                <td><strong>线性代数</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>4-5 小时/周</td>
+                <td>手算秩、方程组、特征值；用向量图解释概念</td>
+                <td>几何与空间直觉是当前短板</td>
+              </tr>
+              <tr>
+                <td><strong>程序设计与算法语言 I（C++）</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>4-5 小时/周</td>
+                <td>迁移到 Visual Studio；恢复语法与调试；每周两个小程序</td>
+                <td>语法生疏，手机与游戏容易打断练习</td>
+              </tr>
+              <tr>
+                <td><strong>通用英语 A / 四级</strong></td>
+                <td><span class="priority p1">P1</span></td>
+                <td>2-3 小时/周</td>
+                <td>每日听力 15-20 分钟；十月后每周一套真题</td>
+                <td>读写强，听力与考试节奏需要补强</td>
+              </tr>
+              <tr>
+                <td><strong>概论、军事理论、体育理论</strong></td>
+                <td><span class="priority p2">P2</span></td>
+                <td>1-2 小时/周</td>
+                <td>按大纲与截止日期集中处理；不漏线上任务</td>
+                <td>教学平台和考核方式尚未明确</td>
+              </tr>
+              <tr>
+                <td><strong>领导力素养 / AI 通识导论</strong></td>
+                <td><span class="priority p2">P2</span></td>
+                <td>1-2 小时/周</td>
+                <td>课堂当天整理；AI 课程如有编程任务优先投入</td>
+                <td>第五周起改变周三上午安排</td>
+              </tr>
+              <tr>
+                <td><strong>竞赛与实验室</strong></td>
+                <td><span class="priority p1">P1</span></td>
+                <td>3-5 小时/周</td>
+                <td>先训练 C++ 与建模；确定一条主线；假期集中投入</td>
+                <td>不能挤占数学、C++ 和英语核心时段</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每周时间预算</h2>
+          <span class="section-note">核心课程 25 小时 + 竞赛科研最多 5 小时</span>
+        </div>
+        <div class="budget">
+          <div class="budget-head">
+            <span>作业、报告、四级训练和复习都包含在核心预算内</span>
+            <span>睡眠不参与挪用</span>
+          </div>
+          <div class="bar" aria-label="每周时间分配">
+            <span style="width: 23.333%; background: #2587a7;" title="数学分析 7 小时"></span>
+            <span style="width: 16.667%; background: #2f6fa8;" title="线性代数 5 小时"></span>
+            <span style="width: 16.667%; background: #2f7d5a;" title="C++ 5 小时"></span>
+            <span style="width: 10%; background: #9a6500;" title="英语 3 小时"></span>
+            <span style="width: 6.667%; background: #67549a;" title="公共课 2 小时"></span>
+            <span style="width: 10%; background: #65717c;" title="复盘与机动 3 小时"></span>
+            <span style="width: 16.667%; background: #a75d22;" title="竞赛上限 5 小时"></span>
+          </div>
+          <div class="legend">
+            <span><i class="dot" style="background: #2587a7;"></i>数学分析 7h</span>
+            <span><i class="dot" style="background: #2f6fa8;"></i>线性代数 5h</span>
+            <span><i class="dot" style="background: #2f7d5a;"></i>C++ 5h</span>
+            <span><i class="dot" style="background: #9a6500;"></i>英语 3h</span>
+            <span><i class="dot" style="background: #67549a;"></i>公共课 2h</span>
+            <span><i class="dot" style="background: #65717c;"></i>复盘与机动 3h</span>
+            <span><i class="dot" style="background: #a75d22;"></i>竞赛上限 5h</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>学期阶段</h2>
+          <span class="section-note">第五周和第九周需要重新排版时间</span>
+        </div>
+        <div class="phase-grid">
+          <article class="phase cyan">
+            <div class="phase-range">第 1-4 周</div>
+            <h3>建立基础节奏</h3>
+            <p>适应课程、补齐数学前置知识、恢复 C++、收集所有课程大纲与考核比例。</p>
+          </article>
+          <article class="phase amber">
+            <div class="phase-range">第 5-8 周</div>
+            <h3>领导力素养模块</h3>
+            <p>周三上午增加通识课；维持数学与编程主线，开始筛选一条竞赛或实验室路径。</p>
+          </article>
+          <article class="phase green">
+            <div class="phase-range">第 9-16 周</div>
+            <h3>AI 通识与期末冲刺</h3>
+            <p>AI 课程若有项目任务，优先转化为 C++ 或建模能力；十一月后兼顾四级与期末。</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="callout warning">
+        <strong>待更新信息</strong>
+        各科成绩比例、军事理论、大学体育理论和人工智能通识导论大纲尚未明确；线性代数教材已确定为《线性代数（第三版）》（科学出版社，ISBN 978-7-03-077238-1），其他公共课教材版本待补录。第一周拿到教学大纲后更新这些项目。
+      </div>
+    </section>
+
+    <section class="view" id="todo">
+      <div class="callout">
+        <strong>今日记录</strong>
+        已完成：C++ 第一讲 Anki 卡片导入、OneNote 首批课堂笔记写入、Codex 每日提醒启用，
+        安装每日课程闭环 Skill `$track-daily-course`，并在 Microsoft To Do 创建 10 个今日任务。
+        待完成：将任务加入 My Day、数学预习与课后整理、线代和英语 APKG 导入、GeoGebra 安装、
+        C++ 两题、英语听力。
+      </div>
+
+      <div class="todo-summary">
+        <div class="todo-summary-head">
+          <div>
+            <strong id="todo-progress-text">0 / 0</strong>
+            <div class="small">已完成任务</div>
+          </div>
+          <div class="small">勾选状态自动保存在当前浏览器</div>
+        </div>
+        <div class="todo-progress-track" aria-hidden="true">
+          <div class="todo-progress-fill" id="todo-progress-fill"></div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>今天：9 月 21 日</h2>
+          <span class="section-note">数学预习和课后整理最关键</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">周一执行清单</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="math-preview">
+            <span class="todo-copy">
+              <strong>完成工科数学分析第一章预习</strong>
+              <small>重点看函数、数列和极限定义，时间放在 9 月 21 日 08:10-09:40。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="daily-course-loop">
+            <span class="todo-copy">
+              <strong>上传今日课程材料与笔记，运行 $track-daily-course</strong>
+              <small>Skill 会生成复习题、写入 OneNote、打包 Anki、创建 To Do 今日任务并生成 My Day 接力，同时更新作战板待办。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="verify-course-outputs">
+            <span class="todo-copy">
+              <strong>检查 OneNote、Anki 和复习题输出是否正确</strong>
+              <small>确认页面内容、卡片知识点和当天待办没有遗漏或误读。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="sync-today-todo">
+            <span class="todo-copy">
+              <strong>将“大一上每日任务”中的 10 个任务加入 My Day</strong>
+              <small>任务已经同步成功；在 Microsoft To Do 中将今天到期的任务加入 My Day。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="vs-debug">
+            <span class="todo-copy">
+              <strong>在 Visual Studio 中编译、运行并调试一段小程序</strong>
+              <small>至少使用一次断点和变量监视。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-daily-limit">
+            <span class="todo-copy">
+              <strong>在 Anki 设置每日新卡上限 10-15 张</strong>
+              <small>避免 80 张新卡一次性堆积，先保证数学和 C++ 上机练习。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-apkg">
+            <span class="todo-copy">
+              <strong>导入线性代数和大学英语 APKG</strong>
+              <small>C++ 已成功导入，不要重复；在 Anki 中选择“文件、导入”。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="geogebra-install">
+            <span class="todo-copy">
+              <strong>安装并打开 GeoGebra Classic</strong>
+              <small>安装包位于项目的 installers 文件夹；安装后打开一次确认可用。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-p1001-p1421">
+            <span class="todo-copy">
+              <strong>完成洛谷 P1001 与 P1421</strong>
+              <small>9 月 21 日 14:00-14:45，在 Visual Studio 中独立完成。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-listening-monday">
+            <span class="todo-copy">
+              <strong>完成一次 15-20 分钟英语听力</strong>
+              <small>放在 9 月 21 日午饭后，不占用晚自习。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课后复习题</h2>
+          <span class="section-note">完成后把课程名、题号和答案发回 Codex</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">首批课程诊断</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-cpp-first">
+            <span class="todo-copy">
+              <strong>完成 C++ 第一讲复习题，共 12 题</strong>
+              <small>先独立作答，不查资料。完成后把题号和答案发到 Codex。</small>
+              <small><a href="review-questions.html#cpp" target="_blank">打开 C++ 复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-linear-1-1-1-2">
+            <span class="todo-copy">
+              <strong>完成线性代数 1.1-1.2 首轮诊断，共 8 题</strong>
+              <small>包含矩阵乘法条件、反例和计算题。</small>
+              <small><a href="review-questions.html#linear" target="_blank">打开线性代数复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-english-overview">
+            <span class="todo-copy">
+              <strong>完成大学英语课程与四级结构诊断，共 10 题</strong>
+              <small>重点核对四级顺序、分值、时间长度和课程总评。</small>
+              <small><a href="review-questions.html#english" target="_blank">打开大学英语复习题</a></small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>本周 C++ 上机</h2>
+          <span class="section-note">晚自习无电脑，只做纸质代码跟踪</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">第 1 周题单</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-wed">
+            <span class="todo-copy">
+              <strong>周三完成洛谷 P1425 与 P5711</strong>
+              <small>周三 13:30-14:15，练习时间换算、逻辑和边界测试。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-fri">
+            <span class="todo-copy">
+              <strong>周五完成洛谷 P5718 与 P5721</strong>
+              <small>周五 16:00-17:00，练习循环、最小值和嵌套循环。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-sun">
+            <span class="todo-copy">
+              <strong>周日完成洛谷 P5722 与 P5735</strong>
+              <small>周日 14:00-15:00，练习循环累计、函数和浮点计算。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-paper-trace">
+            <span class="todo-copy">
+              <strong>完成一次无电脑代码跟踪</strong>
+              <small>晚自习任选一题，逐步写下变量值、循环次数和输出结果。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-error-log">
+            <span class="todo-copy">
+              <strong>为每道 C++ 题登记错误类型</strong>
+              <small>按概念、条件、边界、语法、调试五类记录。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>第一周课程信息</h2>
+          <span class="section-note">拿到教学大纲后再补充具体日期</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">课程与行政事项</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="course-syllabus">
+            <span class="todo-copy">
+              <strong>收集工科数学分析教学大纲和成绩比例</strong>
+              <small>线性代数、C++ 和英语的考核信息已整理，目前只差数学分析。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="military-pe-platform">
+            <span class="todo-copy">
+              <strong>确认军事理论和大学体育理论的授课平台</strong>
+              <small>记录线上任务、考试形式和截止时间。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="ai-assessment">
+            <span class="todo-copy">
+              <strong>确认人工智能通识导论的考核方式</strong>
+              <small>领导力第五至八周、AI 第九至十六周已经记录；下一步确认 AI 课程是否有项目或编程任务。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cet4-routine">
+            <span class="todo-copy">
+              <strong>建立四级每日听力和每周真题节奏</strong>
+              <small>10 月前以听力和词汇为主，10 月后每周一套真题。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="weekly-review">
+            <span class="todo-copy">
+              <strong>完成第一次周复盘</strong>
+              <small>9 月 27 日 20:30，记录完成率、最大卡点和下周三项任务。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="week">
+      <div class="callout warning">
+        <strong>课表变化</strong>
+        第 1-4 周按当前课表执行。第 5-8 周周三 09:50-11:25 改为领导力素养；第 9-16 周同一时段改为人工智能通识导论。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>固定课表与推荐学习任务</h2>
+          <span class="section-note">周二和周四最满，避免再叠加高强度任务</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>固定安排</th>
+                <th>最适合的自主时段</th>
+                <th>当天主目标</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>周一</strong></td>
+                <td>工科数学分析 I 09:50-11:25；晚自习 19:00-21:25</td>
+                <td>08:10-09:40 数学预习；14:00-14:45 C++ 上机</td>
+                <td>数学当天复盘；晚自习只做纸质代码跟踪</td>
+              </tr>
+              <tr>
+                <td><strong>周二</strong></td>
+                <td>线代 08:00-09:35；英语 09:50-11:25；程序设计 14:00-16:35；通识 19:00-21:25</td>
+                <td>12:30-13:40 轻任务；16:45-18:10 错题</td>
+                <td>只做复盘与小练，不硬塞新难题</td>
+              </tr>
+              <tr>
+                <td><strong>周三</strong></td>
+                <td>数学 08:00-09:35；第 5 周起 09:50-11:25 通识；晚自习 19:00-21:25</td>
+                <td>13:30-14:15 C++ 上机；14:30-16:30 线性代数</td>
+                <td>C++ 与英语听力；晚自习前段线代</td>
+              </tr>
+              <tr>
+                <td><strong>周四</strong></td>
+                <td>概论 09:50-12:15；线代 14:00-15:35；体育 15:50-17:25；晚自习 19:00-21:25</td>
+                <td>17:45-18:40 轻复盘；晚自习前半段整理</td>
+                <td>思政整理 + 英语；避免高强度硬撑</td>
+              </tr>
+              <tr>
+                <td><strong>周五</strong></td>
+                <td>数学 09:50-11:25；程序设计 14:00-15:35；晚自习 19:00-21:25</td>
+                <td>08:10-09:40 数学预习；16:00-17:00 C++ 调试</td>
+                <td>C++ 上机 + 一周错题清零</td>
+              </tr>
+              <tr>
+                <td><strong>周六</strong></td>
+                <td>约 5 小时自主时间；可预约约会与活动</td>
+                <td>上午 2.5 小时；下午 2.5 小时</td>
+                <td>数学整块训练 + 四级真题或竞赛基础</td>
+              </tr>
+              <tr>
+                <td><strong>周日</strong></td>
+                <td>约 5 小时自主时间；保留完整休息段</td>
+                <td>上午 2 小时；14:00-15:00 C++ 题单；下午 2 小时</td>
+                <td>周复盘、下周预习、C++ 小项目</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每天与每周的最低标准</h2>
+        </div>
+        <div class="check-grid">
+          <article class="check">
+            <strong>课前 10 分钟</strong>
+            只回看上次内容和本课定义，不追求提前学完整章。
+          </article>
+          <article class="check">
+            <strong>课后 30 分钟</strong>
+            不看答案复述概念，再做 3-5 道代表题。
+          </article>
+          <article class="check">
+            <strong>晚自习前 60 分钟</strong>
+            处理最难课程，手机离开桌面。
+          </article>
+          <article class="check">
+            <strong>工作日最低标准</strong>
+            数学接触、C++ 或英语复习、当天课堂整理，至少完成两项。
+          </article>
+          <article class="check">
+            <strong>周末最低标准</strong>
+            完成一次周复盘、一次整块数学训练、一次四级或编程输出。
+          </article>
+          <article class="check">
+            <strong>超载信号</strong>
+            连续两天睡不足 6.5 小时、数学积压或游戏失控时，立即砍竞赛和活动。
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>手机与游戏规则</h2>
+          <span class="section-note">规则的目标是保护深度时段，不是把娱乐彻底清零</span>
+        </div>
+        <div class="rules-grid">
+          <article class="panel">
+            <h3>硬边界</h3>
+            <ul class="plain-list">
+              <li>19:00-21:25 晚自习期间手机静音并放到看不见的位置。</li>
+              <li>游戏只放在完成两项核心任务之后，不作为学习间隙的随机消遣。</li>
+              <li>工作日单次不超过 60 分钟；周末划出固定娱乐段，不无限延长。</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>约会与活动</h3>
+            <ul class="plain-list">
+              <li>约会时间视为正式休息安排，提前预留，避免边约会边焦虑学习。</li>
+              <li>文学社和班委合计按每周 6-8 小时控制，尽量集中安排。</li>
+              <li>团支书任务波动较大，竞选后需要重新核算实际时间。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="method">
+      <div class="callout success">
+        <strong>最重要的执行原则</strong>
+        先守住数学、C++ 和睡眠，再处理英语、公共课、活动与竞赛。每周可以完成得少，但不能连续中断主线。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课程执行清单</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>课程</th>
+                <th>固定动作</th>
+                <th>判断标准</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>工科数学分析</strong></td>
+                <td>定义与条件卡；每天计算；每周按概念、运算、推理分类错题；几何应用单独补图。</td>
+                <td>先能解释定理条件，再追求做题速度。</td>
+              </tr>
+              <tr>
+                <td><strong>线性代数</strong></td>
+                <td>每章画概念关系图；矩阵题手算到底；用二维或三维例子理解秩、基、特征向量。</td>
+                <td>几何薄弱不靠背诵弥补，要靠图像和例子建立直觉。</td>
+              </tr>
+              <tr>
+                <td><strong>C++</strong></td>
+                <td>先在 Visual Studio 重写基础程序；每章独立实现一个小功能；强制使用断点调试。</td>
+                <td>看过代码不等于会写，能在报错后独立修复才算掌握。</td>
+              </tr>
+              <tr>
+                <td><strong>英语与四级</strong></td>
+                <td>每日听力 15-20 分钟；每周一套真题；作文与翻译各复盘一次；十一月后模拟考试节奏。</td>
+                <td>稳住优势即可，不因四级打乱数学和编程主线。</td>
+              </tr>
+              <tr>
+                <td><strong>物理思维</strong></td>
+                <td>固定六步：对象、过程、图示、规律、方程、检查；每题先写已知未知量。</td>
+                <td>当前问题更像流程缺失，上大学物理前先练建模顺序。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>如何高效使用 Codex</h2>
+        </div>
+        <div class="method-grid">
+          <article class="panel">
+            <h3>日常学习</h3>
+            <ul class="plain-list">
+              <li><strong>课前：</strong>把下一节标题和教材页发来，换取 5 个预习问题。</li>
+              <li><strong>课后：</strong>贴出课堂笔记，生成概念图、口述题和 10 道快速自测。</li>
+              <li><strong>作业：</strong>先写自己的尝试，再按提示、思路、完整过程逐级求解。</li>
+              <li><strong>每周：</strong>发完成情况，重排下周计划并标记风险课程。</li>
+              <li><strong>考前：</strong>汇总错题和大纲，生成分层模拟卷与口头追问。</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>错误记录格式</h3>
+            <ol class="plain-list">
+              <li>题目来源与核心考点。</li>
+              <li>我最初为什么这样做。</li>
+              <li>错误属于概念、条件、运算、逻辑还是时间管理。</li>
+              <li>正确入口在哪里，下一次看到什么信号应转向。</li>
+              <li>三天后和一周后各重做一次。</li>
+            </ol>
+            <p class="small">数学偏条件与推理，编程偏现象、复现步骤和根因。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每周复盘模板</h2>
+        </div>
+        <div class="panel">
+          <div class="check-grid">
+            <div class="check">
+              <strong>完成率</strong>
+              数学、C++、英语分别完成了原计划的多少。
+            </div>
+            <div class="check">
+              <strong>最大卡点</strong>
+              本周最影响效率的一件事，以及下周如何规避。
+            </div>
+            <div class="check">
+              <strong>娱乐控制</strong>
+              手机和游戏是否侵入晚自习或深度时段。
+            </div>
+            <div class="check">
+              <strong>睡眠底线</strong>
+              是否连续两天少于 6.5 小时。
+            </div>
+            <div class="check">
+              <strong>活动负载</strong>
+              文学社、班委和约会是否超过 6-8 小时。
+            </div>
+            <div class="check">
+              <strong>下周三项</strong>
+              只列最重要的三件事，其他任务不能替代它们。
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">依据：2026-09-21 至 09-27 课表、每周 25 小时学习预算、6-8 小时活动、5 小时竞赛上限及保研与通信工程分流目标。考核比例和后半学期课表待更新。</p>
+  </main>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const views = document.querySelectorAll(".view");
+    const todoChecks = Array.from(document.querySelectorAll(".todo-check"));
+    const todoProgressText = document.querySelector("#todo-progress-text");
+    const todoProgressFill = document.querySelector("#todo-progress-fill");
+
+    function updateTodoProgress() {
+      const completed = todoChecks.filter((item) => item.checked).length;
+      const total = todoChecks.length;
+      const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      todoProgressText.textContent = `${completed} / ${total}`;
+      todoProgressFill.style.width = `${percent}%`;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.view;
+        tabs.forEach((item) => item.classList.toggle("active", item === tab));
+        views.forEach((view) => view.classList.toggle("active", view.id === target));
+      });
+    });
+
+    todoChecks.forEach((item) => {
+      const storageKey = `freshman-todo-v2-${item.dataset.taskId}`;
+      item.checked = localStorage.getItem(storageKey) === "1";
+
+      item.addEventListener("change", () => {
+        localStorage.setItem(storageKey, item.checked ? "1" : "0");
+        updateTodoProgress();
+      });
+    });
+
+    updateTodoProgress();
+  </script>
+</body>
+</html>

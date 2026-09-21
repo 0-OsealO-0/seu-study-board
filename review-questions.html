@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大学课程课后复习题</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --soft: #eef2f5;
+      --text: #18212b;
+      --muted: #5f6b76;
+      --line: #d9e0e6;
+      --blue: #1769aa;
+      --green: #2f7d5a;
+      --amber: #9a6500;
+      --red: #a53345;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    .page {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 50px;
+    }
+
+    header {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 7px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 21px;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .subtitle {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav a {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface);
+      text-decoration: none;
+    }
+
+    .notice {
+      margin: 20px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--amber);
+      border-radius: 5px;
+      background: #fbf0d5;
+    }
+
+    section.sheet {
+      margin-top: 30px;
+      scroll-margin-top: 70px;
+    }
+
+    .sheet-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-head p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    ol.questions {
+      margin: 0;
+      padding: 18px 18px 6px 46px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    ol.questions > li {
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    .formula {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.95em;
+      color: #253442;
+    }
+
+    .finish {
+      margin-top: 28px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--green);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    @media (max-width: 650px) {
+      .page {
+        width: min(100% - 20px, 980px);
+        padding-top: 18px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .sheet-head {
+        display: block;
+      }
+
+      .meta {
+        margin-top: 6px;
+        text-align: left;
+      }
+
+      ol.questions {
+        padding-left: 38px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .nav,
+      .notice {
+        display: none;
+      }
+
+      section.sheet {
+        break-before: page;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>大学课程课后复习题</h1>
+      <p class="subtitle">首批题目来自 2026-09-20 的 C++ 第一讲、线性代数 1.1-1.2 和大学英语课程概览。先独立作答，不查课件或答案。</p>
+    </header>
+
+    <nav class="nav" aria-label="复习题导航">
+      <a href="#cpp">C++ 第一讲</a>
+      <a href="#linear">线性代数 1.1-1.2</a>
+      <a href="#english">大学英语与四级</a>
+    </nav>
+
+    <div class="notice">
+      完成后直接把“课程名 + 题号 + 答案”发到 Codex。我会逐题判定，只标记掌握度并安排 T+1、T+3、T+7 复习，不直接给答案。
+    </div>
+
+    <section class="sheet" id="cpp">
+      <div class="sheet-head">
+        <div>
+          <h2>C++ 第一讲：计算机基础</h2>
+          <p>范围：计算机基本结构、工作原理、数据表示、机器数和字符编码。</p>
+        </div>
+        <div class="meta">12 题<br>建议 25-35 分钟</div>
+      </div>
+      <ol class="questions">
+        <li>计算机系统由哪两大部分组成？硬件系统的主机通常包含哪些部分？</li>
+        <li>软件系统分为哪两类？系统软件通常包括哪些部分？</li>
+        <li>什么是指令流水线工作方式？它能提高计算机执行速度的原因是什么？</li>
+        <li>1 bit 和 1 byte 分别是什么？<span class="formula">1KB、1MB、1GB</span> 分别等于多少字节？</li>
+        <li>计算二进制加法：<span class="formula">1011011 + 1010.11</span>。</li>
+        <li>把十进制数 <span class="formula">18.8125</span> 转换成二进制数。</li>
+        <li>把二进制数 <span class="formula">11101.1101</span> 转换成八进制数，并说明分组规则。</li>
+        <li>把二进制数 <span class="formula">1101011011.10101</span> 转换成十六进制数。</li>
+        <li>设机器数位数为 8，写出 <span class="formula">-73</span> 的原码、反码和补码。</li>
+        <li>为什么补码的符号位可以与数值部分共同参加加减运算？最高位进位应如何处理？</li>
+        <li>定点表示法和浮点表示法的核心区别是什么？浮点数通常需要明确表示哪两部分？</li>
+        <li>ASCII 使用多少位表示一个字符？写出国标码与区位码、机内码与国标码的换算关系。</li>
+      </ol>
+    </section>
+
+    <section class="sheet" id="linear">
+      <div class="sheet-head">
+        <div>
+          <h2>线性代数 1.1-1.2 首轮诊断</h2>
+          <p>范围：矩阵的基本概念、特殊矩阵、矩阵运算和矩阵乘法。</p>
+        </div>
+        <div class="meta">8 题<br>建议 20-30 分钟</div>
+      </div>
+      <ol class="questions">
+        <li>若 <span class="formula">A</span> 是 <span class="formula">2×3</span> 矩阵，<span class="formula">B</span> 是 <span class="formula">3×4</span> 矩阵，那么 <span class="formula">AB</span> 和 <span class="formula">BA</span> 分别是否有意义？若 <span class="formula">AB</span> 有意义，乘积是什么型？</li>
+        <li>判断：若 <span class="formula">A</span> 与 <span class="formula">B</span> 同型，则 <span class="formula">A+B</span> 与 <span class="formula">AB</span> 都有意义。请说明理由。</li>
+        <li>举一个反例说明：<span class="formula">AB=O</span> 不能推出 <span class="formula">A=O</span> 或 <span class="formula">B=O</span>。</li>
+        <li>为什么 <span class="formula">AB=AC</span> 且 <span class="formula">A≠O</span> 不能推出 <span class="formula">B=C</span>？</li>
+        <li>已知 <span class="formula">A=[[1,2],[3,4]]</span>，<span class="formula">B=[[0,1],[1,0]]</span>，计算 <span class="formula">AB</span> 和 <span class="formula">BA</span>。</li>
+        <li>判断：若 <span class="formula">A</span> 是 <span class="formula">3×2</span> 矩阵，<span class="formula">B</span> 是 <span class="formula">2×4</span> 矩阵，则 <span class="formula">AB</span> 是 <span class="formula">3×4</span> 矩阵。</li>
+        <li>用一句准确的话说明“两个矩阵相等”的两个条件。</li>
+        <li>为什么 <span class="formula">1×1</span> 矩阵 <span class="formula">(a_11)</span> 可以看作数 <span class="formula">a_11</span>？</li>
+      </ol>
+    </section>
+
+    <section class="sheet" id="english">
+      <div class="sheet-head">
+        <div>
+          <h2>大学英语课程与四级结构</h2>
+          <p>范围：课程规则、教材单元、必修平台、四级题型、分值和时间。</p>
+        </div>
+        <div class="meta">10 题<br>建议 12-18 分钟</div>
+      </div>
+      <ol class="questions">
+        <li>四级笔试的四个部分按考试顺序分别是什么？</li>
+        <li>四级笔试总题数和总时长分别是多少？</li>
+        <li>听力和阅读在总分中各占多少比例？</li>
+        <li>写作部分要求至少写多少词，限时多少分钟？</li>
+        <li>翻译部分的汉语原文长度通常是多少字，限时多少分钟？</li>
+        <li>听力理解由哪三类材料组成？分别占多少分？</li>
+        <li>阅读理解由哪三类题型组成？仔细阅读占多少分？</li>
+        <li>四级笔试达到多少分，代表达到“基础目标”要求？</li>
+        <li>本课程总评中，期末、Presentation、出勤与参与各占多少？</li>
+        <li>New Experiencing English 和 Understanding Contemporary China 分别需要学习哪些单元？</li>
+      </ol>
+    </section>
+
+    <div class="finish">
+      <h3>提交格式</h3>
+      <p>示例：<span class="formula">线性代数：1. 无意义 / 无意义；2. 错，因为……</span></p>
+      <p>全部提交后，我会返回每题判定、薄弱点和下一轮复习日期。</p>
+    </div>
+  </main>
+</body>
+</html>
