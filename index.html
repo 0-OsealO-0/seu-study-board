@@ -809,10 +809,38 @@
             <strong id="todo-progress-text">0 / 0</strong>
             <div class="small">已完成任务</div>
           </div>
-          <div class="small">勾选状态自动保存在当前浏览器</div>
+          <div class="small">本地服务器模式同步到电脑；公开发布版仅保存在当前浏览器</div>
         </div>
         <div class="todo-progress-track" aria-hidden="true">
           <div class="todo-progress-fill" id="todo-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="todo-summary" id="cloud-sync-panel" hidden>
+        <div class="todo-summary-head">
+          <div>
+            <strong id="cloud-sync-title">云端同步</strong>
+            <div class="small" id="cloud-sync-status">尚未登录</div>
+          </div>
+          <div class="small">Supabase</div>
+        </div>
+        <div id="cloud-login-controls">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input
+              id="cloud-email"
+              type="email"
+              placeholder="输入邮箱接收登录链接"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-login-button">发送登录链接</button>
+          </div>
+          <div class="small" id="cloud-login-message" style="margin-top:8px;"></div>
+        </div>
+        <div id="cloud-user-controls" hidden>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <span class="small" id="cloud-user-email"></span>
+            <button class="tab" type="button" id="cloud-signout-button">退出同步</button>
+          </div>
         </div>
       </div>
 
@@ -1309,12 +1337,33 @@
     <p class="footer-note">依据：2026-09-21 至 09-27 课表、每周 25 小时学习预算、6-8 小时活动、5 小时竞赛上限及保研与通信工程分流目标。考核比例和后半学期课表待更新。</p>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
     const tabs = document.querySelectorAll(".tab");
     const views = document.querySelectorAll(".view");
     const todoChecks = Array.from(document.querySelectorAll(".todo-check"));
     const todoProgressText = document.querySelector("#todo-progress-text");
     const todoProgressFill = document.querySelector("#todo-progress-fill");
+    const localKeyPrefix = "freshman-todo-v2-";
+    const cloudPanel = document.querySelector("#cloud-sync-panel");
+    const cloudStatus = document.querySelector("#cloud-sync-status");
+    const cloudLoginControls = document.querySelector("#cloud-login-controls");
+    const cloudUserControls = document.querySelector("#cloud-user-controls");
+    const cloudEmail = document.querySelector("#cloud-email");
+    const cloudLoginButton = document.querySelector("#cloud-login-button");
+    const cloudLoginMessage = document.querySelector("#cloud-login-message");
+    const cloudUserEmail = document.querySelector("#cloud-user-email");
+    const cloudSignoutButton = document.querySelector("#cloud-signout-button");
+    const supabaseConfig = window.STUDY_BOARD_SUPABASE || {};
+    const cloudEnabled = Boolean(
+      supabaseConfig.url &&
+      supabaseConfig.anonKey &&
+      window.supabase
+    );
+    let supabaseClient = null;
+    let cloudSession = null;
+    let saveTimer = null;
 
     function updateTodoProgress() {
       const completed = todoChecks.filter((item) => item.checked).length;
@@ -1333,17 +1382,201 @@
       });
     });
 
-    todoChecks.forEach((item) => {
-      const storageKey = `freshman-todo-v2-${item.dataset.taskId}`;
-      item.checked = localStorage.getItem(storageKey) === "1";
+    function getTodoState() {
+      return Object.fromEntries(
+        todoChecks.map((item) => [item.dataset.taskId, item.checked])
+      );
+    }
 
+    function applyTodoState(state) {
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (Object.prototype.hasOwnProperty.call(state, taskId)) {
+          item.checked = Boolean(state[taskId]);
+        }
+      });
+      updateTodoProgress();
+    }
+
+    function loadLocalState() {
+      const state = {};
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        state[taskId] =
+          localStorage.getItem(`${localKeyPrefix}${taskId}`) === "1";
+      });
+      applyTodoState(state);
+      return state;
+    }
+
+    function saveLocalState(state) {
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        localStorage.setItem(
+          `${localKeyPrefix}${taskId}`,
+          state[taskId] ? "1" : "0"
+        );
+      });
+    }
+
+    async function loadRemoteState() {
+      if (cloudEnabled && cloudSession) {
+        const { data, error } = await supabaseClient
+          .from("todo_states")
+          .select("task_id,checked");
+        if (error) {
+          cloudStatus.textContent = `读取失败：${error.message}`;
+          return null;
+        }
+        return Object.fromEntries(
+          (data || []).map((row) => [row.task_id, row.checked])
+        );
+      }
+
+      if (!location.protocol.startsWith("http")) {
+        return null;
+      }
+
+      try {
+        const response = await fetch("/api/state", { cache: "no-store" });
+        if (!response.ok) {
+          return null;
+        }
+        return await response.json();
+      } catch {
+        return null;
+      }
+    }
+
+    async function saveRemoteState(state) {
+      if (cloudEnabled && cloudSession) {
+        const rows = Object.entries(state).map(([taskId, checked]) => ({
+          user_id: cloudSession.user.id,
+          task_id: taskId,
+          checked
+        }));
+        const { error } = await supabaseClient
+          .from("todo_states")
+          .upsert(rows, { onConflict: "user_id,task_id" });
+        cloudStatus.textContent = error
+          ? `同步失败：${error.message}`
+          : `已同步 · ${new Date().toLocaleTimeString()}`;
+        return;
+      }
+
+      if (!location.protocol.startsWith("http")) {
+        return;
+      }
+
+      try {
+        await fetch("/api/state", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(state),
+        });
+      } catch {
+        // Local storage remains the fallback.
+      }
+    }
+
+    function scheduleRemoteSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        const state = getTodoState();
+        saveLocalState(state);
+        saveRemoteState(state);
+      }, 120);
+    }
+
+    function updateCloudUi() {
+      if (!cloudEnabled) {
+        return;
+      }
+
+      cloudPanel.hidden = false;
+      if (cloudSession) {
+        cloudLoginControls.hidden = true;
+        cloudUserControls.hidden = false;
+        cloudUserEmail.textContent = cloudSession.user.email || "已登录";
+        cloudStatus.textContent = "云端同步已启用";
+      } else {
+        cloudLoginControls.hidden = false;
+        cloudUserControls.hidden = true;
+        cloudStatus.textContent = "登录后可在电脑和手机间同步";
+      }
+    }
+
+    async function initCloudSync() {
+      if (!cloudEnabled) {
+        return;
+      }
+
+      supabaseClient = window.supabase.createClient(
+        supabaseConfig.url,
+        supabaseConfig.anonKey
+      );
+
+      const { data } = await supabaseClient.auth.getSession();
+      cloudSession = data.session;
+      updateCloudUi();
+
+      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        cloudSession = session;
+        updateCloudUi();
+        if (cloudSession) {
+          const state = await loadRemoteState();
+          if (state) {
+            applyTodoState(state);
+            saveLocalState(state);
+          }
+        }
+      });
+    }
+
+    cloudLoginButton?.addEventListener("click", async () => {
+      const email = cloudEmail.value.trim();
+      if (!email) {
+        cloudLoginMessage.textContent = "请先输入邮箱。";
+        return;
+      }
+
+      cloudLoginMessage.textContent = "正在发送登录链接...";
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: location.href.split("#")[0]
+        }
+      });
+      cloudLoginMessage.textContent = error
+        ? `发送失败：${error.message}`
+        : "登录链接已发送，请检查邮箱。";
+    });
+
+    cloudSignoutButton?.addEventListener("click", async () => {
+      await supabaseClient.auth.signOut();
+      cloudSession = null;
+      updateCloudUi();
+    });
+
+    todoChecks.forEach((item) => {
       item.addEventListener("change", () => {
-        localStorage.setItem(storageKey, item.checked ? "1" : "0");
         updateTodoProgress();
+        scheduleRemoteSave();
       });
     });
 
-    updateTodoProgress();
+    (async () => {
+      const localState = loadLocalState();
+      await initCloudSync();
+      const remoteState = await loadRemoteState();
+
+      if (remoteState && Object.keys(remoteState).length > 0) {
+        applyTodoState(remoteState);
+        saveLocalState(remoteState);
+      } else {
+        saveRemoteState(localState);
+      }
+    })();
   </script>
 </body>
 </html>
