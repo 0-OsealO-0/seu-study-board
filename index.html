@@ -649,7 +649,7 @@
         </div>
         <div class="stat">
           <strong>6-8 小时</strong>
-          <span>文学社、班委与社交合计</span>
+          <span>文学社、宣传委员与社交合计</span>
         </div>
         <div class="stat">
           <strong>5 小时</strong>
@@ -797,7 +797,8 @@
       <div class="callout">
         <strong>今日记录</strong>
         已完成：C++ 第一讲 Anki 卡片导入、OneNote 首批课堂笔记写入、Codex 每日提醒启用，
-        安装每日课程闭环 Skill `$track-daily-course`，并在 Microsoft To Do 创建 10 个今日任务。
+        安装每日课程闭环 Skill `$track-daily-course`，修复 OneNote 的 C++ 分区，并在 Microsoft To Do
+        创建 10 个今日任务。
         待完成：将任务加入 My Day、数学预习与课后整理、线代和英语 APKG 导入、GeoGebra 安装、
         C++ 两题、英语听力。
       </div>
@@ -851,6 +852,13 @@
             </span>
           </label>
           <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="propaganda-role-onboarding">
+            <span class="todo-copy">
+              <strong>了解宣传委员职责、例会与工作平台</strong>
+              <small>记录固定例会、推文和海报截止时间，并与文学社任务合并排期。</small>
+            </span>
+          </label>
+          <label class="todo-item">
             <input class="todo-check" type="checkbox" data-task-id="vs-debug">
             <span class="todo-copy">
               <strong>在 Visual Studio 中编译、运行并调试一段小程序</strong>
@@ -899,6 +907,41 @@
         <div class="section-head">
           <h2>课后复习题</h2>
           <span class="section-note">完成后把课程名、题号和答案发回 Codex</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-21 工科数学分析 1.1</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>完成工科数学分析 1.1 复习题，共 12 题</strong>
+              <small>先独立作答，完成后把题号和答案发回 Codex；待课堂材料到手后核对表述。</small>
+              <small><a href="course-loop/2026-09-21-math-analysis/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>导入工科数学分析 1.1 Anki 卡包</strong>
+              <small>导入 15 张实数集、上下确界、完备性与稠密性卡片。</small>
+              <small><a href="course-loop/2026-09-21-math-analysis/engineering-math-analysis-2026-09-21.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>回看工科数学分析 OneNote 课堂笔记</strong>
+              <small>核对 1.1 的术语、符号和课堂补充内容，并标记待修正处。</small>
+              <small><a href="course-loop/2026-09-21-math-analysis/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>将今日任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的数学分析任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
         </div>
         <div class="todo-group">
           <h3 class="todo-group-title">首批课程诊断</h3>
@@ -1140,7 +1183,9 @@
             <ul class="plain-list">
               <li>约会时间视为正式休息安排，提前预留，避免边约会边焦虑学习。</li>
               <li>文学社和班委合计按每周 6-8 小时控制，尽量集中安排。</li>
-              <li>团支书任务波动较大，竞选后需要重新核算实际时间。</li>
+              <li>已担任宣传委员，工作主要集中在文案、海报、推文和活动宣传。</li>
+              <li>宣传任务尽量固定在周五晚或周末批量处理，避免碎片化侵占数学和 C++ 时段。</li>
+              <li>每次接到任务先记录发布日期、最终截止时间和负责人，再拆分到具体时段。</li>
             </ul>
           </article>
         </div>
@@ -1250,7 +1295,7 @@
             </div>
             <div class="check">
               <strong>活动负载</strong>
-              文学社、班委和约会是否超过 6-8 小时。
+              文学社、宣传委员和约会是否超过 6-8 小时。
             </div>
             <div class="check">
               <strong>下周三项</strong>
