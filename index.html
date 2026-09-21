@@ -1356,9 +1356,11 @@
     const cloudUserEmail = document.querySelector("#cloud-user-email");
     const cloudSignoutButton = document.querySelector("#cloud-signout-button");
     const supabaseConfig = window.STUDY_BOARD_SUPABASE || {};
+    const supabasePublicKey =
+      supabaseConfig.publishableKey || supabaseConfig.anonKey;
     const cloudEnabled = Boolean(
       supabaseConfig.url &&
-      supabaseConfig.anonKey &&
+      supabasePublicKey &&
       window.supabase
     );
     let supabaseClient = null;
@@ -1513,7 +1515,7 @@
 
       supabaseClient = window.supabase.createClient(
         supabaseConfig.url,
-        supabaseConfig.anonKey
+        supabasePublicKey
       );
 
       const { data } = await supabaseClient.auth.getSession();
