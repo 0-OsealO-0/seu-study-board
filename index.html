@@ -1655,6 +1655,23 @@
       }
     }
 
+    async function reconcileCloudState() {
+      if (!cloudEnabled || !cloudSession) {
+        return;
+      }
+
+      const localState = getTodoState();
+      const remoteState = await loadRemoteState();
+
+      if (remoteState && Object.keys(remoteState).length > 0) {
+        applyTodoState(remoteState);
+        removePreviousDayCompletedTasks();
+        saveLocalState(remoteState);
+      } else {
+        await saveRemoteState(localState);
+      }
+    }
+
     function scheduleRemoteSave() {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
@@ -1700,11 +1717,7 @@
         cloudSession = session;
         updateCloudUi();
         if (cloudSession) {
-          const state = await loadRemoteState();
-          if (state) {
-            applyTodoState(state);
-            saveLocalState(state);
-          }
+          await reconcileCloudState();
         }
       });
     }
@@ -1761,6 +1774,12 @@
       const localState = loadLocalState();
       removePreviousDayCompletedTasks();
       await initCloudSync();
+
+      if (cloudEnabled && cloudSession) {
+        await reconcileCloudState();
+        return;
+      }
+
       const remoteState = await loadRemoteState();
 
       if (remoteState && Object.keys(remoteState).length > 0) {
