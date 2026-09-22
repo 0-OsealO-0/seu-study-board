@@ -485,14 +485,6 @@
       border-bottom: 0;
     }
 
-    .todo-item.is-complete {
-      display: none;
-    }
-
-    #todo.show-completed .todo-item.is-complete {
-      display: flex;
-    }
-
     .todo-item:hover {
       background: #fafbfc;
     }
@@ -524,17 +516,6 @@
     .todo-check:checked + .todo-copy strong {
       color: var(--muted);
       text-decoration: line-through;
-    }
-
-    .mini-button {
-      min-height: 26px;
-      padding: 3px 8px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: var(--surface);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 12px;
     }
 
     .small {
@@ -833,10 +814,7 @@
             <strong id="todo-progress-text">0 / 0</strong>
             <div class="small">已完成任务</div>
           </div>
-          <div class="small">
-            已勾选任务自动隐藏
-            <button class="mini-button" type="button" id="toggle-completed">显示已完成</button>
-          </div>
+          <div class="small">已完成任务将在次日打开时自动移除</div>
         </div>
         <div class="todo-progress-track" aria-hidden="true">
           <div class="todo-progress-fill" id="todo-progress-fill"></div>
@@ -1494,8 +1472,6 @@
     const cloudLoginMessage = document.querySelector("#cloud-login-message");
     const cloudUserEmail = document.querySelector("#cloud-user-email");
     const cloudSignoutButton = document.querySelector("#cloud-signout-button");
-    const todoView = document.querySelector("#todo");
-    const toggleCompletedButton = document.querySelector("#toggle-completed");
     const supabaseConfig = window.STUDY_BOARD_SUPABASE || {};
     const supabasePublicKey =
       supabaseConfig.publishableKey || supabaseConfig.anonKey;
@@ -1507,24 +1483,16 @@
     let supabaseClient = null;
     let cloudSession = null;
     let saveTimer = null;
-    let showCompleted =
-      localStorage.getItem("freshman-show-completed") === "1";
+    const completionTimes = {};
 
     function updateTodoProgress() {
-      const completed = todoChecks.filter((item) => item.checked).length;
-      const total = todoChecks.length;
+      const activeChecks = todoChecks.filter((item) => item.isConnected);
+      const completed = activeChecks.filter((item) => item.checked).length;
+      const total = activeChecks.length;
       const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
 
       todoProgressText.textContent = `${completed} / ${total}`;
       todoProgressFill.style.width = `${percent}%`;
-
-      todoChecks.forEach((item) => {
-        item.closest(".todo-item")?.classList.toggle("is-complete", item.checked);
-      });
-      todoView.classList.toggle("show-completed", showCompleted);
-      toggleCompletedButton.textContent = showCompleted
-        ? "隐藏已完成"
-        : "显示已完成";
     }
 
     tabs.forEach((tab) => {
@@ -1541,11 +1509,14 @@
       );
     }
 
-    function applyTodoState(state) {
+    function applyTodoState(state, timestamps = {}) {
       todoChecks.forEach((item) => {
         const taskId = item.dataset.taskId;
         if (Object.prototype.hasOwnProperty.call(state, taskId)) {
           item.checked = Boolean(state[taskId]);
+        }
+        if (Object.prototype.hasOwnProperty.call(timestamps, taskId)) {
+          completionTimes[taskId] = timestamps[taskId];
         }
       });
       updateTodoProgress();
@@ -1553,34 +1524,77 @@
 
     function loadLocalState() {
       const state = {};
+      const timestamps = {};
       todoChecks.forEach((item) => {
         const taskId = item.dataset.taskId;
         state[taskId] =
           localStorage.getItem(`${localKeyPrefix}${taskId}`) === "1";
+        timestamps[taskId] =
+          localStorage.getItem(`freshman-todo-time-${taskId}`) || null;
       });
-      applyTodoState(state);
+      Object.assign(completionTimes, timestamps);
+      applyTodoState(state, timestamps);
       return state;
     }
 
     function saveLocalState(state) {
-      todoChecks.forEach((item) => {
+      todoChecks.filter((item) => item.isConnected).forEach((item) => {
         const taskId = item.dataset.taskId;
         localStorage.setItem(
           `${localKeyPrefix}${taskId}`,
           state[taskId] ? "1" : "0"
         );
+        if (completionTimes[taskId]) {
+          localStorage.setItem(
+            `freshman-todo-time-${taskId}`,
+            completionTimes[taskId]
+          );
+        } else {
+          localStorage.removeItem(`freshman-todo-time-${taskId}`);
+        }
       });
+    }
+
+    function removePreviousDayCompletedTasks() {
+      const today = new Date().toLocaleDateString("en-CA");
+
+      todoChecks.forEach((item) => {
+        if (!item.isConnected || !item.checked) {
+          return;
+        }
+
+        const taskId = item.dataset.taskId;
+        if (!completionTimes[taskId]) {
+          completionTimes[taskId] = new Date().toISOString();
+          return;
+        }
+
+        const completedDay = new Date(
+          completionTimes[taskId]
+        ).toLocaleDateString("en-CA");
+
+        if (completedDay < today) {
+          item.closest(".todo-item")?.remove();
+        }
+      });
+
+      updateTodoProgress();
     }
 
     async function loadRemoteState() {
       if (cloudEnabled && cloudSession) {
         const { data, error } = await supabaseClient
           .from("todo_states")
-          .select("task_id,checked");
+          .select("task_id,checked,updated_at");
         if (error) {
           cloudStatus.textContent = `读取失败：${error.message}`;
           return null;
         }
+        (data || []).forEach((row) => {
+          completionTimes[row.task_id] = row.checked
+            ? row.updated_at
+            : null;
+        });
         return Object.fromEntries(
           (data || []).map((row) => [row.task_id, row.checked])
         );
@@ -1595,7 +1609,12 @@
         if (!response.ok) {
           return null;
         }
-        return await response.json();
+        const payload = await response.json();
+        if (payload && payload.state) {
+          Object.assign(completionTimes, payload.updatedAt || {});
+          return payload.state;
+        }
+        return payload;
       } catch {
         return null;
       }
@@ -1625,7 +1644,10 @@
         await fetch("/api/state", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(state),
+          body: JSON.stringify({
+            state,
+            updatedAt: completionTimes
+          }),
         });
       } catch {
         // Local storage remains the fallback.
@@ -1723,17 +1745,12 @@
       });
     });
 
-    toggleCompletedButton?.addEventListener("click", () => {
-      showCompleted = !showCompleted;
-      localStorage.setItem(
-        "freshman-show-completed",
-        showCompleted ? "1" : "0"
-      );
-      updateTodoProgress();
-    });
-
     todoChecks.forEach((item) => {
       item.addEventListener("change", () => {
+        const taskId = item.dataset.taskId;
+        completionTimes[taskId] = item.checked
+          ? new Date().toISOString()
+          : null;
         updateTodoProgress();
         scheduleRemoteSave();
       });
@@ -1741,11 +1758,13 @@
 
     (async () => {
       const localState = loadLocalState();
+      removePreviousDayCompletedTasks();
       await initCloudSync();
       const remoteState = await loadRemoteState();
 
       if (remoteState && Object.keys(remoteState).length > 0) {
         applyTodoState(remoteState);
+        removePreviousDayCompletedTasks();
         saveLocalState(remoteState);
       } else {
         saveRemoteState(localState);
