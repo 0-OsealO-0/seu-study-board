@@ -485,6 +485,14 @@
       border-bottom: 0;
     }
 
+    .todo-item.is-complete {
+      display: none;
+    }
+
+    #todo.show-completed .todo-item.is-complete {
+      display: flex;
+    }
+
     .todo-item:hover {
       background: #fafbfc;
     }
@@ -516,6 +524,17 @@
     .todo-check:checked + .todo-copy strong {
       color: var(--muted);
       text-decoration: line-through;
+    }
+
+    .mini-button {
+      min-height: 26px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
     }
 
     .small {
@@ -814,7 +833,10 @@
             <strong id="todo-progress-text">0 / 0</strong>
             <div class="small">已完成任务</div>
           </div>
-          <div class="small">本地服务器模式同步到电脑；公开发布版仅保存在当前浏览器</div>
+          <div class="small">
+            已勾选任务自动隐藏
+            <button class="mini-button" type="button" id="toggle-completed">显示已完成</button>
+          </div>
         </div>
         <div class="todo-progress-track" aria-hidden="true">
           <div class="todo-progress-fill" id="todo-progress-fill"></div>
@@ -1472,6 +1494,8 @@
     const cloudLoginMessage = document.querySelector("#cloud-login-message");
     const cloudUserEmail = document.querySelector("#cloud-user-email");
     const cloudSignoutButton = document.querySelector("#cloud-signout-button");
+    const todoView = document.querySelector("#todo");
+    const toggleCompletedButton = document.querySelector("#toggle-completed");
     const supabaseConfig = window.STUDY_BOARD_SUPABASE || {};
     const supabasePublicKey =
       supabaseConfig.publishableKey || supabaseConfig.anonKey;
@@ -1483,6 +1507,8 @@
     let supabaseClient = null;
     let cloudSession = null;
     let saveTimer = null;
+    let showCompleted =
+      localStorage.getItem("freshman-show-completed") === "1";
 
     function updateTodoProgress() {
       const completed = todoChecks.filter((item) => item.checked).length;
@@ -1491,6 +1517,14 @@
 
       todoProgressText.textContent = `${completed} / ${total}`;
       todoProgressFill.style.width = `${percent}%`;
+
+      todoChecks.forEach((item) => {
+        item.closest(".todo-item")?.classList.toggle("is-complete", item.checked);
+      });
+      todoView.classList.toggle("show-completed", showCompleted);
+      toggleCompletedButton.textContent = showCompleted
+        ? "隐藏已完成"
+        : "显示已完成";
     }
 
     tabs.forEach((tab) => {
@@ -1687,6 +1721,15 @@
           redirectTo: location.href.split("#")[0]
         }
       });
+    });
+
+    toggleCompletedButton?.addEventListener("click", () => {
+      showCompleted = !showCompleted;
+      localStorage.setItem(
+        "freshman-show-completed",
+        showCompleted ? "1" : "0"
+      );
+      updateTodoProgress();
     });
 
     todoChecks.forEach((item) => {
