@@ -841,14 +841,32 @@
             <button class="tab" type="button" id="cloud-login-button">发送登录链接</button>
             <button class="tab" type="button" id="cloud-github-button">使用 GitHub 登录</button>
           </div>
-          <div class="small" id="cloud-login-message" style="margin-top:8px;"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <input
+              id="cloud-password"
+              type="password"
+              placeholder="输入账户密码"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-password-login">密码登录</button>
+          </div>
         </div>
         <div id="cloud-user-controls" hidden>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <span class="small" id="cloud-user-email"></span>
             <button class="tab" type="button" id="cloud-signout-button">退出同步</button>
           </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <input
+              id="cloud-new-password"
+              type="password"
+              placeholder="设置或更新密码"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-set-password">设置密码</button>
+          </div>
         </div>
+        <div class="small" id="cloud-login-message" style="margin-top:8px;"></div>
       </div>
 
       <section class="section">
@@ -1470,6 +1488,10 @@
     const cloudEmail = document.querySelector("#cloud-email");
     const cloudLoginButton = document.querySelector("#cloud-login-button");
     const cloudGithubButton = document.querySelector("#cloud-github-button");
+    const cloudPassword = document.querySelector("#cloud-password");
+    const cloudPasswordLogin = document.querySelector("#cloud-password-login");
+    const cloudNewPassword = document.querySelector("#cloud-new-password");
+    const cloudSetPassword = document.querySelector("#cloud-set-password");
     const cloudLoginMessage = document.querySelector("#cloud-login-message");
     const cloudUserEmail = document.querySelector("#cloud-user-email");
     const cloudSignoutButton = document.querySelector("#cloud-signout-button");
@@ -1739,6 +1761,43 @@
       cloudLoginMessage.textContent = error
         ? `发送失败：${error.message}`
         : "登录链接已发送，请检查邮箱。";
+    });
+
+    cloudPasswordLogin?.addEventListener("click", async () => {
+      const email = cloudEmail.value.trim();
+      const password = cloudPassword.value;
+
+      if (!email || !password) {
+        cloudLoginMessage.textContent = "请输入邮箱和密码。";
+        return;
+      }
+
+      cloudLoginMessage.textContent = "正在登录...";
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        cloudLoginMessage.textContent = `登录失败：${error.message}`;
+        return;
+      }
+
+      cloudSession = data.session;
+      updateCloudUi();
+      cloudLoginMessage.textContent = "登录成功，云端同步已启用。";
+      await reconcileCloudState();
+    });
+
+    cloudSetPassword?.addEventListener("click", async () => {
+      const password = cloudNewPassword.value;
+      if (!password || password.length < 6) {
+        cloudLoginMessage.textContent = "密码至少需要 6 位。";
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.updateUser({ password });
+      cloudLoginMessage.textContent = error
+        ? `设置失败：${error.message}`
+        : "密码已设置，可在其他设备使用邮箱和密码登录。";
     });
 
     cloudSignoutButton?.addEventListener("click", async () => {
