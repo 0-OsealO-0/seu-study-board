@@ -1552,6 +1552,7 @@
     let supabaseClient = null;
     let cloudSession = null;
     let saveTimer = null;
+    const pendingRemoteTaskIds = new Set();
     const completionTimes = {};
 
     function updateTodoProgress() {
@@ -1740,12 +1741,24 @@
       }
     }
 
-    function scheduleRemoteSave() {
+    function scheduleRemoteSave(taskId) {
+      if (taskId) {
+        pendingRemoteTaskIds.add(taskId);
+      }
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
         const state = getTodoState();
         saveLocalState(state);
-        saveRemoteState(state);
+        const changedState = {};
+        pendingRemoteTaskIds.forEach((id) => {
+          if (Object.prototype.hasOwnProperty.call(state, id)) {
+            changedState[id] = state[id];
+          }
+        });
+        pendingRemoteTaskIds.clear();
+        if (Object.keys(changedState).length > 0) {
+          saveRemoteState(changedState);
+        }
       }, 120);
     }
 
@@ -1871,7 +1884,7 @@
           ? new Date().toISOString()
           : null;
         updateTodoProgress();
-        scheduleRemoteSave();
+        scheduleRemoteSave(taskId);
       });
     });
 
