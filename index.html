@@ -358,6 +358,77 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .resource-card {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .resource-card__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .resource-card__head h3 {
+      margin: 6px 0 0;
+    }
+
+    .resource-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 12px 0;
+    }
+
+    .resource-meta span {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .resource-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 13px;
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .resource-link:hover,
+    .resource-link:focus-visible {
+      background: #12588e;
+      outline: none;
+    }
+
     .rules-grid,
     .method-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -547,6 +618,7 @@
 
       .stats,
       .phase-grid,
+      .resource-grid,
       .rules-grid,
       .method-grid,
       .check-grid {
@@ -575,6 +647,7 @@
 
       .stats,
       .phase-grid,
+      .resource-grid,
       .rules-grid,
       .method-grid,
       .check-grid {
@@ -631,7 +704,7 @@
         <span class="tag">南京 / 长三角</span>
         <span class="tag">宣传委员</span>
         <span class="tag">云端同步为主</span>
-        <span class="tag">更新：2026-09-24</span>
+        <span class="tag">更新：2026-10-09</span>
       </div>
     </header>
 
@@ -640,6 +713,7 @@
       <button class="tab" type="button" data-view="todo">待办</button>
       <button class="tab" type="button" data-view="week">周计划</button>
       <button class="tab" type="button" data-view="method">学习方法</button>
+      <button class="tab" type="button" data-view="resources">学习资料整理</button>
     </nav>
 
     <section class="view active" id="overview">
@@ -1715,6 +1789,57 @@
               只列最重要的三件事，其他任务不能替代它们。
             </div>
           </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="resources">
+      <div class="callout success">
+        <strong>资料整理状态</strong>
+        已建立独立的离线复习资料入口。后续课程笔记、定理汇编和考前速查页都可以继续加入这一栏。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>学习资料整理</h2>
+          <span class="section-note">当前 1 个资料项目</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p0">P0</span>
+                <h3>工科数学分析 I 第一章：定理与推论复习</h3>
+              </div>
+              <span class="tag">已完成首版</span>
+            </div>
+            <p>
+              依据 5 份原课件整理，覆盖实数集、数列极限、函数极限、无穷小量与无穷大、连续函数。
+              页面包含章节导航、关键词查找、前置定义、完整论证和移动端离线单文件。
+            </p>
+            <div class="resource-meta">
+              <span>37 条定理</span>
+              <span>9 条推论</span>
+              <span>18 条前置定义</span>
+              <span>46 套完整论证</span>
+              <span>更新：2026-10-09</span>
+            </div>
+            <ul class="plain-list">
+              <li>条目编号已统一整理为“定理 1.2.6”。</li>
+              <li>完整论证默认折叠，查找关键词会自动定位相关条目。</li>
+              <li>单文件版本约 0.72 MB，可发送到手机后用浏览器离线打开。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="math-analysis-ch1-theorems-review-single.html"
+                target="_blank"
+                rel="noopener"
+              >
+                打开手机离线版
+              </a>
+            </div>
+          </article>
         </div>
       </section>
     </section>
