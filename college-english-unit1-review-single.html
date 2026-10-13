@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="大学英语 Unit 1 核心词汇、短语与表达的离线复习页">
+    <title>大学英语 Unit 1 词汇与短语</title>
+    <style>
+      :root {
+        --bg: #f3f5f7;
+        --surface: #ffffff;
+        --text: #17202a;
+        --muted: #62707c;
+        --line: #d8dee5;
+        --blue: #236a9a;
+        --teal: #1d7a72;
+        --amber: #9a6500;
+        --soft-blue: #eaf2f8;
+        --soft-teal: #e8f4f2;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+        line-height: 1.62;
+      }
+      button, input { font: inherit; }
+      .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 26px 0 54px;
+      }
+      .hero {
+        padding: 26px 28px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+      .eyebrow {
+        margin: 0 0 6px;
+        color: var(--teal);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: .04em;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(27px, 3vw, 42px);
+        line-height: 1.18;
+      }
+      .intro {
+        max-width: 780px;
+        margin: 12px 0 0;
+        color: var(--muted);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .stat {
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fafbfc;
+      }
+      .stat strong {
+        display: block;
+        font-size: 23px;
+      }
+      .stat span { color: var(--muted); font-size: 13px; }
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) auto;
+        gap: 12px;
+        margin: 18px 0;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: rgba(255, 255, 255, .96);
+        box-shadow: 0 4px 14px rgba(26, 42, 56, .06);
+        backdrop-filter: blur(10px);
+      }
+      .search {
+        width: 100%;
+        min-height: 42px;
+        padding: 8px 12px;
+        border: 1px solid #bfc9d2;
+        border-radius: 6px;
+        color: var(--text);
+        background: #fff;
+      }
+      .tabs { display: flex; gap: 7px; flex-wrap: wrap; }
+      .tab {
+        min-height: 42px;
+        padding: 8px 13px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: #34414d;
+        background: #fff;
+        cursor: pointer;
+      }
+      .tab.is-active {
+        border-color: var(--blue);
+        color: #fff;
+        background: var(--blue);
+      }
+      .result-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 8px 0 14px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .section-block {
+        margin-top: 22px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+      .section-head h2 { margin: 0; font-size: 23px; }
+      .section-head span { color: var(--muted); }
+      .vocab-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .word-card {
+        padding: 15px 16px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+      }
+      .word-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .word {
+        margin: 0;
+        color: #0f415f;
+        font-size: 21px;
+        line-height: 1.25;
+      }
+      .phonetic {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .pos {
+        flex: 0 0 auto;
+        padding: 2px 7px;
+        border: 1px solid #b8d1df;
+        border-radius: 999px;
+        color: #185474;
+        background: var(--soft-blue);
+        font-size: 12px;
+      }
+      .definition { margin: 12px 0 0; }
+      .examples {
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .example {
+        margin-top: 9px;
+        padding-top: 9px;
+        border-top: 1px dashed #dce2e7;
+      }
+      .example-en { color: #263846; }
+      .example-zh {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .collocations {
+        margin: 12px 0 0;
+        padding: 9px 11px;
+        border-left: 3px solid var(--teal);
+        background: var(--soft-teal);
+        color: #214b47;
+        font-size: 14px;
+      }
+      .collocations strong { display: block; margin-bottom: 3px; }
+      .phrase-group {
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        overflow: hidden;
+      }
+      .phrase-group h3 {
+        margin: 0;
+        padding: 11px 14px;
+        color: #174d66;
+        background: var(--soft-blue);
+        font-size: 17px;
+      }
+      .phrase-row {
+        display: grid;
+        grid-template-columns: minmax(0, .95fr) minmax(0, 1.25fr);
+        gap: 12px;
+        padding: 10px 14px;
+        border-top: 1px solid #e5e9ed;
+      }
+      .phrase-row:nth-child(odd) { background: #fbfcfd; }
+      .phrase-zh { color: #25343f; }
+      .phrase-en { color: #165f58; font-weight: 600; }
+      .empty {
+        display: none;
+        padding: 22px;
+        border: 1px dashed #b9c4ce;
+        border-radius: 7px;
+        color: var(--muted);
+        text-align: center;
+      }
+      .footnote {
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      [hidden] { display: none !important; }
+      @media (max-width: 860px) {
+        .vocab-grid { grid-template-columns: 1fr; }
+        .toolbar { position: static; grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .page { width: min(100% - 20px, 1180px); padding-top: 14px; }
+        .hero, .section-block { padding: 15px; }
+        .stats { grid-template-columns: 1fr; }
+        .phrase-row { grid-template-columns: 1fr; gap: 4px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">大学英语 · Unit 1</p>
+        <h1>核心词汇与短语</h1>
+        <p class="intro">
+          依据词汇讲解补充版和 Phrases and Expressions 整理。单词保留释义、例句与搭配；
+          短语按课文段落归类，可搜索中文或英文。
+        </p>
+        <div class="stats" aria-label="内容数量">
+          <div class="stat"><strong>25</strong><span>核心词汇</span></div>
+          <div class="stat"><strong>43</strong><span>短语与表达</span></div>
+          <div class="stat"><strong>6</strong><span>课文段落</span></div>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="搜索和筛选">
+        <label>
+          <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">搜索词汇或短语</span>
+          <input
+            id="search-input"
+            class="search"
+            type="search"
+            autocomplete="off"
+            placeholder="搜索单词、释义、例句或短语"
+          >
+        </label>
+        <div class="tabs" id="tabs" role="group" aria-label="内容类型">
+          <button class="tab is-active" type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button class="tab" type="button" data-filter="vocabulary" aria-pressed="false">核心词汇</button>
+          <button class="tab" type="button" data-filter="phrase" aria-pressed="false">短语与表达</button>
+        </div>
+      </section>
+
+      <div class="result-row">
+        <span id="result-status" aria-live="polite"></span>
+        <span>默认显示全部内容</span>
+      </div>
+
+      <section class="section-block" id="vocabulary-section">
+        <div class="section-head">
+          <h2>核心词汇</h2>
+          <span>25 条</span>
+        </div>
+        <div class="vocab-grid" id="vocabulary-list"></div>
+      </section>
+
+      <section class="section-block" id="phrase-section">
+        <div class="section-head">
+          <h2>短语与表达</h2>
+          <span>43 条 · 6 个段落</span>
+        </div>
+        <div id="phrase-list"></div>
+      </section>
+
+      <div class="empty" id="empty-state">没有匹配的内容，请换一个关键词。</div>
+      <p class="footnote">
+        来源：Unit1 词汇讲解补充版.docx；Unit1Phrases and Expressions.docx。
+        本页只整理知识点，不包含额外练习题。
+      </p>
+    </main>
+
+    <script id="resource-data" type="application/json">{"title": "大学英语 Unit 1 词汇与短语", "sourceVocabulary": "Unit1 词汇讲解补充版.docx", "sourcePhrases": "Unit1Phrases and Expressions.docx", "vocabulary": [{"number": 1, "word": "acclaim", "ipa": "əˈkleɪm", "part_of_speech": "n.", "definition": "praise and approval for sb/sth, especially an artistic achievement （尤其对艺术成就的）称誉，高度评价", "examples": [{"english": "She has won acclaim for her commitment to democracy.", "chinese": "她为民主做出的贡献为她赢得了赞誉。"}, {"english": "The scientist earned acclaim for his remarkable achievement in the field.", "chinese": "科学家以其在研究领域的突出成就而赢得了高度评价。"}], "collocations": []}, {"number": 2, "word": "aftermath", "ipa": "ˈæf.tɚ.mæθ", "part_of_speech": "n.", "definition": "the situation that exists as a result of an important (and usually unpleasant) event, especially a war, an accident, etc. 后果，余波", "examples": [{"english": "We all worked together in the aftermath of the earthquake.", "chinese": "我们在震后废墟中一起并肩作战。"}, {"english": "For a county still dealing with the aftermath of decades of corruption, we can do better.", "chinese": "作为一个仍在致力于解决几十年的腐败隐患的国家来说，我们理应做的更好。"}], "collocations": []}, {"number": 3, "word": "allocation", "ipa": "æl.əˈkeɪ.ʃən", "part_of_speech": "n.", "definition": "the act of giving sth to sb for a particular purpose 划;拨;分配", "examples": [{"english": "Higher budgetary allocations for education mean more teachers can be hired.", "chinese": "高涨的教育经费拨款说明学校计划招聘更多教师。"}, {"english": "A huge amount of economic activity might be lost to inefficient allocation.", "chinese": "大量的经济活动有可能因为低效率的财政分配而丧失效果。"}], "collocations": []}, {"number": 4, "word": "combat", "ipa": "kɑːm.bæt", "part_of_speech": "v. / n.", "definition": "a fight, especially during a war斗争，战争", "examples": [{"english": "The film explores the combat between good and evil.", "chinese": "这部电影针对正邪两方的斗争展开探索。"}, {"english": "I have to combat this constant desire to eat chocolate.", "chinese": "我必须要抵抗住常常想吃巧克力的冲动。"}], "collocations": []}, {"number": 5, "word": "coordination", "ipa": "koʊˌɔːr.dənˈeɪ.ʃən", "part_of_speech": "n.", "definition": "the act of making parts of sth, groups of people, etc. work together in an efficient and organized way 协作；协调；配合", "examples": [{"english": "There's absolutely no coordination between the different groups - nobody knows what anyone else is doing.", "chinese": "不同的群体之间完全没有配合—每个人都不知道别人在做什么。"}, {"english": "We need better coordination between state and local authorities.", "chinese": "我们需要来自国家和本地政府之间更好的协调配合。"}], "collocations": []}, {"number": 6, "word": "derail", "ipa": "diːˈreɪl", "part_of_speech": "v.", "definition": "to leave the track; to make a train do this （使）脱轨，出轨", "examples": [{"english": "Investors are very concerned that a new crisis could derail the economic recovery.", "chinese": "投资商十分担忧新一轮的危机会使得经济复苏难以为继。"}, {"english": "Companies should help women whose careers have often been derailed by maternity leave.", "chinese": "对于因休产假而事业受到影响的女员工，公司有义务对其伸出援手。"}], "collocations": []}, {"number": 7, "word": "destabilize", "ipa": "diːˈsteɪ.bəl.aɪz", "part_of_speech": "v.", "definition": "to make a system, country, government, etc. become less firmly established or successful使（制度、国家、政府等）动摇；使不安定；使不稳定", "examples": [{"english": "The bordering countries are being destabilized by the conflict.", "chinese": "周边国家因战争冲突而受到干扰。"}, {"english": "Further increases in imports could destabilize the economy.", "chinese": "进口产品的持续增长可能会扰乱经济。"}], "collocations": []}, {"number": 8, "word": "disintegration", "ipa": "dɪs.ɪn.t̬əˈɡreɪ.ʃən", "part_of_speech": "n.", "definition": "the process of losing cohesion or strength分裂解体", "examples": [{"english": "She survived the disintegration of her marriage and the challenge of raising five children.", "chinese": "她从离婚的创伤中恢复了过来，并且养育了五个孩子。"}, {"english": "Europeans who believe that disintegration is a good idea should consult the history of the 1920s and 1930s.", "chinese": "那些支持分裂的欧洲人应该参考20和30年代的历史。"}], "collocations": []}, {"number": 9, "word": "estimation", "ipa": "", "part_of_speech": "n.", "definition": "a judgement or opinion about the value or quality of sb/sth 判断；评价；看法", "examples": [{"english": "His skills and abilities make him, in my estimation, an ideal candidate for the board of governors.", "chinese": "在我看来，他的技能和能力使他成为理事会的理想人选。"}, {"english": "He sank in my estimation when I saw how he treated his wife.", "chinese": "当我看到他如何对待他的妻子时，他在我心目中的形象一落千丈。"}], "collocations": ["in somebody’s estimation", "go up/come down in somebody’s estimation (=be respected or admired more or less by someone)"]}, {"number": 10, "word": "exceed", "ipa": "", "part_of_speech": "v.", "definition": "to be greater than a particular number or amount 超过（数量）", "examples": [{"english": "The success of our campaign has exceeded our wildest expectations.", "chinese": "我们发起的运动获得了意想不到的成功。"}, {"english": "She was found guilty on three charges of exceeding the speed limit.", "chinese": "她被指控3次超速驾驶，并被判有罪。"}], "collocations": []}, {"number": 11, "word": "expound", "ipa": "", "part_of_speech": "v.", "definition": "to explain sth by talking about it in detail 详解；详述；阐述", "examples": [{"english": "He's always expounding on what's wrong with the world.", "chinese": "他总在痛陈这个世界的弊病。"}, {"english": "She uses her newspaper column to expound her views on environmental issues.", "chinese": "她利用主笔的报纸专栏阐述自己对环境问题的观点。"}], "collocations": []}, {"number": 12, "word": "integration", "ipa": "", "part_of_speech": "n.", "definition": "the act or process of combining two or more things so that they work together (= of integrating them) 结合；整合；一体化", "examples": [{"english": "His music is an integration of tradition and new technology.", "chinese": "他的音乐结合了传统和新技术。"}, {"english": "To promote integration, several schools' catchment areas were merged.", "chinese": "为了促进融合，合并了几所学校的学区。"}], "collocations": ["integration of", "integration into", "racial integration"]}, {"number": 13, "word": "livelihood", "ipa": "", "part_of_speech": "n.", "definition": "a means of earning money in order to live 赚钱謀生的手段；生计", "examples": [{"english": "Many ship workers could lose their livelihoods because of falling orders for new ships.", "chinese": "由于新船订单减少，许多船厂工人可能要丢掉饭碗。"}, {"english": "Fishing is the main source of livelihood for many people in the area.", "chinese": "捕鱼是该地区许多人的主要生计来源。"}], "collocations": []}, {"number": 14, "word": "materialize", "ipa": "", "part_of_speech": "v.", "definition": "to take place or start to exist as expected or planned 实现；发生；成为现实", "examples": [{"english": "Her hopes of becoming a painter never materialized.", "chinese": "她当画家的愿望一直未实现。"}, {"english": "Suddenly a lorry appeared in front of her - it seemed to materialize out of nowhere.", "chinese": "一辆卡车突然出现在她面前——好似是从地下冒出来的。"}], "collocations": []}, {"number": 15, "word": "pledge", "ipa": "", "part_of_speech": "v.", "definition": "to formally promise to give or do sth 保证给予（或做）；正式承诺；n. a serious or formal promise, especially one to give money or to be a friend, or something that you give as a sign that you will keep a promise誓言；诺言；保证", "examples": [{"english": "Herrera pledged that his company would give aid to schools.", "chinese": "埃雷拉承诺他的公司将为学校提供援助。"}, {"english": "We are asking people to pledge their support for our campaign.", "chinese": "我们正请求人们承诺支持我们的运动。"}, {"english": "I give you this ring as a pledge of my everlasting love for you.", "chinese": "我把这枚戒指送给你作为我永远爱你的信物。"}, {"english": "All the candidates have given/made pledges not to raise taxes if they are elected.", "chinese": "所有的候选人都保证当选后不增税。"}], "collocations": ["pledge something to something/somebody", "pledge to do something", "pledge that", "pledge to do something", "make/take/give a pledge", "keep/fulfil/honour a pledge"]}, {"number": 16, "word": "reaffirm", "ipa": "", "part_of_speech": "v.", "definition": "to state sth again in order to emphasize that it is still true 重申；再次确定", "examples": [{"english": "The government yesterday reaffirmed its commitment to the current peace process.", "chinese": "政府昨天重申了对目前和平进程的承诺。"}, {"english": "The government has reaffirmed that education is a top priority.", "chinese": "政府重申教育是头等大事。"}], "collocations": []}, {"number": 17, "word": "renew", "ipa": "rɪˈnjuː", "part_of_speech": "v.", "definition": "to begin sth again after a pause or an interruption 使恢复，更新", "examples": [{"english": "We have to renew our efforts to attract young players.", "chinese": "我们只好重新开始努力吸引年轻队员。"}, {"english": "The annual dinner is a chance to renew acquaintance with old friends.", "chinese": "一年一度的聚餐会是与老朋友叙旧的好机会。"}], "collocations": []}, {"number": 18, "word": "solidify", "ipa": "səˈlɪdɪfaɪ", "part_of_speech": "v.", "definition": "to become or to make sth become more definite and less likely to change （使）变得坚定，变得稳固，巩固", "examples": [{"english": "Vague objections to the system solidified into firm opposition.", "chinese": "先前对这一制度不大明朗的反对演变成了坚决的抵制。"}, {"english": "They solidified their position as Britain's top band.", "chinese": "他们巩固了自己作为英国顶尖乐队的地位。"}], "collocations": []}, {"number": 19, "word": "stabilize", "ipa": "ˈsteɪbəlaɪz", "part_of_speech": "v.", "definition": "to become or to make sth become firm, steady and unlikely to change; to make sth stable （使）稳定，稳固", "examples": [{"english": "The patient's condition stabilized.", "chinese": "患者的病情稳定下来。"}, {"english": "Doctors stabilized the patient's condition.", "chinese": "大夫们使患者的病情稳定下来。"}], "collocations": []}, {"number": 20, "word": "substantial", "ipa": "səbˈstænʃ(ə)l", "part_of_speech": "a.", "definition": "large in amount, value or importance 大量的；价值巨大的；重大的", "examples": [{"english": "Substantial numbers of people support the reforms.", "chinese": "相当多的人支持这些改革措施。"}, {"english": "Your claim ought to succeed, in which case the damages will be substantial.", "chinese": "你的索赔应当能成功，假如这样的话，损害赔偿金将会相当可观。"}], "collocations": []}, {"number": 21, "word": "violation", "ipa": "ˌvaɪəˈleɪʃ(ə)n", "part_of_speech": "n.", "definition": "the action of violating something 违反，违背；侵权", "examples": [{"english": "To deprive the boy of his education is a violation of state law.", "chinese": "剥夺这个男孩的受教育权是一种违反州法律的行为。"}, {"english": "The judge called the decision \"a flagrant violation of international law.\"", "chinese": "法官称这个决定是“对国际法的公然违反”。"}], "collocations": []}, {"number": 22, "word": "abide by", "ipa": "əˈbaɪd baɪ", "part_of_speech": "", "definition": "to accept and act according to a law, an agreement, etc. 遵守，遵照（法规、约定等）", "examples": [{"english": "You'll have to abide by the rules of the club.", "chinese": "你必须遵守俱乐部的规定。"}, {"english": "We are not free agents; we abide by the decisions of our president.", "chinese": "我们不是自由不需负责任的人；我们遵守总统的决定。"}], "collocations": []}, {"number": 23, "word": "hinge on", "ipa": "hɪndʒ ɒn", "part_of_speech": "", "definition": "to depend on sth completely 有赖于；取决于", "examples": [{"english": "The plan hinges on a deal being struck with a new company.", "chinese": "该计划完全取决于正在和一家新公司谈的一笔交易。"}, {"english": "His success hinges on how well he does at the interview.", "chinese": "他能否成功要看他在面试中的表现。"}], "collocations": []}, {"number": 24, "word": "in conformity with", "ipa": "ɪn kənˈfɔːməti wɪð", "part_of_speech": "", "definition": "following the rules of sth; conforming to sth 遵循（规则）；与…相符合（或一致）", "examples": [{"english": "These regulations are in conformity with European law.", "chinese": "这些规章符合欧洲法律。"}, {"english": "The prime minister is, in conformity with their constitution, chosen by the president.", "chinese": "首相是遵照宪法由总统选定的。"}], "collocations": []}, {"number": 25, "word": "scale up", "ipa": "skeɪl ʌp", "part_of_speech": "", "definition": "to increase the size or number of sth 增大，扩大（规模或数量）", "examples": [{"english": "All in all, it's a great business that should be easy to scale up.", "chinese": "总之，这是一项很好的业务，应该很容易扩大规模。"}, {"english": "Agricultural commodity producers should be supported to diversify and scale up their production.", "chinese": "我们应该支持农产品生产主体的多元化规模化发展。"}], "collocations": []}], "phraseGroups": [{"paragraph": 1, "entries": [{"number": 1, "chinese": "成熟的机制", "english": "full-fledged mechanisms"}, {"number": 2, "chinese": "加强融合", "english": "strengthen integration"}, {"number": 3, "chinese": "固有的对立", "english": "an intrinsic opposition"}, {"number": 4, "chinese": "零和博弈(游戏)", "english": "a zero-sum game"}, {"number": 5, "chinese": "长期主导", "english": "long-term dominance"}, {"number": 6, "chinese": "战胜对手", "english": "a/the triumph over opponents"}, {"number": 7, "chinese": "违背，与…背道而驰", "english": "run counter to"}, {"number": 8, "chinese": "建国信条", "english": "founding creed"}, {"number": 9, "chinese": "忠诚崩塌", "english": "collapse of loyalty"}, {"number": 10, "chinese": "随之而来的危机", "english": "subsequent crisis"}, {"number": 11, "chinese": "地区动荡", "english": "regional unrest"}, {"number": 12, "chinese": "民族分裂主义", "english": "national separatism"}]}, {"paragraph": 2, "entries": [{"number": 1, "chinese": "激烈的暴力冲突", "english": "intense violent conflicts"}, {"number": 2, "chinese": "实现理想。", "english": "The ideal materializes."}, {"number": 3, "chinese": "规模空前扩大", "english": "scale up unprecedentedly"}, {"number": 4, "chinese": "战后余波", "english": "in the aftermath of the war"}, {"number": 5, "chinese": "得到一定程度的遏制", "english": "be curbed to a certain degree"}, {"number": 6, "chinese": "潜在的社会问题", "english": "a potential social issue"}]}, {"paragraph": 3, "entries": [{"number": 1, "chinese": "相继， 陆续", "english": "one after another"}, {"number": 2, "chinese": "新兴的民族国家", "english": "emerging nation-states"}, {"number": 3, "chinese": "在相当大的程度上", "english": "to a considerable degree"}, {"number": 4, "chinese": "被称为", "english": "be referred to as"}, {"number": 5, "chinese": "一套适合的治理体系", "english": "an agreeable system of governance"}, {"number": 6, "chinese": "以…的形式显现出来", "english": "be revealed in the form of…"}]}, {"paragraph": 4, "entries": [{"number": 1, "chinese": "区域联盟", "english": "regional alliances"}, {"number": 2, "chinese": "遇到的困难", "english": "difficulties encountered"}, {"number": 3, "chinese": "让位，让步", "english": "give way to"}, {"number": 4, "chinese": "保障生存", "english": "safeguard survival"}]}, {"paragraph": 5, "entries": [{"number": 1, "chinese": "自成立(诞生)以来", "english": "since the inception of"}, {"number": 2, "chinese": "时空的", "english": "spatial and temporal"}, {"number": 3, "chinese": "推进进程", "english": "advance the process"}, {"number": 4, "chinese": "在这方面", "english": "in this regard"}, {"number": 5, "chinese": "为…奠定基础", "english": "lay the foundation for"}]}, {"paragraph": 6, "entries": [{"number": 1, "chinese": "提出", "english": "put forth"}, {"number": 2, "chinese": "符合，与…一致", "english": "in conformity with"}, {"number": 3, "chinese": "最近结束的代表大会", "english": "recently concluded congress"}, {"number": 4, "chinese": "理论建设", "english": "theoretical construction"}, {"number": 5, "chinese": "不稳定因素", "english": "destabilizing factors"}, {"number": 6, "chinese": "制定总体布局", "english": "chart the overall layout"}, {"number": 7, "chinese": "开放包容的秩序", "english": "an open and inclusive order"}, {"number": 8, "chinese": "共同繁荣", "english": "common prosperity"}, {"number": 9, "chinese": "产生深远影响", "english": "exert profound impact on"}, {"number": 10, "chinese": "超出常规预计", "english": "beyond conventional estimations"}]}], "counts": {"vocabulary": 25, "phrases": 43, "paragraphs": 6}}</script>
+    <script>
+      (function () {
+        "use strict";
+        const data = JSON.parse(document.getElementById("resource-data").textContent);
+        const state = { query: "", filter: "all" };
+        const vocabList = document.getElementById("vocabulary-list");
+        const phraseList = document.getElementById("phrase-list");
+        const searchInput = document.getElementById("search-input");
+        const resultStatus = document.getElementById("result-status");
+        const emptyState = document.getElementById("empty-state");
+        const vocabularySection = document.getElementById("vocabulary-section");
+        const phraseSection = document.getElementById("phrase-section");
+
+        function createElement(tag, className, text) {
+          const element = document.createElement(tag);
+          if (className) element.className = className;
+          if (text !== undefined) element.textContent = text;
+          return element;
+        }
+
+        function add(target, ...children) {
+          children.filter(Boolean).forEach((child) => target.appendChild(child));
+          return target;
+        }
+
+        function vocabularySearchText(entry) {
+          return [
+            entry.word,
+            entry.ipa,
+            entry.part_of_speech,
+            entry.definition,
+            ...entry.examples.flatMap((example) => [example.english, example.chinese]),
+            ...entry.collocations
+          ].join(" ").toLowerCase();
+        }
+
+        function phraseSearchText(entry) {
+          return `${entry.chinese} ${entry.english}`.toLowerCase();
+        }
+
+        function renderVocabulary() {
+          vocabList.textContent = "";
+          data.vocabulary.forEach((entry) => {
+            const card = createElement("article", "word-card");
+            card.dataset.type = "vocabulary";
+            card.dataset.search = vocabularySearchText(entry);
+
+            const top = createElement("div", "word-top");
+            const heading = createElement("div");
+            const word = createElement("h3", "word", entry.word);
+            heading.appendChild(word);
+            if (entry.ipa) heading.appendChild(createElement("span", "phonetic", `/${entry.ipa}/`));
+            top.appendChild(heading);
+            if (entry.part_of_speech) top.appendChild(createElement("span", "pos", entry.part_of_speech));
+            card.appendChild(top);
+
+            card.appendChild(createElement("p", "definition", entry.definition || "见原词汇表"));
+            if (entry.examples.length) {
+              const list = createElement("ul", "examples");
+              entry.examples.forEach((example) => {
+                const item = createElement("li", "example");
+                item.appendChild(createElement("div", "example-en", `• ${example.english}`));
+                if (example.chinese) item.appendChild(createElement("span", "example-zh", example.chinese));
+                list.appendChild(item);
+              });
+              card.appendChild(list);
+            }
+            if (entry.collocations.length) {
+              const box = createElement("div", "collocations");
+              box.appendChild(createElement("strong", "", "常用搭配"));
+              box.appendChild(document.createTextNode(entry.collocations.join("；")));
+              card.appendChild(box);
+            }
+            vocabList.appendChild(card);
+          });
+        }
+
+        function renderPhrases() {
+          phraseList.textContent = "";
+          data.phraseGroups.forEach((group) => {
+            const groupCard = createElement("section", "phrase-group");
+            groupCard.dataset.type = "phrase-group";
+            groupCard.appendChild(createElement("h3", "", `Para. ${group.paragraph}`));
+            group.entries.forEach((entry) => {
+              const row = createElement("div", "phrase-row");
+              row.dataset.type = "phrase";
+              row.dataset.search = phraseSearchText(entry);
+              row.appendChild(createElement("div", "phrase-zh", entry.chinese));
+              row.appendChild(createElement("div", "phrase-en", entry.english || ""));
+              groupCard.appendChild(row);
+            });
+            phraseList.appendChild(groupCard);
+          });
+        }
+
+        function applyFilters() {
+          const query = state.query.trim().toLowerCase();
+          let visible = 0;
+
+          document.querySelectorAll(".word-card").forEach((card) => {
+            const typeMatches = state.filter === "all" || state.filter === "vocabulary";
+            const queryMatches = !query || card.dataset.search.includes(query);
+            card.hidden = !(typeMatches && queryMatches);
+            if (!card.hidden) visible += 1;
+          });
+
+          document.querySelectorAll(".phrase-group").forEach((group) => {
+            let groupVisible = 0;
+            group.querySelectorAll(".phrase-row").forEach((row) => {
+              const typeMatches = state.filter === "all" || state.filter === "phrase";
+              const queryMatches = !query || row.dataset.search.includes(query);
+              row.hidden = !(typeMatches && queryMatches);
+              if (!row.hidden) {
+                groupVisible += 1;
+                visible += 1;
+              }
+            });
+            group.hidden = groupVisible === 0;
+          });
+
+          const showVocabulary = state.filter !== "phrase";
+          const showPhrases = state.filter !== "vocabulary";
+          vocabularySection.hidden = !showVocabulary;
+          phraseSection.hidden = !showPhrases;
+          emptyState.style.display = visible === 0 ? "block" : "none";
+          resultStatus.textContent = query ? `当前显示 ${visible} 条匹配内容` : `当前显示 ${visible} 条内容`;
+        }
+
+        document.getElementById("tabs").addEventListener("click", (event) => {
+          const button = event.target.closest(".tab");
+          if (!button) return;
+          state.filter = button.dataset.filter;
+          document.querySelectorAll(".tab").forEach((tab) => {
+            const active = tab === button;
+            tab.classList.toggle("is-active", active);
+            tab.setAttribute("aria-pressed", String(active));
+          });
+          applyFilters();
+        });
+
+        searchInput.addEventListener("input", () => {
+          state.query = searchInput.value;
+          applyFilters();
+        });
+
+        renderVocabulary();
+        renderPhrases();
+        applyFilters();
+      })();
+    </script>
+  </body>
+</html>

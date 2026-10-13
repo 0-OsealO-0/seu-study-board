@@ -1180,7 +1180,7 @@ a {
         </div>
         <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
         <p class="sidebar-source">
-          依据已归档的课件 2 至课件 5 笔记整理，覆盖第 1.1 至 1.6 节。
+          依据已归档的课件 2 至课件 6 笔记整理，覆盖第 1.1 至 1.6 节。
         </p>
       </aside>
 
@@ -1795,6 +1795,222 @@ window.LINEAR_REVIEW_CHAPTERS = [
         "derivation": ["高阶行列式的展开项数和符号规则远超对角线法则。"],
         "pitfalls": ["把三阶公式机械推广到四阶。"],
         "source": "课件 5，第 20-49 页"
+      },
+      {
+        "id": "la-property-det-transpose",
+        "type": "property",
+        "label": "性质 1.6.8",
+        "title": "行列式转置不变",
+        "statement": ["对方阵 $A$，恒有 $|A^T|=|A|$。因此行与列的行列式性质完全对称。"],
+        "conditions": ["$A$ 为方阵。"],
+        "conclusion": ["关于行成立的性质都可以按同样的方式转到列上。"],
+        "derivation": ["按第一行展开与按第一列展开的递归定义在结构上互为转置。"],
+        "pitfalls": ["把矩阵转置和行列式符号的写法混淆。"],
+        "source": "课件 6，第 2 页"
+      },
+      {
+        "id": "la-property-det-row-swap",
+        "type": "property",
+        "label": "性质 1.6.9",
+        "title": "互换两行或两列变号",
+        "statement": ["互换行列式中的两行，行列式变号；互换两列也同样变号。"],
+        "conditions": ["交换的是两整行或两整列。"],
+        "conclusion": ["如果两行或两列完全相同，则交换后得到同一个行列式，同时由本性质又得到相反数，因此原行列式为 $0$。"],
+        "derivation": ["交换一次改变排列的奇偶性，因此产生一个负号。"],
+        "pitfalls": ["计算初等变换时漏记换行产生的负号。"],
+        "source": "课件 6，第 2-3 页"
+      },
+      {
+        "id": "la-property-det-row-scale",
+        "type": "property",
+        "label": "性质 1.6.10",
+        "title": "单行或单列公因子可提出",
+        "statement": ["行列式某一行（列）有公因子 $k$ 时，可以把 $k$ 提到行列式外；对 $n$ 阶方阵还有 $|kA|=k^n|A|$。"],
+        "conditions": ["倍乘针对单独一行或单独一列。", "整体数乘 $kA$ 时，所有 $n$ 个行都同时乘 $k$。"],
+        "conclusion": ["$|E(i(k))|=k$；整体数乘要提出 $n$ 个因子。"],
+        "derivation": ["按该行展开时，每一项都含有共同因子 $k$。"],
+        "pitfalls": ["把 $|kA|$ 误写成 $k|A|$。", "把某一行的公因子误认为可以同时对多行提取而只计一次。"],
+        "source": "课件 6，第 6、9、24 页"
+      },
+      {
+        "id": "la-property-det-row-additive",
+        "type": "property",
+        "label": "性质 1.6.11",
+        "title": "单行或单列的加性",
+        "statement": ["若某一行（列）的元素分别是两项之和，而其余行（列）保持不变，则行列式可拆成两个行列式之和。"],
+        "conditions": ["只能同时替换一行或一列；其余行列必须原样保留。"],
+        "conclusion": ["行列式对每一行、每一列分别具有线性性。"],
+        "derivation": ["把该行中的每一项拆开后，再按展开式逐项分组。"],
+        "pitfalls": ["把 $|A+B|$ 直接写成 $|A|+|B|$。", "拆分时改动了其他行或列。"],
+        "source": "课件 6，第 7、10 页"
+      },
+      {
+        "id": "la-property-det-row-addition",
+        "type": "property",
+        "label": "性质 1.6.12",
+        "title": "倍加变换不改变行列式",
+        "statement": ["把某一行加上另一行的 $k$ 倍，或把某一列加上另一列的 $k$ 倍，行列式不变。"],
+        "conditions": ["倍加变换必须是“加上”而非“替换整个行”。"],
+        "conclusion": ["倍加变换是化上三角行列式时最常用的工具。"],
+        "derivation": ["按单行加性拆开后，其中一个行列式有两行成比例，因而为 $0$。"],
+        "pitfalls": ["把倍加变换误记为会改变符号或将因子提出。"],
+        "source": "课件 6，第 12-15 页"
+      },
+      {
+        "id": "la-property-det-proportional-zero",
+        "type": "property",
+        "label": "性质 1.6.13",
+        "title": "两行或两列成比例时行列式为零",
+        "statement": ["若行列式中有两行或两列成比例，则 $D=0$。特别地，有两行或两列完全相同也有 $D=0$。"],
+        "conditions": ["比例倍数可以是任意常数，包括 $0$。"],
+        "conclusion": ["行列式为零是线性相关的重要信号。"],
+        "derivation": ["先用倍乘性质把比例系数提出，再对两行相同的情形使用换行变号的推论。"],
+        "pitfalls": ["只检查完全相同的行，忘记成比例也足够判定为零。"],
+        "source": "课件 6，第 3、8 页"
+      },
+      {
+        "id": "la-property-block-triangular-det",
+        "type": "property",
+        "label": "性质 1.6.14",
+        "title": "分块三角行列式",
+        "statement": ["若 $A,B$ 为方阵，则 $\\begin{vmatrix}A&C\\\\O&B\\end{vmatrix}=|A||B|$，下分块三角形式也成立；分块对角矩阵的行列式等于各对角块行列式之积。"],
+        "conditions": ["$A,B$ 为方阵。", "零块位于另一侧。"],
+        "conclusion": ["分块三角结构可把高阶行列式拆成两个低阶行列式的乘积。"],
+        "derivation": ["用倍加变换把 $A$ 和 $B$ 分别化为上三角，分块结构使整体仍保持上三角。"],
+        "pitfalls": ["把非方阵块放在对角位置。"],
+        "source": "课件 6，第 16-18 页"
+      },
+      {
+        "id": "la-property-det-multiplicative",
+        "type": "property",
+        "label": "性质 1.6.15",
+        "title": "行列式乘法性质",
+        "statement": ["对同阶方阵 $A,B$，有 $|AB|=|A||B|$；对同阶方阵 $A_1,\\ldots,A_s$，有 $|A_1\\cdots A_s|=|A_1|\\cdots|A_s|$。"],
+        "conditions": ["$A,B$ 必须为同阶方阵。"],
+        "conclusion": ["行列式把矩阵乘法转化为普通数的乘法。"],
+        "derivation": ["把矩阵化为行最简形并用初等矩阵分解，再逐一使用初等矩阵的行列式性质。"],
+        "pitfalls": ["对 $m\\times n$ 与 $n\\times m$ 矩阵直接使用该公式。", "误写成 $|A+B|=|A|+|B|$。"],
+        "source": "课件 6，第 19-30 页"
+      },
+      {
+        "id": "la-formula-elementary-matrix-det",
+        "type": "formula",
+        "label": "公式 1.6.16",
+        "title": "初等矩阵的行列式",
+        "statement": ["$|E(i,j)|=-1$，$|E(i(k))|=k$，$|E(i,j(k))|=1$。"],
+        "conditions": ["$E(i(k))$ 中的 $k\\ne0$。"],
+        "conclusion": ["初等矩阵的行列式恰好对应换行、倍乘、倍加三种行列式变换。"],
+        "derivation": ["直接计算交换行列式、对角行列式和倍加行列式。"],
+        "pitfalls": ["把倍加矩阵的行列式写成 $k$。"],
+        "source": "课件 6，第 23-25 页"
+      },
+      {
+        "id": "la-property-det-expand-any-row-column",
+        "type": "property",
+        "label": "性质 1.6.17",
+        "title": "行列式可按任意行或任意列展开",
+        "statement": ["对 $n\\ge2$ 的方阵 $A=(a_{ij})$，$|A|=\\sum_{j=1}^n a_{ij}A_{ij}$，也可写成 $|A|=\\sum_{i=1}^n a_{ij}A_{ij}$。"],
+        "conditions": ["展开使用对应位置 $a_{ij}$ 的代数余子式 $A_{ij}$。"],
+        "conclusion": ["展开行或列可任选，通常选择含 $0$ 较多的一行或一列。"],
+        "derivation": ["由第一行展开和行列式性质把待展开行移动到第一行，同时跟踪符号。"],
+        "pitfalls": ["使用某行元素时配错另一行的代数余子式。"],
+        "source": "课件 6，第 4-5、32-33 页"
+      },
+      {
+        "id": "la-property-cofactor-orthogonality",
+        "type": "property",
+        "label": "性质 1.6.18",
+        "title": "异行或异列代数余子式展开为零",
+        "statement": ["当 $i\\ne j$ 时，$\\sum_{k=1}^n a_{ik}A_{jk}=0$，且 $\\sum_{k=1}^n a_{ki}A_{kj}=0$。"],
+        "conditions": ["元素的指标行与代数余子式的指标行不同，或列指标不同。"],
+        "conclusion": ["同行或同列对应展开得到 $|A|$，异行或异列对应展开得到 $0$。"],
+        "derivation": ["把第 $i$ 行替换成第 $j$ 行，所得行列式有两行相同，因此为 $0$，再按第 $j$ 行展开。"],
+        "pitfalls": ["把异行展开误算为 $|A|$，忽略指标必须相同。"],
+        "source": "课件 6，第 34-36 页"
+      },
+      {
+        "id": "la-formula-adjugate-identity",
+        "type": "formula",
+        "label": "公式 1.6.19",
+        "title": "代数余子式矩阵与行列式单位化",
+        "statement": ["记 $C=(A_{ij})$ 为代数余子式矩阵，则 $AC^T=C^TA=|A|E$。"],
+        "conditions": ["$A$ 为 $n$ 阶方阵。"],
+        "conclusion": ["该式把行列式、余子式和矩阵乘法连接起来，也是伴随矩阵公式的直接来源。"],
+        "derivation": ["矩阵乘法的 $(i,j)$ 元素是第 $i$ 行元素与第 $j$ 列元素对应代数余子式的乘积之和；$i=j$ 时为 $|A|$，$i\\ne j$ 时为 $0$。"],
+        "pitfalls": ["忘记代数余子式矩阵需要转置后才按列与 $A$ 相乘。"],
+        "source": "课件 6，第 37-39 页"
+      },
+      {
+        "id": "la-method-det-row-reduction",
+        "type": "method",
+        "label": "方法 1.6.20",
+        "title": "用初等变换化三角形计算行列式",
+        "statement": ["用倍加变换造零，把高阶行列式化为上（下）三角行列式，再取主对角线元素乘积。"],
+        "conditions": ["换行要记一个负号；某一行乘 $k$ 要记一个因子 $k$；倍加不改变行列式。"],
+        "conclusion": ["四阶及以上行列式通常优先消除非对角元素，而不是直接展开。"],
+        "derivation": ["倍加变换保持行列式不变，三角行列式等于主对角线元素之积。"],
+        "pitfalls": ["把倍加变换误记为倍乘变换，导致多算因子。", "换行后忘记符号。"],
+        "source": "课件 6，第 40-42 页"
+      },
+      {
+        "id": "la-method-det-diagonal-x-off-a",
+        "type": "method",
+        "label": "方法 1.6.21",
+        "title": "主对角线为 x、其余为 a 的 n 阶行列式",
+        "statement": ["若 $D_n$ 的主对角线元素全为 $x$，其余元素全为 $a$，则 $D_n=[x+(n-1)a](x-a)^{n-1}$。"],
+        "conditions": ["$n$ 阶方阵，且对角线外元素统一为 $a$。"],
+        "conclusion": ["把各行都加到第一行可提出 $x+(n-1)a$，再用倍加变换化为三角形式。"],
+        "derivation": ["先将第一行变成都等于 $x+(n-1)a$，再减去 $a$ 倍的第一行，得到三角形行列式。"],
+        "pitfalls": ["把公式记成 $[x-(n-1)a](x+a)^{n-1}$ 或漏掉 $n-1$ 次幂。"],
+        "source": "课件 6，第 43 页"
+      },
+      {
+        "id": "la-formula-vandermonde",
+        "type": "formula",
+        "label": "公式 1.6.22",
+        "title": "范德蒙行列式",
+        "statement": ["$D_n=\\begin{vmatrix}1&1&\\cdots&1\\\\a_1&a_2&\\cdots&a_n\\\\\\vdots&\\vdots&&\\vdots\\\\a_1^{n-1}&a_2^{n-1}&\\cdots&a_n^{n-1}\\end{vmatrix}=\\prod_{1\\le i<j\\le n}(a_j-a_i)$。"],
+        "conditions": ["按列取值 $a_1,\\ldots,a_n$ 构成范德蒙结构。"],
+        "conclusion": ["当且仅当某些 $a_i$ 相等时，范德蒙行列式为 $0$。"],
+        "derivation": ["低阶直接计算；高阶用逐列消元提取差因子，再递推到 $n-1$ 阶。"],
+        "pitfalls": ["把因子顺序写成 $a_i-a_j$ 而不统一。"],
+        "source": "课件 6，第 45、50-51 页"
+      },
+      {
+        "id": "la-proof-vandermonde",
+        "type": "proof",
+        "label": "证明 1.6.23",
+        "title": "范德蒙行列式的归纳证明",
+        "statement": ["用数学归纳法证明 $D_n=\\prod_{1\\le i<j\\le n}(a_j-a_i)$。"],
+        "conditions": ["先验证 $n=2$，再假设 $n-1$ 阶结论成立。"],
+        "conclusion": ["从最后一列起逐列减去前一列的 $a_n$ 倍，可提出因子 $(a_1-a_n)\\cdots(a_{n-1}-a_n)$，余下部分对应 $D_{n-1}$。"],
+        "derivation": ["对最后一行之前逐列做倍加变换，展开最后一列，得到符号与差因子的乘积，再使用归纳假设。"],
+        "pitfalls": ["差因子的符号与列的排列顺序不一致。"],
+        "source": "课件 6，第 46-51 页"
+      },
+      {
+        "id": "la-pitfall-det-shape-and-linearity",
+        "type": "pitfall",
+        "label": "易错点 1.6.24",
+        "title": "行列式乘法与加性的边界",
+        "statement": ["$|AB|=|A||B|$ 的常用形式要求 $A,B$ 为同阶方阵；行列式对单行或单列是线性的，但一般没有 $|A+B|=|A|+|B|$。"],
+        "conditions": ["先把矩阵形状和是否同阶写在题目旁边。"],
+        "conclusion": ["不同形状的矩阵乘积需要通过补零块等方式转化为同阶方阵问题，不能直接套用乘法公式。"],
+        "derivation": ["行列式的多线性是逐行或逐列线性，不是对整个矩阵加法线性。"],
+        "pitfalls": ["把 $|A+B|$ 拆成 $|A|+|B|$。", "对 $2\\times3$ 与 $3\\times2$ 矩阵直接说 $|AB|=|A||B|$。"],
+        "source": "课件 6，第 19-30 页"
+      },
+      {
+        "id": "la-pitfall-det-operation-sign-factor",
+        "type": "pitfall",
+        "label": "易错点 1.6.25",
+        "title": "行列式初等变换的符号与倍率跟踪",
+        "statement": ["换行产生符号，倍乘产生因子，倍加不改变行列式；每一步都要区分这三类操作。"],
+        "conditions": ["进行行列式计算时逐行记录操作。"],
+        "conclusion": ["先跟踪符号和因子，再计算三角形行列式，可以减少最后一步的错误。"],
+        "derivation": ["三类操作分别对应 $|E(i,j)|=-1$、$|E(i(k))|=k$、$|E(i,j(k))|=1$。"],
+        "pitfalls": ["把倍加变换当成换行或倍乘。", "计算完三角形行列式后忘记补回符号和倍数。"],
+        "source": "课件 6，第 12-15、23-25、40-42 页"
       }
     ]
   }
@@ -1840,8 +2056,8 @@ window.LINEAR_REVIEW_CHAPTERS = [
     {
       number: "1.6",
       title: "方阵的行列式",
-      lead: "行列式递归定义、余子式、代数余子式与计算。",
-      map: ["二阶三阶", "余子式", "代数余子式", "递归展开", "三角行列式"]
+      lead: "行列式定义、性质、按行/列展开、初等变换计算与范德蒙行列式。",
+      map: ["行列式性质", "代数余子式", "按行/列展开", "初等变换", "范德蒙行列式"]
     }
   ];
   const allSourceEntries = sourceChapters.flatMap((chapter) => chapter.entries || []);
