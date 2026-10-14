@@ -651,6 +651,23 @@ a {
   border-left-color: var(--corollary);
 }
 
+.entry-card--formula,
+.entry-card--method {
+  border-left-color: #2e6f9e;
+}
+
+.entry-card--property {
+  border-left-color: #4f728b;
+}
+
+.entry-card--example {
+  border-left-color: #7a5ca8;
+}
+
+.entry-card--pitfall {
+  border-left-color: var(--warning-line);
+}
+
 .entry-card--definition {
   border-left-color: var(--definition);
 }
@@ -701,6 +718,23 @@ a {
 
 .entry-badge--corollary {
   background: var(--corollary);
+}
+
+.entry-badge--formula,
+.entry-badge--method {
+  background: #2e6f9e;
+}
+
+.entry-badge--property {
+  background: #4f728b;
+}
+
+.entry-badge--example {
+  background: #7a5ca8;
+}
+
+.entry-badge--pitfall {
+  background: #b06d16;
 }
 
 .entry-badge--definition {
@@ -1230,6 +1264,14 @@ a {
               aria-pressed="false"
             >
               定义
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="keypoint"
+              aria-pressed="false"
+            >
+              重要知识点
             </button>
           </div>
 
@@ -2229,6 +2271,239 @@ window.MATH_REVIEW_CHAPTERS = [
 
     </script>
     <script>
+window.MATH_REVIEW_EXTRA_KNOWLEDGE = [
+  {
+    "id": "key-1-1-archimedean",
+    "chapter": "1.1",
+    "type": "property",
+    "label": "重要性质 1.1.A",
+    "title": "Archimedean 性质",
+    "statement": [
+      "对任意实数 $x$，存在正整数 $n$，使 $n>x$；等价地，对任意 $\\varepsilon>0$，存在正整数 $n$，使 $1/n<\\varepsilon$。"
+    ],
+    "conditions": ["讨论对象为实数。"],
+    "conclusion": ["正整数可以超过任意给定实数。", "正数 $1/n$ 可以任意小。"],
+    "intuition": "它保证自然数不会在实数轴上有上界，是许多极限证明的基础。",
+    "proofIdea": ["常作为实数完备性体系中的基本性质使用。", "函数与数列中证明“可以取得足够小”时经常使用。"],
+    "dependencies": ["实数系与确界原理"],
+    "pitfalls": ["不能用“肉眼上看很大”代替严格估计。"],
+    "source": "1.1，实数完备性"
+  },
+  {
+    "id": "key-1-1-density",
+    "chapter": "1.1",
+    "type": "property",
+    "label": "重要性质 1.1.B",
+    "title": "有理数与无理数的稠密性",
+    "statement": ["任意两个不相等的实数之间，既存在有理数，也存在无理数。"],
+    "conditions": ["所给两个实数不相等。"],
+    "conclusion": ["任何非空开区间内都同时含有有理数和无理数。"],
+    "intuition": "实数轴上的任意小间隙都不是由单一类型数独占。",
+    "proofIdea": ["有理数稠密性可由 Archimedean 性质和整数分割证明；无理数可借助有理数加无理数构造。"],
+    "dependencies": ["Archimedean 性质"],
+    "pitfalls": ["稠密性只保证存在，不保证两个数之间的所有数都属于同一类型。"],
+    "source": "1.1，有理数与无理数"
+  },
+  {
+    "id": "key-1-2-epsilon-template",
+    "chapter": "1.2",
+    "type": "method",
+    "label": "重要方法 1.2.A",
+    "title": "$\\varepsilon$-$N$ 证明模板",
+    "statement": ["证明 $a_n\\to a$ 时，先任取 $\\varepsilon>0$，再解出 $N$，最后验证当 $n>N$ 时确有 $|a_n-a|<\\varepsilon$。"],
+    "conditions": ["目标极限和数列表达式已知。"],
+    "conclusion": ["证明结构固定，关键是找到所需的 $N$ 和完成误差估计。"],
+    "intuition": "把“最终任意接近”翻译成一个可验证的尾部不等式。",
+    "proofIdea": [
+      "任取 $\\varepsilon>0$。",
+      "从 $|a_n-a|<\\varepsilon$ 出发反推 $n>N(\\varepsilon)$。",
+      "取合适的 $N$，并回头验证所有 $n>N$ 都满足不等式。"
+    ],
+    "dependencies": ["数列极限的 $\\varepsilon$-$N$ 定义"],
+    "pitfalls": ["先取 $N$ 再找 $\\varepsilon$ 通常不是有效证明。", "只验证若干项不满足定义。"],
+    "source": "1.2，数列极限定义与例题"
+  },
+  {
+    "id": "key-1-2-common-limits",
+    "chapter": "1.2",
+    "type": "formula",
+    "label": "常用极限 1.2.B",
+    "title": "基本数列极限",
+    "statement": [
+      "$\\lim\\limits_{n\\to\\infty}\\frac1n=0$；$\\lim\\limits_{n\\to\\infty}q^n=0$（$|q|<1$）；$\\lim\\limits_{n\\to\\infty}\\sqrt[n]{a}=1$（$a>0$）。"
+    ],
+    "conditions": ["各公式的条件如上；$q$ 必须满足 $|q|<1$。"],
+    "conclusion": ["这些标准极限可作为夹逼、单调有界或取对数计算的基准。"],
+    "intuition": "它们是最常被用来做放缩和代入的基础块。",
+    "proofIdea": ["$1/n\\to0$ 由 Archimedean 性质；$q^n\\to0$ 令 $|q|=1/(1+h)$ 后用 Bernoulli 不等式；根式极限可取对数或用均值不等式。"],
+    "dependencies": ["Archimedean 性质", "夹逼定理"],
+    "pitfalls": ["把 $q^n\\to0$ 错误推广到所有 $|q|\\le1$。"],
+    "source": "1.2，数列极限与例题"
+  },
+  {
+    "id": "key-1-2-techniques",
+    "chapter": "1.2",
+    "type": "method",
+    "label": "重要方法 1.2.C",
+    "title": "数列极限常用计算方法",
+    "statement": ["常见方法包括因式分解、分子分母同除最高次幂、有理化、取对数、夹逼、单调有界和递推式固定点分析。"],
+    "conditions": ["先判断极限类型和代数结构，再选择方法。"],
+    "conclusion": ["不同题型应优先使用能消除主导不定结构的方法。"],
+    "intuition": "先识别结构，再做变形，避免盲目套公式。",
+    "proofIdea": ["分式先比较最高阶项；根式差先有理化；含幂指结构可取对数；递推数列先证明收敛再解极限方程。"],
+    "dependencies": ["四则运算", "夹逼定理", "单调有界原理"],
+    "pitfalls": ["未证明极限存在就设 $\\lim a_n=a$ 并代入递推式。"],
+    "source": "1.2，极限计算方法"
+  },
+  {
+    "id": "key-1-3-two-limits",
+    "chapter": "1.3",
+    "type": "formula",
+    "label": "重要极限 1.3.A",
+    "title": "两个重要极限",
+    "statement": [
+      "$\\lim\\limits_{x\\to0}\\frac{\\sin x}{x}=1$；$\\lim\\limits_{x\\to\\infty}\\left(1+\\frac1x\\right)^x=e$，等价写作 $\\lim\\limits_{t\\to0}(1+t)^{1/t}=e$。"
+    ],
+    "conditions": [
+      "第一个极限要求角 $x$ 使用弧度制，且 $x\\to0$。",
+      "第二个极限中的 $x\\to\\infty$，或等价地 $t=x^{-1}\\to0$。"
+    ],
+    "conclusion": ["它们分别是三角型和幂指型极限的核心基准。"],
+    "intuition": "一个刻画小角正弦与角度的近似，另一个定义自然常数 $e$。",
+    "proofIdea": [
+      "第一式由几何不等式 $\\sin x<x<\\tan x$ 和夹逼定理得到。",
+      "第二式可由数列 $(1+1/n)^n$ 的单调有界性定义 $e$，再推广到实数变量。"
+    ],
+    "dependencies": ["夹逼定理", "单调有界原理"],
+    "pitfalls": ["把 $\\sin x/x$ 的极限误写成 0 或 $\\infty$。", "第二个重要极限中指数的位置和极限方向必须对应正确。"],
+    "source": "1.3，两个重要极限"
+  },
+  {
+    "id": "key-1-3-left-right",
+    "chapter": "1.3",
+    "type": "property",
+    "label": "重要性质 1.3.B",
+    "title": "左右极限存在准则",
+    "statement": ["$\\lim\\limits_{x\\to x_0}f(x)=A$ 当且仅当左极限和右极限都存在，并且都等于 $A$。"],
+    "conditions": ["函数在 $x_0$ 左右两侧有定义。"],
+    "conclusion": ["函数极限存在等价于两侧单侧极限相等。"],
+    "intuition": "从左右两个方向趋向同一点，结果必须一致。",
+    "proofIdea": ["一侧极限的定义可由双边极限推出；反过来，取两侧邻域的较小 $\\delta$ 即可得到双边极限。"],
+    "dependencies": ["左极限与右极限定义"],
+    "pitfalls": ["左右极限分别存在但不相等时，双边极限不存在。"],
+    "source": "1.3，单侧极限"
+  },
+  {
+    "id": "key-1-3-limit-techniques",
+    "chapter": "1.3",
+    "type": "method",
+    "label": "重要方法 1.3.C",
+    "title": "函数极限常用计算方法",
+    "statement": ["常用方法包括因式分解、有理化、变量替换、等价无穷小替换、两个重要极限、左右极限和夹逼定理。"],
+    "conditions": ["先判断点极限、无穷极限或单侧极限，并识别不定式类型。"],
+    "conclusion": ["对不定式进行结构变形后再求极限。"],
+    "intuition": "核心是消除分母或幂指结构中的主导不确定性。",
+    "proofIdea": ["含根式差先有理化；含三角函数先用两个重要极限；幂指型先取对数；分段点先算左右极限。"],
+    "dependencies": ["函数极限四则运算", "两个重要极限", "等价无穷小"],
+    "pitfalls": ["在加减结构中直接做等价替换。"],
+    "source": "1.3，函数极限计算"
+  },
+  {
+    "id": "key-1-4-equivalent",
+    "chapter": "1.4",
+    "type": "formula",
+    "label": "重要公式 1.4.A",
+    "title": "常用等价无穷小",
+    "statement": [
+      "当 $x\\to0$ 时：$\\sin x\\sim x$，$\\tan x\\sim x$，$1-\\cos x\\sim\\frac{x^2}{2}$，$\\ln(1+x)\\sim x$，$e^x-1\\sim x$，$(1+x)^\\alpha-1\\sim\\alpha x$。"
+    ],
+    "conditions": ["每个近似都在 $x\\to0$ 的过程中成立。"],
+    "conclusion": ["乘除结构中可用等价无穷小替换简化极限。"],
+    "intuition": "它们记录函数在零点附近的一次或二次主项。",
+    "proofIdea": ["分别计算与相应主项之比的极限为 1。"],
+    "dependencies": ["无穷小量的阶", "两个重要极限"],
+    "pitfalls": ["在加减结构中直接替换可能改变主项。"],
+    "source": "1.4，等价无穷小"
+  },
+  {
+    "id": "key-1-4-replacement",
+    "chapter": "1.4",
+    "type": "method",
+    "label": "重要方法 1.4.B",
+    "title": "等价无穷小替换规则",
+    "statement": ["在乘除结构中，若 $X\\sim\\widetilde X$、$Y\\sim\\widetilde Y$，则可用 $\\widetilde X,\\widetilde Y$ 替换 $X,Y$ 而不改变商的极限。"],
+    "conditions": ["替换对象必须处于乘除结构。", "替换后的极限必须存在并保持结构有意义。"],
+    "conclusion": ["乘除型极限可以通过等价替换快速化简。"],
+    "intuition": "相对误差趋零，因此不改变乘积或商的极限。",
+    "proofIdea": ["把替换后的商拆成原商与若干趋 1 因子的乘积。"],
+    "dependencies": ["等价无穷小的性质"],
+    "pitfalls": ["在加减结构中直接替换。", "忽略不同变量趋向过程的差异。"],
+    "source": "1.4，等价替换"
+  },
+  {
+    "id": "key-1-4-growth",
+    "chapter": "1.4",
+    "type": "property",
+    "label": "重要性质 1.4.C",
+    "title": "无穷大量增长阶的比较",
+    "statement": ["常见增长层级为 $\\ln n\\ll n^\\alpha\\ll a^n\\ll n!$（$\\alpha>0,a>1,n\\to\\infty$）。"],
+    "conditions": ["$n\\to\\infty$，参数满足给定条件。"],
+    "conclusion": ["对数增长最慢，阶乘增长最快。"],
+    "intuition": "比较增长阶时只看主导项和最高增长结构。",
+    "proofIdea": ["分别考察相邻增长率或比值极限。"],
+    "dependencies": ["无穷大量的阶"],
+    "pitfalls": ["只看某几个初始值判断整体增长快慢。"],
+    "source": "1.4，无穷大量的比较"
+  },
+  {
+    "id": "key-1-5-elementary",
+    "chapter": "1.5",
+    "type": "property",
+    "label": "重要性质 1.5.A",
+    "title": "初等函数的连续性",
+    "statement": ["基本初等函数在其定义域内连续；由连续函数经过有限次四则运算和复合得到的初等函数，在其定义域内连续。"],
+    "conditions": ["运算过程中保持函数定义域非空。"],
+    "conclusion": ["初等函数求极限时通常可以直接代入定义域内点。"],
+    "intuition": "连续性使极限运算与函数值运算可以交换。",
+    "proofIdea": ["由基本初等函数连续性、四则运算法则和复合函数连续性逐层传递。"],
+    "dependencies": ["连续函数四则运算", "复合函数连续性"],
+    "pitfalls": ["在无定义点直接代入。"],
+    "source": "1.5，初等函数的连续性"
+  },
+  {
+    "id": "key-1-5-discontinuity",
+    "chapter": "1.5",
+    "type": "property",
+    "label": "重要性质 1.5.B",
+    "title": "间断点分类",
+    "statement": ["左右极限都存在但不等于函数值或彼此不等的间断点称为第一类间断点；至少一侧极限不存在的间断点称为第二类间断点。"],
+    "conditions": ["在讨论极限时要明确左极限和右极限。"],
+    "conclusion": ["可去间断点和跳跃间断点属于第一类；无穷间断点和振荡间断点属于第二类。"],
+    "intuition": "分类的本质是看左右极限是否都存在。",
+    "proofIdea": ["分别计算左、右极限，再与函数值比较。"],
+    "dependencies": ["单侧极限", "连续函数定义"],
+    "pitfalls": ["只看函数值是否存在就判断间断类型。"],
+    "source": "1.5，间断点及其分类"
+  },
+  {
+    "id": "key-1-5-common-uniform",
+    "chapter": "1.5",
+    "type": "example",
+    "label": "重要例解 1.5.C",
+    "title": "常见一致连续与非一致连续例子",
+    "statement": ["$\\sin x$ 在 $\\mathbb R$ 上一致连续；$x^2$ 在 $\\mathbb R$ 上不一致连续；$1/x$ 在 $(0,1)$ 上不一致连续，但在 $(c,1)$（$c>0$）上一致连续。"],
+    "conditions": ["区分闭区间、开区间和无穷区间。"],
+    "conclusion": ["一致连续与定义域是否紧致、端点是否有限密切相关。"],
+    "intuition": "函数越陡或曲线拉伸越明显，越容易破坏一致连续。",
+    "proofIdea": ["用一致连续定义检验；或构造距离趋于 0 但函数值差保持正下界的点列。"],
+    "dependencies": ["一致连续定义", "Cantor 定理"],
+    "pitfalls": ["把“连续”直接当成“一致连续”。"],
+    "source": "1.5，一致连续"
+  }
+];
+
+    </script>
+    <script>
 window.MATH_REVIEW_PROOFS = {
   "thm-1-1": [
     "在课程采用的确界原理中，这条定理本身就是实数完备性的基本刻画，因此它不再由更初等的代数性质推出。",
@@ -2502,11 +2777,32 @@ window.MATH_REVIEW_PROOFS = {
   "use strict";
 
   const chapters = window.MATH_REVIEW_CHAPTERS || [];
+  const extraKnowledge = window.MATH_REVIEW_EXTRA_KNOWLEDGE || [];
+  chapters.forEach((chapter) => {
+    const additions = extraKnowledge.filter(
+      (entry) => entry.chapter === chapter.number
+    );
+    if (additions.length) {
+      chapter.entries = chapter.entries.concat(additions);
+    }
+  });
   const typeNames = {
     theorem: "定理",
     corollary: "推论",
-    definition: "定义"
+    definition: "定义",
+    formula: "公式",
+    method: "方法",
+    property: "性质",
+    example: "例解",
+    pitfall: "易错点"
   };
+  const keypointTypes = new Set([
+    "formula",
+    "method",
+    "property",
+    "example",
+    "pitfall"
+  ]);
 
   const state = {
     query: "",
@@ -2979,7 +3275,10 @@ window.MATH_REVIEW_PROOFS = {
     const matchingCards = [];
 
     document.querySelectorAll(".entry-card").forEach((card) => {
-      const matchesType = state.type === "all" || card.dataset.type === state.type;
+      const matchesType =
+        state.type === "all" ||
+        card.dataset.type === state.type ||
+        (state.type === "keypoint" && keypointTypes.has(card.dataset.type));
       const matchesQuery = !query || card.dataset.search.includes(query);
       const show = matchesType && matchesQuery;
       card.hidden = !show;
@@ -3097,10 +3396,10 @@ window.MATH_REVIEW_PROOFS = {
       const link = event.target.closest(".chapter-nav-link");
       if (link) {
         const targetId = link.getAttribute("href").slice(1);
-        navigationLockUntil = Date.now() + 700;
+        navigationLockUntil = Date.now() + 1400;
         setActiveNavigation(targetId);
         closeSidebar();
-        window.setTimeout(updateActiveNavigationFromScroll, 720);
+        window.setTimeout(updateActiveNavigationFromScroll, 1420);
       }
     });
     document.addEventListener("keydown", (event) => {
