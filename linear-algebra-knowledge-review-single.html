@@ -8,7 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta
       name="description"
-      content="工科数学分析 I 第一章定理、推论与前置定义复习页"
+      content="线性代数第一章矩阵、逆矩阵、行列式与矩阵秩知识点复习页"
     >
     <title>线性代数 | 第一章知识点复习</title>
     <style>
@@ -1180,7 +1180,7 @@ a {
         </div>
         <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
         <p class="sidebar-source">
-          依据已归档的课件 2 至课件 6 笔记整理，覆盖第 1.1 至 1.6 节。
+          依据课件 2 至课件 8 整理，覆盖第 1.1 至 1.7 节；课件 8 内容作为 10 月 20 日课前预习纳入。
         </p>
       </aside>
 
@@ -2011,6 +2011,174 @@ window.LINEAR_REVIEW_CHAPTERS = [
         "derivation": ["三类操作分别对应 $|E(i,j)|=-1$、$|E(i(k))|=k$、$|E(i,j(k))|=1$。"],
         "pitfalls": ["把倍加变换当成换行或倍乘。", "计算完三角形行列式后忘记补回符号和倍数。"],
         "source": "课件 6，第 12-15、23-25、40-42 页"
+      },
+      {
+        "id": "la-def-adjugate-matrix",
+        "type": "definition",
+        "label": "定义 1.6.26",
+        "title": "伴随矩阵",
+        "statement": ["设 $A=(a_{ij})_{n\\times n}$，$n\\ge2$，$A_{ij}$ 为 $a_{ij}$ 的代数余子式，则 $A^*=\\begin{pmatrix}A_{11}&A_{21}&\\cdots&A_{n1}\\\\A_{12}&A_{22}&\\cdots&A_{n2}\\\\\\vdots&\\vdots&&\\vdots\\\\A_{1n}&A_{2n}&\\cdots&A_{nn}\\end{pmatrix}$ 称为 $A$ 的伴随矩阵。"],
+        "conditions": ["$A$ 为 $n$ 阶方阵，且 $n\\ge2$。"],
+        "conclusion": ["伴随矩阵不是代数余子式矩阵本身，而是其转置。"],
+        "derivation": ["第 $i$ 行第 $j$ 列位置放的是 $A_{ji}$，因此整体相当于把 $A_{ij}$ 按列排列。"],
+        "pitfalls": ["忘记伴随矩阵需要转置。", "把代数余子式 $A_{ij}$ 与余子式 $M_{ij}$ 混同。"],
+        "source": "课件 7，第 10-18 页"
+      },
+      {
+        "id": "la-theorem-adjugate-identity",
+        "type": "property",
+        "label": "定理 1.6.27",
+        "title": "伴随矩阵恒等式",
+        "statement": ["对 $n$ 阶矩阵 $A$（$n\\ge2$），有 $AA^*=A^*A=|A|E$。"],
+        "conditions": ["$A$ 为 $n$ 阶方阵，$n\\ge2$。"],
+        "conclusion": ["该式把伴随矩阵、行列式和单位矩阵联系起来。", "当 $|A|\\ne0$ 时，可由它直接得到逆矩阵公式。"],
+        "derivation": ["矩阵乘积的 $(i,j)$ 元是 $A$ 的第 $i$ 行与代数余子式第 $j$ 列的内积；同指标时为 $|A|$，异指标时为 $0$。"],
+        "pitfalls": ["把 $A^*$ 误认为逐元素取逆或取伴随。"],
+        "source": "课件 7，第 7-13 页"
+      },
+      {
+        "id": "la-theorem-invertible-determinant",
+        "type": "property",
+        "label": "定理 1.6.28",
+        "title": "方阵可逆的行列式判据",
+        "statement": ["设 $A$ 为 $n$ 阶方阵，则 $A$ 可逆当且仅当 $|A|\\ne0$。若 $n\\ge2$ 且 $|A|\\ne0$，则 $A^{-1}=\\frac1{|A|}A^*$。"],
+        "conditions": ["$A$ 为方阵。"],
+        "conclusion": ["非奇异矩阵就是可逆矩阵。", "伴随矩阵提供了公式化求逆方法。"],
+        "derivation": ["若 $AB=E$，则 $|A||B|=1$，故 $|A|\\ne0$；反过来由 $AA^*=|A|E$ 两边除以 $|A|$。"],
+        "pitfalls": ["行列式非零是方阵可逆的判据，非方阵不能直接套用。"],
+        "source": "课件 7，第 13、25-30 页"
+      },
+      {
+        "id": "la-corollary-one-sided-inverse",
+        "type": "property",
+        "label": "推论 1.6.29",
+        "title": "单侧矩阵逆与方阵条件",
+        "statement": ["若 $A$ 为 $n$ 阶方阵，且存在 $B$ 使 $AB=E$ 或 $BA=E$，则 $A$ 可逆且 $A^{-1}=B$。"],
+        "conditions": ["$A$ 必须是方阵。", "等式中的单位矩阵阶数必须匹配。"],
+        "conclusion": ["对同阶方阵，单侧逆已经足以推出双侧逆。"],
+        "derivation": ["由 $AB=E$ 得 $|A||B|=1$，故 $|A|\\ne0$，再左乘 $A^{-1}$ 得 $B=A^{-1}$。"],
+        "pitfalls": ["对非方阵，$AB=E$ 不能推出 $A$ 可逆；例如宽矩阵可能有右逆但不存在逆矩阵。"],
+        "source": "课件 7，第 25-27 页"
+      },
+      {
+        "id": "la-method-abstract-inverse",
+        "type": "method",
+        "label": "方法 1.6.30",
+        "title": "用多项式恒等变形判断抽象矩阵可逆",
+        "statement": ["若已知矩阵多项式恒等式，可把它整理成 $(A+\\alpha E)B=E$ 或 $B(A+\\alpha E)=E$ 的形式，从而直接得到逆矩阵。"],
+        "conditions": ["矩阵恒等式在乘法有意义的前提下成立。"],
+        "conclusion": ["抽象矩阵不必显式计算行列式，也可判断可逆性并求逆。"],
+        "derivation": ["所有项移到一侧，提取目标矩阵因子，再检查剩余因子是否与单位矩阵相等。"],
+        "pitfalls": ["提取因子时不能交换因子顺序。"],
+        "source": "课件 7，第 31-34 页"
+      },
+      {
+        "id": "la-formula-block-upper-inverse",
+        "type": "formula",
+        "label": "公式 1.6.31",
+        "title": "分块上三角矩阵的逆",
+        "statement": ["若 $A,B$ 可逆，则 $\\begin{pmatrix}A&C\\\\O&B\\end{pmatrix}^{-1}=\\begin{pmatrix}A^{-1}&-A^{-1}CB^{-1}\\\\O&B^{-1}\\end{pmatrix}$。"],
+        "conditions": ["$A,B$ 分别为可逆方阵。", "分块维数使乘积有意义。"],
+        "conclusion": ["分块三角结构可把大矩阵求逆化为两个小矩阵求逆。"],
+        "derivation": ["设逆矩阵为分块形式，利用分块乘法与 $\\begin{pmatrix}A&C\\\\O&B\\end{pmatrix}$ 相乘等于单位矩阵，逐个解出子块。"],
+        "pitfalls": ["右上块不是 $C^{-1}$，而是 $-A^{-1}CB^{-1}$。", "子块乘法顺序不能随意交换。"],
+        "source": "课件 7，第 35-37 页"
+      },
+      {
+        "id": "la-formula-cramer",
+        "type": "formula",
+        "label": "定理 1.6.32",
+        "title": "克拉默法则",
+        "statement": ["若线性方程组 $Ax=b$ 的系数矩阵 $A$ 为 $n$ 阶方阵且 $D=|A|\\ne0$，则方程组有唯一解 $x_j=\\frac{D_j}{D}$，其中 $D_j$ 是把 $A$ 的第 $j$ 列换成 $b$ 后得到的行列式。"],
+        "conditions": ["方程个数等于未知数个数。", "$D=|A|\\ne0$。"],
+        "conclusion": ["可用行列式表示唯一解。", "若 $D\\ne0$，对应的齐次方程组 $Ax=0$ 只有零解。"],
+        "derivation": ["由 $x=A^{-1}b=\\frac1D A^*b$ 展开第 $j$ 个分量，得到 $D_j/D$。"],
+        "pitfalls": ["克拉默法则只直接给出唯一解情形，不处理 $D=0$ 的完整解集。", "替换的是第 $j$ 列，不是第 $j$ 行。"],
+        "source": "课件 7，第 39-44 页"
+      },
+      {
+        "id": "la-def-k-minor",
+        "type": "definition",
+        "label": "定义 1.7.1",
+        "title": "$k$ 阶子式与矩阵的秩",
+        "statement": ["在 $m\\times n$ 矩阵 $A$ 中任取 $k$ 行与 $k$ 列，交叉位置元素按原顺序构成 $k$ 阶行列式，称为 $A$ 的 $k$ 阶子式。若存在非零 $r$ 阶子式，但所有 $r+1$ 阶子式都为零，则称 $A$ 的秩为 $r$，记作 $r(A)=r$。"],
+        "conditions": ["$1\\le k\\le\\min\\{m,n\\}$。"],
+        "conclusion": ["零矩阵的秩规定为 $0$。", "$0\\le r(A)\\le\\min\\{m,n\\}$。"],
+        "derivation": ["若 $r$ 阶子式非零，则更高阶子式展开后只由更低阶子式组合，因此一旦所有 $r+1$ 阶子式为零，更高阶也不可能非零。"],
+        "pitfalls": ["秩不是非零元素的个数。", "必须用子式的非零最高阶数来定义。"],
+        "source": "课件 8，第 1-13 页"
+      },
+      {
+        "id": "la-property-rank-basic",
+        "type": "property",
+        "label": "性质 1.7.2",
+        "title": "矩阵秩的基本结论",
+        "statement": ["$r(O)=0$；$r(A)=0\\Leftrightarrow A=O$；$r(A_{m\\times n})\\le\\min\\{m,n\\}$；$r(A)=n$（$A$ 为 $n$ 阶方阵）$\\Leftrightarrow |A|\\ne0\\Leftrightarrow A$ 可逆。"],
+        "conditions": ["讨论方阵满秩时需先确认矩阵为方阵。"],
+        "conclusion": ["满秩矩阵与非奇异矩阵、可逆矩阵是同一类方阵。"],
+        "derivation": ["由秩的子式定义和行列式定义直接得到。"],
+        "pitfalls": ["非方阵也可以有“行满秩”或“列满秩”，但不能称为可逆矩阵。"],
+        "source": "课件 8，第 9-10 页"
+      },
+      {
+        "id": "la-property-rank-transpose",
+        "type": "property",
+        "label": "引理 1.7.3",
+        "title": "矩阵转置不改变秩",
+        "statement": ["$r(A^T)=r(A)$。"],
+        "conditions": ["讨论任意 $m\\times n$ 矩阵。"],
+        "conclusion": ["矩阵的行秩与列秩相等。"],
+        "derivation": ["$A$ 的 $k$ 阶子式转置后成为 $A^T$ 的同阶子式，行列式值不变。"],
+        "pitfalls": ["不要把 $r(A^T)=r(A)$ 与 $A^T=A$ 混淆。"],
+        "source": "课件 8，第 15 页"
+      },
+      {
+        "id": "la-theorem-rank-elementary",
+        "type": "property",
+        "label": "定理 1.7.4",
+        "title": "初等变换不改变矩阵的秩",
+        "statement": ["对矩阵进行有限次初等行变换或初等列变换，矩阵的秩保持不变。"],
+        "conditions": ["只进行三类标准初等变换。"],
+        "conclusion": ["行阶梯形矩阵的秩等于非零行数。"],
+        "derivation": ["每类初等变换都对应乘以可逆初等矩阵；可逆矩阵乘法不改变秩。"],
+        "pitfalls": ["用初等变换求秩时，不需要像求行列式那样跟踪换行符号或倍乘因子。"],
+        "source": "课件 8，第 16-22 页"
+      },
+      {
+        "id": "la-corollary-rank-equivalent",
+        "type": "property",
+        "label": "推论 1.7.5",
+        "title": "矩阵等价与可逆乘法的秩不变性",
+        "statement": ["若 $A$ 与 $B$ 等价，则 $r(A)=r(B)$。若 $P,Q$ 分别为可逆矩阵，则 $r(A)=r(PA)=r(AQ)=r(PAQ)$。"],
+        "conditions": ["$P,Q$ 的阶数分别与 $A$ 的行数、列数匹配，并且 $P,Q$ 可逆。"],
+        "conclusion": ["初等变换和可逆矩阵乘法都保持秩。"],
+        "derivation": ["可逆矩阵可写成初等矩阵的乘积，而初等变换不改变秩。"],
+        "pitfalls": ["只乘一侧可逆矩阵已经保秩，不必同时左乘和右乘。"],
+        "source": "课件 8，第 19-22 页"
+      },
+      {
+        "id": "la-method-rank-echelon",
+        "type": "method",
+        "label": "方法 1.7.6",
+        "title": "用行阶梯形求矩阵的秩",
+        "statement": ["用初等行变换把矩阵化为行阶梯形，矩阵的秩等于阶梯形中非零行的个数；若需等价标准形，再继续化为只含单位块和零块的形式。"],
+        "conditions": ["只需行变换即可确定秩。"],
+        "conclusion": ["避免按定义枚举所有子式，适合高阶或大型矩阵。"],
+        "derivation": ["初等变换保秩，而阶梯形矩阵的秩显然等于非零行数。"],
+        "pitfalls": ["把非零首元个数与普通非零元素个数混淆。"],
+        "source": "课件 8，第 16-22 页"
+      },
+      {
+        "id": "la-method-rank-parameter",
+        "type": "method",
+        "label": "方法 1.7.7",
+        "title": "含参数矩阵的秩讨论",
+        "statement": ["先计算行列式或化简矩阵，找出使某些子式为 $0$ 的参数临界值；再对每个临界值分别回代，求对应的最高非零子式阶数。"],
+        "conditions": ["矩阵元素含参数，且需要按参数分类讨论。"],
+        "conclusion": ["主行或主元消失时必须回代，不能直接沿用一般情形的结论。"],
+        "derivation": ["秩是最高非零子式的阶数；参数使某个子式为零后，需要重新寻找其他非零子式。"],
+        "pitfalls": ["只解出 $|A|=0$ 的参数值，却没有分别计算各参数值下的秩。"],
+        "source": "课件 8，第 12-13、23 页"
       }
     ]
   }
@@ -2058,6 +2226,12 @@ window.LINEAR_REVIEW_CHAPTERS = [
       title: "方阵的行列式",
       lead: "行列式定义、性质、按行/列展开、初等变换计算与范德蒙行列式。",
       map: ["行列式性质", "代数余子式", "按行/列展开", "初等变换", "范德蒙行列式"]
+    },
+    {
+      number: "1.7",
+      title: "矩阵的秩",
+      lead: "子式定义、秩的性质、初等变换不变量、等价标准形与含参矩阵的秩。",
+      map: ["k 阶子式", "秩的定义", "初等变换", "等价标准形", "含参讨论"]
     }
   ];
   const allSourceEntries = sourceChapters.flatMap((chapter) => chapter.entries || []);
@@ -2072,6 +2246,8 @@ window.LINEAR_REVIEW_CHAPTERS = [
     .filter((chapter) => chapter.entries.length > 0);
   const typeNames = {
     definition: "定义",
+    theorem: "定理",
+    corollary: "推论",
     formula: "公式",
     property: "性质",
     method: "方法",
