@@ -1966,6 +1966,8 @@
     const todoProgressText = document.querySelector("#todo-progress-text");
     const todoProgressFill = document.querySelector("#todo-progress-fill");
     const localKeyPrefix = "freshman-todo-v2-";
+    const localUpdateKeyPrefix = "freshman-todo-updated-v1-";
+    const cloudRefreshIntervalMs = 15000;
     const cloudPanel = document.querySelector("#cloud-sync-panel");
     const cloudStatus = document.querySelector("#cloud-sync-status");
     const cloudLoginControls = document.querySelector("#cloud-login-controls");
@@ -1991,8 +1993,13 @@
     let supabaseClient = null;
     let cloudSession = null;
     let saveTimer = null;
+    let saveChain = Promise.resolve();
+    let reconcilePromise = null;
+    let reconcileRequestedAt = 0;
+    let cloudRefreshTimer = null;
     const pendingRemoteTaskIds = new Set();
     const completionTimes = {};
+    const taskUpdatedAt = {};
 
     function updateTodoProgress() {
       const activeChecks = todoChecks.filter((item) => item.isConnected);
@@ -2018,14 +2025,36 @@
       );
     }
 
+    function hasOwn(object, key) {
+      return Object.prototype.hasOwnProperty.call(object, key);
+    }
+
+    function timestampMs(value) {
+      const parsed = Date.parse(value || "");
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function rememberTaskTimestamp(taskId, timestamp, checked) {
+      const normalized = timestamp || null;
+      taskUpdatedAt[taskId] = normalized;
+      completionTimes[taskId] = checked ? normalized : null;
+    }
+
     function applyTodoState(state, timestamps = {}) {
       todoChecks.forEach((item) => {
         const taskId = item.dataset.taskId;
-        if (Object.prototype.hasOwnProperty.call(state, taskId)) {
+        if (hasOwn(state, taskId)) {
           item.checked = Boolean(state[taskId]);
+          if (!state[taskId] && !hasOwn(timestamps, taskId)) {
+            completionTimes[taskId] = null;
+          }
         }
-        if (Object.prototype.hasOwnProperty.call(timestamps, taskId)) {
-          completionTimes[taskId] = timestamps[taskId];
+        if (hasOwn(timestamps, taskId)) {
+          rememberTaskTimestamp(
+            taskId,
+            timestamps[taskId],
+            Boolean(item.checked)
+          );
         }
       });
       updateTodoProgress();
@@ -2039,9 +2068,11 @@
         state[taskId] =
           localStorage.getItem(`${localKeyPrefix}${taskId}`) === "1";
         timestamps[taskId] =
-          localStorage.getItem(`freshman-todo-time-${taskId}`) || null;
+          localStorage.getItem(`${localUpdateKeyPrefix}${taskId}`) ||
+          localStorage.getItem(`freshman-todo-time-${taskId}`) ||
+          null;
       });
-      Object.assign(completionTimes, timestamps);
+      Object.assign(taskUpdatedAt, timestamps);
       applyTodoState(state, timestamps);
       return state;
     }
@@ -2053,7 +2084,15 @@
           `${localKeyPrefix}${taskId}`,
           state[taskId] ? "1" : "0"
         );
-        if (completionTimes[taskId]) {
+        if (taskUpdatedAt[taskId]) {
+          localStorage.setItem(
+            `${localUpdateKeyPrefix}${taskId}`,
+            taskUpdatedAt[taskId]
+          );
+        } else {
+          localStorage.removeItem(`${localUpdateKeyPrefix}${taskId}`);
+        }
+        if (state[taskId] && completionTimes[taskId]) {
           localStorage.setItem(
             `freshman-todo-time-${taskId}`,
             completionTimes[taskId]
@@ -2066,6 +2105,7 @@
 
     function removePreviousDayCompletedTasks() {
       const today = new Date().toLocaleDateString("en-CA");
+      const now = new Date().toISOString();
 
       todoChecks.forEach((item) => {
         if (!item.isConnected || !item.checked) {
@@ -2074,7 +2114,8 @@
 
         const taskId = item.dataset.taskId;
         if (!completionTimes[taskId]) {
-          completionTimes[taskId] = new Date().toISOString();
+          completionTimes[taskId] = now;
+          taskUpdatedAt[taskId] = taskUpdatedAt[taskId] || now;
           return;
         }
 
@@ -2088,6 +2129,7 @@
       });
 
       updateTodoProgress();
+      saveLocalState(getTodoState());
     }
 
     async function loadRemoteState() {
@@ -2099,14 +2141,13 @@
           cloudStatus.textContent = `读取失败：${error.message}`;
           return null;
         }
+        const state = {};
+        const timestamps = {};
         (data || []).forEach((row) => {
-          completionTimes[row.task_id] = row.checked
-            ? row.updated_at
-            : null;
+          state[row.task_id] = Boolean(row.checked);
+          timestamps[row.task_id] = row.updated_at || null;
         });
-        return Object.fromEntries(
-          (data || []).map((row) => [row.task_id, row.checked])
-        );
+        return { state, timestamps };
       }
 
       if (!location.protocol.startsWith("http")) {
@@ -2120,29 +2161,45 @@
         }
         const payload = await response.json();
         if (payload && payload.state) {
-          Object.assign(completionTimes, payload.updatedAt || {});
-          return payload.state;
+          return {
+            state: payload.state,
+            timestamps: payload.updatedAt || {}
+          };
         }
-        return payload;
+        return { state: payload || {}, timestamps: {} };
       } catch {
         return null;
       }
     }
 
     async function saveRemoteState(state) {
+      const changedState = { ...state };
+      if (Object.keys(changedState).length === 0) {
+        return true;
+      }
+
       if (cloudEnabled && cloudSession) {
-        const rows = Object.entries(state).map(([taskId, checked]) => ({
+        const rows = Object.entries(changedState).map(([taskId, checked]) => ({
           user_id: cloudSession.user.id,
           task_id: taskId,
           checked
         }));
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
           .from("todo_states")
-          .upsert(rows, { onConflict: "user_id,task_id" });
+          .upsert(rows, { onConflict: "user_id,task_id" })
+          .select("task_id,checked,updated_at");
+        (data || []).forEach((row) => {
+          if (hasOwn(changedState, row.task_id)) {
+            rememberTaskTimestamp(row.task_id, row.updated_at, row.checked);
+          }
+        });
+        if (!error) {
+          saveLocalState(getTodoState());
+        }
         cloudStatus.textContent = error
           ? `同步失败：${error.message}`
           : `已同步 · ${new Date().toLocaleTimeString()}`;
-        return;
+        return !error;
       }
 
       if (!location.protocol.startsWith("http")) {
@@ -2150,33 +2207,133 @@
       }
 
       try {
-        await fetch("/api/state", {
+        const response = await fetch("/api/state", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            state,
-            updatedAt: completionTimes
+            state: changedState,
+            updatedAt: taskUpdatedAt
           }),
         });
+        return response.ok;
       } catch {
         // Local storage remains the fallback.
+        return false;
       }
     }
 
-    async function reconcileCloudState() {
-      if (!cloudEnabled || !cloudSession) {
-        return;
+    function queueRemoteStateSave(state) {
+      const snapshot = { ...state };
+      saveChain = saveChain
+        .catch(() => false)
+        .then(() => saveRemoteState(snapshot));
+      return saveChain;
+    }
+
+    async function flushScheduledRemoteSave() {
+      if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
       }
 
-      const localState = getTodoState();
-      const remoteState = await loadRemoteState();
+      const state = getTodoState();
+      const changedState = {};
+      pendingRemoteTaskIds.forEach((taskId) => {
+        if (hasOwn(state, taskId)) {
+          changedState[taskId] = state[taskId];
+        }
+      });
+      pendingRemoteTaskIds.clear();
+      if (Object.keys(changedState).length > 0) {
+        await queueRemoteStateSave(changedState);
+      }
+    }
 
-      if (remoteState && Object.keys(remoteState).length > 0) {
-        applyTodoState(remoteState);
-        removePreviousDayCompletedTasks();
-        saveLocalState(remoteState);
-      } else {
-        await saveRemoteState(localState);
+    function mergeRemoteState(remote) {
+      const localState = getTodoState();
+      const remoteState = remote.state || {};
+      const remoteTimestamps = remote.timestamps || {};
+      const stateToApply = {};
+      const timestampsToApply = {};
+      const localStateToUpload = {};
+      const remoteTaskIds = Object.keys(remoteState);
+
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (!hasOwn(remoteState, taskId)) {
+          localStateToUpload[taskId] = localState[taskId];
+          return;
+        }
+
+        const localUpdatedAt = timestampMs(taskUpdatedAt[taskId]);
+        const remoteUpdatedAt = timestampMs(remoteTimestamps[taskId]);
+        const keepLocal =
+          pendingRemoteTaskIds.has(taskId) ||
+          localUpdatedAt > remoteUpdatedAt;
+
+        if (keepLocal) {
+          if (localState[taskId] !== Boolean(remoteState[taskId])) {
+            localStateToUpload[taskId] = localState[taskId];
+          }
+          return;
+        }
+
+        stateToApply[taskId] = Boolean(remoteState[taskId]);
+        timestampsToApply[taskId] = remoteTimestamps[taskId] || null;
+      });
+
+      if (remoteTaskIds.length === 0) {
+        return {
+          needsUpload: true,
+          uploadState: { ...localState }
+        };
+      }
+
+      applyTodoState(stateToApply, timestampsToApply);
+      removePreviousDayCompletedTasks();
+      saveLocalState(getTodoState());
+
+      return {
+        needsUpload: Object.keys(localStateToUpload).length > 0,
+        uploadState: localStateToUpload
+      };
+    }
+
+    async function reconcileCloudState({ force = false } = {}) {
+      if (!cloudEnabled || !cloudSession) {
+        return false;
+      }
+      if (reconcilePromise) {
+        return reconcilePromise;
+      }
+      if (!force && Date.now() - reconcileRequestedAt < 1500) {
+        return false;
+      }
+      reconcileRequestedAt = Date.now();
+
+      const request = (async () => {
+        await flushScheduledRemoteSave();
+        const remote = await loadRemoteState();
+        if (!remote) {
+          return false;
+        }
+
+        const mergeResult = mergeRemoteState(remote);
+        if (mergeResult.needsUpload) {
+          const saved = await queueRemoteStateSave(mergeResult.uploadState);
+          if (!saved) {
+            return false;
+          }
+        }
+        cloudStatus.textContent =
+          `已校准 · ${new Date().toLocaleTimeString()}`;
+        return true;
+      })();
+      reconcilePromise = request;
+      try {
+        return await request;
+      } finally {
+        reconcilePromise = null;
       }
     }
 
@@ -2186,18 +2343,8 @@
       }
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
-        const state = getTodoState();
-        saveLocalState(state);
-        const changedState = {};
-        pendingRemoteTaskIds.forEach((id) => {
-          if (Object.prototype.hasOwnProperty.call(state, id)) {
-            changedState[id] = state[id];
-          }
-        });
-        pendingRemoteTaskIds.clear();
-        if (Object.keys(changedState).length > 0) {
-          saveRemoteState(changedState);
-        }
+        saveTimer = null;
+        flushScheduledRemoteSave().catch(() => false);
       }, 120);
     }
 
@@ -2228,6 +2375,11 @@
         supabaseConfig.url,
         supabasePublicKey
       );
+      cloudRefreshTimer = window.setInterval(() => {
+        if (cloudSession && document.visibilityState === "visible") {
+          reconcileCloudState();
+        }
+      }, cloudRefreshIntervalMs);
 
       const { data } = await supabaseClient.auth.getSession();
       cloudSession = data.session;
@@ -2299,6 +2451,7 @@
     });
 
     cloudSignoutButton?.addEventListener("click", async () => {
+      await flushScheduledRemoteSave();
       await supabaseClient.auth.signOut();
       cloudSession = null;
       updateCloudUi();
@@ -2319,12 +2472,33 @@
     todoChecks.forEach((item) => {
       item.addEventListener("change", () => {
         const taskId = item.dataset.taskId;
-        completionTimes[taskId] = item.checked
-          ? new Date().toISOString()
-          : null;
+        const changedAt = new Date().toISOString();
+        completionTimes[taskId] = item.checked ? changedAt : null;
+        taskUpdatedAt[taskId] = changedAt;
         updateTodoProgress();
+        saveLocalState(getTodoState());
         scheduleRemoteSave(taskId);
       });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        flushScheduledRemoteSave().catch(() => false);
+      } else if (cloudSession) {
+        reconcileCloudState({ force: true });
+      }
+    });
+
+    window.addEventListener("focus", () => {
+      if (cloudSession) {
+        reconcileCloudState();
+      }
+    });
+
+    window.addEventListener("pageshow", () => {
+      if (cloudSession) {
+        reconcileCloudState({ force: true });
+      }
     });
 
     (async () => {
@@ -2333,18 +2507,19 @@
       await initCloudSync();
 
       if (cloudEnabled && cloudSession) {
-        await reconcileCloudState();
+        await reconcileCloudState({ force: true });
         return;
       }
 
-      const remoteState = await loadRemoteState();
+      const remote = await loadRemoteState();
 
-      if (remoteState && Object.keys(remoteState).length > 0) {
-        applyTodoState(remoteState);
-        removePreviousDayCompletedTasks();
-        saveLocalState(remoteState);
+      if (remote && Object.keys(remote.state).length > 0) {
+        const mergeResult = mergeRemoteState(remote);
+        if (mergeResult.needsUpload) {
+          await queueRemoteStateSave(mergeResult.uploadState);
+        }
       } else {
-        saveRemoteState(localState);
+        await queueRemoteStateSave(localState);
       }
     })();
   </script>
