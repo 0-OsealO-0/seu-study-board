@@ -2247,6 +2247,7 @@
       if (Object.keys(changedState).length > 0) {
         await queueRemoteStateSave(changedState);
       }
+      await saveChain.catch(() => false);
     }
 
     function mergeRemoteState(remote) {
