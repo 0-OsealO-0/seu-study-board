@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线性代数 课后复习题</title>
+  <style>
+    :root { --bg:#f4f6f8; --surface:#fff; --text:#18212b; --muted:#5f6b76; --line:#d9e0e6; --blue:#1769aa; --amber:#9a6500; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.65; }
+    .page { width:min(900px,calc(100% - 32px)); margin:0 auto; padding:28px 0 48px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    .subtitle,.meta { color:var(--muted); }
+    .notice { margin:20px 0; padding:14px 16px; border-left:4px solid var(--amber); background:#fbf0d5; border-radius:5px; }
+    ol { margin:0; padding:18px 18px 8px 46px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+    li { margin-bottom:16px; }
+    @media (max-width:620px) { .page { width:min(100% - 20px,900px); padding-top:18px; } h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>线性代数 课后复习题</h1>
+    <p class="subtitle">2026-10-22 课堂内容。先独立作答，不查课件或答案。</p>
+    <p class="meta">共 12 题</p>
+    <div class="notice">先独立作答，不查课件或答案。矩阵题先写明各矩阵的行列数；证明题至少写出使用的秩不等式及方向。</div>
+    <ol><li id="q1">设 A 为 s×m 矩阵，B 为 s×n 矩阵。叙述分块矩阵 (A,B) 的秩的上下界，并说明三个量之间的方向。</li>
+<li id="q2">对同型矩阵 A,B，写出 r(A+B) 的常用上界，并指出为什么一般不能写成等号。</li>
+<li id="q3">若 A 为 s×n 矩阵，B 为 n×t 矩阵，叙述 r(AB) 的双侧上界，并说明它依赖哪些矩阵的秩。</li>
+<li id="q4">完整叙述 r(A)=1 的充要条件，包括两个向量的形状和非零性。</li>
+<li id="q5">写出 Sylvester 秩不等式，并标明 A 为 s×n、B 为 n×t 时各符号对应的维数。</li>
+<li id="q6">在 Sylvester 秩不等式的条件下，若 AB=O，可以推出什么结论？逆命题成立吗？</li>
+<li id="q7">若 n 阶方阵 A 满足 A^2=A，写出 r(A)+r(E-A) 的值，并说出证明中使用的两个方向。</li>
+<li id="q8">设 A 为 3×5 矩阵且 r(A)=2，B 为 5×4 矩阵且 r(B)=3。求 r(AB) 的可能上下界，并说明分别用了哪条不等式。</li>
+<li id="q9">设 ξ=(1,2,-1)^T，η=(3,0,4)。计算 A=ξη，求 r(A)，并直接指出 ξ 与 η 的非零性如何对应秩 1 判据。</li>
+<li id="q10">设 A 为 4×5 矩阵，B 为 5×3 矩阵且 r(B)=2。若 AB=O，求 r(A) 的最大可能值，并说明理由。</li>
+<li id="q11">设 5 阶方阵 A 满足 A^2=A，且 r(A)=2。求 r(E-A)，并用两个相反的秩不等式各说明一半。</li>
+<li id="q12">已知分块恒等式 [[E_s,-A],[O,E_n]]·[[A,O],[E_n,B]]·[[E_n,B],[O,-E_t]]=[[O,AB],[E_n,O]]，说明如何由此推出 r(AB)≥r(A)+r(B)-n。证明中必须指出哪些因子可逆。</li></ol>
+  </main>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta
+      name="description"
+      content="线性代数第一章矩阵、逆矩阵、行列式与矩阵秩知识点复习页"
+    >
+    <title>线性代数 | 第一章知识点复习</title>
+    <link rel="stylesheet" href="assets/katex/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#chapter-content">跳到正文</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="章节目录">
+        <div class="sidebar-brand">
+        <p class="sidebar-brand__course">线性代数</p>
+        <p class="sidebar-brand__title">第一章知识点复习</p>
+        </div>
+        <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
+        <p class="sidebar-source">
+          依据课件 2 至课件 9 整理，覆盖第 1.1 至 1.7 节；课件 9 内容于 10 月 22 日并入秩不等式专题。
+        </p>
+      </aside>
+
+      <button
+        class="sidebar-toggle"
+        id="sidebar-toggle"
+        type="button"
+        aria-controls="sidebar"
+        aria-expanded="false"
+        aria-label="打开章节目录"
+      >
+        <span class="sidebar-toggle__lines" aria-hidden="true"></span>
+      </button>
+      <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+      <main class="main">
+        <header class="page-header">
+          <p class="page-kicker">第一章 · 矩阵与行列式基础</p>
+          <h1>线性代数知识点整理</h1>
+          <p class="page-intro">
+            按课件顺序整理定义、公式、性质、算法和易错点。先读结论，再展开核对条件、推导与应用方法。
+          </p>
+
+          <div class="stats" aria-label="内容统计">
+            <div class="stat">
+              <strong id="stat-items">0</strong>
+              <span>知识点</span>
+            </div>
+            <div class="stat">
+              <strong id="stat-formulas">0</strong>
+              <span>公式与方法</span>
+            </div>
+            <div class="stat">
+              <strong id="stat-chapters">0</strong>
+              <span>课件主题</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="toolbar" aria-label="筛选和搜索">
+          <div class="search-wrap">
+            <label class="sr-only" for="search-input">搜索内容</label>
+            <input
+              id="search-input"
+              class="search-input"
+              type="search"
+              autocomplete="off"
+              placeholder="搜索定理、推论或关键词"
+            >
+          </div>
+
+          <div class="filter-tabs" id="filter-tabs" role="group" aria-label="内容类型">
+            <button
+              class="filter-tab is-active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              全部
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="definition"
+              aria-pressed="false"
+            >
+              定义
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="formula"
+              aria-pressed="false"
+            >
+              公式
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="property"
+              aria-pressed="false"
+            >
+              性质
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="method"
+              aria-pressed="false"
+            >
+              方法
+            </button>
+          </div>
+
+          <button class="toolbar-button" id="expand-all" type="button" data-expanded="false">
+            全部展开
+          </button>
+          <div class="search-results" id="search-results" aria-label="搜索结果" hidden></div>
+        </section>
+
+        <div class="search-summary-row">
+          <span class="search-status" id="search-status" aria-live="polite"></span>
+        </div>
+        <p class="sr-only" id="result-count" aria-live="polite">正在加载</p>
+        <div class="chapter-content" id="chapter-content"></div>
+
+        <footer class="page-footer">
+          <p>离线知识点复习页，可直接使用浏览器打开。</p>
+        </footer>
+      </main>
+    </div>
+
+    <script src="assets/katex/katex.min.js" defer></script>
+    <script src="content-data.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
