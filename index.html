@@ -554,6 +554,10 @@
       cursor: pointer;
     }
 
+    .todo-item[hidden] {
+      display: none !important;
+    }
+
     .todo-item:last-child {
       border-bottom: 0;
     }
@@ -2003,8 +2007,13 @@
     const completionTimes = {};
     const taskUpdatedAt = {};
 
+    function isTodoVisible(item) {
+      const row = item.closest(".todo-item");
+      return Boolean(row) && !row.hidden;
+    }
+
     function updateTodoProgress() {
-      const activeChecks = todoChecks.filter((item) => item.isConnected);
+      const activeChecks = todoChecks.filter(isTodoVisible);
       const completed = activeChecks.filter((item) => item.checked).length;
       const total = activeChecks.length;
       const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
@@ -2042,6 +2051,39 @@
       completionTimes[taskId] = checked ? normalized : null;
     }
 
+    function localDateKey(value) {
+      const date = value instanceof Date ? value : new Date(value);
+      if (!Number.isFinite(date.getTime())) {
+        return "";
+      }
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function refreshTodoVisibility() {
+      const today = localDateKey(new Date());
+      const now = new Date().toISOString();
+
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (item.checked && !completionTimes[taskId]) {
+          completionTimes[taskId] = now;
+        }
+
+        const completedDay = localDateKey(completionTimes[taskId]);
+        const row = item.closest(".todo-item");
+        if (row) {
+          row.hidden = Boolean(
+            item.checked && completedDay && completedDay < today
+          );
+        }
+      });
+
+      updateTodoProgress();
+    }
+
     function applyTodoState(state, timestamps = {}) {
       todoChecks.forEach((item) => {
         const taskId = item.dataset.taskId;
@@ -2059,7 +2101,7 @@
           );
         }
       });
-      updateTodoProgress();
+      refreshTodoVisibility();
     }
 
     function loadLocalState() {
@@ -2080,7 +2122,7 @@
     }
 
     function saveLocalState(state) {
-      todoChecks.filter((item) => item.isConnected).forEach((item) => {
+      todoChecks.forEach((item) => {
         const taskId = item.dataset.taskId;
         localStorage.setItem(
           `${localKeyPrefix}${taskId}`,
@@ -2103,35 +2145,6 @@
           localStorage.removeItem(`freshman-todo-time-${taskId}`);
         }
       });
-    }
-
-    function removePreviousDayCompletedTasks() {
-      const today = new Date().toLocaleDateString("en-CA");
-      const now = new Date().toISOString();
-
-      todoChecks.forEach((item) => {
-        if (!item.isConnected || !item.checked) {
-          return;
-        }
-
-        const taskId = item.dataset.taskId;
-        if (!completionTimes[taskId]) {
-          completionTimes[taskId] = now;
-          taskUpdatedAt[taskId] = taskUpdatedAt[taskId] || now;
-          return;
-        }
-
-        const completedDay = new Date(
-          completionTimes[taskId]
-        ).toLocaleDateString("en-CA");
-
-        if (completedDay < today) {
-          item.closest(".todo-item")?.remove();
-        }
-      });
-
-      updateTodoProgress();
-      saveLocalState(getTodoState());
     }
 
     async function loadRemoteState() {
@@ -2293,7 +2306,7 @@
       }
 
       applyTodoState(stateToApply, timestampsToApply);
-      removePreviousDayCompletedTasks();
+      refreshTodoVisibility();
       saveLocalState(getTodoState());
 
       return {
@@ -2506,7 +2519,7 @@
 
     (async () => {
       const localState = loadLocalState();
-      removePreviousDayCompletedTasks();
+      refreshTodoVisibility();
       await initCloudSync();
 
       if (cloudEnabled && cloudSession) {
