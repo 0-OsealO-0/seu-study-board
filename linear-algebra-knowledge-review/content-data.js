@@ -990,5 +990,736 @@ window.LINEAR_REVIEW_CHAPTERS = [
         "source": "课件 9，第 6、9 页"
       }
     ]
+  },
+  {
+    "number": "2.1",
+    "title": "n 维向量及其运算",
+    "lead": "把矩阵的一行或一列单独取出来研究，建立向量的语言与线性运算规则，作为向量组的准备。",
+    "map": [
+      "n 维向量",
+      "加法与数乘",
+      "零向量与负向量",
+      "运算性质"
+    ],
+    "entries": [
+      {
+        "id": "la-def-nvector",
+        "type": "definition",
+        "label": "向量 2.1.1",
+        "title": "n 维向量的定义",
+        "statement": [
+          "由 $n$ 个数 $a_1,a_2,\\dots,a_n$ 组成的有序数组称为 $n$ 维向量。写成一行 $(a_1,a_2,\\dots,a_n)$ 时为 $n$ 维行向量；写成一列时为 $n$ 维列向量。"
+        ],
+        "conditions": [
+          "$n$ 个数必须按固定次序排列。",
+          "行向量是 $1\\times n$ 矩阵，列向量是 $n\\times 1$ 矩阵。"
+        ],
+        "conclusion": [
+          "$a_i$ 称为第 $i$ 个分量。",
+          "行向量与列向量统称为 $n$ 维向量，简称向量。"
+        ],
+        "derivation": [
+          "向量的本质是有序数组，几何上可看作点的坐标；行、列两种写法只是同一数组的不同表现形式。",
+          "因为行向量、列向量分别是行矩阵、列矩阵，所以矩阵的线性运算规则可以整体照搬到向量上。"
+        ],
+        "pitfalls": [
+          "把 $(1,2)$ 与 $(2,1)$ 当成同一个向量，忽略分量次序。",
+          "把行向量与列向量直接相加，二者不同型。"
+        ],
+        "source": "课件 11，第 3-5 页"
+      },
+      {
+        "id": "la-formula-vector-add-scalar",
+        "type": "formula",
+        "label": "公式 2.1.2",
+        "title": "向量的加法与数乘",
+        "statement": [
+          "设 $\\alpha=(a_1,\\dots,a_n)$，$\\beta=(b_1,\\dots,b_n)$，$k$ 为数，则 $\\alpha+\\beta=(a_1+b_1,\\dots,a_n+b_n)$，$k\\alpha=(ka_1,\\dots,ka_n)$。"
+        ],
+        "conditions": [
+          "加法要求两个向量维数相同。",
+          "数乘对每个分量同时进行。"
+        ],
+        "conclusion": [
+          "向量的加法与数乘和矩阵的加法、数乘完全一致，都是逐分量运算。"
+        ],
+        "derivation": [
+          "把行向量看作 $1\\times n$ 矩阵、列向量看作 $n\\times 1$ 矩阵，矩阵加法与数乘的定义直接给出上述分量形式。"
+        ],
+        "pitfalls": [
+          "维数不同的向量相加。",
+          "只对第一个分量作数乘。",
+          "把向量加法与内积混淆，误把结果写成一个数。"
+        ],
+        "source": "课件 11，第 6-7 页"
+      },
+      {
+        "id": "la-def-zero-negative-vector",
+        "type": "definition",
+        "label": "向量 2.1.3",
+        "title": "零向量、负向量与向量减法",
+        "statement": [
+          "各分量全为 $0$ 的向量称为零向量，记作 $0$；$\\alpha=(a_1,\\dots,a_n)$ 的负向量为 $-\\alpha=(-a_1,\\dots,-a_n)$，且 $-\\alpha=(-1)\\alpha$。"
+        ],
+        "conditions": [
+          "零向量与负向量都必须与 $\\alpha$ 同维。"
+        ],
+        "conclusion": [
+          "向量减法定义为 $\\alpha-\\beta=\\alpha+(-\\beta)$。",
+          "数 $0$ 与零向量是不同对象，记号相同但含义由上下文决定。"
+        ],
+        "derivation": [
+          "由数乘定义取 $k=-1$ 即得负向量；减法不是新运算，只是加上负向量。"
+        ],
+        "pitfalls": [
+          "把数 $0$ 与零向量 $0$ 混为一谈。",
+          "认为不同维数的零向量相等。"
+        ],
+        "source": "课件 11，第 8 页"
+      },
+      {
+        "id": "la-property-vector-linear-ops",
+        "type": "property",
+        "label": "性质 2.1.4",
+        "title": "n 维向量线性运算的九条性质",
+        "statement": [
+          "设 $\\alpha,\\beta,\\gamma,0$ 均为 $n$ 维向量，$k,l$ 为数，则 (1) $\\alpha+\\beta=\\beta+\\alpha$；(2) $(\\alpha+\\beta)+\\gamma=\\alpha+(\\beta+\\gamma)$；(3) $\\alpha+0=\\alpha$；(4) $\\alpha+(-\\alpha)=0$；(5) $1\\alpha=\\alpha$；(6) $k(l\\alpha)=(kl)\\alpha$；(7) $(k+l)\\alpha=k\\alpha+l\\alpha$；(8) $k(\\alpha+\\beta)=k\\alpha+k\\beta$；(9) $k\\alpha=0$ 当且仅当 $k=0$ 或 $\\alpha=0$。"
+        ],
+        "conditions": [
+          "所有向量必须同维。"
+        ],
+        "conclusion": [
+          "这九条性质与矩阵线性运算性质逐条对应，是后续所有向量推导的代数依据。",
+          "它们说明 $n$ 维向量全体在上述运算下构成一个线性空间。"
+        ],
+        "derivation": [
+          "逐分量使用实数的交换律、结合律和分配律即可验证 (1) 至 (8)。",
+          "第 (9) 条：若 $k\\alpha=0$ 且 $k\\neq0$，则每个分量 $ka_i=0$，得 $a_i=0$，即 $\\alpha=0$。"
+        ],
+        "pitfalls": [
+          "漏掉第 (9) 条的反向：$k=0$ 与 $\\alpha=0$ 都能推出 $k\\alpha=0$，但只有 $k\\ne0$ 时才由 $k\\alpha=0$ 推出 $\\alpha=0$。"
+        ],
+        "source": "课件 11，第 9-10 页"
+      }
+    ]
+  },
+  {
+    "number": "2.2",
+    "title": "向量组的线性表示与秩",
+    "lead": "把若干向量作为一个整体研究：线性组合、线性表示、等价关系与向量组的秩。线性相关性留待下一次课。",
+    "map": [
+      "向量组",
+      "线性组合",
+      "线性表示",
+      "等价关系",
+      "向量组的秩"
+    ],
+    "entries": [
+      {
+        "id": "la-def-vector-group",
+        "type": "definition",
+        "label": "向量组 2.2.1",
+        "title": "向量组与基本单位向量组",
+        "statement": [
+          "若干个同维向量 $\\alpha_1,\\alpha_2,\\dots,\\alpha_s$ 组成一个向量组；$e_1=(1,0,\\dots,0)$，$e_2=(0,1,\\dots,0)$，$\\dots$，$e_n=(0,\\dots,0,1)$ 称为 $n$ 维基本单位向量组。"
+        ],
+        "conditions": [
+          "同一向量组内的向量必须维数相同。"
+        ],
+        "conclusion": [
+          "基本单位向量组恰有 $n$ 个向量，按行排成矩阵或按列排成矩阵都得到单位矩阵 $E_n$。"
+        ],
+        "derivation": [
+          "向量组只是把若干向量作为一个整体讨论，不引入新的运算。",
+          "$e_1,\\dots,e_n$ 的分量结构使它们按任何方式排成分块矩阵都是 $E_n$。"
+        ],
+        "pitfalls": [
+          "把向量组内向量个数误记为 $n$，向量个数一般记作 $s$。"
+        ],
+        "source": "课件 11，第 12 页"
+      },
+      {
+        "id": "la-def-vector-group-block",
+        "type": "definition",
+        "label": "向量组 2.2.2",
+        "title": "向量组与分块矩阵（行向量组、列向量组）",
+        "statement": [
+          "若 $\\alpha_1,\\dots,\\alpha_s$ 为 $n$ 维行向量，以它们为行排成 $s\\times n$ 矩阵 $A$，则称它们为 $A$ 的行向量组；若为 $n$ 维列向量，令 $A=(\\alpha_1,\\dots,\\alpha_s)$ 为 $n\\times s$ 矩阵，则称它们为 $A$ 的列向量组。"
+        ],
+        "conditions": [
+          "行向量组按行排成 $s\\times n$ 矩阵。",
+          "列向量组按列排成 $n\\times s$ 矩阵。"
+        ],
+        "conclusion": [
+          "同一个向量组可以按行或按列写成矩阵，对应矩阵互为转置，秩相同。"
+        ],
+        "derivation": [
+          "分块矩阵按行分块，每一块是一个行向量；按列分块，每一块是一个列向量。"
+        ],
+        "pitfalls": [
+          "把行向量组对应的矩阵形状写成 $n\\times s$。",
+          "在讨论线性表示时混淆 $B=KA$（行）与 $B=AK$（列）。"
+        ],
+        "source": "课件 11，第 13-14 页"
+      },
+      {
+        "id": "la-def-linear-combination",
+        "type": "definition",
+        "label": "向量组 2.2.3",
+        "title": "线性组合与组合系数",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 为同维向量组，$k_1,\\dots,k_s$ 为数，则称 $k_1\\alpha_1+k_2\\alpha_2+\\dots+k_s\\alpha_s$ 为该向量组的一个线性组合，$k_1,\\dots,k_s$ 称为组合系数。"
+        ],
+        "conditions": [
+          "向量组内向量同维，组合系数可以是任意数。"
+        ],
+        "conclusion": [
+          "线性组合的全体构成该向量组张成的集合（生成子空间）。"
+        ],
+        "derivation": [
+          "线性组合只是加法与数乘的反复使用，没有引入新运算。"
+        ],
+        "pitfalls": [
+          "把线性组合与内积混淆。",
+          "忽略组合系数可以全为 $0$，此时线性组合是零向量。"
+        ],
+        "source": "课件 11，第 15-17 页"
+      },
+      {
+        "id": "la-formula-combination-matrix",
+        "type": "formula",
+        "label": "公式 2.2.4",
+        "title": "线性组合的矩阵写法",
+        "statement": [
+          "行向量情形：$k_1\\alpha_1+\\dots+k_s\\alpha_s=(k_1,\\dots,k_s)\\begin{pmatrix}\\alpha_1\\\\\\vdots\\\\\\alpha_s\\end{pmatrix}$；列向量情形：$k_1\\alpha_1+\\dots+k_s\\alpha_s=(\\alpha_1,\\dots,\\alpha_s)\\begin{pmatrix}k_1\\\\\\vdots\\\\k_s\\end{pmatrix}$。"
+        ],
+        "conditions": [
+          "行向量情形系数行写在左边，列向量情形系数列写在右边。"
+        ],
+        "conclusion": [
+          "线性组合可以统一写成矩阵乘积，这是把向量组问题翻译成矩阵问题的关键一步。"
+        ],
+        "derivation": [
+          "由矩阵乘法定义，左边系数的第 $1$ 行与右侧矩阵的各列作内积，得到组合结果的各个分量，即 $\\sum_i k_i a_{ij}$。"
+        ],
+        "pitfalls": [
+          "列向量情形把系数写成行向量，导致乘积维数不匹配。"
+        ],
+        "source": "课件 11，第 15-17 页"
+      },
+      {
+        "id": "la-def-linear-representation",
+        "type": "definition",
+        "label": "向量组 2.2.5",
+        "title": "线性表示",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s,\\beta$ 为同维向量，若存在数 $k_1,\\dots,k_s$ 使 $\\beta=k_1\\alpha_1+\\dots+k_s\\alpha_s$，则称 $\\beta$ 能由向量组 $\\alpha_1,\\dots,\\alpha_s$ 线性表示。"
+        ],
+        "conditions": [
+          "$\\beta$ 与向量组中每个向量必须同维。"
+        ],
+        "conclusion": [
+          "线性表示就是“$\\beta$ 是某个线性组合”。",
+          "零向量总能被任何向量组线性表示，取系数全为 $0$ 即可。"
+        ],
+        "derivation": [
+          "把“存在系数”翻译成方程或矩阵乘法，就得到后面的判别方法。"
+        ],
+        "pitfalls": [
+          "认为线性表示要求组合系数唯一，实际上系数可能不唯一。",
+          "把“能被表示”与“系数全非零”混为一谈。"
+        ],
+        "source": "课件 11，第 18 页"
+      },
+      {
+        "id": "la-property-unit-group",
+        "type": "property",
+        "label": "性质 2.2.6",
+        "title": "任一 n 维向量都能由基本单位向量组线性表示",
+        "statement": [
+          "对任意 $\\alpha=(a_1,a_2,\\dots,a_n)$ 有 $\\alpha=a_1e_1+a_2e_2+\\dots+a_ne_n$，即任何 $n$ 维向量都能由基本单位向量组线性表示，且组合系数恰为它的各个分量。"
+        ],
+        "conditions": [
+          "$e_1,\\dots,e_n$ 必须是 $n$ 维基本单位向量组。"
+        ],
+        "conclusion": [
+          "基本单位向量组可以线性表示全部 $n$ 维向量。"
+        ],
+        "derivation": [
+          "逐分量计算 $a_1e_1+\\dots+a_ne_n$，第 $i$ 个分量只由 $a_ie_i$ 贡献，等于 $a_i$。"
+        ],
+        "pitfalls": [
+          "把系数的顺序与分量的顺序写错。",
+          "只验证列向量情形，忘记行向量情形同样成立。"
+        ],
+        "source": "课件 11，第 19 页"
+      },
+      {
+        "id": "la-theorem-representation-vs-solvable",
+        "type": "theorem",
+        "label": "定理 2.2.7",
+        "title": "线性表示与线性方程组解的关系",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 为 $n$ 维列向量，$A=(\\alpha_1,\\dots,\\alpha_s)$，则 $\\beta$ 能由 $\\alpha_1,\\dots,\\alpha_s$ 线性表示当且仅当线性方程组 $Ax=\\beta$ 有解。"
+        ],
+        "conditions": [
+          "必须是列向量组，$A$ 为 $n\\times s$ 矩阵。"
+        ],
+        "conclusion": [
+          "向量组的线性表示问题与线性方程组解的问题完全等价。"
+        ],
+        "derivation": [
+          "$x_1\\alpha_1+\\dots+x_s\\alpha_s=(\\alpha_1,\\dots,\\alpha_s)\\begin{pmatrix}x_1\\\\\\vdots\\\\x_s\\end{pmatrix}=Ax$，故 $\\beta$ 能被表示等价于 $Ax=\\beta$ 有解。"
+        ],
+        "pitfalls": [
+          "行向量情形不能直接写成 $Ax=\\beta$，需转置或改用 $xA=\\beta$。",
+          "额外要求解唯一，线性表示只要求有解。"
+        ],
+        "source": "课件 11，第 20 页"
+      },
+      {
+        "id": "la-def-group-representation",
+        "type": "definition",
+        "label": "向量组 2.2.8",
+        "title": "向量组之间的线性表示",
+        "statement": [
+          "给定两个同维向量组 I: $\\alpha_1,\\dots,\\alpha_r$ 与 II: $\\beta_1,\\dots,\\beta_s$。若 II 中每个向量都能由 I 中的向量线性表示，则称向量组 II 能由向量组 I 线性表示。"
+        ],
+        "conditions": [
+          "两个向量组的向量必须同维。"
+        ],
+        "conclusion": [
+          "“II 能由 I 表示”是逐向量验证，不要求 I 也能被 II 表示。"
+        ],
+        "derivation": [
+          "每个 $\\beta_j$ 各有一组系数，全部合起来就是一个 $s\\times r$ 的系数矩阵。"
+        ],
+        "pitfalls": [
+          "把单向表示当作等价。",
+          "只验证 II 中的部分向量。"
+        ],
+        "source": "课件 11，第 22-25 页"
+      },
+      {
+        "id": "la-theorem-row-group-ka",
+        "type": "theorem",
+        "label": "定理 2.2.9",
+        "title": "行向量组：系数矩阵在左",
+        "statement": [
+          "设 I: $\\alpha_1,\\dots,\\alpha_r$ 与 II: $\\beta_1,\\dots,\\beta_s$ 为 $n$ 维行向量组，$A,B$ 分别以它们为行。则 II 能由 I 线性表示当且仅当存在 $s\\times r$ 矩阵 $K$ 使 $B=KA$。"
+        ],
+        "conditions": [
+          "行向量组对应“系数矩阵在左”。",
+          "$K$ 的行数等于 II 的向量个数 $s$，列数等于 I 的向量个数 $r$。"
+        ],
+        "conclusion": [
+          "行向量组的线性表示等价于左乘系数矩阵。"
+        ],
+        "derivation": [
+          "$\\beta_i=k_{i1}\\alpha_1+\\dots+k_{ir}\\alpha_r=(k_{i1},\\dots,k_{ir})A$：把 $s$ 个这样的等式按行堆叠即得 $B=KA$。"
+        ],
+        "pitfalls": [
+          "把 $K$ 写成 $r\\times s$。",
+          "写成 $B=AK$，那是列向量组的公式。"
+        ],
+        "source": "课件 11，第 26-34 页"
+      },
+      {
+        "id": "la-theorem-column-group-ak",
+        "type": "theorem",
+        "label": "定理 2.2.10",
+        "title": "列向量组：系数矩阵在右",
+        "statement": [
+          "设 I: $\\alpha_1,\\dots,\\alpha_r$ 与 II: $\\beta_1,\\dots,\\beta_s$ 为 $n$ 维列向量组，$A=(\\alpha_1,\\dots,\\alpha_r)$，$B=(\\beta_1,\\dots,\\beta_s)$。则 II 能由 I 线性表示当且仅当存在 $r\\times s$ 矩阵 $K$ 使 $B=AK$。"
+        ],
+        "conditions": [
+          "列向量组对应“系数矩阵在右”。",
+          "$K$ 的列数等于 II 的向量个数 $s$，行数等于 I 的向量个数 $r$。"
+        ],
+        "conclusion": [
+          "列向量组的线性表示等价于右乘系数矩阵。"
+        ],
+        "derivation": [
+          "$\\beta_j=k_{1j}\\alpha_1+\\dots+k_{rj}\\alpha_r=A\\begin{pmatrix}k_{1j}\\\\\\vdots\\\\k_{rj}\\end{pmatrix}$，把 $j=1,\\dots,s$ 按列拼起来得 $B=AK$。"
+        ],
+        "pitfalls": [
+          "把 $K$ 写成 $s\\times r$。",
+          "沿用行向量公式写成 $B=KA$。"
+        ],
+        "source": "课件 11，第 35-45 页"
+      },
+      {
+        "id": "la-property-product-group-representation",
+        "type": "property",
+        "label": "性质 2.2.11",
+        "title": "矩阵乘积与向量组的线性表示",
+        "statement": [
+          "设 $C_{m\\times n}=A_{m\\times s}B_{s\\times n}$，则 $C$ 的行向量组能由 $B$ 的行向量组线性表示，系数矩阵为 $A$；$C$ 的列向量组能由 $A$ 的列向量组线性表示，系数矩阵为 $B$。"
+        ],
+        "conditions": [
+          "$A$ 的列数等于 $B$ 的行数，乘积才有意义。"
+        ],
+        "conclusion": [
+          "矩阵乘法可以读作“行向量组的线性表示”或“列向量组的线性表示”。",
+          "于是 $r(C)\\le r(B)$ 与 $r(C)\\le r(A)$，即 $r(AB)\\le\\min\\{r(A),r(B)\\}$。"
+        ],
+        "derivation": [
+          "按分块乘法，$C$ 的第 $i$ 行等于 $A$ 的第 $i$ 行左乘 $B$，即 $B$ 各行向量以该行为系数的组合。",
+          "同理 $C$ 的第 $j$ 列等于 $A$ 右乘 $B$ 的第 $j$ 列。"
+        ],
+        "pitfalls": [
+          "把“行向量组由 $B$ 表示”误记成“由 $A$ 表示”。"
+        ],
+        "source": "课件 11，第 46-47 页"
+      },
+      {
+        "id": "la-theorem-representation-transitive",
+        "type": "theorem",
+        "label": "定理 2.2.12",
+        "title": "线性表示的传递性",
+        "statement": [
+          "若向量组 II 能由 I 线性表示，且 III 能由 II 线性表示，则 III 能由 I 线性表示。"
+        ],
+        "conditions": [
+          "三个向量组同维，且表示关系依次衔接。"
+        ],
+        "conclusion": [
+          "“能被线性表示”是传递关系。"
+        ],
+        "derivation": [
+          "以列向量组为例：存在 $K$ 使 $B=AK$，存在 $L$ 使 $C=BL$，于是 $C=(AK)L=A(KL)$，系数矩阵为 $KL$。",
+          "行向量组情形对偶：$C=LB=L(KA)=(LK)A$。"
+        ],
+        "pitfalls": [
+          "默认系数矩阵相乘可交换。",
+          "只写结论而不给出组合系数矩阵。"
+        ],
+        "source": "课件 11，第 48-53 页"
+      },
+      {
+        "id": "la-def-group-equivalence",
+        "type": "definition",
+        "label": "向量组 2.2.13",
+        "title": "向量组的等价",
+        "statement": [
+          "若向量组 I 与 II 能相互线性表示，则称向量组 I 与 II 等价。"
+        ],
+        "conditions": [
+          "两个向量组同维。",
+          "必须两个方向都能表示。"
+        ],
+        "conclusion": [
+          "等价意味着两个向量组互相张成同一个集合。"
+        ],
+        "derivation": [
+          "等价 = II 能由 I 表示 且 I 能由 II 表示。"
+        ],
+        "pitfalls": [
+          "只验证一个方向就断言等价。"
+        ],
+        "source": "课件 11，第 57 页"
+      },
+      {
+        "id": "la-example-equivalent-different-size",
+        "type": "example",
+        "label": "例 2.2.14",
+        "title": "等价向量组所含向量个数未必相等",
+        "statement": [
+          "取 I: $\\alpha_1=(1,1)$，$\\alpha_2=(1,-1)$，$\\alpha_3=(2,1)$；II: $\\beta_1=(1,0)$，$\\beta_2=(1,2)$。则 I 与 II 等价，但 I 有 $3$ 个向量而 II 只有 $2$ 个。"
+        ],
+        "conditions": [
+          "两组向量都是 $2$ 维行向量。"
+        ],
+        "conclusion": [
+          "等价不要求两个向量组所含向量个数相同。"
+        ],
+        "derivation": [
+          "$\\beta_1=\\frac12\\alpha_1+\\frac12\\alpha_2$，$\\beta_2=\\frac32\\alpha_1-\\frac12\\alpha_2$，故 II 能由 I 线性表示。",
+          "$\\alpha_1=\\frac12\\beta_1+\\frac12\\beta_2$，$\\alpha_2=\\frac32\\beta_1-\\frac12\\beta_2$，$\\alpha_3=\\frac32\\beta_1+\\frac12\\beta_2$，故 I 也能由 II 线性表示。"
+        ],
+        "pitfalls": [
+          "误以为等价的两组向量必须一一对应、个数相同。"
+        ],
+        "source": "课件 11，第 58 页"
+      },
+      {
+        "id": "la-property-equivalence-relation",
+        "type": "property",
+        "label": "性质 2.2.15",
+        "title": "向量组等价的三条性质",
+        "statement": [
+          "向量组之间的等价关系满足：反身性（I 与自身等价）；对称性（I 与 II 等价则 II 与 I 等价）；传递性（I 与 II 等价且 II 与 III 等价，则 I 与 III 等价）。"
+        ],
+        "conditions": [
+          "三个向量组同维。"
+        ],
+        "conclusion": [
+          "等价是等价关系，可以按等价类讨论向量组。"
+        ],
+        "derivation": [
+          "反身性取系数矩阵为 $E$；对称性来自等价定义本身是双向的；传递性由线性表示的传递性得到。"
+        ],
+        "pitfalls": [
+          "把矩阵等价的三条性质与向量组等价的三条性质混为一谈：形式相同但对象不同。"
+        ],
+        "source": "课件 11，第 59-60 页"
+      },
+      {
+        "id": "la-theorem-equivalence-rank-standard-form",
+        "type": "theorem",
+        "label": "定理 2.2.16",
+        "title": "等价向量组秩相等与等价标准形",
+        "statement": [
+          "设 I、II 为 $n$ 维行向量组，向量个数分别为 $s$ 与 $t$，$A,B$ 分别以它们为行。若 I 与 II 等价，则存在 $s\\times t$ 矩阵 $K$ 与 $t\\times s$ 矩阵 $L$ 使 $B=KA$、$A=LB$，从而 $r(A)=r(B)$；当 $s=t$ 时 $K,L$ 为可逆方阵，$A$ 与 $B$ 有相同的等价标准形，即 $A$ 与 $B$ 等价。"
+        ],
+        "conditions": [
+          "行向量组写成 $B=KA$；列向量组写成 $B=AK$。",
+          "$s=t$ 是 $K,L$ 为同阶方阵并可逆的前提。"
+        ],
+        "conclusion": [
+          "等价推出秩相等；若两组向量个数还相等，则对应矩阵也等价。"
+        ],
+        "derivation": [
+          "$B=KA$ 给出 $r(B)\\le r(A)$，$A=LB$ 给出 $r(A)\\le r(B)$，故秩相等。",
+          "秩相等且 $s=t$ 时两个矩阵的行阶梯形非零行数相同，等价标准形都是 $\\begin{pmatrix}E_r&O\\\\O&O\\end{pmatrix}$，故矩阵等价。"
+        ],
+        "pitfalls": [
+          "把“两组向量个数相同”当成等价的必要条件，它只是附加条件。",
+          "列向量组情形忘记把系数矩阵写到右边。"
+        ],
+        "source": "课件 11，第 67-68 页"
+      },
+      {
+        "id": "la-theorem-elementary-transform-group-equivalence",
+        "type": "theorem",
+        "label": "定理 2.2.17",
+        "title": "初等变换与向量组等价",
+        "statement": [
+          "对矩阵 $A$ 作一次初等行变换相当于在左边乘一个初等矩阵，所以 $B=PA$（$P$ 可逆）意味着 $A$ 与 $B$ 的行向量组等价；作一次初等列变换相当于在右边乘一个初等矩阵，所以 $B=AQ$ 意味着 $A$ 与 $B$ 的列向量组等价。"
+        ],
+        "conditions": [
+          "行变换只保证行向量组等价，列变换只保证列向量组等价。",
+          "初等矩阵可逆，因此表示是双向的。"
+        ],
+        "conclusion": [
+          "初等行变换保持行向量组等价，初等列变换保持列向量组等价。"
+        ],
+        "derivation": [
+          "$B=PA$ 中把 $P$ 看作系数矩阵，就是 $B$ 的行向量组能由 $A$ 的行向量组线性表示；又 $A=P^{-1}B$ 给出反方向。"
+        ],
+        "pitfalls": [
+          "认为初等行变换也保持列向量组等价，这是错误的。"
+        ],
+        "source": "课件 11，第 62-63 页"
+      },
+      {
+        "id": "la-pitfall-matrix-equivalence-not-group",
+        "type": "pitfall",
+        "label": "易错点 2.2.18",
+        "title": "矩阵等价不蕴含向量组等价",
+        "statement": [
+          "矩阵等价（存在可逆 $P,Q$ 使 $B=PAQ$）只保证秩相等，它既不保证行向量组等价，也不保证列向量组等价。例如 $M=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ 与 $N=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$ 秩都为 $1$ 故等价，但两者的行向量组不等价，列向量组也不等价。"
+        ],
+        "conditions": [
+          "矩阵等价允许左右同时乘可逆矩阵；向量组等价只允许单侧乘系数矩阵。"
+        ],
+        "conclusion": [
+          "秩相等 $\\Leftrightarrow$ 矩阵等价；行（列）向量组等价 $\\Rightarrow$ 秩相等，但反向不成立。"
+        ],
+        "derivation": [
+          "若 $M$ 与 $N$ 的行向量组等价，应存在 $K$ 使 $N=KM$，但 $KM=\\begin{pmatrix}a&0\\\\c&0\\end{pmatrix}$ 的第二列恒为零，无法等于 $N$。",
+          "同理 $MK=\\begin{pmatrix}a&b\\\\0&0\\end{pmatrix}$ 的第二行恒为零，列向量组也不等价。"
+        ],
+        "pitfalls": [
+          "看到秩相等就断言两个向量组等价。",
+          "把“矩阵等价”当成比“向量组等价”更强的结论。"
+        ],
+        "source": "课件 11，第 65-66 页"
+      },
+      {
+        "id": "la-def-vector-group-rank",
+        "type": "definition",
+        "label": "定义 2.2.19",
+        "title": "向量组的秩",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 为 $n$ 维向量组。把它们按行排成矩阵 $A$（或按列排成矩阵 $A$），则向量组的秩定义为该矩阵的秩，记作 $r\\{\\alpha_1,\\dots,\\alpha_s\\}$ 或 $\\operatorname{rank}\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "conditions": [
+          "行向量组排成 $s\\times n$ 矩阵，列向量组排成 $n\\times s$ 矩阵，二者互为转置，秩相同。"
+        ],
+        "conclusion": [
+          "向量组的秩就是矩阵的秩的另一种说法，把向量组问题转化为矩阵问题。"
+        ],
+        "derivation": [
+          "把向量组写成矩阵后，矩阵的行秩（或列秩）就是向量组的秩。"
+        ],
+        "pitfalls": [
+          "把向量组的秩与向量个数混为一谈：秩不超过向量个数。",
+          "把行向量组与列向量组算成两个不同的秩。"
+        ],
+        "source": "课件 11，第 72-73 页"
+      },
+      {
+        "id": "la-method-compute-group-rank",
+        "type": "method",
+        "label": "方法 2.2.20",
+        "title": "计算向量组的秩",
+        "statement": [
+          "把向量组按行（或按列）排成矩阵 $A$，用初等变换化为行阶梯形，非零行数即为秩；也可用最高阶非零子式判断秩。"
+        ],
+        "conditions": [
+          "初等变换不改变矩阵的秩。",
+          "行向量组按行排，列向量组按列排，保持“向量是行还是列”的一致性。"
+        ],
+        "conclusion": [
+          "向量组的秩 = 对应矩阵的秩 = 行阶梯形非零行数 = 最高阶非零子式的阶数。"
+        ],
+        "derivation": [
+          "初等变换保秩，化到行阶梯形后数非零行即可。"
+        ],
+        "pitfalls": [
+          "阶梯形没化到底就数行数。",
+          "构造矩阵时把行向量组按列排，虽秩相同但后续表示关系全错。"
+        ],
+        "source": "课件 11，第 74-77 页"
+      },
+      {
+        "id": "la-example-group-rank-two-dim",
+        "type": "example",
+        "label": "例 2.2.21",
+        "title": "求秩：三个 2 维行向量",
+        "statement": [
+          "求 $\\alpha_1=(1,1)$，$\\alpha_2=(1,-1)$，$\\alpha_3=(2,1)$ 的秩。"
+        ],
+        "conditions": [
+          "按行排成 $3\\times2$ 矩阵 $A$。"
+        ],
+        "conclusion": [
+          "$r\\{\\alpha_1,\\alpha_2,\\alpha_3\\}=r(A)=2$。"
+        ],
+        "derivation": [
+          "$A=\\begin{pmatrix}1&1\\\\1&-1\\\\2&1\\end{pmatrix}$，二阶子式 $\\begin{vmatrix}1&1\\\\1&-1\\end{vmatrix}=-2\\neq0$，故 $r(A)\\ge2$。",
+          "又 $A$ 只有 $2$ 列，$r(A)\\le2$，故 $r(A)=2$。"
+        ],
+        "pitfalls": [
+          "以为 $3$ 个向量秩就一定是 $3$，忽略矩阵只有 $2$ 列。"
+        ],
+        "source": "课件 11，第 74-75 页"
+      },
+      {
+        "id": "la-example-group-rank-columns",
+        "type": "example",
+        "label": "例 2.2.22",
+        "title": "求秩：三个 3 维列向量",
+        "statement": [
+          "求 $\\alpha_1=(3,5,7)^T$，$\\alpha_2=(0,0,0)^T$，$\\alpha_3=(5,9,4)^T$ 的秩。"
+        ],
+        "conditions": [
+          "按列排成 $3\\times3$ 矩阵 $A=(\\alpha_1,\\alpha_2,\\alpha_3)$。"
+        ],
+        "conclusion": [
+          "$r\\{\\alpha_1,\\alpha_2,\\alpha_3\\}=2$。"
+        ],
+        "derivation": [
+          "二阶子式 $\\begin{vmatrix}3&5\\\\5&9\\end{vmatrix}=27-25=2\\neq0$，故 $r(A)\\ge2$。",
+          "三阶子式只有 $|A|$，而 $A$ 含零列，$|A|=0$，故 $r(A)\\le2$，于是 $r(A)=2$。"
+        ],
+        "pitfalls": [
+          "把 $|A|=0$ 直接当作 $r(A)=0$。"
+        ],
+        "source": "课件 11，第 76-77 页"
+      },
+      {
+        "id": "la-example-group-rank-parameters",
+        "type": "example",
+        "label": "例 2.2.23",
+        "title": "含参向量组的秩",
+        "statement": [
+          "已知 $\\alpha_1=(a,3,1)^T$，$\\alpha_2=(1,b,2)^T$，$\\alpha_3=(2,3,1)^T$，$\\alpha_4=(1,1,0)^T$ 的秩为 $2$，求 $a,b$。"
+        ],
+        "conditions": [
+          "按列排成矩阵后作初等行变换化为阶梯形。"
+        ],
+        "conclusion": [
+          "$a=2$，$b=3$。"
+        ],
+        "derivation": [
+          "$A=(\\alpha_1,\\alpha_2,\\alpha_3,\\alpha_4)=\\begin{pmatrix}a&1&2&1\\\\3&b&3&1\\\\1&2&1&0\\end{pmatrix}\\to\\begin{pmatrix}1&2&1&0\\\\0&b-6&0&1\\\\0&1-2a&2-a&1\\end{pmatrix}$。",
+          "秩为 $2$ 要求第三行是第一行的倍数：由第三列得 $2-a=0$，再由第二列得 $1-2a=b-6$，代入得 $a=2$，$b=3$。"
+        ],
+        "pitfalls": [
+          "把“秩为 $2$”读成“有两个非零行”就直接作答，忘记回代检验。",
+          "只令一个参数为零就停手。"
+        ],
+        "source": "课件 11，第 78 页"
+      },
+      {
+        "id": "la-theorem-representation-rank-inequality",
+        "type": "theorem",
+        "label": "定理 2.2.24",
+        "title": "线性表示与秩的大小关系",
+        "statement": [
+          "若向量组 II: $\\beta_1,\\dots,\\beta_t$ 能由向量组 I: $\\alpha_1,\\dots,\\alpha_s$ 线性表示，则 $r\\{\\beta_1,\\dots,\\beta_t\\}\\le r\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "conditions": [
+          "两个向量组同维。"
+        ],
+        "conclusion": [
+          "能被表示的一方秩不会更大，即 $r(II)\\le r(I)$：表示关系具有“秩不增”的方向。"
+        ],
+        "derivation": [
+          "以列向量为例，令 $A=(\\alpha_1,\\dots,\\alpha_s)$，$B=(\\beta_1,\\dots,\\beta_t)$，由 II 能由 I 表示知存在 $K$ 使 $B=AK$。",
+          "由 $r(B)=r(AK)\\le r(A)$ 即得结论。"
+        ],
+        "pitfalls": [
+          "把方向记反，写成 $r(I)\\le r(II)$。"
+        ],
+        "source": "课件 11，第 80-82 页"
+      },
+      {
+        "id": "la-corollary-equivalence-equal-rank",
+        "type": "corollary",
+        "label": "推论 2.2.25",
+        "title": "等价的向量组秩相等",
+        "statement": [
+          "若向量组 I 与 II 等价，则 $r(I)=r(II)$。"
+        ],
+        "conditions": [
+          "两个向量组同维且能相互线性表示。"
+        ],
+        "conclusion": [
+          "秩是向量组等价的不变量，是等价的必要条件。"
+        ],
+        "derivation": [
+          "I 与 II 等价给出 $r(II)\\le r(I)$ 与 $r(I)\\le r(II)$，两边夹逼得相等。"
+        ],
+        "pitfalls": [
+          "把它误当作充要条件。"
+        ],
+        "source": "课件 11，第 83 页"
+      },
+      {
+        "id": "la-pitfall-equal-rank-not-equivalent",
+        "type": "pitfall",
+        "label": "易错点 2.2.26",
+        "title": "秩相等不蕴含向量组等价",
+        "statement": [
+          "$r(I)=r(II)$ 不能推出 I 与 II 等价。例如 $\\alpha_1=(1,0,0)^T$，$\\alpha_2=(0,1,0)^T$；$\\beta_1=(0,1,0)^T$，$\\beta_2=(0,0,1)^T$，则 $r\\{\\alpha_1,\\alpha_2\\}=r\\{\\beta_1,\\beta_2\\}=2$，但 $\\beta_2$ 不能由 $\\alpha_1,\\alpha_2$ 线性表示，故两组不等价。"
+        ],
+        "conditions": [
+          "两组向量个数可以相同，秩也可以相同。"
+        ],
+        "conclusion": [
+          "等价 $\\Rightarrow$ 秩相等；秩相等 $\\nRightarrow$ 等价。"
+        ],
+        "derivation": [
+          "若 $\\beta_2=k_1\\alpha_1+k_2\\alpha_2=(k_1,k_2,0)^T$，第三个分量必为 $0$，而 $\\beta_2=(0,0,1)^T$，矛盾。"
+        ],
+        "pitfalls": [
+          "把“秩相等”当成判定等价的充分条件。"
+        ],
+        "source": "课件 11，第 84 页"
+      }
+    ]
   }
 ];

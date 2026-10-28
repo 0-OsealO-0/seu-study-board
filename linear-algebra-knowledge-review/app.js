@@ -44,6 +44,18 @@
       title: "矩阵的秩",
       lead: "子式定义、秩的性质、初等变换不变量、等价标准形、含参讨论与矩阵秩的不等式。",
       map: ["k 阶子式", "秩的定义", "初等变换", "等价标准形", "含参讨论", "秩不等式"]
+    },
+    {
+      number: "2.1",
+      title: "n 维向量及其运算",
+      lead: "向量定义、加法与数乘、零向量与负向量、九条运算性质。",
+      map: ["n 维向量", "加法与数乘", "零向量与负向量", "运算性质"]
+    },
+    {
+      number: "2.2",
+      title: "向量组的线性表示与秩",
+      lead: "向量组与分块矩阵、线性组合、线性表示、等价关系、初等变换与向量组的秩。线性相关性留待下次课。",
+      map: ["向量组", "线性组合", "线性表示", "等价关系", "向量组的秩"]
     }
   ];
   const allSourceEntries = sourceChapters.flatMap((chapter) => chapter.entries || []);
@@ -319,7 +331,8 @@
     section.dataset.chapter = chapter.number;
 
     const header = createElement("header", "chapter-header");
-    const eyebrow = createElement("p", "chapter-eyebrow", `第 1 章 / §${chapter.number}`);
+    const chapterNo = chapter.number.split(".")[0];
+    const eyebrow = createElement("p", "chapter-eyebrow", `第 ${chapterNo} 章 / §${chapter.number}`);
     const title = createElement("h2", "chapter-title", chapter.title);
     const lead = createElement("p", "chapter-lead");
     appendMathText(lead, chapter.lead);

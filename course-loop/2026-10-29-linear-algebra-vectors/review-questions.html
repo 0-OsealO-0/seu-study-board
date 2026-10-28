@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线性代数 课后复习题</title>
+  <style>
+    :root { --bg:#f4f6f8; --surface:#fff; --text:#18212b; --muted:#5f6b76; --line:#d9e0e6; --blue:#1769aa; --amber:#9a6500; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.65; }
+    .page { width:min(900px,calc(100% - 32px)); margin:0 auto; padding:28px 0 48px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    .subtitle,.meta { color:var(--muted); }
+    .notice { margin:20px 0; padding:14px 16px; border-left:4px solid var(--amber); background:#fbf0d5; border-radius:5px; }
+    ol { margin:0; padding:18px 18px 8px 46px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+    li { margin-bottom:16px; }
+    @media (max-width:620px) { .page { width:min(100% - 20px,900px); padding-top:18px; } h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>线性代数 课后复习题</h1>
+    <p class="subtitle">2026-10-29 课堂内容。先独立作答，不查课件或答案。</p>
+    <p class="meta">共 12 题</p>
+    <div class="notice">先独立作答，不查课件或答案。涉及线性表示时写清系数矩阵的位置与形状；求秩题必须写出判定依据（子式或阶梯形）。</div>
+    <ol><li id="q1">写出 n 维向量、n 维行向量与 n 维列向量的定义，并说明它们分别对应什么形状的矩阵；向量的分量指什么？</li>
+<li id="q2">写出向量加法与数乘的分量定义，并写出零向量、负向量，以及负向量与数乘的关系。</li>
+<li id="q3">叙述 n 维向量线性运算的九条性质，并特别说明第 (9) 条的完整含义：kα=0 能推出什么，反向是否成立。</li>
+<li id="q4">区分线性组合、组合系数与线性表示三个概念，并写出线性组合的矩阵写法（行向量与列向量两种情形）。</li>
+<li id="q5">设 α1,…,αs 为 n 维列向量，A=(α1,…,αs)。说明 β 能由该向量组线性表示与 Ax=β 有解为什么等价，并写出推导。</li>
+<li id="q6">向量组 II 能由向量组 I 线性表示时，行向量组情形与列向量组情形分别得到什么矩阵等式？系数矩阵的形状以及在 A 的左边还是右边？</li>
+<li id="q7">叙述向量组等价的定义与三条性质，并说明初等行变换、初等列变换分别保持哪一组向量等价。</li>
+<li id="q8">设 α1=(1,0,1)^T，α2=(0,1,1)^T，α3=(1,1,2)^T，β=(1,2,3)^T。判断 β 能否由 α1,α2,α3 线性表示；若能，写出全部组合系数，并说明解的个数。</li>
+<li id="q9">设向量组 II: β1,…,βt 能由向量组 I: α1,…,αs 线性表示，证明 r{β1,…,βt}≤r{α1,…,αs}。要求用列向量情形写出系数矩阵与秩的推导。</li>
+<li id="q10">求向量组 α1=(1,2,1)，α2=(2,1,-1)，α3=(4,5,1) 的秩，并指出用了哪个子式或哪一步行变换。</li>
+<li id="q11">已知 α1=(1,2,1)^T，α2=(1,1,0)^T，α3=(2,3,k)^T 的秩为 2，求 k 的值并说明理由。</li>
+<li id="q12">取 M=[[1,0],[0,0]]，N=[[0,0],[0,1]]。说明为什么 M 与 N 作为矩阵等价，但它们的行向量组不等价、列向量组也不等价，并指出初等行变换与初等列变换各自保持哪一组向量等价。</li></ol>
+  </main>
+</body>
+</html>
