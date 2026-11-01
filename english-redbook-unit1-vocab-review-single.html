@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>红书 Unit 1 · The allure of modern Spring Festival</title>
+<meta name="description" content="自学教材 Unit 1 词表 37 词与 4 条表达，附 Unit 5 词汇练习。">
+<style>
+:root{
+  --ink:#1c2a23; --muted:#66776d; --paper:#f6f4ee; --card:#fffdf8;
+  --line:#e2dccd; --green:#1f6b4a; --green-d:#124430; --green-l:#e9f2ec;
+  --gold:#a8762a; --red:#a5432f; --shadow:0 1px 2px rgba(28,42,35,.05),0 10px 26px rgba(28,42,35,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 72px}
+header.hero{background:linear-gradient(135deg,#124430 0%,#1f6b4a 58%,#2c8a5f 100%);
+  color:#f4f8f4;padding:46px 0 40px;margin-bottom:26px}
+header.hero .wrap{padding-bottom:0}
+.kicker{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;opacity:.78;margin:0 0 10px}
+header.hero h1{margin:0;font-size:34px;line-height:1.25;font-weight:650;letter-spacing:.01em}
+header.hero .sub{margin:10px 0 0;font-size:15px;opacity:.85;max-width:760px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;padding:0;list-style:none}
+.stats li{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;padding:8px 13px;font-size:13px;letter-spacing:.02em}
+.stats b{font-size:16px;font-weight:700;margin-right:4px}
+.toolbar{position:sticky;top:0;z-index:30;background:rgba(246,244,238,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 0;margin-bottom:24px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
+  padding:7px 14px;font-size:13.5px;cursor:pointer;transition:.16s}
+.tab:hover{border-color:var(--green);color:var(--green)}
+.tab.active{background:var(--green);border-color:var(--green);color:#fff}
+input.search{flex:1 1 220px;min-width:180px;border:1px solid var(--line);border-radius:999px;
+  padding:9px 16px;font-size:14px;background:#fff;color:var(--ink);outline:none}
+input.search:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-l)}
+.section{margin:0 0 40px}
+.section > h2{font-size:19px;margin:0 0 4px;letter-spacing:.01em;display:flex;align-items:baseline;gap:10px}
+.section > h2 .cn{font-size:12.5px;font-weight:400;color:var(--muted);letter-spacing:.14em}
+.section > .lead{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+h3.group{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);
+  margin:26px 0 12px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(292px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  box-shadow:var(--shadow);transition:.18s}
+.card:hover{transform:translateY(-2px);border-color:#cfd8cf}
+.card .w{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card .w b{font-size:18px;letter-spacing:.01em}
+.card .ipa{color:var(--muted);font-size:12.5px;font-family:"Cambria","Times New Roman",serif}
+.card .pos{font-size:11.5px;color:var(--green);background:var(--green-l);
+  border-radius:5px;padding:1px 6px;font-style:italic}
+.card .def{font-size:13.5px;margin:8px 0 0;color:#33453c}
+.card .zh{font-size:13px;color:var(--muted);margin:6px 0 0}
+.card .ex{font-size:12.5px;margin:8px 0 0;padding-left:11px;border-left:2px solid var(--green-l);color:#3d4f45}
+.card .ex i{color:var(--muted);font-style:normal;display:block;margin-top:2px}
+.card .collos{font-size:12px;color:var(--gold);margin-top:8px}
+.tag{font-size:11px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);
+  border-radius:4px;padding:0 5px}
+.lp{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--green);
+  border-radius:12px;padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.lp .lp-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.lp .lp-h .num{font-size:12px;letter-spacing:.16em;color:var(--gold);font-weight:700}
+.lp .lp-h .name{font-size:15.5px;font-weight:650}
+.lp .lp-h .loc{font-size:12px;color:var(--muted)}
+.lp .sent{font-family:"Cambria","Georgia",serif;font-size:15px;background:var(--green-l);
+  border-radius:8px;padding:10px 13px;margin:0 0 10px;color:#22392c}
+.lp .note{font-size:13.5px;color:#374a40;margin:0}
+.lp .note p{margin:0 0 6px}
+.lp .note p:last-child{margin-bottom:0}
+.lp .eg{font-size:12.8px;color:var(--muted);margin:8px 0 0}
+.lp .eg b{color:#374a40;font-weight:600}
+.para{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
+.para .p-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.para .p-h .badge{background:var(--green);color:#fff;font-size:11.5px;letter-spacing:.1em;
+  border-radius:5px;padding:2px 8px}
+.para .p-h .cap{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.para p{margin:0 0 8px;font-size:14.4px;line-height:1.95;text-indent:2em;color:#2d4037}
+.para p:last-child{margin-bottom:0}
+.pn{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pn div{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px 13px}
+.pn .pn-en{display:block;font-size:13.8px;font-weight:600;color:#2b3d33;line-height:1.4}
+.pn .pn-zh{display:block;color:var(--muted);font-size:12.6px;margin-top:3px;line-height:1.5}
+.pp{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:9px 13px;
+  display:flex;justify-content:space-between;gap:12px;font-size:13.4px}
+.pp span:first-child{color:#2b3d33}
+.pp span:last-child{color:var(--muted);font-size:12.8px;text-align:right}
+.practice-box{background:linear-gradient(135deg,#173d2c,#245c42);color:#eef5ee;
+  border-radius:16px;padding:24px 26px;display:flex;flex-wrap:wrap;gap:18px;
+  align-items:center;justify-content:space-between;box-shadow:var(--shadow)}
+.practice-box h3{margin:0 0 6px;font-size:19px}
+.practice-box p{margin:0;font-size:13.5px;opacity:.85;max-width:620px}
+.btn{display:inline-block;background:#f6f1e6;color:#173d2c;border-radius:10px;
+  padding:11px 20px;font-size:14px;font-weight:650;white-space:nowrap}
+.btn:hover{text-decoration:none;background:#fff}
+.btn.ghost{background:transparent;color:#eef5ee;border:1px solid rgba(255,255,255,.45)}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+footer.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:14px;display:none}
+
+/* practice */
+.quiz{max-width:900px;margin:0 auto}
+.q{background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:16px 19px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q .q-h{font-size:12px;letter-spacing:.14em;color:var(--gold);margin-bottom:6px;font-weight:700}
+.q .stem{font-size:14.6px;margin:0 0 12px;color:#26382e;line-height:1.7}
+.q .stem em{font-style:normal;border-bottom:1.5px solid var(--green);padding:0 2px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.opt{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font-size:13.8px;cursor:pointer;background:#fff;transition:.14s}
+.opt:hover{border-color:#bfd0c4;background:#fbfdfa}
+.opt input{margin:3px 0 0;accent-color:var(--green)}
+.opt .lt{color:var(--muted);font-weight:700;font-size:12.5px}
+.opt.right{border-color:#2f8a5f;background:#eef8f1}
+.opt.wrong{border-color:#c26a52;background:#fdf0ec}
+.blank{border:none;border-bottom:1.6px solid var(--green);background:transparent;
+  font-size:14px;min-width:150px;padding:2px 6px;color:var(--ink);outline:none;font-family:inherit}
+.blank:focus{background:var(--green-l)}
+.blank.right{border-color:#2f8a5f;color:#1d6b46;font-weight:600}
+.blank.wrong{border-color:#c26a52;color:#a5432f}
+.ansline{font-size:12.8px;color:#1d6b46;margin-top:8px;display:none}
+.q.revealed .ansline{display:block}
+.qmsg{margin-top:8px;font-size:12.8px;display:none}
+.qmsg.show{display:block}
+.qmsg.ok{color:#1d6b46}.qmsg.no{color:#a5432f}
+.scorebar{position:sticky;top:0;z-index:20;background:rgba(246,244,238,.95);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:22px}
+.scorebar .inner{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;
+  align-items:center;justify-content:space-between}
+.scorebar .sc{font-size:14px;color:var(--muted)}
+.scorebar .sc b{font-size:20px;color:var(--green)}
+.hint{font-size:12.6px;color:var(--muted);margin:0 0 18px}
+@media (max-width:640px){
+  header.hero h1{font-size:26px}
+  .wrap{padding:0 16px 56px}
+  .grid{grid-template-columns:1fr}
+  .pn{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Red Book · Unit 1</p>
+    <h1>红书 Unit 1 · The allure of modern Spring Festival</h1>
+    <p class="sub">自学教材第 24–25 页 New words 与 Expressions，独立成册；Unit 5 词汇练习另设练习页。</p>
+    <ul class="stats"><li><b>37</b>词汇</li><li><b>4</b>表达</li><li><b>10</b>选择题</li><li><b>8</b>填空题</li></ul>
+  </div>
+</header>
+<div class="wrap">
+<div class="toolbar">
+  <div class="tabs"><button class="tab active" data-tab="all">全部</button><button class="tab" data-tab="vocabulary">词汇</button><button class="tab" data-tab="phrase">短语</button><button class="tab" data-tab="proper">专名</button><button class="tab" data-tab="language">语言点</button><button class="tab" data-tab="translation">译文</button><button class="tab" data-tab="practice">练习</button></div>
+  <input class="search" id="q" type="search" placeholder="搜索本单元单词或表达…">
+</div>
+
+<section class="section" id="sec-vocabulary">
+  <h2>New words <span class="cn">VOCABULARY · 37</span></h2>
+  <p class="lead">按课本第 24–25 页顺序；p.24 / p.25 标注所在页码，方便对照纸书。</p>
+  <div class="grid"><article class="card" data-kind="vocabulary" data-search="abundance"><div class="w"><b>abundance</b><span class='ipa'>/əˈbʌndəns/</span><span class="pos">n. [sing., U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a large quantity of sth</p><p class="zh">充裕；丰富</p></article><article class="card" data-kind="vocabulary" data-search="aisle"><div class="w"><b>aisle</b><span class='ipa'>/aɪl/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a long passage between rows of seats in a plane, theatre, etc., or between rows of shelves in a shop</p><p class="zh">（飞机上或剧院两排座位间或商店货架间的）通道，过道</p></article><article class="card" data-kind="vocabulary" data-search="allure"><div class="w"><b>allure</b><span class='ipa'>/əˈlʊə/</span><span class="pos">n. [sing., U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a mysterious, exciting, or desirable quality</p><p class="zh">魅力；诱惑；吸引力</p></article><article class="card" data-kind="vocabulary" data-search="amid"><div class="w"><b>amid</b><span class='ipa'>/əˈmɪd/</span><span class="pos">prep.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">in the middle of or during sth, esp. sth that causes excitement or fear</p><p class="zh">在…过程中；在…中</p></article><article class="card" data-kind="vocabulary" data-search="aromatic"><div class="w"><b>aromatic</b><span class='ipa'>/ˌærəˈmætɪk/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">having a strong pleasant smell</p><p class="zh">芳香的</p></article><article class="card" data-kind="vocabulary" data-search="bold"><div class="w"><b>bold</b><span class='ipa'>/bəʊld/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">not afraid of taking risks and making difficult decisions</p><p class="zh">果敢的；敢于冒险的；大胆的</p></article><article class="card" data-kind="vocabulary" data-search="bundle"><div class="w"><b>bundle</b><span class='ipa'>/ˈbʌndl/</span><span class="pos">v.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">(~ up) put warm clothes on yourself or sb. else, or wrap sb. in sth. warm</p><p class="zh">（给…）穿上暖和衣服</p></article><article class="card" data-kind="vocabulary" data-search="burst"><div class="w"><b>burst</b><span class='ipa'>/bɜːst/</span><span class="pos">n. / v.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">n. [C] (~ of) a sudden strong emotion that you feel for a short time; v. (cause sth. to) break violently open or apart, esp. because of pressure from inside</p><p class="zh">n. 强烈感情的突然爆发；v. （使）爆炸，胀破，爆破</p></article><article class="card" data-kind="vocabulary" data-search="cobble"><div class="w"><b>cobble</b><span class='ipa'>/ˈkɒbl/</span><span class="pos">vt.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">(~ together) make sth. quickly and without a lot of care, using whatever is available</p><p class="zh">匆忙拼凑</p></article><article class="card" data-kind="vocabulary" data-search="commonplace"><div class="w"><b>commonplace</b><span class='ipa'>/ˈkɒmənpleɪs/</span><span class="pos">a. / n.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a. happening or existing in many places, and therefore not special or unusual; n. [C, usu. sing.] sth. that happens or exists in many places, so that it is not unusual</p><p class="zh">a. 常见的；屡见不鲜的；n. 平常事；常见事物</p></article><article class="card" data-kind="vocabulary" data-search="courier"><div class="w"><b>courier</b><span class='ipa'>/ˈkʊriə/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a person or company that is paid to take packages somewhere</p><p class="zh">快递员；快递公司</p></article><article class="card" data-kind="vocabulary" data-search="crown jewel"><div class="w"><b>crown jewel</b><span class='ipa'>/ˌkraʊn ˈdʒuːəl/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">the best or most valuable thing that a person or place has</p><p class="zh">最为宝贵的东西</p></article><article class="card" data-kind="vocabulary" data-search="dazzle"><div class="w"><b>dazzle</b><span class='ipa'>/ˈdæzl/</span><span class="pos">vi. / vt.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">vi. inspire admiration or wonder; vt. blind sb. briefly with too much light, brilliance, etc.</p><p class="zh">vi. 令人赞叹；vt. （强光）使目眩，使眼花</p></article><article class="card" data-kind="vocabulary" data-search="embark"><div class="w"><b>embark</b><span class='ipa'>/ɪmˈbɑːk/</span><span class="pos">v.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">1 (~ on) start sth., esp. sth. new, difficult, or exciting; 2 go onto a ship or a plane, or put or take sth. onto a ship or plane</p><p class="zh">1 开始，着手（尤指新的、困难的或令人激动的事）；2 （使）上船（飞机）；（使）装船（飞机）</p></article><article class="card" data-kind="vocabulary" data-search="epic"><div class="w"><b>epic</b><span class='ipa'>/ˈepɪk/</span><span class="pos">a. / n.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a. taking place over a long period of time and involving a lot of difficulties; n. [C] a book, poem, or film that tells a long story about brave actions and exciting events</p><p class="zh">a. 漫长而艰难的；n. 长篇叙事性小说（诗歌，电影）；史诗般的作品</p></article><article class="card" data-kind="vocabulary" data-search="feast"><div class="w"><b>feast</b><span class='ipa'>/fiːst/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a large meal where a lot of people celebrate a special occasion</p><p class="zh">盛会；宴会</p></article><article class="card" data-kind="vocabulary" data-search="firecracker"><div class="w"><b>firecracker</b><span class='ipa'>/ˈfaɪəˌkrækə/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a small firework that explodes loudly</p><p class="zh">鞭炮；爆竹</p></article><article class="card" data-kind="vocabulary" data-search="get-together"><div class="w"><b>get-together</b><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a friendly informal meeting or party</p><p class="zh">聚会；联欢会</p></article><article class="card" data-kind="vocabulary" data-search="glow"><div class="w"><b>glow</b><span class='ipa'>/ɡləʊ/</span><span class="pos">n. [sing.]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a soft steady light</p><p class="zh">光亮；光辉</p></article><article class="card" data-kind="vocabulary" data-search="hassle"><div class="w"><b>hassle</b><span class='ipa'>/ˈhæsl/</span><span class="pos">n. [C, U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">(spoken) sth. that is annoying, because it causes problems or is difficult to do</p><p class="zh">麻烦</p></article><article class="card" data-kind="vocabulary" data-search="mere"><div class="w"><b>mere</b><span class='ipa'>/mɪə/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">(only before noun, no comparative) used to emphasize how small or unimportant sth. or sb. is</p><p class="zh">仅仅；只不过</p></article><article class="card" data-kind="vocabulary" data-search="metropolis"><div class="w"><b>metropolis</b><span class='ipa'>/məˈtrɒpəlɪs/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a very large city that is the most important city in a country or area</p><p class="zh">（一国或一地区的）首要城市，大都会</p></article><article class="card" data-kind="vocabulary" data-search="mutton"><div class="w"><b>mutton</b><span class='ipa'>/ˈmʌtn/</span><span class="pos">n. [U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">meat from a sheep</p><p class="zh">羊肉</p></article><article class="card" data-kind="vocabulary" data-search="pasture"><div class="w"><b>pasture</b><span class='ipa'>/ˈpɑːstʃə/</span><span class="pos">n. [C, U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">land or a field that is covered with grass and is used for cattle, sheep, etc. to feed on</p><p class="zh">牧场</p></article><article class="card" data-kind="vocabulary" data-search="resolute"><div class="w"><b>resolute</b><span class='ipa'>/ˈrezəˌluːt/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">doing sth. in a very determined way because you have very strong beliefs, aims, etc.</p><p class="zh">坚决的；坚定的</p></article><article class="card" data-kind="vocabulary" data-search="rhythm"><div class="w"><b>rhythm</b><span class='ipa'>/ˈrɪðəm/</span><span class="pos">n. [C, U]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a regular repeated pattern of sounds or movements</p><p class="zh">节律；节奏</p></article><article class="card" data-kind="vocabulary" data-search="sanctuary"><div class="w"><b>sanctuary</b><span class='ipa'>/ˈsæŋktʃuəri/</span><span class="pos">n.</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">1 [C, U] a place that is safe and provides protection, esp. for people who are in danger; 2 [C] an area for birds or animals where they are protected and cannot be hunted</p><p class="zh">1 避难所；庇护所；2 鸟兽保护区；禁猎区</p></article><article class="card" data-kind="vocabulary" data-search="scent"><div class="w"><b>scent</b><span class='ipa'>/sent/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.24</span></div><p class="def">a pleasant smell that sth. has</p><p class="zh">香味</p></article><article class="card" data-kind="vocabulary" data-search="scroll"><div class="w"><b>scroll</b><span class='ipa'>/skrəʊl/</span><span class="pos">n. / v.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">n. [U] the action of moving displayed text or graphics up, down, or across a screen to view different parts of them; v. move text on a computer screen up or down so that you can read different parts of it</p><p class="zh">n. 滚动浏览；v. 滚屏；滚动</p></article><article class="card" data-kind="vocabulary" data-search="sea change"><div class="w"><b>sea change</b><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">a very big change in sth.</p><p class="zh">巨变</p></article><article class="card" data-kind="vocabulary" data-search="shrink"><div class="w"><b>shrink</b><span class='ipa'>/ʃrɪŋk/</span><span class="pos">v.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">(shrank, shrunk) 1 become or make sth. smaller in amount, size, or value; 2 become smaller, or make sth. smaller, through the effects of heat or water</p><p class="zh">1 （使）（数量、体积或价值）变小，减少，缩小；2 （使）缩小；（使）收缩</p></article><article class="card" data-kind="vocabulary" data-search="spin"><div class="w"><b>spin</b><span class='ipa'>/spɪn/</span><span class="pos">n. / v.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">n. [C] a distinctive point of view, interpretation, character, or style; v. (spun, spun) turn around and around very quickly, or make sth. do this</p><p class="zh">n. 独特的观点（解释、特点、风格）；v. （使）快速旋转</p></article><article class="card" data-kind="vocabulary" data-search="stroll"><div class="w"><b>stroll</b><span class='ipa'>/strəʊl/</span><span class="pos">vi.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">walk somewhere in a slow relaxed way</p><p class="zh">散步；漫步；闲逛</p></article><article class="card" data-kind="vocabulary" data-search="sun-drenched"><div class="w"><b>sun-drenched</b><span class='ipa'>/ˈsʌnˌdrentʃt/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">a sun-drenched place is usu. very sunny</p><p class="zh">阳光充足的；阳光充沛的</p></article><article class="card" data-kind="vocabulary" data-search="tap"><div class="w"><b>tap</b><span class='ipa'>/tæp/</span><span class="pos">n. [C]</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">1 an act of hitting sth. with a quick light blow or a series of quick light blows; 2 a piece of equipment for controlling the flow of water, gas, etc. from a pipe or container</p><p class="zh">1 轻轻敲击；轻叩；2 （水、煤气等管道或容器的）龙头，阀门</p></article><article class="card" data-kind="vocabulary" data-search="tranquil"><div class="w"><b>tranquil</b><span class='ipa'>/ˈtræŋkwɪl/</span><span class="pos">a.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">pleasantly calm, quiet, and peaceful</p><p class="zh">平静的；宁静的</p></article><article class="card" data-kind="vocabulary" data-search="unveil"><div class="w"><b>unveil</b><span class='ipa'>/ʌnˈveɪl/</span><span class="pos">vt.</span><span class="tag" style="margin-left:auto">p.25</span></div><p class="def">show or tell people about a new product or plan for the first time</p><p class="zh">（首次）透露（新计划），展示（新产品）</p></article></div>
+</section>
+
+<section class="section" id="sec-phrase">
+  <h2>Expressions <span class="cn">PHRASES · 4</span></h2>
+  <p class="lead">课本 Expressions 栏目共 4 条，做题时优先记搭配而不是单字。</p>
+  <div class="grid"><article class="card" data-kind="phrase" data-search="cut down on"><div class="w"><b>cut down on</b></div><p class="def">减少；缩减</p></article><article class="card" data-kind="phrase" data-search="end up"><div class="w"><b>end up</b></div><p class="def">最终处于，到头来（尤指经历一系列意外后）</p></article><article class="card" data-kind="phrase" data-search="go off"><div class="w"><b>go off</b></div><p class="def">1 爆炸；开火；2 离开，走（尤指为了做某事）</p></article><article class="card" data-kind="phrase" data-search="light up"><div class="w"><b>light up</b></div><p class="def">照亮（某处）；把光照在（某物）上</p></article></div>
+</section>
+
+<section class="section" id="sec-practice">
+  <h2>练习入口 <span class="cn">PRACTICE</span></h2>
+  <p class="lead">配套练习来自《红书Unit5 词汇练习.docx》：10 道单选 + 8 道填空。注意该练习覆盖的是 Unit 5 词汇（traverse / brim / hark back to / amplify / discord / dissent / fruition / simmer…），与本页 Unit 1 词表不是同一单元，做之前先看清楚。</p>
+  <div class="practice-box" data-kind="practice">
+    <div>
+      <h3>Unit 5 词汇练习 · 18 题</h3>
+      <p>单选即时判分，填空支持大小写不敏感与常见词形变体。</p>
+    </div>
+    <a class="btn" href="english-redbook-unit5-practice.html">开始练习 →</a>
+  </div>
+</section>
+
+<div class="empty" id="empty">没有匹配的内容，换个关键词试试。</div>
+
+<footer class="foot">
+  资料整理：2026-11-01 · 来源：自学教材 Unit 1 词表（第 24–25 页）、Unit 5 词汇练习。
+</footer>
+</div>
+<script>
+const tabs=document.querySelectorAll('.tab');
+const q=document.getElementById('q');
+const empty=document.getElementById('empty');
+let active='all';
+function apply(){
+  const kw=(q.value||'').trim().toLowerCase();
+  let shown=0;
+  document.querySelectorAll('[data-kind]').forEach(el=>{
+    const okTab=(active==='all'||el.dataset.kind===active);
+    const okKw=!kw||(el.dataset.search||'').includes(kw)||el.textContent.toLowerCase().includes(kw);
+    const vis=okTab&&okKw; el.style.display=vis?'':'none'; if(vis)shown++;
+  });
+  empty.style.display=shown?'none':'block';
+}
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');active=t.dataset.tab;apply();
+}));
+tabs.forEach(t=>{
+  if(t.dataset.tab==='all')return;
+  if(!document.querySelector('[data-kind="'+t.dataset.tab+'"]'))t.style.display='none';
+});
+q.addEventListener('input',apply);
+</script>
+</body>
+</html>
