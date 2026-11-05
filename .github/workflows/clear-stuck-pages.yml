@@ -1,18 +1,15 @@
 name: Clear stuck Pages deployment
 
-# 一次性运维工作流：GitHub Pages 的某次部署卡在 in_progress 时，新的部署会被
-# 直接拒绝（400 "due to in progress deployment"）。这里把指定提交上仍未结束的
-# deployment 标记为 inactive，从而解除阻塞。用完可以删除本文件。
+# 运维工作流：GitHub Pages 的部署卡在 in_progress 时，新的部署会被直接拒绝
+# （400 "Deployment request failed ... due to in progress deployment"）。
+# 这里把最近仍未进入终止态的 deployment 标记为 inactive，解除阻塞。
+# 触发方式：改本文件后 push，或在 Actions 页面手动 Run workflow。
 on:
   push:
     branches: [main]
     paths:
       - '.github/workflows/clear-stuck-pages.yml'
   workflow_dispatch:
-    inputs:
-      sha:
-        description: '提交 SHA（留空则用当前 main 上的 HEAD）'
-        required: false
 
 permissions:
   contents: read
@@ -26,34 +23,34 @@ jobs:
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          TARGET: ${{ github.event.inputs.sha }}
         run: |
           set -euo pipefail
-          sha="${TARGET:-}"
-          if [ -z "$sha" ]; then
-            # 默认清理卡住的那次部署（b1b9bf0）。它的 API 状态可能已经是 failure，
-            # 但 Pages 服务端仍视为 in_progress，所以这里不按状态筛选，直接全部置为 inactive。
-            sha="b1b9bf0f2b7399f46c3fbd309edea50291fb7fc8"
-          fi
-          echo "target sha: $sha"
+          # 只看按时间倒序的前 20 个 deployment，逐个读最新状态
           ids=$(curl -sS -H "Authorization: Bearer $TOKEN" \
-            "https://api.github.com/repos/$REPO/deployments?sha=$sha&per_page=100" | jq -r '.[].id')
+            "https://api.github.com/repos/$REPO/deployments?per_page=20" | jq -r '.[].id')
           if [ -z "$ids" ]; then
-            echo "no deployments found for $sha"
+            echo "no deployments found"
             exit 0
           fi
           for id in $ids; do
             last=$(curl -sS -H "Authorization: Bearer $TOKEN" \
               "https://api.github.com/repos/$REPO/deployments/$id/statuses" | jq -r '.[0].state')
-            echo "deployment $id last state: $last"
-            if [ "$last" = "inactive" ]; then
-              echo "  already inactive, skip"
-            else
-              echo "  marking inactive"
-              curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/$REPO/deployments/$id/statuses" \
-                -d '{"state":"inactive"}' >/dev/null
-            fi
+            sha=$(curl -sS -H "Authorization: Bearer $TOKEN" \
+              "https://api.github.com/repos/$REPO/deployments/$id" | jq -r '.sha[0:7]')
+            echo "deployment $id ($sha) last state: $last"
+            case "$last" in
+              success|inactive)
+                echo "  terminal, skip"
+                ;;
+              *)
+                # in_progress / queued / pending 自不必说；failure、error 也要处理，
+                # 因为 Pages 服务端有时仍把上一次失败的部署当成 in_progress 持有锁。
+                echo "  marking inactive"
+                curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$REPO/deployments/$id/statuses" \
+                  -d '{"state":"inactive"}' >/dev/null
+                ;;
+            esac
           done
-          echo "done"
+          echo "clear pass done"
