@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta
+      name="description"
+      content="工科数学分析 I 第一、二章定理与方法复习页，附 2026-11-05 数列极限习题课 16 题与连续函数习题课 22 题全解"
+    >
+    <title>工科数学分析 I | 知识整理与习题课全解</title>
+    <link rel="stylesheet" href="assets/katex/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#chapter-content">跳到正文</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="章节目录">
+        <div class="sidebar-brand">
+          <p class="sidebar-brand__course">工科数学分析 I</p>
+          <p class="sidebar-brand__title">知识整理 + 习题课</p>
+        </div>
+        <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
+        <p class="sidebar-source">
+          依据第 1 章 5 份课件和第 2 章 5 份课件整理。第二章节覆盖导数、微分、中值定理、Taylor 定理与函数性态。
+          第三章为 2026-11-05 习题课「数列极限」的 16 题全解与套路总结。
+          第四章为 2026-11-10 习题课「连续函数」的 22 题全解与套路总结。
+        </p>
+      </aside>
+
+      <button
+        class="sidebar-toggle"
+        id="sidebar-toggle"
+        type="button"
+        aria-controls="sidebar"
+        aria-expanded="false"
+        aria-label="打开章节目录"
+      >
+        <span class="sidebar-toggle__lines" aria-hidden="true"></span>
+      </button>
+      <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+      <main class="main">
+        <header class="page-header">
+          <p class="page-kicker">第一、二章 + 两节习题课 · 一元函数微积分</p>
+          <h1>工科数学分析知识整理</h1>
+          <p class="page-intro">
+            按章节整理核心结论、前置定义、证明骨架和依赖关系。切换章节后，可使用搜索与类型筛选定位当前章内容。
+            第三章是数列极限习题课：九种套路、常考知识点、16 题全解与易错清单；
+            第四章是连续函数习题课：八种套路、22 题全解与易错清单。
+          </p>
+
+          <nav class="book-chapter-tabs" id="book-chapter-tabs" aria-label="章节选取">
+            <button
+              class="book-chapter-tab is-active"
+              type="button"
+              data-book-chapter="1"
+              aria-pressed="true"
+            >
+              <span class="book-chapter-tab__index">第一章</span>
+              <span class="book-chapter-tab__title">极限与连续</span>
+            </button>
+            <button
+              class="book-chapter-tab"
+              type="button"
+              data-book-chapter="2"
+              aria-pressed="false"
+            >
+              <span class="book-chapter-tab__index">第二章</span>
+              <span class="book-chapter-tab__title">一元函数微分学</span>
+            </button>
+            <button
+              class="book-chapter-tab"
+              type="button"
+              data-book-chapter="3"
+              aria-pressed="false"
+            >
+              <span class="book-chapter-tab__index">习题课</span>
+              <span class="book-chapter-tab__title">数列极限 16 题</span>
+            </button>
+            <button
+              class="book-chapter-tab"
+              type="button"
+              data-book-chapter="4"
+              aria-pressed="false"
+            >
+              <span class="book-chapter-tab__index">习题课</span>
+              <span class="book-chapter-tab__title">连续函数 22 题</span>
+            </button>
+          </nav>
+
+          <div class="stats" aria-label="内容统计">
+            <div class="stat">
+              <strong id="stat-theorems">0</strong>
+              <span>定理</span>
+            </div>
+            <div class="stat">
+              <strong id="stat-corollaries">0</strong>
+              <span>推论</span>
+            </div>
+            <div class="stat">
+              <strong id="stat-definitions">0</strong>
+              <span>前置定义</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="toolbar" aria-label="筛选和搜索">
+          <div class="search-wrap">
+            <label class="sr-only" for="search-input">搜索内容</label>
+            <input
+              id="search-input"
+              class="search-input"
+              type="search"
+              autocomplete="off"
+              placeholder="搜索定理、推论或关键词"
+            >
+          </div>
+
+          <div class="filter-tabs" id="filter-tabs" role="group" aria-label="内容类型">
+            <button
+              class="filter-tab is-active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              全部
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="theorem"
+              aria-pressed="false"
+            >
+              定理
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="corollary"
+              aria-pressed="false"
+            >
+              推论
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="definition"
+              aria-pressed="false"
+            >
+              定义
+            </button>
+            <button
+              class="filter-tab"
+              type="button"
+              data-filter="keypoint"
+              aria-pressed="false"
+            >
+              重要知识点
+            </button>
+          </div>
+
+          <button class="toolbar-button" id="expand-all" type="button" data-expanded="false">
+            全部展开
+          </button>
+          <div class="search-results" id="search-results" aria-label="搜索结果" hidden></div>
+        </section>
+
+        <div class="search-summary-row">
+          <span class="search-status" id="search-status" aria-live="polite"></span>
+        </div>
+        <p class="sr-only" id="result-count" aria-live="polite">正在加载</p>
+        <div class="chapter-content" id="chapter-content"></div>
+
+        <footer class="page-footer">
+          <p>离线复习页，可直接使用浏览器打开。公式资源已随目录保存。</p>
+        </footer>
+      </main>
+    </div>
+
+    <script src="assets/katex/katex.min.js" defer></script>
+    <script src="content-data.js" defer></script>
+    <script src="chapter2-data.js" defer></script>
+    <script src="extra-knowledge-data.js" defer></script>
+    <script src="proof-data.js" defer></script>
+    <script src="exercises-data.js" defer></script>
+    <script src="continuity-exercises-data.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工科数学分析 课后复习题</title>
+  <style>
+    :root { --bg:#f4f6f8; --surface:#fff; --text:#18212b; --muted:#5f6b76; --line:#d9e0e6; --blue:#1769aa; --amber:#9a6500; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.65; }
+    .page { width:min(900px,calc(100% - 32px)); margin:0 auto; padding:28px 0 48px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    .subtitle,.meta { color:var(--muted); }
+    .notice { margin:20px 0; padding:14px 16px; border-left:4px solid var(--amber); background:#fbf0d5; border-radius:5px; }
+    ol { margin:0; padding:18px 18px 8px 46px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+    li { margin-bottom:16px; }
+    @media (max-width:620px) { .page { width:min(100% - 20px,900px); padding-top:18px; } h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>工科数学分析 课后复习题</h1>
+    <p class="subtitle">2026-11-10 课堂内容。先独立作答，不查课件或答案。</p>
+    <p class="meta">共 12 题</p>
+    <div class="notice">先独立作答，不查课件与第四章资料页；证明题必须写出定理条件（闭区间、连续、端点符号）与量词顺序，极限题必须写清每一步用了哪条等价无穷小。</div>
+    <ol><li id="q1">判阶的完整做法是什么？写出「f 是 x 的 k 阶无穷小」的严格定义，并说明「同阶」与「等价」的区别。</li>
+<li id="q2">写出六个高频等价无穷小（sin x、tan x、ln(1+x)、eˣ−1、1−cos x、(1+x)^α−1），并说明为什么加减法里不能直接逐项替换。</li>
+<li id="q3">1^∞ 型极限的标准三步是什么？写出公式 uᵛ → e^{lim(u−1)v} 的推导，并指出最常见的写错方式。</li>
+<li id="q4">叙述间断点的四类分类（可去、跳跃、无穷、振荡），并说明第一类与第二类的分界线是什么。</li>
+<li id="q5">证明「f 在 x₀ 连续」的三个入口分别是什么？各适合哪类题（具体初等函数、抽象函数方程、分段函数）？</li>
+<li id="q6">一致连续定义里的 δ 与什么无关？证明「不一致连续」的两列法，其量词顺序怎么写？</li>
+<li id="q7">已知当 x→0 时 e^{x cos x²} − eˣ 与 xᵏ 是同阶无穷小，求 k，并写出完整的替换链。</li>
+<li id="q8">求 f(x) = arctan(1/(x−1)) + sin x / (x²(π−x)) 的全部间断点，并逐个指出类型。</li>
+<li id="q9">求 lim_{x→∞} (sin(4/x²) + cos(2/x))^{x²}。</li>
+<li id="q10">已知 lim_{x→0} ln(1 + f(x)/sin 2x) / (eˣ − 1) = 5，求 lim_{x→0} f(x)/x²，并说明哪一步需要单独交代「f(x)/sin 2x → 0」。</li>
+<li id="q11">证明方程 1/(x−a) + 1/(x−b) + 1/(x−c) = k（a&lt;b&lt;c，k≠0）至少有三个实根。k&gt;0 时分别取哪三个区间？第三根为什么落在 (c, +∞)？</li>
+<li id="q12">对比证明：(1/x)cos(1/x) 在 (0,1) 上不一致连续；√x 在 [0,+∞) 上一致连续。两题各用什么关键工具？为什么「导数无界」不能直接推出不一致连续？</li></ol>
+  </main>
+</body>
+</html>
