@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线性代数 课后复习题</title>
+  <style>
+    :root { --bg:#f4f6f8; --surface:#fff; --text:#18212b; --muted:#5f6b76; --line:#d9e0e6; --blue:#1769aa; --amber:#9a6500; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.65; }
+    .page { width:min(900px,calc(100% - 32px)); margin:0 auto; padding:28px 0 48px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    .subtitle,.meta { color:var(--muted); }
+    .notice { margin:20px 0; padding:14px 16px; border-left:4px solid var(--amber); background:#fbf0d5; border-radius:5px; }
+    ol { margin:0; padding:18px 18px 8px 46px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+    li { margin-bottom:16px; }
+    @media (max-width:620px) { .page { width:min(100% - 20px,900px); padding-top:18px; } h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>线性代数 课后复习题</h1>
+    <p class="subtitle">2026-11-10 课堂内容。先独立作答，不查课件或答案。</p>
+    <p class="meta">共 12 题</p>
+    <div class="notice">先独立作答，不查课件或答案。定义题要写全条件与反向是否成立；证明题要写清每一步乘的是哪个矩阵、为什么可以对系数下结论。</div>
+    <ol><li id="q1">用向量组的秩写出线性相关与线性无关的定义，并解释为什么「秩小于向量个数」正好对应「相关」；再用 (1,0),(0,1) 与 (5,0),(0,0) 两组向量各判断一次。</li>
+<li id="q2">完整叙述定理1、推论1、推论2，并写出定理1 的证明思路（说明用的是哪一种初等变换、得到的矩阵等式是什么、取哪个行向量作为系数）。</li>
+<li id="q3">叙述并各给一句理由：向量组与其转置向量组的相关性关系；单个向量线性相关的充要条件；含零向量的向量组是否相关；两个向量线性相关与分量成比例的关系。</li>
+<li id="q4">判断 s 个 n 维向量什么时候必然线性相关；叙述拼接（接长）与截短之间的结论及其逆否形式；说明「多的能由少的表示」为什么导致相关；由此推出两个线性无关且等价的向量组的个数有什么关系。</li>
+<li id="q5">叙述定理2 与定理3，并明确指出定理2 中「存在某个」与「每一个」的区别，以及定理3 的两个前提条件缺一会怎样。</li>
+<li id="q6">设 α1..αs 线性无关，β_j = c_1j α1 + … + c_sj αs（j=1..s），C=(c_ij)，B=(β1..βs)。写出 B 与 A、C 的关系，说明为什么 β 组线性无关当且仅当 C 可逆，并解释只用 r(AC) ≤ r(C) 能不能完成这一步。</li>
+<li id="q7">证明：若 α 组线性相关、s&gt;1 且 α1≠0，则存在 j（2 ≤ j ≤ s）使 αj 可由前 j-1 个向量线性表示。再说明「同一个 η 的表示唯一」与「表示它的向量组线性无关」为什么等价。</li>
+<li id="q8">设 η 是 n 维非零列向量，A 是 n 阶方阵，且 A^(m-1)η ≠ 0（m&gt;2），A^mη = 0。证明 η, Aη, A²η, …, A^(m-1)η 线性无关，并写出两种不同的证法。</li>
+<li id="q9">设 α1=(2,5,6)^T，α2=(0,a,0)^T，α3=(b,0,1)^T。求 a、b 满足什么条件时这组向量线性无关，什么条件下线性相关；必须写出行列式与低阶子式的依据。</li>
+<li id="q10">设 α1,α2,α3 线性无关，β1=aα1+bα2，β2=aα2+bα3，β3=aα3+bα1。写出系数矩阵 C，计算 |C|，并由此判断 β 组在什么条件下线性无关；再说明当 b=-a 且 a≠0 时 β 组的秩是多少。</li>
+<li id="q11">设 α1,α2,α3,α4 是任意四个同维向量，β1=α1+α2，β2=α2+α3，β3=α3+α4，β4=α4+α1。证明无论 α1..α4 取什么，β1..β4 都线性相关，并指出证明中哪一步只用到秩的不等式、哪一步用到了 |C| 的值。</li>
+<li id="q12">把本章线索串起来：设 α1..αn 是 n 个 n 维列向量。证明「α1..αn 线性无关」等价于「任意 n 维列向量 η 都能由它们线性表示」，并说明这个等价关系分别用到了本章哪一条结论或定理（提示：两个方向各用一条）。</li></ol>
+  </main>
+</body>
+</html>

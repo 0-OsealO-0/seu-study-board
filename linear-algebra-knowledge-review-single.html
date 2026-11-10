@@ -8,7 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta
       name="description"
-      content="线性代数第一、二章知识点复习页：矩阵、逆矩阵、行列式、矩阵的秩与 n 维向量"
+      content="线性代数第一、二章知识点复习页：矩阵、逆矩阵、行列式、矩阵的秩、n 维向量与向量组的线性相关性"
     >
     <title>线性代数 | 第一、二章知识点复习</title>
     <style>
@@ -1180,7 +1180,7 @@ a {
         </div>
         <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
         <p class="sidebar-source">
-          依据课件 2 至课件 11 整理，覆盖第 1.1 至 1.7 节与第 2.1 至 2.2 节；课件 11 内容于 10 月 28 日并入 n 维向量与向量组的秩。
+          依据课件 2 至课件 12 整理，覆盖第 1.1 至 1.7 节与第 2.1 至 2.3 节；课件 11 内容于 10 月 28 日并入 n 维向量与向量组的秩，课件 12 内容于 11 月 10 日并入向量组的线性相关性。
         </p>
       </aside>
 
@@ -3020,6 +3020,603 @@ window.LINEAR_REVIEW_CHAPTERS = [
         "source": "课件 11，第 84 页"
       }
     ]
+  },
+  {
+    "number": "2.3",
+    "title": "向量组的线性相关性",
+    "lead": "线性相关与线性无关的秩定义、定理1 与两个推论、八条快速结论、定理2 与定理3、系数矩阵法 B=AC 与典型例题。",
+    "map": [
+      "相关与无关",
+      "定理1",
+      "八条结论",
+      "定理2 与定理3",
+      "系数矩阵法"
+    ],
+    "entries": [
+      {
+        "id": "la-def-linear-dependence",
+        "type": "definition",
+        "label": "定义 2.3.1",
+        "title": "向量组的线性相关与线性无关",
+        "statement": [
+          "设向量组 $\\alpha_1,\\dots,\\alpha_s$ 的秩为 $r\\{\\alpha_1,\\dots,\\alpha_s\\}=r$。若 $r<s$，称该向量组**线性相关**；若 $r=s$，称该向量组**线性无关**。"
+        ],
+        "conditions": [
+          "向量组中向量个数为 $s$，秩为 $r$，两者都是有限数。",
+          "按行排成 $s\\times n$ 矩阵或按列排成 $n\\times s$ 矩阵均可，秩不变。"
+        ],
+        "conclusion": [
+          "线性相关 $\\iff r<s$；线性无关 $\\iff r=s$。",
+          "相关性完全由秩与向量个数是否相等决定，与向量的具体分量无关。"
+        ],
+        "derivation": [
+          "秩是最大线性无关组所含向量个数，即真正独立的向量个数。",
+          "$s$ 个向量彼此独立时秩必须等于 $s$；秩小于 $s$ 说明至少有一个向量能被其余向量线性表示，也就是多余的。"
+        ],
+        "pitfalls": [
+          "把定义记成「行列式为零就相关」，只有方阵且个数等于维数时才成立。",
+          "忘记核对秩的阶数，把 $r<s$ 与 $r\\le s$ 混用。"
+        ],
+        "source": "课件 12，第 4-5 页"
+      },
+      {
+        "id": "la-thm-dependence-criterion",
+        "type": "theorem",
+        "label": "定理 2.3.2",
+        "title": "线性相关的充要条件（定理1）",
+        "statement": [
+          "向量组 $\\alpha_1,\\dots,\\alpha_s$ 线性相关 $\\iff$ 存在不全为零的数 $k_1,\\dots,k_s$，使 $k_1\\alpha_1+k_2\\alpha_2+\\dots+k_s\\alpha_s=0$。"
+        ],
+        "conditions": [
+          "$s\\ge 1$，各向量同维。",
+          "结论对行向量组与列向量组都成立。"
+        ],
+        "conclusion": [
+          "相关 $\\iff$ 零向量有非平凡表示。",
+          "这个等式是全章所有证明的出发点。"
+        ],
+        "derivation": [
+          "把行向量组排成矩阵 $A$，只用初等行变换化行阶梯形，得 $PA=U$。",
+          "取 $e=(0,\\dots,0,1)$，令 $(k_1,\\dots,k_s)=eP$，则 $(k_1,\\dots,k_s)A=ePA=eU=0$，因为 $U$ 的最后一行是全零行。",
+          "$P$ 可逆，故 $eP$ 不是零行，系数不全为零。"
+        ],
+        "pitfalls": [
+          "把「存在不全为零的系数」误写成「任意系数都为零」。",
+          "证明中把初等行变换写成列变换，导致 $PA$ 与 $AQ$ 弄混。"
+        ],
+        "source": "课件 12，第 26-30 页"
+      },
+      {
+        "id": "la-cor-part-overall",
+        "type": "corollary",
+        "label": "推论 2.3.3",
+        "title": "部分与整体的相关性（推论1）",
+        "statement": [
+          "(1) 若向量组的某一部分线性相关，则整个向量组线性相关。",
+          "(2) 若整个向量组线性无关，则它的任何一部分都线性无关。"
+        ],
+        "conditions": [
+          "「部分」指从原向量组中取出若干个向量，保持原有顺序。"
+        ],
+        "conclusion": [
+          "(2) 是 (1) 的逆否命题，两者等价。"
+        ],
+        "derivation": [
+          "(1)：部分相关时把该部分的不全为零系数取出来，其余向量的系数补 $0$，得到整组的不全为零系数。"
+        ],
+        "pitfalls": [
+          "误用成「整体相关则部分相关」，反例：$(1,0),(0,1),(0,0)$ 整体相关，而前两个无关。"
+        ],
+        "source": "课件 12，第 31-32 页"
+      },
+      {
+        "id": "la-cor-independent-criterion",
+        "type": "corollary",
+        "label": "推论 2.3.4",
+        "title": "线性无关的等价刻画（推论2）",
+        "statement": [
+          "$\\alpha_1,\\dots,\\alpha_s$ 线性无关 $\\iff$ 由 $k_1\\alpha_1+\\dots+k_s\\alpha_s=0$ 必可推出 $k_1=\\dots=k_s=0$。"
+        ],
+        "conditions": [
+          "各向量同维且个数为 $s$。"
+        ],
+        "conclusion": [
+          "要证明一组向量线性无关，标准动作是：设零组合，推出全部系数为零。"
+        ],
+        "derivation": [
+          "由定理1 取逆否命题即得：不存在不全为零的系数使组合为零。"
+        ],
+        "pitfalls": [
+          "证明中只推出部分系数为零就宣布无关。"
+        ],
+        "source": "课件 12，第 33 页"
+      },
+      {
+        "id": "la-prop-transpose",
+        "type": "property",
+        "label": "性质 2.3.5",
+        "title": "转置不改变线性相关性（结论1）",
+        "statement": [
+          "向量组线性相关 $\\iff$ 它的转置向量组线性相关。",
+          "即行向量组的相关性与对应列向量组的相关性完全相同。"
+        ],
+        "conditions": [
+          "转置指把每个向量由行写为列（或由列写为行），向量组内顺序不变。"
+        ],
+        "conclusion": [
+          "判断相关性时行、列两种写法可以随意选择，通常选计算更方便的一种。"
+        ],
+        "derivation": [
+          "设行向量组构成矩阵 $A$，转置后构成 $A^T$，而 $r(A)=r(A^T)$，向量个数不变，故 $r<s$ 的判定结果不变。"
+        ],
+        "pitfalls": [
+          "以为转置后相关性会翻转，或忘记个数不变这一前提。"
+        ],
+        "source": "课件 12，第 6-8 页"
+      },
+      {
+        "id": "la-prop-single-zero",
+        "type": "property",
+        "label": "性质 2.3.6",
+        "title": "单个向量与含零向量的向量组（结论2、3）",
+        "statement": [
+          "单个向量 $\\alpha$ 线性相关 $\\iff \\alpha=0$。",
+          "若向量组中含有零向量，则该向量组必线性相关。"
+        ],
+        "conditions": [
+          "第二条对任意个数、任意维数都成立。"
+        ],
+        "conclusion": [
+          "零向量是「必然多余」的向量，含它的组一定相关。"
+        ],
+        "derivation": [
+          "单个向量构成的组秩为 $0$ 或 $1$：相关即 $0<1$，也就是 $\\alpha=0$。",
+          "含零向量时取该向量的系数为 $1$、其余为 $0$，即得非平凡零组合。"
+        ],
+        "pitfalls": [
+          "用结论3 反推「不含零向量就无关」——这是错误的。"
+        ],
+        "source": "课件 12，第 10 页"
+      },
+      {
+        "id": "la-prop-two-proportional",
+        "type": "property",
+        "label": "性质 2.3.7",
+        "title": "两个向量相关当且仅当分量成比例（结论4）",
+        "statement": [
+          "两个向量 $\\alpha=(a_1,\\dots,a_n)$，$\\beta=(b_1,\\dots,b_n)$ 线性相关 $\\iff$ 它们的分量成比例，即所有二阶子式 $a_ib_j-a_jb_i=0$。"
+        ],
+        "conditions": [
+          "$n\\ge 2$；$n=1$ 时任意两个数都成比例。"
+        ],
+        "conclusion": [
+          "存在一个二阶子式非零即可断言两向量线性无关。",
+          "例：$(1,2,3,4)^T$ 与 $(2,4,6,8)^T$ 相关；与 $(2,4,6,9)^T$ 无关，因为 $\\begin{vmatrix}3&6\\\\4&9\\end{vmatrix}=3\\ne 0$。"
+        ],
+        "derivation": [
+          "相关即秩为 $1$，二阶子式全为零正是秩不超过 $1$ 的判据。"
+        ],
+        "pitfalls": [
+          "只检查个别分量就下结论，或漏掉某个二阶子式。"
+        ],
+        "source": "课件 12，第 14-16 页"
+      },
+      {
+        "id": "la-prop-count-exceeds-dim",
+        "type": "property",
+        "label": "性质 2.3.8",
+        "title": "个数大于维数必相关（结论5）",
+        "statement": [
+          "若 $s>n$，则任意 $s$ 个 $n$ 维向量必线性相关。"
+        ],
+        "conditions": [
+          "向量的维数固定为 $n$；$s$ 是向量个数。"
+        ],
+        "conclusion": [
+          "这是最省事的判定：先数个数、看维数即可。",
+          "$s\\le n$ 时这条判据完全不起作用，必须回到秩或子式计算。"
+        ],
+        "derivation": [
+          "把 $s$ 个 $n$ 维向量排成 $n\\times s$ 矩阵 $A$，则 $r(A)\\le n<s$，由定义即相关。"
+        ],
+        "pitfalls": [
+          "把结论滥用到 $s\\le n$ 的情形，误以为个数不超过维数就一定无关。"
+        ],
+        "source": "课件 12，第 17-18 页"
+      },
+      {
+        "id": "la-prop-concatenate",
+        "type": "property",
+        "label": "性质 2.3.9",
+        "title": "拼接与截短：相关性的传递方向（结论6）",
+        "statement": [
+          "若拼接向量组 $(\\alpha_1;\\beta_1),(\\alpha_2;\\beta_2),\\dots,(\\alpha_s;\\beta_s)$ 线性相关，则 $\\alpha_1,\\dots,\\alpha_s$ 线性相关。",
+          "逆否形式：若 $\\alpha_1,\\dots,\\alpha_s$ 线性无关，则拼接向量组线性无关。"
+        ],
+        "conditions": [
+          "拼接指把同下标的两个向量上下接成一个更长的向量。"
+        ],
+        "conclusion": [
+          "相关性只能由「长组」传给「短组」，不能反向传递。"
+        ],
+        "derivation": [
+          "$k_1(\\alpha_1;\\beta_1)+\\dots+k_s(\\alpha_s;\\beta_s)=(\\sum k_i\\alpha_i;\\sum k_i\\beta_i)=0$，上、下两半同时为零向量，故 $\\sum k_i\\alpha_i=0$，拼接组的不全为零系数就是截短组的不全为零系数。"
+        ],
+        "pitfalls": [
+          "把方向写反，用短组的相关性去推长组相关。"
+        ],
+        "source": "课件 12，第 19 页、第 45-46 页"
+      },
+      {
+        "id": "la-thm-more-represented-by-fewer",
+        "type": "theorem",
+        "label": "定理 2.3.10",
+        "title": "多的能由少的表示则相关（结论7）",
+        "statement": [
+          "若向量组 II: $\\beta_1,\\dots,\\beta_t$ 可由向量组 I: $\\alpha_1,\\dots,\\alpha_s$ 线性表示，且 $t>s$，则 $\\beta_1,\\dots,\\beta_t$ 线性相关。"
+        ],
+        "conditions": [
+          "两个向量组同维；表示关系是单向的（II 能由 I 表示）。"
+        ],
+        "conclusion": [
+          "推论：若 II 与 I 等价且两组都线性无关，则 $s=t$。"
+        ],
+        "derivation": [
+          "由 $r(II)\\le r(I)$ 得 $r\\{\\beta_1,\\dots,\\beta_t\\}\\le r\\{\\alpha_1,\\dots,\\alpha_s\\}\\le s<t$，秩小于个数故相关。"
+        ],
+        "pitfalls": [
+          "把 $t>s$ 写成 $t\\ge s$；$t=s$ 时不能推出相关。"
+        ],
+        "source": "课件 12，第 20 页"
+      },
+      {
+        "id": "la-cor-n-plus-one",
+        "type": "corollary",
+        "label": "推论 2.3.11",
+        "title": "$n+1$ 个 $n$ 维向量必相关（例2）",
+        "statement": [
+          "任意 $n+1$ 个 $n$ 维向量都线性相关。"
+        ],
+        "conditions": [
+          "向量个数恰为 $n+1$，维数为 $n$。"
+        ],
+        "conclusion": [
+          "这是结论5（个数大于维数）在 $s=n+1$ 时的特例，也是「$n$ 维无关组能表示一切」的关键一步。"
+        ],
+        "derivation": [
+          "令 $E=(e_1,\\dots,e_n)$ 为基本单位向量组构成的矩阵，$A=(\\alpha_1,\\dots,\\alpha_{n+1})$，则 $A=EA$，故 $r(A)\\le r(E)=n<n+1$。"
+        ],
+        "pitfalls": [
+          "把它与「$n$ 个 $n$ 维向量可能相关也可能无关」混为一谈。"
+        ],
+        "source": "课件 12，第 21 页、第 51 页"
+      },
+      {
+        "id": "la-thm-independent-equivalent-count",
+        "type": "theorem",
+        "label": "定理 2.3.12",
+        "title": "无关且等价的向量组个数相等（结论8）",
+        "statement": [
+          "若向量组 I 与 II 都线性无关且彼此等价，则它们所含向量个数相等，即 $s=t$。"
+        ],
+        "conditions": [
+          "前提是两个条件同时成立：都线性无关、彼此等价。"
+        ],
+        "conclusion": [
+          "个数是无关向量组在等价关系下的不变量。"
+        ],
+        "derivation": [
+          "反证法：若 $t>s$，由 II 能由 I 表示及结论7 得 II 相关，与无关矛盾；直接法：$s=r(I)=r(II)=t$。"
+        ],
+        "pitfalls": [
+          "漏掉「线性无关」这一前提，误以为等价向量组个数都相等。"
+        ],
+        "source": "课件 12，第 22-23 页"
+      },
+      {
+        "id": "la-prop-equivalent-count-diff",
+        "type": "property",
+        "label": "性质 2.3.13",
+        "title": "等价向量组的个数可以不等",
+        "statement": [
+          "等价的向量组所含向量个数可以不同，也可能一个线性无关、一个线性相关。"
+        ],
+        "conditions": [
+          "只需两组能相互线性表示。"
+        ],
+        "conclusion": [
+          "例：I: $(1,1),(1,-1),(2,1)$ 与 II: $(1,0),(1,2)$ 等价，个数为 $3$ 与 $2$。",
+          "其中 $\\alpha_1=\\tfrac12\\beta_1+\\tfrac12\\beta_2$，$\\alpha_2=\\tfrac12\\beta_1-\\tfrac12\\beta_2$，$\\alpha_3=\\tfrac12\\beta_1+\\tfrac32\\beta_2$；$\\beta_1=\\tfrac12\\alpha_1+\\tfrac12\\alpha_2$，$\\beta_2=\\tfrac12\\alpha_1-\\tfrac32\\alpha_2$。"
+        ],
+        "derivation": [
+          "等价只要求两组能相互线性表示，与个数无关；上例中两组互表关系已逐一验证，故个数 $3$ 与 $2$ 仍算等价。"
+        ],
+        "pitfalls": [
+          "把「等价」误当「一一对应」，从而以为个数必须相同。"
+        ],
+        "source": "课件 12，第 24 页"
+      },
+      {
+        "id": "la-thm-dependent-some-represent",
+        "type": "theorem",
+        "label": "定理 2.3.14",
+        "title": "相关等价于存在某个向量可由其余表示（定理2）",
+        "statement": [
+          "当 $s\\ge 2$ 时，向量组 $\\alpha_1,\\dots,\\alpha_s$ 线性相关 $\\iff$ 存在某个 $\\alpha_i$ 可由其余 $s-1$ 个向量线性表示。"
+        ],
+        "conditions": [
+          "要求 $s\\ge 2$；单个向量谈不上「其余向量」。"
+        ],
+        "conclusion": [
+          "注意是「存在某个」，不是「每一个都能由其余表示」。"
+        ],
+        "derivation": [
+          "由定理1 取不全为零的系数，若 $k_i\\ne 0$，则 $\\alpha_i=-\\frac{1}{k_i}\\sum_{j\\ne i}k_j\\alpha_j$；反之移项即得系数含 $-1$ 的零组合。"
+        ],
+        "pitfalls": [
+          "把结论读成「每一个向量都可由其余表示」。反例：$(1,0),(0,1),(1,1)$ 相关，但 $(1,0)$ 不能由 $(0,1),(1,1)$ 表示。"
+        ],
+        "source": "课件 12，第 47 页"
+      },
+      {
+        "id": "la-thm-unique-representation",
+        "type": "theorem",
+        "label": "定理 2.3.15",
+        "title": "无关组外添一个相关向量则唯一可表示（定理3）",
+        "statement": [
+          "若 $\\alpha_1,\\dots,\\alpha_s$ 线性无关，而 $\\alpha_1,\\dots,\\alpha_s,\\beta$ 线性相关，则 $\\beta$ 可由 $\\alpha_1,\\dots,\\alpha_s$ 线性表示，且表示方式唯一。"
+        ],
+        "conditions": [
+          "两个前提缺一不可：原组线性无关；添上 $\\beta$ 后线性相关。"
+        ],
+        "conclusion": [
+          "结论包含两件事：能表示（存在性）与表示唯一。"
+        ],
+        "derivation": [
+          "设 $k_1\\alpha_1+\\dots+k_s\\alpha_s+k\\beta=0$。若 $k=0$，则原组相关，矛盾，故 $k\\ne 0$，得 $\\beta=-\\frac{k_1}{k}\\alpha_1-\\dots-\\frac{k_s}{k}\\alpha_s$。",
+          "唯一性：若有两组系数，相减得原组的零组合，由无关性系数全为 $0$。"
+        ],
+        "pitfalls": [
+          "漏掉「原组无关」，此时即使能表示也不唯一。",
+          "漏掉「加 $\\beta$ 后相关」，此时 $\\beta$ 根本不能表示。"
+        ],
+        "source": "课件 12，第 48-50 页"
+      },
+      {
+        "id": "la-method-coefficient-matrix",
+        "type": "method",
+        "label": "方法 2.3.16",
+        "title": "系数矩阵法：$B=AC$ 与 $C$ 可逆判据",
+        "statement": [
+          "设 $A=(\\alpha_1,\\dots,\\alpha_s)$ 且 $\\alpha_1,\\dots,\\alpha_s$ 线性无关，$\\beta_j=\\sum_{i}c_{ij}\\alpha_i$，$C=(c_{ij})$，则 $B=(\\beta_1,\\dots,\\beta_s)=AC$。",
+          "此时 $\\beta_1,\\dots,\\beta_s$ 线性无关 $\\iff C$ 可逆 $\\iff |C|\\ne 0$。"
+        ],
+        "conditions": [
+          "$\\alpha$ 组必须线性无关（$A$ 列满秩）；$C$ 为 $s\\times s$ 方阵。"
+        ],
+        "conclusion": [
+          "循环替换、环形组合、含参组合题一律化为判断 $|C|$ 是否为零。"
+        ],
+        "derivation": [
+          "$A$ 列满秩时 $\\ker A=\\{0\\}$：若 $ACx=0$，则 $Cx\\in\\ker A$，故 $Cx=0$，于是 $r(AC)=r(C)$。",
+          "因此 $r(B)=s\\iff r(C)=s\\iff C$ 可逆。"
+        ],
+        "pitfalls": [
+          "只用 $r(AC)\\le r(C)$ 就宣布「等价」：它只能由 $C$ 不可逆推出相关，反方向必须补上 $A$ 列满秩。"
+        ],
+        "source": "课件 12，第 58 页"
+      },
+      {
+        "id": "la-method-parameter-rank",
+        "type": "method",
+        "label": "方法 2.3.17",
+        "title": "含参向量组相关性的判定流程",
+        "statement": [
+          "含参数向量组判定的标准流程：(1) 先找一个不含参数的低阶非零子式定下秩的下界；(2) 再用最高阶子式（通常行列式）是否为 $0$ 分情况讨论。"
+        ],
+        "conditions": [
+          "向量组为方阵规模且含 $1$-$2$ 个参数时最有效。"
+        ],
+        "conclusion": [
+          "例：$A=\\begin{pmatrix}2&0&b\\\\5&a&0\\\\6&0&1\\end{pmatrix}$，二阶子式 $\\begin{vmatrix}5&0\\\\6&1\\end{vmatrix}=5\\ne 0$ 给出 $r(A)\\ge 2$；$|A|=2a(1-3b)$。",
+          "结论：线性无关 $\\iff a\\ne 0$ 且 $b\\ne \\tfrac13$。"
+        ],
+        "derivation": [
+          "先由低阶非零子式锁定秩的下界，再把最高阶子式（行列式）当作参数的函数求零点：$|A|\\ne 0$ 对应无关，$|A|=0$ 对应相关。",
+          "当 $|A|=0$ 时，必须用已有的低阶非零子式确认秩恰为 $n-1$，否则可能降到更低。"
+        ],
+        "pitfalls": [
+          "先算最高阶子式、再回头找低阶非零子式，容易在「秩等于 2 还是 1」上出错。",
+          "讨论 $|A|=0$ 时忘记说明此时秩恰为 2，而不是降到 1。"
+        ],
+        "source": "课件 12，第 53 页"
+      },
+      {
+        "id": "la-method-nilpotent",
+        "type": "method",
+        "label": "方法 2.3.18",
+        "title": "幂零型向量组无关性的证明套路",
+        "statement": [
+          "已知 $A^{m-1}\\eta\\ne 0$、$A^{m}\\eta=0$（$m>2$），证明 $\\eta,A\\eta,\\dots,A^{m-1}\\eta$ 线性无关。"
+        ],
+        "conditions": [
+          "$A$ 为 $n$ 阶方阵，$\\eta$ 为 $n$ 维列向量。"
+        ],
+        "conclusion": [
+          "结论：$\\eta,A\\eta,\\dots,A^{m-1}\\eta$ 线性无关。",
+          "两种证法都靠 $A$ 的幂把零组合逐项清零，最终把问题压缩到唯一非零向量 $A^{m-1}\\eta$ 上。"
+        ],
+        "derivation": [
+          "证法一（依次左乘）：对零组合左乘 $A^{m-1}$，注意 $A^{m}\\eta=A^{m+1}\\eta=\\dots=0$，只剩 $k_1A^{m-1}\\eta=0$，得 $k_1=0$；再左乘 $A^{m-2}$ 得 $k_2=0$；如此逐个逼出。",
+          "证法二（第一个非零系数）：设 $k_i$ 是第一个非零系数，左乘 $A^{m-i}$ 后只剩 $k_iA^{m-1}\\eta=0$，与 $A^{m-1}\\eta\\ne 0$ 矛盾。"
+        ],
+        "pitfalls": [
+          "左乘的次数写错（应是 $A^{m-i}$，不是 $A^{i}$）；忘记 $A^{m}\\eta=0$ 会推出所有更高次幂也为零。"
+        ],
+        "source": "课件 12，第 33-44 页"
+      },
+      {
+        "id": "la-ex-cyclic-three",
+        "type": "example",
+        "label": "例 2.3.19",
+        "title": "三向量循环替换的相关性",
+        "statement": [
+          "设 $\\beta_1=\\alpha_1+2\\alpha_2$，$\\beta_2=\\alpha_2+2\\alpha_3$，$\\beta_3=\\alpha_3+2\\alpha_1$，判断 $\\beta$ 组与 $\\alpha$ 组相关性是否一致。"
+        ],
+        "conditions": [
+          "$\\alpha_1,\\alpha_2,\\alpha_3$ 同维，个数为 $3$。"
+        ],
+        "conclusion": [
+          "$B=AC$，$C=\\begin{pmatrix}1&0&2\\\\2&1&0\\\\0&2&1\\end{pmatrix}$，$|C|=1+8=9\\ne 0$，故 $\\alpha$ 组无关 $\\iff \\beta$ 组无关。"
+        ],
+        "derivation": [
+          "$|C|=1\\cdot(1\\cdot1-0\\cdot2)+2\\cdot(2\\cdot2-1\\cdot0)=1+8=9$。"
+        ],
+        "pitfalls": [
+          "只看系数是否出现负号判断可逆性，忽略三角结构。"
+        ],
+        "source": "课件 12，第 9 页"
+      },
+      {
+        "id": "la-ex-four-ring",
+        "type": "example",
+        "label": "例 2.3.20",
+        "title": "四向量环必相关",
+        "statement": [
+          "设 $\\beta_1=\\alpha_1+\\alpha_2$，$\\beta_2=\\alpha_2+\\alpha_3$，$\\beta_3=\\alpha_3+\\alpha_4$，$\\beta_4=\\alpha_4+\\alpha_1$，证明无论 $\\alpha_1,\\dots,\\alpha_4$ 如何取，$\\beta$ 组都线性相关。"
+        ],
+        "conditions": [
+          "$\\alpha_1,\\dots,\\alpha_4$ 为任意同维向量，不要求无关。"
+        ],
+        "conclusion": [
+          "$C=\\begin{pmatrix}1&0&0&1\\\\1&1&0&0\\\\0&1&1&0\\\\0&0&1&1\\end{pmatrix}$，$|C|=0$，于是 $r(B)\\le r(C)<4$，必相关。"
+        ],
+        "derivation": [
+          "把四行相加得 $(2,2,2,2)$，说明 $C$ 的行向量不独立；也可直接展开得 $|C|=0$。"
+        ],
+        "pitfalls": [
+          "试图对 $\\alpha$ 分情况讨论，然而结论与 $\\alpha$ 的取值无关。"
+        ],
+        "source": "课件 12，第 54 页"
+      },
+      {
+        "id": "la-ex-ring-parameter",
+        "type": "example",
+        "label": "例 2.3.21",
+        "title": "环形含参组合的无关条件",
+        "statement": [
+          "设 $\\alpha_1,\\alpha_2,\\alpha_3$ 线性无关，$\\beta_1=a\\alpha_1+b\\alpha_2$，$\\beta_2=a\\alpha_2+b\\alpha_3$，$\\beta_3=a\\alpha_3+b\\alpha_1$，求 $\\beta$ 组线性无关的条件。"
+        ],
+        "conditions": [
+          "$\\alpha$ 组线性无关；$a,b$ 为实数。"
+        ],
+        "conclusion": [
+          "$C=\\begin{pmatrix}a&0&b\\\\b&a&0\\\\0&b&a\\end{pmatrix}$，$|C|=a^3+b^3$，故 $\\beta$ 组线性无关 $\\iff a^3+b^3\\ne 0$，即 $a+b\\ne 0$。"
+        ],
+        "derivation": [
+          "按第一行展开：$|C|=a\\cdot a^2+b\\cdot b^2=a^3+b^3$；又 $a^3+b^3=(a+b)(a^2-ab+b^2)$，二次因子恒正。",
+          "当 $b=-a$、$a\\ne 0$ 时 $|C|=0$ 且 $r(C)=2$，从而 $r(B)=2$，相关。"
+        ],
+        "pitfalls": [
+          "只算 $|C|$ 就结束，没有把它接回「$C$ 可逆 $\\iff$ 无关」这一步。"
+        ],
+        "source": "课件 12，第 55-57 页"
+      },
+      {
+        "id": "la-ex-last-nonzero",
+        "type": "example",
+        "label": "例 2.3.22",
+        "title": "取最后一个非零系数与表示唯一性",
+        "statement": [
+          "若向量组线性相关、$s>1$ 且 $\\alpha_1\\ne 0$，则存在 $j$（$2\\le j\\le s$）使 $\\alpha_j$ 可由 $\\alpha_1,\\dots,\\alpha_{j-1}$ 线性表示。",
+          "另外，$\\eta$ 可由 $\\alpha_1,\\dots,\\alpha_s$ 线性表示时，表示唯一 $\\iff \\alpha_1,\\dots,\\alpha_s$ 线性无关。"
+        ],
+        "conditions": [
+          "第一个结论要求 $\\alpha_1\\ne 0$，否则 $j=1$ 的情形无法排除。"
+        ],
+        "conclusion": [
+          "结论1：相关组中必有一个向量能由它前面的向量线性表示。",
+          "结论2：表示唯一 $\\iff$ 向量组线性无关。"
+        ],
+        "derivation": [
+          "证明取零组合中最后一个非零系数 $k_j$，则 $\\alpha_j=-\\frac{1}{k_j}(k_1\\alpha_1+\\dots+k_{j-1}\\alpha_{j-1})$。",
+          "唯一性：两组表示相减得零组合，由无关性系数全等；反之相关时零组合可叠加出第二组系数。"
+        ],
+        "pitfalls": [
+          "取「第一个」非零系数，因为那样得到的 $\\alpha_j$ 需要用后面的向量表示，不符结论。"
+        ],
+        "source": "课件 12，第 59-61 页"
+      },
+      {
+        "id": "la-ex-n-dim-span",
+        "type": "example",
+        "label": "例 2.3.23",
+        "title": "$n$ 维无关组能表示一切",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_n$ 是 $n$ 维列向量，则「它们线性无关」$\\iff$「任意 $n$ 维列向量都能由它们线性表示」$\\iff$ $A$ 可逆。"
+        ],
+        "conditions": [
+          "向量个数与维数相等，都是 $n$。"
+        ],
+        "conclusion": [
+          "正向用推论 2.3.11（$n+1$ 个 $n$ 维向量必相关）与定理3；反向用 $r(II)\\le r(I)$。"
+        ],
+        "derivation": [
+          "正向：$\\alpha_1,\\dots,\\alpha_n,\\eta$ 共 $n+1$ 个 $n$ 维向量，必相关，套定理3 即可表示。",
+          "反向：$e_1,\\dots,e_n$ 都能由 $\\alpha$ 组表示，故 $n=r\\{e_1,\\dots,e_n\\}\\le r\\{\\alpha_1,\\dots,\\alpha_n\\}\\le n$，秩为 $n$，无关。"
+        ],
+        "pitfalls": [
+          "只证一个方向就当作充要条件；反向证明漏掉「秩不超过 $n$」这一步。"
+        ],
+        "source": "课件 12，第 62 页"
+      },
+      {
+        "id": "la-pitfall-some-vs-every",
+        "type": "pitfall",
+        "label": "易错点 2.3.24",
+        "title": "「相关」是存在某个，而不是每个都能表示",
+        "statement": [
+          "向量组线性相关只保证存在某个 $\\alpha_i$ 可由其余向量线性表示，不能推出每一个向量都能由其余向量表示。"
+        ],
+        "conditions": [
+          "任何 $s\\ge 3$ 的线性相关组都可能是反例，尤其是秩与向量个数相差较大的组。"
+        ],
+        "conclusion": [
+          "反例：$\\alpha_1=(1,0,0)^T$，$\\alpha_2=(2,0,0)^T$，$\\alpha_3=(0,1,0)^T$，$\\alpha_4=(0,0,1)^T$。四个向量都是 3 维，必相关；$\\alpha_1=\\tfrac12\\alpha_2$ 可由其余表示，但 $\\alpha_3$ 不能由 $\\alpha_1,\\alpha_2,\\alpha_4$ 表示（后三者的第二分量恒为 $0$）。"
+        ],
+        "derivation": [
+          "定理2 的证明只用到「某个 $k_i\\ne 0$」，因此天然只能保证存在性；要保证每个向量都能表示，需要更强的条件（例如组的秩不超过 $s-1$ 且去掉任一个向量秩都不降）。"
+        ],
+        "pitfalls": [
+          "把定理2 的「存在某个」误读为「任取一个」。"
+        ],
+        "source": "课件 12，第 47 页"
+      },
+      {
+        "id": "la-pitfall-rank-inequality",
+        "type": "pitfall",
+        "label": "易错点 2.3.25",
+        "title": "$r(AC)\\le r(C)$ 只够一半，拼接方向不能反",
+        "statement": [
+          "判断 $B=AC$ 的相关性时，$r(AC)\\le r(C)$ 只能给出「$C$ 不可逆 $\\Rightarrow B$ 相关」；要得到「$C$ 可逆 $\\Rightarrow B$ 无关」必须额外使用 $A$ 列满秩，此时 $r(AC)=r(C)$。",
+          "同理，拼接结论只能由长组的相关性推短组，不能由短组推长组。"
+        ],
+        "conditions": [
+          "两个易错点都出在「方向」上：不等式与蕴含式都只有单向。"
+        ],
+        "conclusion": [
+          "例：取 $A=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$（非列满秩），$C=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$ 可逆，但 $AC=O$，$r(AC)=0\\ne r(C)$。"
+        ],
+        "derivation": [
+          "结论：不等式的方向决定了只能推出什么；「$C$ 可逆 $\\Rightarrow$ 无关」依赖等式 $r(AC)=r(C)$ 及其前提。",
+          "拼接结论同理：相关由长推短，无关由短推长。"
+        ],
+        "pitfalls": [
+          "先看清是等式还是不等式，再决定能否用「可逆 $\\iff$ 无关」。"
+        ],
+        "source": "课件 12，第 19 页、第 58 页"
+      }
+    ]
   }
 ];
 
@@ -3081,8 +3678,14 @@ window.LINEAR_REVIEW_CHAPTERS = [
     {
       number: "2.2",
       title: "向量组的线性表示与秩",
-      lead: "向量组与分块矩阵、线性组合、线性表示、等价关系、初等变换与向量组的秩。线性相关性留待下次课。",
+      lead: "向量组与分块矩阵、线性组合、线性表示、等价关系、初等变换与向量组的秩。",
       map: ["向量组", "线性组合", "线性表示", "等价关系", "向量组的秩"]
+    },
+    {
+      number: "2.3",
+      title: "向量组的线性相关性",
+      lead: "线性相关与线性无关的秩定义、定理1 与两个推论、八条快速结论、定理2 与定理3、系数矩阵法 B=AC 与典型例题。",
+      map: ["相关与无关", "定理1", "八条结论", "定理2 与定理3", "系数矩阵法"]
     }
   ];
   const allSourceEntries = sourceChapters.flatMap((chapter) => chapter.entries || []);
