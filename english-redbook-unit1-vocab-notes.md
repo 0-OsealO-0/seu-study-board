@@ -3,10 +3,12 @@
 ## 资料来源
 
 - 自学教材 Unit 1 词表，第 24–25 页（New words + Expressions）
-- `红书Unit5 词汇练习.docx`（Unit 5 词汇练习，10 单选 + 8 填空）
+- `红书Unit1词汇练习.docx`（Unit 1 词汇练习，20 道单选，含画线「可替换表达」题）
+- `红书Unit5 词汇练习.docx`（Unit 5 词汇练习，10 单选 + 8 填空；另属 Unit 5）
 
-> 注意：词表是 **Unit 1**，配套练习是 **Unit 5**，两者不是同一单元。练习覆盖 traverse、brim、hark back to、amplify、
-> discord、dissent、fruition、simmer 等词，与本单元 37 词没有重叠，别混在一起背。
+> 单元对应关系：本页词表是 **Unit 1**（37 词 + 4 表达），已配 **Unit 1 词汇练习 20 题**，20 题全部落在本单元词表里；
+> `红书Unit5 词汇练习.docx` 覆盖的是 Unit 5 词汇（traverse、brim、hark back to、amplify、discord、dissent、fruition、simmer…），
+> 已单独整理成 Unit 5 词表页，别和本单元混在一起背。
 
 ## New words（37 词）
 
@@ -29,7 +31,7 @@
 | epic | /ˈepɪk/ | a. / n. | a. 漫长而艰难的；n. 长篇叙事性小说（诗歌，电影）；史诗般的作品 | p.24 |
 | feast | /fiːst/ | n. [C] | 盛会；宴会 | p.24 |
 | firecracker | /ˈfaɪəˌkrækə/ | n. [C] | 鞭炮；爆竹 | p.24 |
-| get-together | — | n. [C] | 聚会；联欢会 | p.24 |
+| get-together | /ˈɡet təˌɡeðə(r)/ | n. [C] | 聚会；联欢会 | p.24 |
 | glow | /ɡləʊ/ | n. [sing.] | 光亮；光辉 | p.24 |
 | hassle | /ˈhæsl/ | n. [C, U] | 麻烦 | p.24 |
 | mere | /mɪə/ | a. | 仅仅；只不过 | p.24 |
@@ -41,7 +43,7 @@
 | sanctuary | /ˈsæŋktʃuəri/ | n. | 1 避难所；庇护所；2 鸟兽保护区；禁猎区 | p.24 |
 | scent | /sent/ | n. [C] | 香味 | p.24 |
 | scroll | /skrəʊl/ | n. / v. | n. 滚动浏览；v. 滚屏；滚动 | p.25 |
-| sea change | — | n. [C] | 巨变 | p.25 |
+| sea change | /ˈsiː tʃeɪndʒ/ | n. [C] | 巨变 | p.25 |
 | shrink | /ʃrɪŋk/ | v. | 1 （使）（数量、体积或价值）变小，减少，缩小；2 （使）缩小；（使）收缩 | p.25 |
 | spin | /spɪn/ | n. / v. | n. 独特的观点（解释、特点、风格）；v. （使）快速旋转 | p.25 |
 | stroll | /strəʊl/ | vi. | 散步；漫步；闲逛 | p.25 |
@@ -52,13 +54,15 @@
 
 ## Expressions（4 条）
 
-- **cut down on**：减少；缩减
-- **end up**：最终处于，到头来（尤指经历一系列意外后）
-- **go off**：1 爆炸；开火；2 离开，走（尤指为了做某事）
-- **light up**：照亮（某处）；把光照在（某物）上
+- **cut down on** /kʌt daʊn ɒn/：减少；缩减
+- **end up** /end ʌp/：最终处于，到头来（尤指经历一系列意外后）
+- **go off** /ɡəʊ ɒf/：1 爆炸；开火；2 离开，走（尤指为了做某事）
+- **light up** /laɪt ʌp/：照亮（某处）；把光照在（某物）上
 
 ## 练习入口
 
+- Unit 1 词汇练习 20 题：`english-redbook-unit1-practice.html`
+- Unit 1 单选答案：C B D A A / C D A B B / D B C B A / A C A B A
 - Unit 5 词汇练习 18 题：`english-redbook-unit5-practice.html`
-- 单选答案：B A D C A B B A D C
-- 填空答案：traversed / brimming / harks / amplify / discord / dissent / fruition / simmer
+- Unit 5 单选答案：B A D C A B B A D C
+- Unit 5 填空答案：traversed / brimming / harks / amplify / discord / dissent / fruition / simmer

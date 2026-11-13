@@ -1,0 +1,2934 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大一上学习作战板</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-soft: #eef2f5;
+      --text: #18212b;
+      --muted: #5f6b76;
+      --line: #d9e0e6;
+      --blue: #1769aa;
+      --blue-soft: #e4f0f8;
+      --green: #2f7d5a;
+      --green-soft: #e5f3eb;
+      --amber: #9a6500;
+      --amber-soft: #fbf0d5;
+      --red: #a53345;
+      --red-soft: #f8e5e9;
+      --purple: #67549a;
+      --purple-soft: #ece8f7;
+      --gray-soft: #e9ecef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 6px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 22px;
+    }
+
+    .tab {
+      height: 34px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .tab:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .tab.active {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .callout {
+      margin-bottom: 18px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .callout.warning {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .callout.success {
+      border-left-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 23px;
+      line-height: 1.2;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    .priority {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 22px;
+      padding: 0 7px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .p0 {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .p1 {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .p2 {
+      color: var(--muted);
+      background: var(--gray-soft);
+    }
+
+    .budget {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .budget-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      display: flex;
+      width: 100%;
+      height: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--gray-soft);
+    }
+
+    .bar span {
+      display: block;
+      min-width: 3px;
+      border-right: 1px solid rgba(255, 255, 255, 0.75);
+    }
+
+    .bar span:last-child {
+      border-right: 0;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .phase-grid,
+    .rules-grid,
+    .method-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .phase-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .resource-card {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .resource-card__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .resource-card__head h3 {
+      margin: 6px 0 0;
+    }
+
+    .resource-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 12px 0;
+    }
+
+    .resource-meta span {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .resource-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 13px;
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .resource-link:hover,
+    .resource-link:focus-visible {
+      background: #12588e;
+      outline: none;
+    }
+
+    .rules-grid,
+    .method-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .phase,
+    .panel {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .phase {
+      border-left-width: 4px;
+    }
+
+    .phase.cyan {
+      border-left-color: #2587a7;
+    }
+
+    .phase.green {
+      border-left-color: var(--green);
+    }
+
+    .phase.amber {
+      border-left-color: var(--amber);
+    }
+
+    .phase-range {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .plain-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .plain-list li {
+      margin-bottom: 7px;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .check {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface-soft);
+    }
+
+    .check strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .todo-summary {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .todo-summary-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .todo-summary-head strong {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .todo-progress-track {
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--gray-soft);
+    }
+
+    .todo-progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--green);
+      transition: width 160ms ease;
+    }
+
+    .todo-group {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .todo-group-title {
+      margin: 0;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .todo-item {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .todo-item[hidden] {
+      display: none !important;
+    }
+
+    .todo-item:last-child {
+      border-bottom: 0;
+    }
+
+    .todo-item:hover {
+      background: #fafbfc;
+    }
+
+    .todo-check {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin: 2px 0 0;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .todo-copy {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .todo-copy strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .todo-copy small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .todo-check:checked + .todo-copy strong {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        display: block;
+      }
+
+      .tag-row {
+        justify-content: flex-start;
+        margin-top: 14px;
+      }
+
+      .stats,
+      .phase-grid,
+      .resource-grid,
+      .rules-grid,
+      .method-grid,
+      .check-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-note {
+        display: block;
+        margin-top: 4px;
+      }
+
+      .stats,
+      .phase-grid,
+      .resource-grid,
+      .rules-grid,
+      .method-grid,
+      .check-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .budget-head {
+        display: block;
+      }
+
+      .budget-head span {
+        display: block;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .tabs {
+        display: none;
+      }
+
+      .view {
+        display: block;
+      }
+
+      .panel,
+      .phase,
+      .stat,
+      .table-wrap,
+      .budget {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <h1>大一上学习作战板</h1>
+        <p class="subtitle">依据当前课表、每周时间预算、保研目标与通信工程分流方向生成。重点是守住数学、C++、英语和睡眠，再安排活动与竞赛。</p>
+      </div>
+      <div class="tag-row">
+        <span class="tag">通信工程方向</span>
+        <span class="tag">保研优先</span>
+        <span class="tag">南京 / 长三角</span>
+        <span class="tag">宣传委员</span>
+        <span class="tag">云端同步为主</span>
+        <span class="tag">更新：2026-11-02</span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="学习计划页面">
+      <button class="tab active" type="button" data-view="overview">学期总览</button>
+      <button class="tab" type="button" data-view="todo">待办</button>
+      <button class="tab" type="button" data-view="week">周计划</button>
+      <button class="tab" type="button" data-view="method">学习方法</button>
+      <button class="tab" type="button" data-view="resources">学习资料整理</button>
+    </nav>
+
+    <section class="view active" id="overview">
+      <div class="callout">
+        <strong>本学期主线</strong>
+        以保研和通信工程分流为目标，把前 10% 至 15% 作为争取区间，把前 20% 作为必须守住的竞争力区间。
+      </div>
+
+      <div class="callout success">
+        <strong>系统联动状态</strong>
+        GitHub Pages + Supabase 是唯一日常入口和待办数据来源。本地离线版和本地服务器仅作为备份，
+        不参与日常跨设备同步。自 2026-10-14 起，OneNote 与 Microsoft To Do 不再参与日常流程；
+        学习资料统一进入“学习资料整理”，提醒统一使用作战板的待办页面。
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong>25 小时</strong>
+          <span>每周课堂外学习预算</span>
+        </div>
+        <div class="stat">
+          <strong>6-8 小时</strong>
+          <span>文学社、宣传委员与社交合计</span>
+        </div>
+        <div class="stat">
+          <strong>5 小时</strong>
+          <span>竞赛与科研每周上限</span>
+        </div>
+        <div class="stat">
+          <strong>7 小时</strong>
+          <span>当前睡眠时长，不能再压缩</span>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课程优先级</h2>
+          <span class="section-note">P0 必须稳定推进，P1 保持优势，P2 按截止日期处理</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>课程</th>
+                <th>级别</th>
+                <th>时间预算</th>
+                <th>最关键动作</th>
+                <th>当前风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>工科数学分析 I</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>6-7 小时/周</td>
+                <td>每天跟课做题；记录定理条件；周六回炉错题</td>
+                <td>极限、严格定义与分析语言基础较少</td>
+              </tr>
+              <tr>
+                <td><strong>线性代数</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>4-5 小时/周</td>
+                <td>手算秩、方程组、特征值；用向量图解释概念</td>
+                <td>几何与空间直觉是当前短板</td>
+              </tr>
+              <tr>
+                <td><strong>程序设计与算法语言 I（C++）</strong></td>
+                <td><span class="priority p0">P0</span></td>
+                <td>4-5 小时/周</td>
+                <td>迁移到 Visual Studio；恢复语法与调试；每周两个小程序</td>
+                <td>语法生疏，手机与游戏容易打断练习</td>
+              </tr>
+              <tr>
+                <td><strong>通用英语 A / 四级</strong></td>
+                <td><span class="priority p1">P1</span></td>
+                <td>2-3 小时/周</td>
+                <td>每日听力 15-20 分钟；十月后每周一套真题</td>
+                <td>读写强，听力与考试节奏需要补强</td>
+              </tr>
+              <tr>
+                <td><strong>概论、军事理论、体育理论</strong></td>
+                <td><span class="priority p2">P2</span></td>
+                <td>1-2 小时/周</td>
+                <td>概论按第 2-6 周完成第六章报告，第 7-16 周展示；其余课程按截止日期处理</td>
+                <td>概论小组报告跨周推进，容易拖到最后才集中处理</td>
+              </tr>
+              <tr>
+                <td><strong>领导力素养 / AI 通识导论</strong></td>
+                <td><span class="priority p2">P2</span></td>
+                <td>1-2 小时/周</td>
+                <td>课堂当天整理；AI 课程如有编程任务优先投入</td>
+                <td>第五周起改变周三上午安排</td>
+              </tr>
+              <tr>
+                <td><strong>竞赛与实验室</strong></td>
+                <td><span class="priority p1">P1</span></td>
+                <td>3-5 小时/周</td>
+                <td>先训练 C++ 与建模；确定一条主线；假期集中投入</td>
+                <td>不能挤占数学、C++ 和英语核心时段</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每周时间预算</h2>
+          <span class="section-note">核心课程 25 小时 + 竞赛科研最多 5 小时</span>
+        </div>
+        <div class="budget">
+          <div class="budget-head">
+            <span>作业、报告、四级训练和复习都包含在核心预算内</span>
+            <span>睡眠不参与挪用</span>
+          </div>
+          <div class="bar" aria-label="每周时间分配">
+            <span style="width: 23.333%; background: #2587a7;" title="数学分析 7 小时"></span>
+            <span style="width: 16.667%; background: #2f6fa8;" title="线性代数 5 小时"></span>
+            <span style="width: 16.667%; background: #2f7d5a;" title="C++ 5 小时"></span>
+            <span style="width: 10%; background: #9a6500;" title="英语 3 小时"></span>
+            <span style="width: 6.667%; background: #67549a;" title="公共课 2 小时"></span>
+            <span style="width: 10%; background: #65717c;" title="复盘与机动 3 小时"></span>
+            <span style="width: 16.667%; background: #a75d22;" title="竞赛上限 5 小时"></span>
+          </div>
+          <div class="legend">
+            <span><i class="dot" style="background: #2587a7;"></i>数学分析 7h</span>
+            <span><i class="dot" style="background: #2f6fa8;"></i>线性代数 5h</span>
+            <span><i class="dot" style="background: #2f7d5a;"></i>C++ 5h</span>
+            <span><i class="dot" style="background: #9a6500;"></i>英语 3h</span>
+            <span><i class="dot" style="background: #67549a;"></i>公共课 2h</span>
+            <span><i class="dot" style="background: #65717c;"></i>复盘与机动 3h</span>
+            <span><i class="dot" style="background: #a75d22;"></i>竞赛上限 5h</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>学期阶段</h2>
+          <span class="section-note">第五周和第九周需要重新排版时间</span>
+        </div>
+        <div class="phase-grid">
+          <article class="phase cyan">
+            <div class="phase-range">第 1-4 周</div>
+            <h3>建立基础节奏</h3>
+            <p>适应课程、补齐数学前置知识、恢复 C++、收集所有课程大纲与考核比例。</p>
+          </article>
+          <article class="phase amber">
+            <div class="phase-range">第 5-8 周</div>
+            <h3>领导力素养模块</h3>
+            <p>周三上午增加通识课；维持数学与编程主线，开始筛选一条竞赛或实验室路径。</p>
+          </article>
+          <article class="phase green">
+            <div class="phase-range">第 9-16 周</div>
+            <h3>AI 通识与期末冲刺</h3>
+            <p>AI 课程若有项目任务，优先转化为 C++ 或建模能力；十一月后兼顾四级与期末。</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="callout warning">
+        <strong>待更新信息</strong>
+        新思想概论已明确为平时 50% + 期末闭卷 50%，其中研读经典成果占过程考核 60%；工科数学分析成绩比例、军事理论、大学体育理论和人工智能通识导论大纲仍待补充。线性代数教材已确定为《线性代数（第三版）》（科学出版社，ISBN 978-7-03-077238-1）。
+      </div>
+    </section>
+
+    <section class="view" id="todo">
+        <div class="callout">
+          <strong>近期状态</strong>
+        已完成：2026-09-29 线性代数补全课件3第 15-53 页与课件4第 1-44 页；C++ 补全第二讲第 11-73 页；
+        2026-09-30 工科数学分析按原课件完成 1.2 数列极限全章整理；
+        2026-10-08 线性代数课件5完成逆矩阵、矩阵方程与行列式整理；
+        2026-10-13 线性代数课件6完成行列式性质、按行（列）展开、初等变换计算和范德蒙行列式整理，大学英语 Unit 1 词汇与短语已并入学习资料整理；
+        2026-10-19 工科数学分析第一、二章已合并到原资料页并加入章节选取，线性代数课件7-8已补入伴随矩阵、克拉默法则和矩阵的秩；
+        2026-10-22 线性代数课件9完成矩阵秩的不等式整理，资料页新增横向分块秩界、Sylvester 不等式、零积推论和幂等矩阵秩分解；
+        2026-10-29 线性代数课件11完成第二章 2.1、2.2 整理，资料页新增 n 维向量与九条性质、向量组与分块矩阵、B=KA 与 B=AK、向量组等价、向量组的秩共 30 条；
+        2026-11-05 工科数学分析新增第三章「数列极限习题课」：9 种套路、7 条常考知识点 + 2 条前置定义、17 条题解（原卷 16 道题，题 2 含 6 个小题）、10 条易错点，共 45 条，资料页加入“习题课”章节选取与习题入口。
+        2026-11-10 线性代数课件12完成第二章 2.3 整理：线性相关与无关的秩定义、定理1 与两个推论、八条快速结论、定理2 与定理3、B=AC 系数矩阵法、含参与幂零型例题、易错点，共 25 条，复习题 12 道、Anki 15 张。
+        待完成：完成本次线性相关性 12 题复习、导入 15 张新卡、纸笔重建定理1 的 PA=U 证明与例3 的 |C|=a³+b³ 推理；数学分析数列极限 12 题与 14 张卡、线性代数上一讲 2.1-2.2 的 12 题与 17 张卡仍在待办中；旧课复习和英语练习继续保留，所有提示统一查看作战板。
+        </div>
+
+      <div class="todo-summary">
+        <div class="todo-summary-head">
+          <div>
+            <strong id="todo-progress-text">0 / 0</strong>
+            <div class="small">已完成任务</div>
+          </div>
+          <div class="small">已完成任务将在次日打开时自动移除</div>
+        </div>
+        <div class="todo-progress-track" aria-hidden="true">
+          <div class="todo-progress-fill" id="todo-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="todo-summary" id="cloud-sync-panel" hidden>
+        <div class="todo-summary-head">
+          <div>
+            <strong id="cloud-sync-title">云端同步</strong>
+            <div class="small" id="cloud-sync-status">尚未登录</div>
+          </div>
+          <div class="small">Supabase</div>
+        </div>
+        <div id="cloud-login-controls">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input
+              id="cloud-email"
+              type="email"
+              placeholder="输入邮箱接收登录链接"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-login-button">发送登录链接</button>
+            <button class="tab" type="button" id="cloud-github-button">使用 GitHub 登录</button>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <input
+              id="cloud-password"
+              type="password"
+              placeholder="输入账户密码"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-password-login">密码登录</button>
+          </div>
+          <div class="small" style="margin-top:8px;">
+            首次使用请先通过邮箱登录；登录成功后才会出现“设置密码”。
+          </div>
+        </div>
+        <div id="cloud-user-controls" hidden>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <span class="small" id="cloud-user-email"></span>
+            <button class="tab" type="button" id="cloud-signout-button">退出同步</button>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <input
+              id="cloud-new-password"
+              type="password"
+              placeholder="设置或更新密码"
+              style="flex:1 1 240px;min-height:34px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;"
+            >
+            <button class="tab" type="button" id="cloud-set-password">设置密码</button>
+          </div>
+        </div>
+        <div class="small" id="cloud-login-message" style="margin-top:8px;"></div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>当前执行清单</h2>
+          <span class="section-note">按下一节课和截止时间动态调整</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">近期任务</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="math-preview">
+            <span class="todo-copy">
+              <strong>完成下一次工科数学分析预习</strong>
+              <small>安排在下一节数学课前的 08:10-09:40，重点检查定义、定理条件和例题。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="daily-course-loop">
+            <span class="todo-copy">
+              <strong>上传今日课程材料与笔记，运行 $track-daily-course</strong>
+              <small>Skill 会生成复习题、打包 Anki、更新“学习资料整理”，并把当天任务加入作战板待办。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="verify-course-outputs">
+            <span class="todo-copy">
+              <strong>检查学习资料、Anki 和复习题输出是否正确</strong>
+              <small>确认页面内容、卡片知识点和当天待办没有遗漏或误读。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="propaganda-role-onboarding">
+            <span class="todo-copy">
+              <strong>了解宣传委员职责、例会与工作平台</strong>
+              <small>记录固定例会、推文和海报截止时间，并与文学社任务合并排期。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="vs-debug">
+            <span class="todo-copy">
+              <strong>在 Visual Studio 中编译、运行并调试一段小程序</strong>
+              <small>至少使用一次断点和变量监视。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-daily-limit">
+            <span class="todo-copy">
+              <strong>在 Anki 设置每日新卡上限 10-15 张</strong>
+              <small>避免 80 张新卡一次性堆积，先保证数学和 C++ 上机练习。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-apkg">
+            <span class="todo-copy">
+              <strong>导入线性代数和大学英语 APKG</strong>
+              <small>C++ 已成功导入，不要重复；在 Anki 中选择“文件、导入”。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="geogebra-install">
+            <span class="todo-copy">
+              <strong>安装并打开 GeoGebra Classic</strong>
+              <small>安装包位于项目的 installers 文件夹；安装后打开一次确认可用。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-p1001-p1421">
+            <span class="todo-copy">
+              <strong>完成洛谷 P1001 与 P1421</strong>
+              <small>在最近一个 45 分钟下午时段，于 Visual Studio 中独立完成。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-listening-monday">
+            <span class="todo-copy">
+              <strong>完成一次 15-20 分钟英语听力</strong>
+              <small>安排在下一节英语课前或午饭后，不占用晚自习。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课后复习题</h2>
+          <span class="section-note">完成后把课程名、题号和答案发回 Codex</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-12 线性代数：极大无关组与向量空间（课件 13）</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261112-linear-algebra-vector-space-basis">
+            <span class="todo-copy">
+              <strong>完成线性代数极大无关组与向量空间复习题，共 12 题</strong>
+              <small>覆盖极大无关组定义与三条定理、初等行变换求法、子空间与两个典型例子、基与维数、坐标与过渡矩阵。</small>
+              <small><a href="course-loop/2026-11-12-linear-algebra-vector-space-basis/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261112-linear-algebra-vector-space-basis">
+            <span class="todo-copy">
+              <strong>导入线性代数极大无关组与向量空间 Anki 卡包</strong>
+              <small>导入 15 张关于极大无关组、子空间、基与维数、坐标与过渡矩阵的卡片。</small>
+              <small><a href="course-loop/2026-11-12-linear-algebra-vector-space-basis/linear-algebra-2026-11-12.apkg" target="_blank">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261112-linear-algebra-vector-space-basis">
+            <span class="todo-copy">
+              <strong>回看学习资料整理第 2.4-2.6 节新增条目</strong>
+              <small>核对课件 13 新增的 37 条：极大无关组、向量空间与基、坐标与过渡矩阵三节。</small>
+              <small><a href="linear-algebra-knowledge-review-single.html" target="_blank">打开学习资料</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261112-linear-algebra-vector-space-basis">
+            <span class="todo-copy">
+              <strong>纸笔重做例1 求极大无关组与例3 过渡矩阵</strong>
+              <small>不查资料把四行五列矩阵化成行最简形并读出 α3、α5 的表示系数，再独立算出 C 与 C^(-1)。</small>
+              <small><a href="course-loop/2026-11-12-linear-algebra-vector-space-basis/notes.md" target="_blank">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-10 线性代数：向量组的线性相关性（课件 12）</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261110-linear-algebra-linear-dependence">
+            <span class="todo-copy">
+              <strong>完成线性代数向量组的线性相关性复习题，共 12 题</strong>
+              <small>覆盖秩定义、定理1 与两个推论、八条快速结论、定理2 与定理3、B=AC 系数矩阵法、含参判定与幂零型证明。</small>
+              <small><a href="course-loop/2026-11-10-linear-algebra-linear-dependence/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261110-linear-algebra-linear-dependence">
+            <span class="todo-copy">
+              <strong>导入线性代数线性相关性 Anki 卡包</strong>
+              <small>导入 15 张关于相关性定义、三条定理、系数矩阵法与幂零型证明套路的卡片。</small>
+              <small><a href="course-loop/2026-11-10-linear-algebra-linear-dependence/linear-algebra-2026-11-10.apkg" target="_blank">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261110-linear-algebra-linear-dependence">
+            <span class="todo-copy">
+              <strong>回看学习资料整理第 2.3 节新增条目</strong>
+              <small>核对课件 12 第 1-62 页新增的线性相关、三条定理、八条结论与五个例题条目。</small>
+              <small><a href="linear-algebra-knowledge-review-single.html" target="_blank">打开学习资料</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261110-linear-algebra-linear-dependence">
+            <span class="todo-copy">
+              <strong>纸笔重建定理1 证明与例3 的 |C|=a³+b³ 推理</strong>
+              <small>不查资料写出 PA=U 的定理1 证明，再用 B=AC、r(AC)=r(C) 完整说明 C 可逆时 β 组无关。</small>
+              <small><a href="course-loop/2026-11-10-linear-algebra-linear-dependence/notes.md" target="_blank">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-01 大学英语：Unit 1 词表补齐与红书词汇总册（Unit 1 + Unit 5 已并册）</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit1-vocab-20261101">
+            <span class="todo-copy">
+              <strong>过一遍 Unit 1 补进来的 43 个词</strong>
+              <small>destiny、diplomatic、emphasize、fate、headquarters、terrorism 到 warfare，共 64 条；带星号的 8 个词不用背。</small>
+              <small><a href="college-english-unit1-review-single.html" target="_blank">打开 Unit 1 词汇页</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit1-practice-20261101">
+            <span class="todo-copy">
+              <strong>做 Unit 1 词汇练习 18 题并订正错题</strong>
+              <small>提交后看分数和错项，再回词汇页搜索对应词的搭配与例句。</small>
+              <small><a href="college-english-unit1-practice.html" target="_blank">开始练习</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-redbook-unit1-20261101">
+            <span class="todo-copy">
+              <strong>红书 Unit 1 词表 37 词 + 词汇练习 20 题（见词汇总册）</strong>
+              <small>第 24–25 页，The allure of modern Spring Festival；20 题全部落在本单元词表里，画线题考可替换表达。</small>
+              <small><a href="english-redbook-vocab-master-single.html" target="_blank">打开词汇总册 · Unit 1</a> · <a href="english-redbook-unit1-practice.html" target="_blank">开始练习</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-redbook-unit5-20261101">
+            <span class="todo-copy">
+              <strong>红书 Unit 5 词表 29 词 + 词汇练习 18 题（见词汇总册）</strong>
+              <small>第 128–129 页，Weaving a tapestry for a better world；练习考的 traverse、brim、hark back to 等都在这一页。</small>
+              <small><a href="english-redbook-vocab-master-single.html" target="_blank">打开词汇总册 · Unit 5</a> · <a href="english-redbook-unit5-practice.html" target="_blank">开始练习</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-07 大学英语：Unit 3 Culture and Heritage 全套整理</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit3-vocab-20261107">
+            <span class="todo-copy">
+              <strong>过一遍 Unit 3 的 84 个词条与 41 条短语</strong>
+              <small>课堂核心词 11 + 课本 Part One 11 + Part Two 62；短语按 Para. 1–9 分组，核心词带例句与译文。</small>
+              <small><a href="college-english-unit3-review-single.html" target="_blank">打开 Unit 3 复习页</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit3-textcomp-20261107">
+            <span class="todo-copy">
+              <strong>做 Text Comprehension 14 题（Para. 1–9）</strong>
+              <small>填空、判断、简答与 Past/Now 对照表，答案默认折叠；Para. 7 与 Para. 9 为按原文补拟。</small>
+              <small><a href="college-english-unit3-review-single.html#sec-tc" target="_blank">打开课文理解</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit3-practice-20261107">
+            <span class="todo-copy">
+              <strong>做 Unit 3 词汇练习 30 题并订正错题</strong>
+              <small>20 道单选（含 10 道画线替换）+ 10 空选词填空，提交后即时判分并给出解析。</small>
+              <small><a href="college-english-unit3-practice.html" target="_blank">开始练习</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-10 工科数学分析：连续函数习题课 22 题</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261110-math-analysis-continuity-exercises">
+            <span class="todo-copy">
+              <strong>完成连续函数习题课复习题，共 12 题</strong>
+              <small>覆盖判阶与等价无穷小、1^∞ 型极限、间断点分类、已知极限反推、和式夹逼、零点定理与最值定理、一致连续正反例。</small>
+              <small><a href="course-loop/2026-11-10-math-analysis-continuity-exercises/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261110-math-analysis-continuity-exercises">
+            <span class="todo-copy">
+              <strong>导入连续函数习题课 Anki 卡包</strong>
+              <small>导入 15 张等价无穷小表、1^∞ 三步、间断点四类、零点定理条件、砍尾最值、一致连续两套模板的卡片。</small>
+              <small><a href="course-loop/2026-11-10-math-analysis-continuity-exercises/math-analysis-2026-11-10.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261110-math-analysis-continuity-exercises">
+            <span class="todo-copy">
+              <strong>回看工科数学分析资料页新增的第四章</strong>
+              <small>核对 4.1 八种套路、4.2 十三条常考知识点 + 2 条前置定义、4.3 二十二题精解、4.4 易错点清单共 54 条。</small>
+              <small><a href="math-analysis-ch1-theorems-review-single.html#chapter-4-1" target="_blank">打开学习资料 · 习题课</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261110-math-analysis-continuity-exercises">
+            <span class="todo-copy">
+              <strong>纸笔重写三类证明模板</strong>
+              <small>不查资料，写出题 6 的两列反证 + Heine、题 8 的多极点分段 + 零点定理、题 9 的砍尾 → 闭区间最值。</small>
+              <small><a href="course-loop/2026-11-10-math-analysis-continuity-exercises/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-11-05 工科数学分析：数列极限习题课 16 题</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261105-math-analysis-sequence-exercises">
+            <span class="todo-copy">
+              <strong>完成数列极限习题课复习题，共 12 题</strong>
+              <small>覆盖九种套路识别、夹逼与单调有界的构造、递推数列不动点、Cauchy 准则正反两用。</small>
+              <small><a href="course-loop/2026-11-05-math-analysis-sequence-limit-exercises/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261105-math-analysis-sequence-exercises">
+            <span class="todo-copy">
+              <strong>导入数列极限习题课 Anki 卡包</strong>
+              <small>导入 14 张套路判型、夹逼上下界、单调有界两步、不动点方程与 Cauchy 否定的卡片。</small>
+              <small><a href="course-loop/2026-11-05-math-analysis-sequence-limit-exercises/math-analysis-2026-11-05.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261105-math-analysis-sequence-exercises">
+            <span class="todo-copy">
+              <strong>回看工科数学分析资料页新增的第三章</strong>
+              <small>核对 3.1 九种套路、3.2 常考知识点、3.3 十七题精解、3.4 易错点清单共 45 条。</small>
+              <small><a href="math-analysis-ch1-theorems-review-single.html#chapter-3-1" target="_blank">打开学习资料 · 习题课</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261105-math-analysis-sequence-exercises">
+            <span class="todo-copy">
+              <strong>纸笔重写四条主线证明</strong>
+              <small>不查资料，写出 aⁿ/n!→0 的比值法、题 11 的单调有界、题 13 的 2x+1/x²≥3 夹逼、题 16 的 Cauchy 否定（ε₀=1/√2）。</small>
+              <small><a href="course-loop/2026-11-05-math-analysis-sequence-limit-exercises/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-10-29 线性代数：n 维向量与向量组的秩</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261029-linear-algebra-vectors">
+            <span class="todo-copy">
+              <strong>完成线性代数 n 维向量与向量组的秩复习题，共 12 题</strong>
+              <small>覆盖向量运算九条性质、线性组合、线性表示、B=KA 与 B=AK、等价关系、向量组的秩与含参求秩。</small>
+              <small><a href="course-loop/2026-10-29-linear-algebra-vectors/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261029-linear-algebra-vectors">
+            <span class="todo-copy">
+              <strong>导入线性代数 n 维向量 Anki 卡包</strong>
+              <small>导入 17 张向量运算、线性组合、线性表示、等价关系与向量组的秩的卡片。</small>
+              <small><a href="course-loop/2026-10-29-linear-algebra-vectors/linear-algebra-2026-10-29.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261029-linear-algebra-vectors">
+            <span class="todo-copy">
+              <strong>回看线性代数学习资料整理第 2 章新增内容</strong>
+              <small>核对课件 11 第 3-84 页新增的 2.1 n 维向量、2.2 向量组的线性表示与秩共 30 条条目。</small>
+              <small><a href="linear-algebra-knowledge-review-single.html">打开学习资料</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261029-linear-algebra-vectors">
+            <span class="todo-copy">
+              <strong>纸笔重建 r(II)≤r(I) 与等价推出秩相等两条证明</strong>
+              <small>不查资料，用列向量情形 B=AK 写出 r(II)≤r(I)，再用 B=KA、A=LB 两步推出等价的两组向量组秩相等。</small>
+              <small><a href="course-loop/2026-10-29-linear-algebra-vectors/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-10-22 线性代数：矩阵秩的不等式</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261022-linear-algebra-rank-inequalities">
+            <span class="todo-copy">
+              <strong>完成线性代数矩阵秩不等式复习题，共 12 题</strong>
+              <small>覆盖 (A,B) 的秩界、和与乘积的秩界、秩 1 判据、Sylvester 不等式和幂等矩阵。</small>
+              <small><a href="course-loop/2026-10-22-linear-algebra-rank-inequalities/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261022-linear-algebra-rank-inequalities">
+            <span class="todo-copy">
+              <strong>导入线性代数矩阵秩不等式 Anki 卡包</strong>
+              <small>导入 14 张秩不等式、Sylvester 公式、秩 1 判据和幂等矩阵卡片。</small>
+              <small><a href="course-loop/2026-10-22-linear-algebra-rank-inequalities/linear-algebra-2026-10-22.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261022-linear-algebra-rank-inequalities">
+            <span class="todo-copy">
+              <strong>回看线性代数学习资料整理新增内容</strong>
+              <small>核对课件 9 第 1-10 页新增的秩不等式、Sylvester 不等式和幂等矩阵条目。</small>
+              <small><a href="linear-algebra-knowledge-review-single.html">打开学习资料</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261022-linear-algebra-rank-inequalities">
+            <span class="todo-copy">
+              <strong>纸笔重建两条秩不等式证明</strong>
+              <small>不查资料，分别写出 r(A+B)≤r(A)+r(B) 和 Sylvester 秩不等式的推导。</small>
+              <small><a href="course-loop/2026-10-22-linear-algebra-rank-inequalities/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-10-13 线性代数：行列式性质、展开与计算</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261013-linear-algebra-determinant-properties-expansion">
+            <span class="todo-copy">
+              <strong>完成线性代数行列式性质与展开复习题，共 15 题</strong>
+              <small>覆盖行列式性质、按行（列）展开、分块三角、|AB|=|A||B|、初等变换计算和范德蒙行列式。</small>
+              <small><a href="course-loop/2026-10-13-linear-algebra-determinant-properties-expansion/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261013-linear-algebra-determinant-properties-expansion">
+            <span class="todo-copy">
+              <strong>导入线性代数行列式性质与展开 Anki 卡包</strong>
+              <small>导入 18 张行列式性质、展开、初等变换计算和范德蒙行列式卡片。</small>
+              <small><a href="course-loop/2026-10-13-linear-algebra-determinant-properties-expansion/linear-algebra-2026-10-13.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="resource-review-20261013-linear-algebra-determinant-properties-expansion">
+            <span class="todo-copy">
+              <strong>回看线性代数学习资料整理新增内容</strong>
+              <small>核对课件 6 第 1-51 页新增的行列式性质、展开定理、初等变换计算和范德蒙行列式。</small>
+              <small><a href="linear-algebra-knowledge-review-single.html">打开学习资料</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261013-linear-algebra-determinant-properties-expansion">
+            <span class="todo-copy">
+              <strong>完成线性代数行列式纸笔计算</strong>
+              <small>任选一个四阶行列式，用初等变换化三角形，并逐步记录符号和倍率变化。</small>
+              <small><a href="course-loop/2026-10-13-linear-algebra-determinant-properties-expansion/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-unit1-resource-20261013">
+            <span class="todo-copy">
+              <strong>对照老师布置的 Unit 1 练习复习词汇与短语</strong>
+              <small>词表已按课本补齐到 64 条（2026-11-01 更新），练习入口见本页 2026-11-01 分组。</small>
+              <small><a href="college-english-unit1-review-single.html" target="_blank">打开 Unit 1 词汇资料</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-10-08 线性代数：逆矩阵、矩阵方程与行列式</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20261008-linear-algebra-inverse-equations-determinants">
+            <span class="todo-copy">
+              <strong>完成线性代数逆矩阵、矩阵方程与行列式复习题，共 15 题</strong>
+              <small>覆盖初等变换求逆、AX=B 与 XA=B、余子式、代数余子式和行列式计算。</small>
+              <small><a href="course-loop/2026-10-08-linear-algebra-inverse-equations-determinants/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20261008-linear-algebra-inverse-equations-determinants">
+            <span class="todo-copy">
+              <strong>导入线性代数逆矩阵、矩阵方程与行列式 Anki 卡包</strong>
+              <small>导入 17 张逆矩阵、矩阵方程、余子式与行列式计算卡片。</small>
+              <small><a href="course-loop/2026-10-08-linear-algebra-inverse-equations-determinants/linear-algebra-2026-10-08.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20261008-linear-algebra-inverse-equations-determinants">
+            <span class="todo-copy">
+              <strong>回看线性代数逆矩阵、矩阵方程与行列式笔记</strong>
+              <small>核对课件5第 1-49 页的公式、例题和易错点。</small>
+              <small><a href="course-loop/2026-10-08-linear-algebra-inverse-equations-determinants/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20261008-linear-algebra-inverse-equations-determinants">
+            <span class="todo-copy">
+              <strong>完成线性代数矩阵方程纸笔练习</strong>
+              <small>分别用行变换和列变换解 AX=B 与 XA=B，并检查矩阵乘法维数。</small>
+              <small><a href="course-loop/2026-10-08-linear-algebra-inverse-equations-determinants/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20261008-linear-algebra-inverse-equations-determinants">
+            <span class="todo-copy">
+              <strong>将今日线性代数任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的线性代数任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-30 工科数学分析 1.2 数列极限</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260930-math-analysis-1-2">
+            <span class="todo-copy">
+              <strong>完成工科数学分析 1.2 全章复习题，共 15 题</strong>
+              <small>覆盖 epsilon-N 定义、极限性质、夹逼、单调有界、区间套、Weierstrass 与 Cauchy 准则。</small>
+              <small><a href="course-loop/2026-09-30-math-analysis-1-2/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260930-math-analysis-1-2">
+            <span class="todo-copy">
+              <strong>导入工科数学分析 1.2 全章 Anki 卡包</strong>
+              <small>导入 20 张数列极限定义、性质、判敛法与完备性卡片。</small>
+              <small><a href="course-loop/2026-09-30-math-analysis-1-2/engineering-math-analysis-1-2-2026-09-30.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260930-math-analysis-1-2">
+            <span class="todo-copy">
+              <strong>回看工科数学分析 1.2 补课笔记</strong>
+              <small>核对原课件中的定义、定理编号、证明思路与易错点。</small>
+              <small><a href="course-loop/2026-09-30-math-analysis-1-2/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20260930-math-analysis-1-2">
+            <span class="todo-copy">
+              <strong>重画数学分析 1.2 定理依赖关系图</strong>
+              <small>梳理实数完备性、单调有界、区间套、Weierstrass 与 Cauchy 准则之间的关系。</small>
+              <small><a href="course-loop/2026-09-30-math-analysis-1-2/notes.md">查看复习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-29 C++ 数据类型、数组与输入输出</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260929-cpp-data-arrays-io">
+            <span class="todo-copy">
+              <strong>完成 C++ 数据类型、数组与输入输出复习题，共 12 题</strong>
+              <small>覆盖变量、常量、运算符、类型转换、数组、字符数组和 cin/cout。</small>
+              <small><a href="course-loop/2026-09-29-cpp-data-arrays-io/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260929-cpp-data-arrays-io">
+            <span class="todo-copy">
+              <strong>导入 C++ 数据类型、数组与输入输出 Anki 卡包</strong>
+              <small>导入 20 张变量、常量、运算符、数组与输入输出卡片。</small>
+              <small><a href="course-loop/2026-09-29-cpp-data-arrays-io/programming-cpp-2026-09-29.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260929-cpp-data-arrays-io">
+            <span class="todo-copy">
+              <strong>回看 C++ 数据类型、数组与输入输出笔记</strong>
+              <small>核对课件第 11-73 页的规则、代码和易错点。</small>
+              <small><a href="course-loop/2026-09-29-cpp-data-arrays-io/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20260929-cpp-data-arrays-io">
+            <span class="todo-copy">
+              <strong>在 Visual Studio 跑通 C++ 基础示例</strong>
+              <small>新建一个项目，运行变量、运算符、数组和字符串输入输出示例。</small>
+              <small><a href="course-loop/2026-09-29-cpp-data-arrays-io/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-29 线性代数补全：分块、初等变换与逆矩阵</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260929-linear-algebra-elementary-inverse">
+            <span class="todo-copy">
+              <strong>完成线性代数分块、初等变换与逆矩阵复习题，共 15 题</strong>
+              <small>覆盖分块矩阵、初等矩阵、行阶梯形、等价标准形、逆矩阵定义与可逆性判定。</small>
+              <small><a href="course-loop/2026-09-29-linear-algebra-elementary-inverse/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260929-linear-algebra-elementary-inverse">
+            <span class="todo-copy">
+              <strong>导入线性代数分块、初等变换与逆矩阵 Anki 卡包</strong>
+              <small>导入 20 张分块矩阵、初等矩阵、等价标准形与逆矩阵卡片。</small>
+              <small><a href="course-loop/2026-09-29-linear-algebra-elementary-inverse/linear-algebra-2026-09-29.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260929-linear-algebra-elementary-inverse">
+            <span class="todo-copy">
+              <strong>回看线性代数补课笔记</strong>
+              <small>核对课件 3 第 15-53 页和课件 4 第 1-44 页的公式与定理。</small>
+              <small><a href="course-loop/2026-09-29-linear-algebra-elementary-inverse/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="practice-20260929-linear-algebra-elementary-inverse">
+            <span class="todo-copy">
+              <strong>完成线性代数初等变换纸笔练习</strong>
+              <small>任选两个 3x4 矩阵，连续做初等行变换并写出每一步对应的初等矩阵。</small>
+              <small><a href="course-loop/2026-09-29-linear-algebra-elementary-inverse/notes.md">查看练习要求</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260930-catchup">
+            <span class="todo-copy">
+              <strong>将补课任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将线代、C++ 和数学分析补课任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-24 线性代数与概论第六章</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260924-linear-algebra">
+            <span class="todo-copy">
+              <strong>完成线性代数矩阵多项式、转置与分块矩阵复习题，共 15 题</strong>
+              <small>覆盖 f(A)、矩阵二项展开、关系矩阵 A^2、转置性质和分块矩阵运算。</small>
+              <small><a href="course-loop/2026-09-24-linear-algebra/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260924-linear-algebra">
+            <span class="todo-copy">
+              <strong>导入线性代数矩阵多项式、转置与分块矩阵 Anki 卡包</strong>
+              <small>导入 20 张矩阵多项式、二项展开、关系矩阵、转置和分块矩阵卡片。</small>
+              <small><a href="course-loop/2026-09-24-linear-algebra/linear-algebra-2026-09-24.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260924-linear-algebra">
+            <span class="todo-copy">
+              <strong>回看线性代数 OneNote 课堂笔记</strong>
+              <small>核对课件2第 11-40 页和课件3第 1-14 页的公式与例题。</small>
+              <small><a href="course-loop/2026-09-24-linear-algebra/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="overview-chapter6-brief-20260924">
+            <span class="todo-copy">
+              <strong>确认新思想概论第六章四人分工与报告题目</strong>
+              <small>王熙尧任组长，李松霖负责理论与概念，秦俞天负责机制与案例，马文博负责政策与系统实践；概论资料不进入 Anki 或 OneNote。</small>
+              <small><a href="course-projects/new-thought-chapter6/group-brief.md">打开小组任务清单</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260924-linear-algebra">
+            <span class="todo-copy">
+              <strong>将今日任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的线性代数和概论小组任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-23 工科数学分析 1.2.1</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260923-math-analysis">
+            <span class="todo-copy">
+              <strong>完成工科数学分析 1.2.1 复习题，共 12 题</strong>
+              <small>按数列极限定义完成，重点写清 epsilon、N 和 n &gt; N 后的全部项。</small>
+              <small><a href="course-loop/2026-09-23-math-analysis/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260923-math-analysis">
+            <span class="todo-copy">
+              <strong>导入工科数学分析 1.2.1 Anki 卡包</strong>
+              <small>导入 15 张数列极限定义、量词顺序、证明模板与基本性质卡片。</small>
+              <small><a href="course-loop/2026-09-23-math-analysis/engineering-math-analysis-2026-09-23.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260923-math-analysis">
+            <span class="todo-copy">
+              <strong>回看工科数学分析 1.2.1 OneNote 课堂笔记</strong>
+              <small>核对 epsilon-N 定义、邻域解释、典型证明与易错点。</small>
+              <small><a href="course-loop/2026-09-23-math-analysis/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="source-check-20260923-math-analysis">
+            <span class="todo-copy">
+              <strong>补交工科数学分析 1.2.1 课件或教材页</strong>
+              <small>当前按“数列极限的定义”标准框架整理；补交原资料后核对标题、术语、例子与作业编号。</small>
+              <small><a href="course-loop/2026-09-23-math-analysis/notes.md">查看待核对项</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260923-math-analysis">
+            <span class="todo-copy">
+              <strong>将今日任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的数学分析任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-22 C++ 初步知识</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260922-cpp-basics">
+            <span class="todo-copy">
+              <strong>完成 C++ 初步知识复习题，共 10 题</strong>
+              <small>覆盖现代与旧式程序结构、词法单位和数据类型五分类。</small>
+              <small><a href="course-loop/2026-09-22-cpp-basics/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260922-cpp-basics">
+            <span class="todo-copy">
+              <strong>导入 C++ 初步知识 Anki 卡包</strong>
+              <small>导入 14 张程序结构、字符集、关键字、标识符和数据类型卡片。</small>
+              <small><a href="course-loop/2026-09-22-cpp-basics/programming-cpp-2026-09-22.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260922-cpp-basics">
+            <span class="todo-copy">
+              <strong>回看 C++ 初步知识 OneNote 课堂笔记</strong>
+              <small>核对第 1-10 页的程序骨架与词法单位。</small>
+              <small><a href="course-loop/2026-09-22-cpp-basics/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260922-cpp-basics">
+            <span class="todo-copy">
+              <strong>将今日 C++ 任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的 C++ 学习任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-22 线性代数与 CET4 英语</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260922-linear-algebra">
+            <span class="todo-copy">
+              <strong>完成线性代数矩阵乘法性质复习题，共 12 题</strong>
+              <small>覆盖结合律、分配律、方阵幂、转移矩阵和 A=BC 的高次幂方法。</small>
+              <small><a href="course-loop/2026-09-22-linear-algebra/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260922-linear-algebra">
+            <span class="todo-copy">
+              <strong>导入线性代数矩阵乘法性质 Anki 卡包</strong>
+              <small>导入 15 张矩阵乘法性质、方阵幂与反例卡片。</small>
+              <small><a href="course-loop/2026-09-22-linear-algebra/linear-algebra-2026-09-22.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260922-linear-algebra">
+            <span class="todo-copy">
+              <strong>回看线性代数 OneNote 课堂笔记</strong>
+              <small>核对第 1-10 页的公式、例题和课堂补充。</small>
+              <small><a href="course-loop/2026-09-22-linear-algebra/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260922-cet4-practice">
+            <span class="todo-copy">
+              <strong>完成 CET4 听力阅读复习题，共 12 题</strong>
+              <small>覆盖 2017 年 12 月听力、选词填空、快餐主题阅读和两篇仔细阅读。</small>
+              <small><a href="course-loop/2026-09-22-cet4-practice/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260922-cet4-practice">
+            <span class="todo-copy">
+              <strong>导入 CET4 听力阅读 Anki 卡包</strong>
+              <small>导入 15 张高频短语、阅读主题和听力信息卡片。</small>
+              <small><a href="course-loop/2026-09-22-cet4-practice/cet4-2017-12-2026-09-22.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260922-cet4-practice">
+            <span class="todo-copy">
+              <strong>回看大学英语 CET4 练习笔记</strong>
+              <small>核对听力篇章主题、阅读填空和信息定位答案。</small>
+              <small><a href="course-loop/2026-09-22-cet4-practice/notes.md">打开本地笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="english-practice-record-20260922">
+            <span class="todo-copy">
+              <strong>补记 CET4 练习中猜对但不确定的题</strong>
+              <small>听力和阅读基本全对，下一步记录不确定题、总用时和具体正确率。</small>
+              <small><a href="course-loop/2026-09-22-cet4-practice/review-questions.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260922-linear-algebra">
+            <span class="todo-copy">
+              <strong>将今日任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的线性代数和 CET4 英语任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">2026-09-21 工科数学分析 1.1</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>完成工科数学分析 1.1 复习题，共 12 题</strong>
+              <small>先独立作答，完成后把题号和答案发回 Codex；待课堂材料到手后核对表述。</small>
+              <small><a href="math-analysis-review-2026-09-21.html" target="_blank">打开复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="anki-import-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>导入工科数学分析 1.1 Anki 卡包</strong>
+              <small>导入 15 张实数集、上下确界、完备性与稠密性卡片。</small>
+              <small><a href="math-analysis-anki-2026-09-21.apkg">打开 Anki 卡包</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="onenote-review-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>回看工科数学分析 OneNote 课堂笔记</strong>
+              <small>核对 1.1 的术语、符号和课堂补充内容，并标记待修正处。</small>
+              <small><a href="math-analysis-notes-2026-09-21.md">打开笔记</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="myday-20260921-math-analysis">
+            <span class="todo-copy">
+              <strong>将今日任务加入 To Do 我的一天</strong>
+              <small>打开 Microsoft To Do，将今天到期的数学分析任务加入 My Day。</small>
+              <small><a href="https://to-do.office.com/tasks/" target="_blank">打开 Microsoft To Do</a></small>
+            </span>
+          </label>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">首批课程诊断</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-cpp-first">
+            <span class="todo-copy">
+              <strong>完成 C++ 第一讲复习题，共 12 题</strong>
+              <small>先独立作答，不查资料。完成后把题号和答案发到 Codex。</small>
+              <small><a href="review-questions.html#cpp" target="_blank">打开 C++ 复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-linear-1-1-1-2">
+            <span class="todo-copy">
+              <strong>完成线性代数 1.1-1.2 首轮诊断，共 8 题</strong>
+              <small>包含矩阵乘法条件、反例和计算题。</small>
+              <small><a href="review-questions.html#linear" target="_blank">打开线性代数复习题</a></small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="review-english-overview">
+            <span class="todo-copy">
+              <strong>完成大学英语课程与四级结构诊断，共 10 题</strong>
+              <small>重点核对四级顺序、分值、时间长度和课程总评。</small>
+              <small><a href="review-questions.html#english" target="_blank">打开大学英语复习题</a></small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>本周 C++ 上机</h2>
+          <span class="section-note">晚自习无电脑，只做纸质代码跟踪</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">第 1 周题单</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-wed">
+            <span class="todo-copy">
+              <strong>周三完成洛谷 P1425 与 P5711</strong>
+              <small>周三 13:30-14:15，练习时间换算、逻辑和边界测试。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-fri">
+            <span class="todo-copy">
+              <strong>周五完成洛谷 P5718 与 P5721</strong>
+              <small>周五 16:00-17:00，练习循环、最小值和嵌套循环。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-sun">
+            <span class="todo-copy">
+              <strong>周日完成洛谷 P5722 与 P5735</strong>
+              <small>周日 14:00-15:00，练习循环累计、函数和浮点计算。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-paper-trace">
+            <span class="todo-copy">
+              <strong>完成一次无电脑代码跟踪</strong>
+              <small>晚自习任选一题，逐步写下变量值、循环次数和输出结果。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-error-log">
+            <span class="todo-copy">
+              <strong>为每道 C++ 题登记错误类型</strong>
+              <small>按概念、条件、边界、语法、调试五类记录。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cpp-selfstudy-20260922">
+            <span class="todo-copy">
+              <strong>阅读 C++ 教材第 17、19、22 页</strong>
+              <small>对应课件自学内容：位运算、四种语句、求值顺序与副作用。</small>
+              <small><a href="course-loop/2026-09-22-cpp-basics/notes.md">打开阅读清单</a></small>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>第一周课程信息</h2>
+          <span class="section-note">拿到教学大纲后再补充具体日期</span>
+        </div>
+        <div class="todo-group">
+          <h3 class="todo-group-title">课程与行政事项</h3>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="course-syllabus">
+            <span class="todo-copy">
+              <strong>收集工科数学分析教学大纲和成绩比例</strong>
+              <small>线性代数、C++ 和英语的考核信息已整理，目前只差数学分析。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="military-pe-platform">
+            <span class="todo-copy">
+              <strong>确认军事理论和大学体育理论的授课平台</strong>
+              <small>记录线上任务、考试形式和截止时间。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="ai-assessment">
+            <span class="todo-copy">
+              <strong>确认人工智能通识导论的考核方式</strong>
+              <small>领导力第五至八周、AI 第九至十六周已经记录；下一步确认 AI 课程是否有项目或编程任务。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="cet4-routine">
+            <span class="todo-copy">
+              <strong>建立四级每日听力和每周真题节奏</strong>
+              <small>10 月前以听力和词汇为主，10 月后每周一套真题。</small>
+            </span>
+          </label>
+          <label class="todo-item">
+            <input class="todo-check" type="checkbox" data-task-id="weekly-review">
+            <span class="todo-copy">
+              <strong>完成第一次周复盘</strong>
+              <small>9 月 27 日 20:30，记录完成率、最大卡点和下周三项任务。</small>
+            </span>
+          </label>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="week">
+      <div class="callout warning">
+        <strong>课表变化</strong>
+        第 1-4 周按当前课表执行。第 5-8 周周三 09:50-11:25 改为领导力素养；第 9-16 周同一时段改为人工智能通识导论。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>固定课表与推荐学习任务</h2>
+          <span class="section-note">周二和周四最满，避免再叠加高强度任务</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>固定安排</th>
+                <th>最适合的自主时段</th>
+                <th>当天主目标</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>周一</strong></td>
+                <td>工科数学分析 I 09:50-11:25；晚自习 19:00-21:25</td>
+                <td>08:10-09:40 数学预习；14:00-14:45 C++ 上机</td>
+                <td>数学当天复盘；晚自习只做纸质代码跟踪</td>
+              </tr>
+              <tr>
+                <td><strong>周二</strong></td>
+                <td>线代 08:00-09:35；英语 09:50-11:25；程序设计 14:00-16:35；通识 19:00-21:25</td>
+                <td>12:30-13:40 轻任务；16:45-18:10 错题</td>
+                <td>只做复盘与小练，不硬塞新难题</td>
+              </tr>
+              <tr>
+                <td><strong>周三</strong></td>
+                <td>数学 08:00-09:35；第 5 周起 09:50-11:25 通识；晚自习 19:00-21:25</td>
+                <td>13:30-14:15 C++ 上机；14:30-16:30 线性代数</td>
+                <td>C++ 与英语听力；晚自习前段线代</td>
+              </tr>
+              <tr>
+                <td><strong>周四</strong></td>
+                <td>概论 09:50-12:15；线代 14:00-15:35；体育 15:50-17:25；晚自习 19:00-21:25</td>
+                <td>17:45-18:40 轻复盘；晚自习前半段整理</td>
+                <td>思政整理 + 英语；避免高强度硬撑</td>
+              </tr>
+              <tr>
+                <td><strong>周五</strong></td>
+                <td>数学 09:50-11:25；程序设计 14:00-15:35；晚自习 19:00-21:25</td>
+                <td>08:10-09:40 数学预习；16:00-17:00 C++ 调试</td>
+                <td>C++ 上机 + 一周错题清零</td>
+              </tr>
+              <tr>
+                <td><strong>周六</strong></td>
+                <td>约 5 小时自主时间；可预约约会与活动</td>
+                <td>上午 2.5 小时；下午 2.5 小时</td>
+                <td>数学整块训练 + 四级真题或竞赛基础</td>
+              </tr>
+              <tr>
+                <td><strong>周日</strong></td>
+                <td>约 5 小时自主时间；保留完整休息段</td>
+                <td>上午 2 小时；14:00-15:00 C++ 题单；下午 2 小时</td>
+                <td>周复盘、下周预习、C++ 小项目</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每天与每周的最低标准</h2>
+        </div>
+        <div class="check-grid">
+          <article class="check">
+            <strong>课前 10 分钟</strong>
+            只回看上次内容和本课定义，不追求提前学完整章。
+          </article>
+          <article class="check">
+            <strong>课后 30 分钟</strong>
+            不看答案复述概念，再做 3-5 道代表题。
+          </article>
+          <article class="check">
+            <strong>晚自习前 60 分钟</strong>
+            处理最难课程，手机离开桌面。
+          </article>
+          <article class="check">
+            <strong>工作日最低标准</strong>
+            数学接触、C++ 或英语复习、当天课堂整理，至少完成两项。
+          </article>
+          <article class="check">
+            <strong>周末最低标准</strong>
+            完成一次周复盘、一次整块数学训练、一次四级或编程输出。
+          </article>
+          <article class="check">
+            <strong>超载信号</strong>
+            连续两天睡不足 6.5 小时、数学积压或游戏失控时，立即砍竞赛和活动。
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>手机与游戏规则</h2>
+          <span class="section-note">规则的目标是保护深度时段，不是把娱乐彻底清零</span>
+        </div>
+        <div class="rules-grid">
+          <article class="panel">
+            <h3>硬边界</h3>
+            <ul class="plain-list">
+              <li>19:00-21:25 晚自习期间手机静音并放到看不见的位置。</li>
+              <li>游戏只放在完成两项核心任务之后，不作为学习间隙的随机消遣。</li>
+              <li>工作日单次不超过 60 分钟；周末划出固定娱乐段，不无限延长。</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>约会与活动</h3>
+            <ul class="plain-list">
+              <li>约会时间视为正式休息安排，提前预留，避免边约会边焦虑学习。</li>
+              <li>文学社和班委合计按每周 6-8 小时控制，尽量集中安排。</li>
+              <li>已担任宣传委员，工作主要集中在文案、海报、推文和活动宣传。</li>
+              <li>宣传任务尽量固定在周五晚或周末批量处理，避免碎片化侵占数学和 C++ 时段。</li>
+              <li>每次接到任务先记录发布日期、最终截止时间和负责人，再拆分到具体时段。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="method">
+      <div class="callout success">
+        <strong>最重要的执行原则</strong>
+        先守住数学、C++ 和睡眠，再处理英语、公共课、活动与竞赛。每周可以完成得少，但不能连续中断主线。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>课程执行清单</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>课程</th>
+                <th>固定动作</th>
+                <th>判断标准</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>工科数学分析</strong></td>
+                <td>定义与条件卡；每天计算；每周按概念、运算、推理分类错题；几何应用单独补图。</td>
+                <td>先能解释定理条件，再追求做题速度。</td>
+              </tr>
+              <tr>
+                <td><strong>线性代数</strong></td>
+                <td>每章画概念关系图；矩阵题手算到底；用二维或三维例子理解秩、基、特征向量。</td>
+                <td>几何薄弱不靠背诵弥补，要靠图像和例子建立直觉。</td>
+              </tr>
+              <tr>
+                <td><strong>C++</strong></td>
+                <td>先在 Visual Studio 重写基础程序；每章独立实现一个小功能；强制使用断点调试。</td>
+                <td>看过代码不等于会写，能在报错后独立修复才算掌握。</td>
+              </tr>
+              <tr>
+                <td><strong>英语与四级</strong></td>
+                <td>每日听力 15-20 分钟；每周一套真题；作文与翻译各复盘一次；十一月后模拟考试节奏。</td>
+                <td>稳住优势即可，不因四级打乱数学和编程主线。</td>
+              </tr>
+              <tr>
+                <td><strong>物理思维</strong></td>
+                <td>固定六步：对象、过程、图示、规律、方程、检查；每题先写已知未知量。</td>
+                <td>当前问题更像流程缺失，上大学物理前先练建模顺序。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>如何高效使用 Codex</h2>
+        </div>
+        <div class="method-grid">
+          <article class="panel">
+            <h3>日常学习</h3>
+            <ul class="plain-list">
+              <li><strong>课前：</strong>把下一节标题和教材页发来，换取 5 个预习问题。</li>
+              <li><strong>课后：</strong>贴出课堂笔记，生成概念图、口述题和 10 道快速自测。</li>
+              <li><strong>作业：</strong>先写自己的尝试，再按提示、思路、完整过程逐级求解。</li>
+              <li><strong>每周：</strong>发完成情况，重排下周计划并标记风险课程。</li>
+              <li><strong>考前：</strong>汇总错题和大纲，生成分层模拟卷与口头追问。</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>错误记录格式</h3>
+            <ol class="plain-list">
+              <li>题目来源与核心考点。</li>
+              <li>我最初为什么这样做。</li>
+              <li>错误属于概念、条件、运算、逻辑还是时间管理。</li>
+              <li>正确入口在哪里，下一次看到什么信号应转向。</li>
+              <li>三天后和一周后各重做一次。</li>
+            </ol>
+            <p class="small">数学偏条件与推理，编程偏现象、复现步骤和根因。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>每周复盘模板</h2>
+        </div>
+        <div class="panel">
+          <div class="check-grid">
+            <div class="check">
+              <strong>完成率</strong>
+              数学、C++、英语分别完成了原计划的多少。
+            </div>
+            <div class="check">
+              <strong>最大卡点</strong>
+              本周最影响效率的一件事，以及下周如何规避。
+            </div>
+            <div class="check">
+              <strong>娱乐控制</strong>
+              手机和游戏是否侵入晚自习或深度时段。
+            </div>
+            <div class="check">
+              <strong>睡眠底线</strong>
+              是否连续两天少于 6.5 小时。
+            </div>
+            <div class="check">
+              <strong>活动负载</strong>
+              文学社、宣传委员和约会是否超过 6-8 小时。
+            </div>
+            <div class="check">
+              <strong>下周三项</strong>
+              只列最重要的三件事，其他任务不能替代它们。
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="resources">
+      <div class="callout success">
+        <strong>资料整理状态</strong>
+        已建立独立的离线复习资料入口。后续课程笔记、定理汇编和考前速查页都可以继续加入这一栏。
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>学习资料整理</h2>
+          <span class="section-note">当前 5 个资料项目</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p0">P0</span>
+                <h3>工科数学分析 I：第一至二章知识整理 + 两节习题课</h3>
+              </div>
+              <span class="tag">已覆盖第一至二章与两节习题课</span>
+            </div>
+            <p>
+              依据第 1 章 5 份课件、第 2 章 5 份课件和两节习题课课件整理。第一章覆盖极限与连续，
+              第二章覆盖导数、微分、中值定理、L'Hospital 法则、Taylor 定理与函数性态，
+              第三章把数列极限习题课 16 道题拆成九种套路、常考知识点、逐题全解和易错清单，
+              第四章把连续函数习题课 22 道题拆成八种套路、常考知识点、逐题全解和易错清单。
+            </p>
+            <div class="resource-meta">
+              <span>第一章 78 条</span>
+              <span>第二章 74 条</span>
+              <span>第三章 45 条</span>
+              <span>第四章 54 条</span>
+              <span>四部分共 251 条</span>
+              <span>章节目录可选</span>
+              <span>更新：2026-11-10</span>
+            </div>
+            <ul class="plain-list">
+              <li>新增“第一章 / 第二章 / 习题课 数列极限 / 习题课 连续函数”四栏选取，搜索、筛选与统计只作用于当前章节。</li>
+              <li>第二章按 §2.1、§2.2、§2.3、§2.3.3 和 §2.4 重新组织。</li>
+              <li>第三章含 9 种套路、7 条常考知识点 + 2 条前置定义、17 条题解、10 条易错点。</li>
+              <li>第四章含 8 种套路、13 条常考知识点 + 2 条前置定义、22 条题解、9 条易错点。</li>
+              <li>保留定理、定义、公式、方法、证明骨架、易错点和来源页信息；题解另附折叠的完整论证。</li>
+              <li>单文件版本约 0.99 MB，可发送到手机后用浏览器离线打开。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="math-analysis-ch1-theorems-review-single.html"
+                target="_blank"
+                rel="noopener"
+              >
+                打开手机离线版
+              </a>
+              <a
+                class="resource-link"
+                href="math-analysis-ch1-theorems-review-single.html#chapter-3-1"
+                target="_blank"
+                rel="noopener"
+              >
+                数列极限习题入口
+              </a>
+              <a
+                class="resource-link"
+                href="math-analysis-ch1-theorems-review-single.html#chapter-4-1"
+                target="_blank"
+                rel="noopener"
+              >
+                连续函数习题入口
+              </a>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p0">P0</span>
+                <h3>线性代数第一、二章：全部知识点整理</h3>
+              </div>
+              <span class="tag">已覆盖课件 2-13</span>
+            </div>
+            <p>
+              依据课件 2 至课件 13 整理，覆盖矩阵基本概念、矩阵运算、分块矩阵、初等变换、
+              逆矩阵、行列式、伴随矩阵、克拉默法则、矩阵的秩、矩阵秩的不等式，以及第二章的
+              n 维向量、线性组合与线性表示、向量组等价、向量组的秩、向量组的线性相关性、
+              极大无关组、向量空间与基、坐标与过渡矩阵。
+            </p>
+            <div class="resource-meta">
+              <span>174 个知识点</span>
+              <span>13 个主题板块</span>
+              <span>36 个公式与方法</span>
+              <span>新增 37 条</span>
+              <span>全部默认折叠推导</span>
+              <span>更新：2026-11-13</span>
+            </div>
+            <ul class="plain-list">
+              <li>按定义、公式、性质、方法和易错点分类。</li>
+              <li>支持关键词查找并自动展示匹配条目。</li>
+              <li>课件 7 已补入伴随矩阵、可逆判据、抽象矩阵求逆与克拉默法则。</li>
+              <li>课件 8-9 已补入秩的定义、初等变换保秩、横向分块秩界、Sylvester 不等式和幂等矩阵。</li>
+              <li>课件 11 已补入第二章 2.1、2.2：n 维向量与九条性质、向量组与分块矩阵、B=KA 与 B=AK、向量组等价、向量组的秩与含参求秩。</li>
+              <li>课件 12 已补入第 2.3 节：相关与无关的秩定义、定理1 与两个推论、八条快速结论、定理2 与定理3、B=AC 系数矩阵法、含参与幂零型例题。</li>
+              <li>课件 13 已补入第 2.4-2.6 节：极大无关组定义与定理1、定理2，初等行变换求极大无关组，子空间与核空间、生成子空间，基与维数，坐标与过渡矩阵、坐标变换公式。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="linear-algebra-knowledge-review-single.html"
+                target="_blank"
+                rel="noopener"
+              >
+                打开手机离线版
+              </a>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p0">P0</span>
+                <h3>工科数学分析（上）期中冲刺：从极限到中值定理（15 个考点 · 101 道真题）</h3>
+              </div>
+              <span class="tag">已对齐今年范围</span>
+            </div>
+            <p>
+              依据 18-19、20-21、22-23、23-24、24-25、25-26 六套同期期中卷，外加 23-24 / 24-25 两套 JOIN 模拟卷，
+              把落在<b>「第 1 章 – 2.3 中值定理」</b>范围内的 101 道题逐题拆成 15 个高频考点，
+              配「必背公式 → 常见错法 → 真题级例题」，末尾是 120 分钟考场时间分配、11 天排程和考前自测 20 问。
+            </p>
+            <div class="resource-meta">
+              <span>101 道真题</span>
+              <span>15 个考点</span>
+              <span>20 条反例</span>
+              <span>8 张速查卡</span>
+              <span>11 天排程</span>
+              <span>更新：2026-11-07</span>
+            </div>
+            <ul class="plain-list">
+              <li>命题地图：六套卷全是「填空 32 + 计算 40 + 证明 28」，没有选择判断，120 分钟闭卷。</li>
+              <li>证明题四件套固定：数列收敛、一致连续、中值定理构造、ε 语言，合计 28 分。</li>
+              <li>25-26 那套卷全程零洛必达、零泰勒，与今年口径完全一致，是最可靠的模板。</li>
+              <li>已剔除洛必达法则、泰勒公式，以及 20-21 那道超纲的七阶泰勒题。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="gongshu-midterm-crash-single.html"
+                target="_blank"
+                rel="noopener"
+              >
+                打开手机离线版
+              </a>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p0">P0</span>
+                <h3>线性代数第一章：期中冲刺（12 个考点 · 40 道真题）</h3>
+              </div>
+              <span class="tag">已对齐今年范围</span>
+            </div>
+            <p>
+              只覆盖第一次期中范围：第一章 1.1–1.7。把 2023-2024-2 与 2024-2025-春 两套同期期中卷里
+              <b>落在第一章</b>的 40 道题逐题拆成 12 个高频考点，配「必背公式 → 常见错法 → 真题级例题」，
+              末尾是 90 分钟考场时间分配、三天冲刺表和考前自测 12 问。
+            </p>
+            <div class="resource-meta">
+              <span>40 道真题</span>
+              <span>12 个考点</span>
+              <span>20 条反例</span>
+              <span>8 张速查卡</span>
+              <span>支持搜索</span>
+              <span>更新：2026-10-28</span>
+            </div>
+            <ul class="plain-list">
+              <li>命题地图：两套卷第一章共 40 道，判断 15、选择 15、填空 8，另 2 道模拟题。</li>
+              <li>12 个考点按题量排序，乘法与转置、逆矩阵、行列式与伴随、矩阵的秩四块占七成。</li>
+              <li>反例库 20 条，专治判断题里「少了某个条件还成立吗」的设套。</li>
+              <li>已剔除向量组线性相关、极大无关组、线性方程组解的结构、特征值等今年不考内容。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="linear-algebra-midterm-crash-single.html"
+                target="_blank"
+                rel="noopener"
+              >
+                打开手机离线版
+              </a>
+            </div>
+          </article>
+<article class="resource-card">
+            <div class="resource-card__head">
+              <div>
+                <span class="priority p1">P1</span>
+                <h3>大学英语：Unit 1 + Unit 3 + 红书词汇，一个入口全打通</h3>
+              </div>
+              <span class="tag">一站式入口</span>
+            </div>
+            <p>
+              课本 Unit 1、Unit 3 与红书词汇总册合并为一个入口页，词表、短语、专名、语言点、课文译文、
+              <b>Text Comprehension</b> 与词汇练习各有直达按钮；不用在资料库里逐张卡片翻找。
+              合计 148 个词条、12 个语言点、15 段译文、48 道词汇练习。
+            </p>
+            <div class="resource-meta">
+              <span>2 个课本单元</span>
+              <span>148 个词条</span>
+              <span>12 个语言点</span>
+              <span>15 段译文</span>
+              <span>14 道课文理解</span>
+              <span>48 题练习</span>
+              <span>更新：2026-11-07</span>
+            </div>
+            <ul class="plain-list">
+              <li>Unit 1：64 词条、4 条课本短语、8 个专名、7 个语言点、6 段译文、18 题练习。</li>
+              <li>Unit 3：84 词条、41 条短语、30 个专名、10 个语言点、9 段译文、14 道课文理解（新增）、30 题练习。</li>
+              <li>红书词汇总册：Unit 1 + Unit 5 并成一册，66 个词条，标页码、可搜索，另配 Unit 5 练习 18 题。</li>
+              <li>入口页底部附推荐使用顺序：词表 → 语言点 → 译文回译 → 课文理解 → 练习判分。</li>
+            </ul>
+            <div class="resource-actions">
+              <a
+                class="resource-link"
+                href="college-english-hub.html"
+                target="_blank"
+                rel="noopener"
+              >
+                进入大学英语入口
+              </a>
+              <a
+                class="resource-link"
+                href="college-english-unit3-review-single.html#sec-tc"
+                target="_blank"
+                rel="noopener"
+              >
+                Unit 3 课文理解
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">依据：2026-09-21 至 09-27 课表、每周 25 小时学习预算、6-8 小时活动、5 小时竞赛上限及保研与通信工程分流目标。考核比例和后半学期课表待更新。</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const views = document.querySelectorAll(".view");
+    const todoChecks = Array.from(document.querySelectorAll(".todo-check"));
+    const todoProgressText = document.querySelector("#todo-progress-text");
+    const todoProgressFill = document.querySelector("#todo-progress-fill");
+    const localKeyPrefix = "freshman-todo-v2-";
+    const localUpdateKeyPrefix = "freshman-todo-updated-v1-";
+    const cloudRefreshIntervalMs = 15000;
+    const cloudPanel = document.querySelector("#cloud-sync-panel");
+    const cloudStatus = document.querySelector("#cloud-sync-status");
+    const cloudLoginControls = document.querySelector("#cloud-login-controls");
+    const cloudUserControls = document.querySelector("#cloud-user-controls");
+    const cloudEmail = document.querySelector("#cloud-email");
+    const cloudLoginButton = document.querySelector("#cloud-login-button");
+    const cloudGithubButton = document.querySelector("#cloud-github-button");
+    const cloudPassword = document.querySelector("#cloud-password");
+    const cloudPasswordLogin = document.querySelector("#cloud-password-login");
+    const cloudNewPassword = document.querySelector("#cloud-new-password");
+    const cloudSetPassword = document.querySelector("#cloud-set-password");
+    const cloudLoginMessage = document.querySelector("#cloud-login-message");
+    const cloudUserEmail = document.querySelector("#cloud-user-email");
+    const cloudSignoutButton = document.querySelector("#cloud-signout-button");
+    const supabaseConfig = window.STUDY_BOARD_SUPABASE || {};
+    const supabasePublicKey =
+      supabaseConfig.publishableKey || supabaseConfig.anonKey;
+    const cloudEnabled = Boolean(
+      supabaseConfig.url &&
+      supabasePublicKey &&
+      window.supabase
+    );
+    let supabaseClient = null;
+    let cloudSession = null;
+    let saveTimer = null;
+    let saveChain = Promise.resolve();
+    let reconcilePromise = null;
+    let reconcileRequestedAt = 0;
+    let cloudRefreshTimer = null;
+    const pendingRemoteTaskIds = new Set();
+    const completionTimes = {};
+    const taskUpdatedAt = {};
+
+    function isTodoVisible(item) {
+      const row = item.closest(".todo-item");
+      return Boolean(row) && !row.hidden;
+    }
+
+    function updateTodoProgress() {
+      const activeChecks = todoChecks.filter(isTodoVisible);
+      const completed = activeChecks.filter((item) => item.checked).length;
+      const total = activeChecks.length;
+      const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      todoProgressText.textContent = `${completed} / ${total}`;
+      todoProgressFill.style.width = `${percent}%`;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.view;
+        tabs.forEach((item) => item.classList.toggle("active", item === tab));
+        views.forEach((view) => view.classList.toggle("active", view.id === target));
+      });
+    });
+
+    function getTodoState() {
+      return Object.fromEntries(
+        todoChecks.map((item) => [item.dataset.taskId, item.checked])
+      );
+    }
+
+    function hasOwn(object, key) {
+      return Object.prototype.hasOwnProperty.call(object, key);
+    }
+
+    function timestampMs(value) {
+      const parsed = Date.parse(value || "");
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function rememberTaskTimestamp(taskId, timestamp, checked) {
+      const normalized = timestamp || null;
+      taskUpdatedAt[taskId] = normalized;
+      completionTimes[taskId] = checked ? normalized : null;
+    }
+
+    function localDateKey(value) {
+      const date = value instanceof Date ? value : new Date(value);
+      if (!Number.isFinite(date.getTime())) {
+        return "";
+      }
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function refreshTodoVisibility() {
+      const today = localDateKey(new Date());
+      const now = new Date().toISOString();
+
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (item.checked && !completionTimes[taskId]) {
+          completionTimes[taskId] = now;
+        }
+
+        const completedDay = localDateKey(completionTimes[taskId]);
+        const row = item.closest(".todo-item");
+        if (row) {
+          row.hidden = Boolean(
+            item.checked && completedDay && completedDay < today
+          );
+        }
+      });
+
+      updateTodoProgress();
+    }
+
+    function applyTodoState(state, timestamps = {}) {
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (hasOwn(state, taskId)) {
+          item.checked = Boolean(state[taskId]);
+          if (!state[taskId] && !hasOwn(timestamps, taskId)) {
+            completionTimes[taskId] = null;
+          }
+        }
+        if (hasOwn(timestamps, taskId)) {
+          rememberTaskTimestamp(
+            taskId,
+            timestamps[taskId],
+            Boolean(item.checked)
+          );
+        }
+      });
+      refreshTodoVisibility();
+    }
+
+    function loadLocalState() {
+      const state = {};
+      const timestamps = {};
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        state[taskId] =
+          localStorage.getItem(`${localKeyPrefix}${taskId}`) === "1";
+        timestamps[taskId] =
+          localStorage.getItem(`${localUpdateKeyPrefix}${taskId}`) ||
+          localStorage.getItem(`freshman-todo-time-${taskId}`) ||
+          null;
+      });
+      Object.assign(taskUpdatedAt, timestamps);
+      applyTodoState(state, timestamps);
+      return state;
+    }
+
+    function saveLocalState(state) {
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        localStorage.setItem(
+          `${localKeyPrefix}${taskId}`,
+          state[taskId] ? "1" : "0"
+        );
+        if (taskUpdatedAt[taskId]) {
+          localStorage.setItem(
+            `${localUpdateKeyPrefix}${taskId}`,
+            taskUpdatedAt[taskId]
+          );
+        } else {
+          localStorage.removeItem(`${localUpdateKeyPrefix}${taskId}`);
+        }
+        if (state[taskId] && completionTimes[taskId]) {
+          localStorage.setItem(
+            `freshman-todo-time-${taskId}`,
+            completionTimes[taskId]
+          );
+        } else {
+          localStorage.removeItem(`freshman-todo-time-${taskId}`);
+        }
+      });
+    }
+
+    async function loadRemoteState() {
+      if (cloudEnabled && cloudSession) {
+        const { data, error } = await supabaseClient
+          .from("todo_states")
+          .select("task_id,checked,updated_at");
+        if (error) {
+          cloudStatus.textContent = `读取失败：${error.message}`;
+          return null;
+        }
+        const state = {};
+        const timestamps = {};
+        (data || []).forEach((row) => {
+          state[row.task_id] = Boolean(row.checked);
+          timestamps[row.task_id] = row.updated_at || null;
+        });
+        return { state, timestamps };
+      }
+
+      if (!location.protocol.startsWith("http")) {
+        return null;
+      }
+
+      try {
+        const response = await fetch("/api/state", { cache: "no-store" });
+        if (!response.ok) {
+          return null;
+        }
+        const payload = await response.json();
+        if (payload && payload.state) {
+          return {
+            state: payload.state,
+            timestamps: payload.updatedAt || {}
+          };
+        }
+        return { state: payload || {}, timestamps: {} };
+      } catch {
+        return null;
+      }
+    }
+
+    async function saveRemoteState(state) {
+      const changedState = { ...state };
+      if (Object.keys(changedState).length === 0) {
+        return true;
+      }
+
+      if (cloudEnabled && cloudSession) {
+        const rows = Object.entries(changedState).map(([taskId, checked]) => ({
+          user_id: cloudSession.user.id,
+          task_id: taskId,
+          checked
+        }));
+        const { data, error } = await supabaseClient
+          .from("todo_states")
+          .upsert(rows, { onConflict: "user_id,task_id" })
+          .select("task_id,checked,updated_at");
+        (data || []).forEach((row) => {
+          if (hasOwn(changedState, row.task_id)) {
+            rememberTaskTimestamp(row.task_id, row.updated_at, row.checked);
+          }
+        });
+        if (!error) {
+          saveLocalState(getTodoState());
+        }
+        cloudStatus.textContent = error
+          ? `同步失败：${error.message}`
+          : `已同步 · ${new Date().toLocaleTimeString()}`;
+        return !error;
+      }
+
+      if (!location.protocol.startsWith("http")) {
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/state", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            state: changedState,
+            updatedAt: taskUpdatedAt
+          }),
+        });
+        return response.ok;
+      } catch {
+        // Local storage remains the fallback.
+        return false;
+      }
+    }
+
+    function queueRemoteStateSave(state) {
+      const snapshot = { ...state };
+      saveChain = saveChain
+        .catch(() => false)
+        .then(() => saveRemoteState(snapshot));
+      return saveChain;
+    }
+
+    async function flushScheduledRemoteSave() {
+      if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+      }
+
+      const state = getTodoState();
+      const changedState = {};
+      pendingRemoteTaskIds.forEach((taskId) => {
+        if (hasOwn(state, taskId)) {
+          changedState[taskId] = state[taskId];
+        }
+      });
+      pendingRemoteTaskIds.clear();
+      if (Object.keys(changedState).length > 0) {
+        await queueRemoteStateSave(changedState);
+      }
+      await saveChain.catch(() => false);
+    }
+
+    function mergeRemoteState(remote) {
+      const localState = getTodoState();
+      const remoteState = remote.state || {};
+      const remoteTimestamps = remote.timestamps || {};
+      const stateToApply = {};
+      const timestampsToApply = {};
+      const localStateToUpload = {};
+      const remoteTaskIds = Object.keys(remoteState);
+
+      todoChecks.forEach((item) => {
+        const taskId = item.dataset.taskId;
+        if (!hasOwn(remoteState, taskId)) {
+          localStateToUpload[taskId] = localState[taskId];
+          return;
+        }
+
+        const localUpdatedAt = timestampMs(taskUpdatedAt[taskId]);
+        const remoteUpdatedAt = timestampMs(remoteTimestamps[taskId]);
+        const keepLocal =
+          pendingRemoteTaskIds.has(taskId) ||
+          localUpdatedAt > remoteUpdatedAt;
+
+        if (keepLocal) {
+          if (localState[taskId] !== Boolean(remoteState[taskId])) {
+            localStateToUpload[taskId] = localState[taskId];
+          }
+          return;
+        }
+
+        stateToApply[taskId] = Boolean(remoteState[taskId]);
+        timestampsToApply[taskId] = remoteTimestamps[taskId] || null;
+      });
+
+      if (remoteTaskIds.length === 0) {
+        return {
+          needsUpload: true,
+          uploadState: { ...localState }
+        };
+      }
+
+      applyTodoState(stateToApply, timestampsToApply);
+      refreshTodoVisibility();
+      saveLocalState(getTodoState());
+
+      return {
+        needsUpload: Object.keys(localStateToUpload).length > 0,
+        uploadState: localStateToUpload
+      };
+    }
+
+    async function reconcileCloudState({ force = false } = {}) {
+      if (!cloudEnabled || !cloudSession) {
+        return false;
+      }
+      if (reconcilePromise) {
+        return reconcilePromise;
+      }
+      if (!force && Date.now() - reconcileRequestedAt < 1500) {
+        return false;
+      }
+      reconcileRequestedAt = Date.now();
+
+      const request = (async () => {
+        await flushScheduledRemoteSave();
+        const remote = await loadRemoteState();
+        if (!remote) {
+          return false;
+        }
+
+        const mergeResult = mergeRemoteState(remote);
+        if (mergeResult.needsUpload) {
+          const saved = await queueRemoteStateSave(mergeResult.uploadState);
+          if (!saved) {
+            return false;
+          }
+        }
+        cloudStatus.textContent =
+          `已校准 · ${new Date().toLocaleTimeString()}`;
+        return true;
+      })();
+      reconcilePromise = request;
+      try {
+        return await request;
+      } finally {
+        reconcilePromise = null;
+      }
+    }
+
+    function scheduleRemoteSave(taskId) {
+      if (taskId) {
+        pendingRemoteTaskIds.add(taskId);
+      }
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        saveTimer = null;
+        flushScheduledRemoteSave().catch(() => false);
+      }, 120);
+    }
+
+    function updateCloudUi() {
+      if (!cloudEnabled) {
+        return;
+      }
+
+      cloudPanel.hidden = false;
+      if (cloudSession) {
+        cloudLoginControls.hidden = true;
+        cloudUserControls.hidden = false;
+        cloudUserEmail.textContent = cloudSession.user.email || "已登录";
+        cloudStatus.textContent = "云端同步已启用";
+      } else {
+        cloudLoginControls.hidden = false;
+        cloudUserControls.hidden = true;
+        cloudStatus.textContent = "登录后可在电脑和手机间同步";
+      }
+    }
+
+    async function initCloudSync() {
+      if (!cloudEnabled) {
+        return;
+      }
+
+      supabaseClient = window.supabase.createClient(
+        supabaseConfig.url,
+        supabasePublicKey
+      );
+      cloudRefreshTimer = window.setInterval(() => {
+        if (cloudSession && document.visibilityState === "visible") {
+          reconcileCloudState();
+        }
+      }, cloudRefreshIntervalMs);
+
+      const { data } = await supabaseClient.auth.getSession();
+      cloudSession = data.session;
+      updateCloudUi();
+
+      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        cloudSession = session;
+        updateCloudUi();
+        if (cloudSession) {
+          await reconcileCloudState();
+        }
+      });
+    }
+
+    cloudLoginButton?.addEventListener("click", async () => {
+      const email = cloudEmail.value.trim();
+      if (!email) {
+        cloudLoginMessage.textContent = "请先输入邮箱。";
+        return;
+      }
+
+      cloudLoginMessage.textContent = "正在发送登录链接...";
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: location.href.split("#")[0]
+        }
+      });
+      cloudLoginMessage.textContent = error
+        ? `发送失败：${error.message}`
+        : "登录链接已发送，请检查邮箱。";
+    });
+
+    cloudPasswordLogin?.addEventListener("click", async () => {
+      const email = cloudEmail.value.trim();
+      const password = cloudPassword.value;
+
+      if (!email || !password) {
+        cloudLoginMessage.textContent = "请输入邮箱和密码。";
+        return;
+      }
+
+      cloudLoginMessage.textContent = "正在登录...";
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        cloudLoginMessage.textContent = `登录失败：${error.message}`;
+        return;
+      }
+
+      cloudSession = data.session;
+      updateCloudUi();
+      cloudLoginMessage.textContent = "登录成功，云端同步已启用。";
+      await reconcileCloudState();
+    });
+
+    cloudSetPassword?.addEventListener("click", async () => {
+      const password = cloudNewPassword.value;
+      if (!password || password.length < 6) {
+        cloudLoginMessage.textContent = "密码至少需要 6 位。";
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.updateUser({ password });
+      cloudLoginMessage.textContent = error
+        ? `设置失败：${error.message}`
+        : "密码已设置，可在其他设备使用邮箱和密码登录。";
+    });
+
+    cloudSignoutButton?.addEventListener("click", async () => {
+      await flushScheduledRemoteSave();
+      await supabaseClient.auth.signOut();
+      cloudSession = null;
+      updateCloudUi();
+    });
+
+    cloudGithubButton?.addEventListener("click", async () => {
+      if (!cloudEnabled) {
+        return;
+      }
+      await supabaseClient.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: location.href.split("#")[0]
+        }
+      });
+    });
+
+    todoChecks.forEach((item) => {
+      item.addEventListener("change", () => {
+        const taskId = item.dataset.taskId;
+        const changedAt = new Date().toISOString();
+        completionTimes[taskId] = item.checked ? changedAt : null;
+        taskUpdatedAt[taskId] = changedAt;
+        updateTodoProgress();
+        saveLocalState(getTodoState());
+        scheduleRemoteSave(taskId);
+      });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        flushScheduledRemoteSave().catch(() => false);
+      } else if (cloudSession) {
+        reconcileCloudState({ force: true });
+      }
+    });
+
+    window.addEventListener("focus", () => {
+      if (cloudSession) {
+        reconcileCloudState();
+      }
+    });
+
+    window.addEventListener("pageshow", () => {
+      if (cloudSession) {
+        reconcileCloudState({ force: true });
+      }
+    });
+
+    (async () => {
+      const localState = loadLocalState();
+      refreshTodoVisibility();
+      await initCloudSync();
+
+      if (cloudEnabled && cloudSession) {
+        await reconcileCloudState({ force: true });
+        return;
+      }
+
+      const remote = await loadRemoteState();
+
+      if (remote && Object.keys(remote.state).length > 0) {
+        const mergeResult = mergeRemoteState(remote);
+        if (mergeResult.needsUpload) {
+          await queueRemoteStateSave(mergeResult.uploadState);
+        }
+      } else {
+        await queueRemoteStateSave(localState);
+      }
+    })();
+  </script>
+</body>
+</html>
