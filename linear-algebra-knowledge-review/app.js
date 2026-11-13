@@ -2,7 +2,7 @@
   "use strict";
 
   const sourceChapters = window.LINEAR_REVIEW_CHAPTERS || [];
-  const sectionMeta = [
+  const sectionMeta = window.LINEAR_REVIEW_SECTIONS || [
     {
       number: "1.1",
       title: "矩阵的基本概念",
