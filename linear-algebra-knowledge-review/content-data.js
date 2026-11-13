@@ -2318,5 +2318,921 @@ window.LINEAR_REVIEW_CHAPTERS = [
         "source": "课件 12，第 19 页、第 58 页"
       }
     ]
+  },
+  {
+    "number": "2.4",
+    "title": "向量组的极大无关组",
+    "lead": "在向量组内部挑出「最精简又够用」的部分组，用有限个向量代表整个向量组，并把向量组的秩算出来。",
+    "map": [
+      "定义与前提",
+      "等价与不唯一",
+      "定理1",
+      "定理2",
+      "初等行变换求法",
+      "表示系数"
+    ],
+    "entries": [
+      {
+        "id": "la-def-maximal-independent-set",
+        "type": "definition",
+        "label": "定义 2.4.1",
+        "title": "极大（线性）无关组",
+        "statement": [
+          "设向量组 $\\alpha_1,\\dots,\\alpha_s$ 的某个部分组 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 满足：",
+          "(1) $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 线性无关；(2) 原向量组中任一向量都能由 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 线性表示，则称 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 为向量组 $\\alpha_1,\\dots,\\alpha_s$ 的一个极大（线性）无关组。"
+        ],
+        "conditions": [
+          "研究对象必须是原向量组的部分组。",
+          "两条要求同时成立：先无关，再能表示全组。"
+        ],
+        "conclusion": [
+          "极大无关组用 $r$ 个向量完整代表了 $s$ 个向量的线性结构。",
+          "极大无关组所含向量个数就是向量组的秩。"
+        ],
+        "derivation": [
+          "「极大」不是指数目最多，而是「再添一个就相关」的临界状态：组内无关，组外任何向量都要靠它表示。",
+          "由于 $s$ 个向量之间的关系完全由极大无关组决定，研究向量组可以缩小为研究它的极大无关组。"
+        ],
+        "pitfalls": [
+          "只验证「线性无关」就下结论，漏掉条件 (2)。",
+          "把原向量组中不存在的向量拉进来充当极大无关组（见下一个易错点）。"
+        ],
+        "source": "课件 13，第 3 页"
+      },
+      {
+        "id": "la-pitfall-max-subset-must-belong",
+        "type": "pitfall",
+        "label": "易错点 2.4.2",
+        "title": "前提是「部分组」，不能用组外向量替换",
+        "statement": [
+          "取 $\\alpha_1=(1,1)^T$，$\\alpha_2=(1,2)^T$，$\\alpha_3=(1,0)^T$，$e_1=(1,0)^T$，$e_2=(0,1)^T$。$e_1,e_2$ 线性无关，且 $e_1,e_2$ 能线性表示 $\\alpha_1,\\alpha_2,\\alpha_3$，但 $e_1,e_2$ 不是 $\\{\\alpha_1,\\alpha_2,\\alpha_3\\}$ 的极大无关组。"
+        ],
+        "conditions": [
+          "$e_1,e_2$ 确实无关，也确实能表示 $\u0007lpha_1,\u0007lpha_2,\u0007lpha_3$。"
+        ],
+        "conclusion": [
+          "原因只有一个：$e_1,e_2$ 不属于向量组 $\\{\u0007lpha_1,\u0007lpha_2,\u0007lpha_3\\}$，不构成它的部分组。"
+        ],
+        "derivation": [
+          "每个 $\\alpha_i$ 都是 $\\mathbb{R}^2$ 中的向量，$e_1,e_2$ 当然能表示它们；但定义要求极大无关组从原向量组中挑选，这个例子里能选的只有 $\\alpha_1,\\alpha_2,\\alpha_3$。"
+        ],
+        "pitfalls": [
+          "看到「无关且能表示」就认定是极大无关组，忽略「必须来自原向量组」。"
+        ],
+        "source": "课件 13，第 5 页"
+      },
+      {
+        "id": "la-prop-max-others-representable",
+        "type": "property",
+        "label": "性质 2.4.3",
+        "title": "条件 (2) 可以只要求「其余向量」能被表示",
+        "statement": [
+          "定义中的条件 (2)「组中任一向量都可由 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 线性表示」，可以改成「其余向量都可由 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 线性表示」。"
+        ],
+        "conditions": [
+          "改写的依据是极大无关组自身的每个向量当然能表示自己。"
+        ],
+        "conclusion": [
+          "两种说法等价，做题时只需检查组外的向量。"
+        ],
+        "derivation": [
+          "$\\alpha_{i_j}=1\\cdot\\alpha_{i_j}+0\\cdot\\alpha_{i_1}+\\dots+0\\cdot\\alpha_{i_r}$，所以组内向量不必单独验证。"
+        ],
+        "pitfalls": [
+          "把条件 (2) 写成「其余向量能被表示」后，忘了条件 (1) 仍然要证。"
+        ],
+        "source": "课件 13，第 7 页"
+      },
+      {
+        "id": "la-prop-max-equivalent-and-not-unique",
+        "type": "property",
+        "label": "性质 2.4.4",
+        "title": "与原组等价；极大无关组不唯一",
+        "statement": [
+          "原向量组与其极大无关组等价。极大无关组不一定唯一。",
+          "例如 $\\alpha_1=(1,1)^T$，$\\alpha_2=(2,1)^T$，$\\alpha_3=(1,0)^T$ 中，$(\\alpha_1,\\alpha_2)$、$(\\alpha_1,\\alpha_3)$、$(\\alpha_2,\\alpha_3)$ 都是极大无关组。"
+        ],
+        "conditions": [
+          "「等价」指能相互线性表示。",
+          "秩大于 $0$ 且向量个数多于秩时，极大无关组一般不唯一。"
+        ],
+        "conclusion": [
+          "不同极大无关组所含向量个数相同（下一节定理1），所以秩是唯一确定的。"
+        ],
+        "derivation": [
+          "极大无关组能表示原组：这正是定义的条件 (2)；原组能表示极大无关组：因为极大无关组是原组的部分组。所以两者等价。",
+          "$\\alpha_1,\\alpha_2,\\alpha_3$ 两两不成比例且都在 $\\mathbb{R}^2$ 中，任取两个都无关，且第三个可被这两个表示，故三组都是极大无关组。"
+        ],
+        "pitfalls": [
+          "误以为极大无关组唯一，答题时把某一种取法说成「那个」极大无关组。"
+        ],
+        "source": "课件 13，第 8-9 页"
+      },
+      {
+        "id": "la-thm-max-any-two-same-count",
+        "type": "theorem",
+        "label": "定理 2.4.5",
+        "title": "定理1：任意两个极大无关组等价且个数相同",
+        "statement": [
+          "同一向量组中任意两个极大无关组等价，且所含向量个数都等于整个向量组的秩。"
+        ],
+        "conditions": [
+          "两个极大无关组都来自同一个向量组。"
+        ],
+        "conclusion": [
+          "若 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 与 $\\alpha_{j_1},\\dots,\\alpha_{j_t}$ 都是极大无关组，则 $r=t=r\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "derivation": [
+          "设两组分别为 I 与 II。由性质 2.4.4，I 与 II 都与原向量组等价，因而 I 与 II 等价。",
+          "由「等价的向量组秩相等」得 $r(I)=r(II)$；又 I、II 各自线性无关，故 $r(I)=r$，$r(II)=t$。",
+          "再由 $r(I)=r\\{\\alpha_1,\\dots,\\alpha_s\\}$（极大无关组用 $r$ 个无关向量表示全组，秩就是 $r$）得 $r=t=r\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "pitfalls": [
+          "只记住「个数相同」，忘了「等价」也是结论的一部分。"
+        ],
+        "source": "课件 13，第 10 页"
+      },
+      {
+        "id": "la-thm-max-exists",
+        "type": "theorem",
+        "label": "定理 2.4.6",
+        "title": "定理2(1)：极大无关组一定存在",
+        "statement": [
+          "设向量组 $\\alpha_1,\\dots,\\alpha_s$ 的秩为 $r>0$，则必存在 $r$ 个向量 $\\alpha_{j_1},\\dots,\\alpha_{j_r}$ 构成它的一个极大无关组。"
+        ],
+        "conditions": [
+          "秩 $r>0$，即向量组中至少有一个非零向量。"
+        ],
+        "conclusion": [
+          "极大无关组存在，且个数恰为秩 $r$。"
+        ],
+        "derivation": [
+          "把向量组按列排成矩阵 $A=(\\alpha_1,\\dots,\\alpha_s)=(a_{ij})_{n\\times s}$，$r(A)=r>0$ 说明 $A$ 中存在 $r$ 阶非零子式。",
+          "这个 $r$ 阶非零子式同时也是子矩阵 $(\\alpha_{j_1},\\dots,\\alpha_{j_r})$ 的 $r$ 阶非零子式，故 $r\\{\\alpha_{j_1},\\dots,\\alpha_{j_r}\\}=r$ 且这 $r$ 个向量线性无关。",
+          "对任一组外的 $\\alpha_j$，由于 $(\\alpha_{j_1},\\dots,\\alpha_{j_r},\\alpha_j)$ 只有 $r$ 行，秩不超过 $r<r+1$，故这 $r+1$ 个向量线性相关，$\\alpha_j$ 可由 $\\alpha_{j_1},\\dots,\\alpha_{j_r}$ 线性表示。"
+        ],
+        "pitfalls": [
+          "用「秩等于向量个数」当无关的判据时，忘了这里是 $r$ 个向量与矩阵秩 $r$ 的对应。"
+        ],
+        "source": "课件 13，第 11-13 页"
+      },
+      {
+        "id": "la-thm-max-any-r-independent",
+        "type": "theorem",
+        "label": "定理 2.4.7",
+        "title": "定理2(2)：任意 $r$ 个无关向量都是极大无关组",
+        "statement": [
+          "设向量组 $\\alpha_1,\\dots,\\alpha_s$ 的秩为 $r>0$，则组中任意 $r$ 个线性无关的向量 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 都构成极大无关组。"
+        ],
+        "conditions": [
+          "必须是组内的 $r$ 个向量，且个数恰好等于秩。",
+          "个数少于 $r$ 时只是无关组，不是极大无关组。"
+        ],
+        "conclusion": [
+          "存在性与任意性合起来：秩为 $r$ 的向量组，极大无关组就是「任取 $r$ 个无关向量」。"
+        ],
+        "derivation": [
+          "$\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 线性无关 $\\Rightarrow r\\{\\alpha_{i_1},\\dots,\\alpha_{i_r}\\}=r$，故该子矩阵存在 $r$ 阶非零子式，它也是 $A$ 的子式。",
+          "由定理2(1) 的构造，取这 $r$ 个向量即得极大无关组（它们无关且能表示其余向量）。",
+          "另一条路：设 $\\alpha_{j_1},\\dots,\\alpha_{j_r}$ 是一个极大无关组，对任意 $\\alpha_i$，$r+1$ 个向量 $\\alpha_{j_1},\\dots,\\alpha_{j_r},\\alpha_i$ 必线性相关，而前 $r$ 个无关，故 $\\alpha_i$ 可由它们表示，从而 $\\alpha_i$ 也能由 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 表示。"
+        ],
+        "pitfalls": [
+          "把「任意 $r$ 个无关向量」误记成「任意 $r$ 个向量」。"
+        ],
+        "source": "课件 13，第 14-15 页"
+      },
+      {
+        "id": "la-method-rref-maximal-independent",
+        "type": "method",
+        "label": "方法 2.4.8",
+        "title": "初等行变换求极大无关组与秩",
+        "statement": [
+          "把 $\\alpha_1,\\dots,\\alpha_s$ 按列排成矩阵 $A$，只用初等行变换把 $A$ 化为行阶梯形（或行最简形），则：非零行数 $=r(A)=r\\{\\alpha_1,\\dots,\\alpha_s\\}$；主元所在的列对应的原向量构成一个极大无关组。"
+        ],
+        "conditions": [
+          "只做初等行变换，不能做列变换（列变换会打乱「哪一列对应哪个向量」）。",
+          "取的是主元列对应的「原来的」列向量，不是化简后矩阵的列。"
+        ],
+        "conclusion": [
+          "秩、极大无关组一次求出；行最简形还能直接读出其余向量的表示系数。"
+        ],
+        "derivation": [
+          "初等行变换不改变列向量组之间的线性关系（相当于左乘可逆矩阵 $P$：$PA$ 与 $A$ 的列向量组有相同的线性关系）。",
+          "行阶梯形中主元列在 $PA$ 里线性无关，且其余列都能由它们表示，故原矩阵中对应序号的列向量也线性无关、也能表示其余列。"
+        ],
+        "pitfalls": [
+          "做完行变换后从化简后的矩阵里取列向量当答案。",
+          "先做列变换再取列，对应关系已经错乱。"
+        ],
+        "source": "课件 13，第 16-19 页"
+      },
+      {
+        "id": "la-method-express-by-basis",
+        "type": "method",
+        "label": "方法 2.4.9",
+        "title": "求其余向量用极大无关组表示的系数",
+        "statement": [
+          "设 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 是极大无关组，要求 $\\alpha_j$ 的表示系数，就解线性方程组 $(\\alpha_{i_1},\\dots,\\alpha_{i_r})x=\\alpha_j$。",
+          "实用做法：对增广矩阵 $(\\alpha_{i_1},\\dots,\\alpha_{i_r}\\mid\\alpha_j)$ 作初等行变换化为行最简形，最后一列就是系数 $x$。"
+        ],
+        "conditions": [
+          "极大无关组线性无关，所以方程组有唯一解。"
+        ],
+        "conclusion": [
+          "这一步同时验证了「$\u0007lpha_j$ 能被表示」，也就验证了该组确实是极大无关组。"
+        ],
+        "derivation": [
+          "若把 $(\\alpha_{i_1},\\dots,\\alpha_{i_r}\\mid\\alpha_{j_1},\\dots)$ 多列一起化简，一次行变换可以同时读出所有组外向量的系数。"
+        ],
+        "pitfalls": [
+          "把系数顺序写乱：系数是相对极大无关组的排列顺序的。"
+        ],
+        "source": "课件 13，第 18-19 页"
+      },
+      {
+        "id": "la-ex-max-five-vectors",
+        "type": "example",
+        "label": "例 2.4.10",
+        "title": "例1：求五维列向量组的极大无关组并表示其余向量",
+        "statement": [
+          "设 $A=(\\alpha_1,\\alpha_2,\\alpha_3,\\alpha_4,\\alpha_5)=\\begin{pmatrix}2&-1&-1&1&2\\\\1&1&-2&1&4\\\\4&-6&2&-2&4\\\\3&6&-9&7&9\\end{pmatrix}$，求该向量组的秩和一个极大无关组，并把其余向量用极大无关组表示。"
+        ],
+        "conditions": [
+          "四个分量，五个向量，故秩不超过 $4$。"
+        ],
+        "conclusion": [
+          "初等行变换得行最简形 $\\begin{pmatrix}1&0&-1&0&4\\\\0&1&-1&0&3\\\\0&0&0&1&-3\\\\0&0&0&0&0\\end{pmatrix}$。",
+          "秩 $=3$；主元在第 $1,2,4$ 列，故 $\\alpha_1,\\alpha_2,\\alpha_4$ 是一个极大无关组。",
+          "$\\alpha_3=-\\alpha_1-\\alpha_2$，$\\alpha_5=4\\alpha_1+3\\alpha_2-3\\alpha_4$。"
+        ],
+        "derivation": [
+          "行最简形第 3 列为 $(-1,-1,0,0)^T$，对应 $\\alpha_3=-\\alpha_1-\\alpha_2+0\\cdot\\alpha_4$。",
+          "第 5 列为 $(4,3,0,-3)^T$，对应 $\\alpha_5=4\\alpha_1+3\\alpha_2+0\\cdot\\alpha_3-3\\alpha_4$。",
+          "也可用方法 2.4.9：对 $(\\alpha_1,\\alpha_2,\\alpha_4\\mid\\alpha_3,\\alpha_5)$ 化简，直接读出系数列。"
+        ],
+        "pitfalls": [
+          "主元列取成 $1,2,3$：第 3 列不是主元列。",
+          "把 $\u0007lpha_3$ 的系数算出后写成 $\u0007lpha_3=-\u0007lpha_1-\u0007lpha_2-\u0007lpha_4$。"
+        ],
+        "source": "课件 13，第 16-19 页"
+      },
+      {
+        "id": "la-ex-max-cyclic-difference",
+        "type": "example",
+        "label": "例 2.4.11",
+        "title": "例2：用系数矩阵判定循环差向量组的极大无关组",
+        "statement": [
+          "设 $\\alpha_1,\\alpha_2,\\alpha_3$ 线性无关，$\\beta_1=\\alpha_1-\\alpha_2$，$\\beta_2=\\alpha_2-\\alpha_3$，$\\beta_3=\\alpha_3-\\alpha_1$，求 $\\beta_1,\\beta_2,\\beta_3$ 的一个极大无关组。"
+        ],
+        "conditions": [
+          "$\u0007lpha$ 组无关，可当作「好用的基」。"
+        ],
+        "conclusion": [
+          "$\\beta_1,\\beta_2$ 是 $\\beta_1,\\beta_2,\\beta_3$ 的一个极大无关组，秩为 $2$。"
+        ],
+        "derivation": [
+          "令 $A=(\\alpha_1,\\alpha_2,\\alpha_3)$，$B=(\\beta_1,\\beta_2,\\beta_3)$，则 $B=AC$，其中 $C=\\begin{pmatrix}1&0&-1\\\\-1&1&0\\\\0&-1&1\\end{pmatrix}$。",
+          "$|C|=0$ 且存在二阶非零子式，故 $r(C)=2$，从而 $r(B)\\le r(C)=2$。",
+          "又 $r(\\beta_1,\\beta_2)=r\\big(A(\\gamma_1,\\gamma_2)\\big)=r(\\gamma_1,\\gamma_2)=2$，其中 $(\\gamma_1,\\gamma_2)$ 是 $C$ 的前两列（$A$ 可逆，左乘可逆矩阵不改变秩）。",
+          "$r(\\beta_1,\\beta_2)=2$ 说明 $\\beta_1,\\beta_2$ 无关；而 $r(B)=2$，故它们构成极大无关组。"
+        ],
+        "pitfalls": [
+          "直接说「$\beta_1+\beta_2+\beta_3=0$ 所以秩为 $2$」而不验证无关性，逻辑上要补一句「任取两个无关」。"
+        ],
+        "source": "课件 13，第 21 页"
+      },
+      {
+        "id": "la-pitfall-pivot-vs-row",
+        "type": "pitfall",
+        "label": "易错点 2.4.12",
+        "title": "主元列取原向量，不要混淆行与列",
+        "statement": [
+          "求「行向量组」的极大无关组时，要把行向量按行排列，做初等行变换后取非零行；求「列向量组」的极大无关组时，按列排列，取主元列对应的原向量。"
+        ],
+        "conditions": [
+          "题目给的是行向量还是列向量，决定排列方式与答案形式。"
+        ],
+        "conclusion": [
+          "两种问法结论可以互相转置，但过程不能混用。"
+        ],
+        "derivation": [
+          "行向量组排成矩阵 $A$ 后，行变换保持行向量组的秩与关系，故取非零行；列向量组同理取主元列。"
+        ],
+        "pitfalls": [
+          "把列向量组按行排列后取非零行充当极大无关组。"
+        ],
+        "source": "课件 13，第 16-19 页"
+      }
+    ]
+  },
+  {
+    "number": "2.5",
+    "title": "向量空间、基与维数",
+    "lead": "把「对加法和数乘封闭」抽象成向量空间，用基与维数刻画它的大小，并说明方程组解集与列空间都是向量空间。",
+    "map": [
+      "子空间定义",
+      "四个引例",
+      "核空间与生成子空间",
+      "基与维数",
+      "极大无关组给出基"
+    ],
+    "entries": [
+      {
+        "id": "la-def-subspace",
+        "type": "definition",
+        "label": "定义 2.5.1",
+        "title": "向量空间（$\\mathbb{R}^n$ 的子空间）",
+        "statement": [
+          "设 $S$ 是 $\\mathbb{R}^n$ 的一个非空子集合。若 $S$ 对加法及数乘封闭，即 $\\forall\\alpha,\\beta\\in S$，$\\forall k\\in\\mathbb{R}$，都有 $\\alpha+\\beta\\in S$，$k\\alpha\\in S$，则称 $S$ 为一个向量空间（或 $\\mathbb{R}^n$ 的一个子空间）。"
+        ],
+        "conditions": [
+          "$S$ 非空（等价于 $0\\in S$ 在封闭性下自动成立）。",
+          "对加法封闭；对数乘封闭。两条缺一不可。"
+        ],
+        "conclusion": [
+          "$\\mathbb{R}^n$ 的任一子空间都自动含有零向量。",
+          "子空间是「线性运算不跑出去」的集合。"
+        ],
+        "derivation": [
+          "非空加上对数乘封闭，取 $k=0$ 即得 $0\\in S$。",
+          "验证子空间的标准流程：先说明 $S\\ne\\varnothing$（通常直接指出 $0\\in S$），再任取 $\\alpha,\\beta\\in S$、$k\\in\\mathbb{R}$ 验证两条封闭性。"
+        ],
+        "pitfalls": [
+          "只验证加法封闭就下结论。",
+          "忘记先说明集合非空。"
+        ],
+        "source": "课件 13，第 26 页"
+      },
+      {
+        "id": "la-ex-subspace-four",
+        "type": "example",
+        "label": "例 2.5.2",
+        "title": "四个典型引例",
+        "statement": [
+          "(1) $\\mathbb{R}^n=\\{(a_1,\\dots,a_n)^T\\mid a_i\\in\\mathbb{R}\\}$：非空，加法和数乘结果仍在 $\\mathbb{R}^n$。",
+          "(2) 齐次方程组解集合 $S=\\{x\\in\\mathbb{R}^n\\mid Ax=0\\}$：$S\\ne\\varnothing$，且 $A(\\xi+\\eta)=A\\xi+A\\eta=0$，$A(k\\xi)=k(A\\xi)=0$。",
+          "(3) 由向量组生成的集合 $S=\\{k_1\\alpha_1+\\dots+k_s\\alpha_s\\mid k_i\\in\\mathbb{R}\\}$：非空，且两个线性组合相加、数乘后仍是线性组合。",
+          "(4) $S=\\{Ax\\mid x\\in\\mathbb{R}^s\\}$（$A$ 为 $n\\times s$ 实矩阵）：$Ax+Ay=A(x+y)$，$k(Ax)=A(kx)$。"
+        ],
+        "conditions": [
+          "每个例子都要落到「非空 + 两条封闭」这个统一格式。"
+        ],
+        "conclusion": [
+          "四个例子覆盖了后面所有常见向量空间：全空间、解空间、生成子空间、列空间。"
+        ],
+        "derivation": [
+          "(3) 的关键一步：$(k_1\\alpha_1+\\dots+k_s\\alpha_s)+(l_1\\alpha_1+\\dots+l_s\\alpha_s)=(k_1+l_1)\\alpha_1+\\dots+(k_s+l_s)\\alpha_s$，$l(k_1\\alpha_1+\\dots+k_s\\alpha_s)=(lk_1)\\alpha_1+\\dots+(lk_s)\\alpha_s$——系数仍在 $\\mathbb{R}$ 中，所以没跑出去。"
+        ],
+        "pitfalls": [
+          "验证 (2) 时只写「$Ax=0$ 有解」，没有真正用 $A$ 的线性性验证封闭。"
+        ],
+        "source": "课件 13，第 23-25 页"
+      },
+      {
+        "id": "la-prop-trivial-subspace",
+        "type": "property",
+        "label": "性质 2.5.3",
+        "title": "$\\mathbb{R}^n$ 的平凡子空间",
+        "statement": [
+          "$\\{0\\}$ 与 $\\mathbb{R}^n$ 都是 $\\mathbb{R}^n$ 的子空间，称为平凡子空间。"
+        ],
+        "conditions": [
+          "$0$ 表示零向量。"
+        ],
+        "conclusion": [
+          "除这两个之外的都是非平凡子空间；讨论「真子空间」时要排除它们。"
+        ],
+        "derivation": [
+          "$\\{0\\}$ 对加法、数乘封闭；$\\mathbb{R}^n$ 显然封闭。"
+        ],
+        "pitfalls": [
+          "把 $\\{0\\}$ 当成空集；空集不是子空间。"
+        ],
+        "source": "课件 13，第 26-27 页"
+      },
+      {
+        "id": "la-def-kernel-and-span",
+        "type": "definition",
+        "label": "定义 2.5.4",
+        "title": "核空间 $K(A)$ 与生成子空间 $L(\\alpha_1,\\dots,\\alpha_s)$",
+        "statement": [
+          "核空间（解空间）$K(A)=\\{x\\in\\mathbb{R}^n\\mid Ax=0\\}$，即齐次方程组 $Ax=0$ 的解集合。",
+          "生成子空间 $L(\\alpha_1,\\dots,\\alpha_s)=\\{k_1\\alpha_1+\\dots+k_s\\alpha_s\\mid k_i\\in\\mathbb{R}\\}$，即 $\\alpha_1,\\dots,\\alpha_s$ 的一切线性组合。"
+        ],
+        "conditions": [
+          "$A$ 为 $m\\times n$ 矩阵时 $K(A)\\subseteq\\mathbb{R}^n$；$\\alpha_i\\in\\mathbb{R}^n$ 时 $L(\\alpha_1,\\dots,\\alpha_s)\\subseteq\\mathbb{R}^n$。"
+        ],
+        "conclusion": [
+          "若 $A_{n\\times s}=(\\alpha_1,\\dots,\\alpha_s)$，则 $Ax=x_1\\alpha_1+\\dots+x_s\\alpha_s$，故 $L(\\alpha_1,\\dots,\\alpha_s)=\\{Ax\\mid x\\in\\mathbb{R}^s\\}$，即 $A$ 的列空间（值域）$R(A)$。"
+        ],
+        "derivation": [
+          "把 $A$ 按列分块：$Ax$ 就是 $A$ 的列向量以 $x$ 的分量为系数的线性组合，于是「所有线性组合」与「所有 $Ax$」是同一个集合。"
+        ],
+        "pitfalls": [
+          "把 $K(A)$ 与 $L(\u0007lpha_1,\\dots,\u0007lpha_s)$ 的方向搞反：前者是「打得零」的 $x$，后者是「被打出来」的 $Ax$。"
+        ],
+        "source": "课件 13，第 26-27 页"
+      },
+      {
+        "id": "la-pitfall-nonhomogeneous-not-subspace",
+        "type": "pitfall",
+        "label": "易错点 2.5.5",
+        "title": "非齐次方程组的解集不是向量空间",
+        "statement": [
+          "设 $Ax=b$，$b\\ne0$，解集合 $S=\\{x\\mid Ax=b\\}$ 不是向量空间。"
+        ],
+        "conditions": [
+          "$b\ne 0$ 是关键；$b=0$ 时化为齐次，解集是子空间。"
+        ],
+        "conclusion": [
+          "无解时 $S=\\varnothing$，不满足「非空」；有解时 $A(x+y)=2b\\ne b$，$A(3x)=3b\\ne b$，对加法与数乘都不封闭。"
+        ],
+        "derivation": [
+          "两条封闭性各找一个反例即可：$x+y\\notin S$，$3x\\notin S$。"
+        ],
+        "pitfalls": [
+          "以为「解集」天然是子空间，把非齐次通解写成子空间。"
+        ],
+        "source": "课件 13，第 28 页"
+      },
+      {
+        "id": "la-def-basis-dimension",
+        "type": "definition",
+        "label": "定义 2.5.6",
+        "title": "基与维数",
+        "statement": [
+          "设 $V$ 是一个向量空间。若 $V$ 中的向量组 $\\alpha_1,\\dots,\\alpha_s$ 满足：(1) 线性无关；(2) $V$ 中任一向量都能由 $\\alpha_1,\\dots,\\alpha_s$ 线性表示，则称 $\\alpha_1,\\dots,\\alpha_s$ 为 $V$ 的一组基，$s$ 称为 $V$ 的维数，记 $\\dim V=s$。"
+        ],
+        "conditions": [
+          "基必须从 $V$ 中取，且要同时满足无关与能表示全空间。"
+        ],
+        "conclusion": [
+          "基就是「向量空间版本的极大无关组」：把定义 2.4.1 中的原向量组换成整个空间 $V$。"
+        ],
+        "derivation": [
+          "对 $V=L(\\alpha_1,\\dots,\\alpha_s)$ 而言，$V$ 的基正好是 $\\alpha_1,\\dots,\\alpha_s$ 的极大无关组（见定理 2.5.14）。"
+        ],
+        "pitfalls": [
+          "把「能表示全空间」写成「能表示生成它的那组向量」，二者在生成子空间里等价，但一般空间里不等价。"
+        ],
+        "source": "课件 13，第 30 页"
+      },
+      {
+        "id": "la-thm-basis-equal-count",
+        "type": "theorem",
+        "label": "定理 2.5.7",
+        "title": "两组基等价，因而个数相同",
+        "statement": [
+          "若 $\\{\\alpha_1,\\dots,\\alpha_s\\}$ 与 $\\{\\beta_1,\\dots,\\beta_t\\}$ 都是 $V$ 的基，则两个向量组等价，因而 $s=t$。"
+        ],
+        "conditions": [
+          "两组都是 $V$ 的基，即都能表示 $V$ 中所有向量。"
+        ],
+        "conclusion": [
+          "维数 $\\dim V$ 与基的选择无关，这个数由空间本身决定。"
+        ],
+        "derivation": [
+          "$\\alpha$ 组能表示 $V$ 中任一向量，特别是能表示每个 $\\beta_j$；$\\beta$ 组同理能表示每个 $\\alpha_i$，故两组等价。",
+          "等价的向量组秩相等，而两组都线性无关，故 $s=r\\{\\alpha\\}=r\\{\\beta\\}=t$。"
+        ],
+        "pitfalls": [
+          "用「基的个数是唯一的」当已知条件去证，逻辑倒置。"
+        ],
+        "source": "课件 13，第 30 页"
+      },
+      {
+        "id": "la-prop-zero-dim-and-standard-basis",
+        "type": "property",
+        "label": "性质 2.5.8",
+        "title": "零空间维数为 $0$；$\\mathbb{R}^n$ 的标准基",
+        "statement": [
+          "若 $V=\\{0\\}$（$0$ 为零向量），则 $\\dim V=0$。",
+          "$n$ 维基本单位向量组 $e_1,\\dots,e_n$ 是 $\\mathbb{R}^n$ 的一组基，$\\dim\\mathbb{R}^n=n$。"
+        ],
+        "conditions": [
+          "$e_i$ 表示第 $i$ 个分量为 $1$、其余为 $0$ 的向量。"
+        ],
+        "conclusion": [
+          "零空间的基是空集，维数为 $0$；这不是例外，而是定义的自然延伸。"
+        ],
+        "derivation": [
+          "任一 $(a_1,\\dots,a_n)^T=a_1e_1+\\dots+a_ne_n$，且 $k_1e_1+\\dots+k_ne_n=0$ 推出所有 $k_i=0$，故 $e_1,\\dots,e_n$ 是基。"
+        ],
+        "pitfalls": [
+          "把 $\\{0\\}$ 的维数说成 $1$（把零向量当成基向量）。"
+        ],
+        "source": "课件 13，第 31 页"
+      },
+      {
+        "id": "la-thm-equiv-replacement-basis",
+        "type": "theorem",
+        "label": "定理 2.5.9",
+        "title": "与基等价的 $s$ 个向量仍是基",
+        "statement": [
+          "若 $\\alpha_1,\\dots,\\alpha_s$ 是 $V$ 的一组基，且 $\\beta_1,\\dots,\\beta_s$ 与 $\\alpha_1,\\dots,\\alpha_s$ 等价，则 $\\beta_1,\\dots,\\beta_s$ 也是 $V$ 的一组基。"
+        ],
+        "conditions": [
+          "个数必须与基的个数相同，都是 $s$。"
+        ],
+        "conclusion": [
+          "「等价替换」保持基的身份：可以逐个把基向量换掉，只要每一步仍等价。"
+        ],
+        "derivation": [
+          "由等价，每个 $\\beta_i=k_{1i}\\alpha_1+\\dots+k_{si}\\alpha_s\\in V$（$V$ 对线性运算封闭）。",
+          "$r\\{\\beta_1,\\dots,\\beta_s\\}=r\\{\\alpha_1,\\dots,\\alpha_s\\}=s$，故 $\\beta$ 组线性无关。",
+          "又 $V$ 中向量能由 $\\alpha$ 组表示，$\\alpha$ 组能由 $\\beta$ 组表示，故 $V$ 中向量能由 $\\beta$ 组表示。"
+        ],
+        "pitfalls": [
+          "只证「无关」不证「能表示」，或只证「能表示」不证「无关」。"
+        ],
+        "source": "课件 13，第 32 页"
+      },
+      {
+        "id": "la-thm-s-independent-is-basis",
+        "type": "theorem",
+        "label": "定理 2.5.10",
+        "title": "定理：$s$ 维空间中任意 $s$ 个无关向量都是基",
+        "statement": [
+          "设 $V$ 是 $s$ 维向量空间（$s$ 为正整数），则 $V$ 中任意 $s$ 个线性无关的向量都可以作为 $V$ 的一组基。"
+        ],
+        "conditions": [
+          "个数必须恰好等于 $\\dim V=s$。",
+          "向量必须取自 $V$。"
+        ],
+        "conclusion": [
+          "这是「基」最常用的判定：数一数、验无关，就够了。"
+        ],
+        "derivation": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 为 $V$ 的一组基，$\\beta_1,\\dots,\\beta_s$ 是 $V$ 中任意 $s$ 个无关向量。",
+          "$\\forall\\alpha\\in V$，$\\alpha$ 可由 $\\alpha$ 组线性表示（基的定义）。",
+          "反设 $\\alpha$ 不能由 $\\beta$ 组表示，则 $\\beta_1,\\dots,\\beta_s,\\alpha$ 线性无关，但这是 $s+1>s=\\dim V$ 个无关向量，矛盾（$s$ 维空间中无关向量个数不超过 $s$）。故 $\\alpha$ 能由 $\\beta$ 组表示，$\\beta$ 组是基。"
+        ],
+        "pitfalls": [
+          "漏掉「$s+1$ 个无关向量不可能存在于 $s$ 维空间」这一矛盾点，证明不完整。"
+        ],
+        "source": "课件 13，第 33、35 页"
+      },
+      {
+        "id": "la-thm-unique-representation-2-5",
+        "type": "theorem",
+        "label": "定理 2.5.11",
+        "title": "无关 + 添一相关 $\\Rightarrow$ 唯一表示",
+        "statement": [
+          "若 $\\alpha_1,\\dots,\\alpha_s$ 线性无关，而 $\\alpha_1,\\dots,\\alpha_s,\\beta$ 线性相关，则 $\\beta$ 能由 $\\alpha_1,\\dots,\\alpha_s$ 线性表示，且表示方式唯一。"
+        ],
+        "conditions": [
+          "前提是「原组无关」且「添一个后相关」。"
+        ],
+        "conclusion": [
+          "这条定理是坐标唯一性的来源（见 2.6 坐标定义）。"
+        ],
+        "derivation": [
+          "存在性：由线性相关，存在不全为零的 $k_1,\\dots,k_s,k$ 使 $k_1\\alpha_1+\\dots+k_s\\alpha_s+k\\beta=0$。若 $k=0$，则 $\\alpha$ 组线性相关，矛盾，故 $k\\ne0$，可解出 $\\beta=-\\frac{k_1}{k}\\alpha_1-\\dots-\\frac{k_s}{k}\\alpha_s$。",
+          "唯一性：若有两种表示，相减得 $(k_1-l_1)\\alpha_1+\\dots+(k_s-l_s)\\alpha_s=0$，由无关得 $k_i=l_i$。"
+        ],
+        "pitfalls": [
+          "把条件写成「$\beta$ 不能表示则相关」，方向反了。"
+        ],
+        "source": "课件 13，第 34 页"
+      },
+      {
+        "id": "la-method-find-basis",
+        "type": "method",
+        "label": "方法 2.5.12",
+        "title": "求子空间的一组基与维数",
+        "statement": [
+          "情形一（方程给出的子空间）：把约束方程解出自由未知量，写成「自由未知量 $\\times$ 固定向量」的线性组合，这些固定向量就是基，自由未知量个数就是维数。",
+          "情形二（向量组生成的子空间 $L(\\alpha_1,\\dots,\\alpha_s)$）：按列排成矩阵作初等行变换，主元列对应的原向量构成一组基，非零行数就是维数。"
+        ],
+        "conditions": [
+          "情形二要验证所求向量确实属于该子空间，且能表示子空间中所有向量。"
+        ],
+        "conclusion": [
+          "两种情形本质一致：都是先找极大无关组，再取它作基。"
+        ],
+        "derivation": [
+          "例：$V=\\{(x,y,z)^T\\mid x+2y-3z=0\\}$ 中令 $y,z$ 为自由未知量，得 $x=-2y+3z$，于是 $V=\\{y(-2,1,0)^T+z(3,0,1)^T\\}$，基为 $(-2,1,0)^T,(3,0,1)^T$，$\\dim V=2$。"
+        ],
+        "pitfalls": [
+          "情形一把系数向量抄错符号：$x=-2y+3z$ 对应 $(-2,1,0)^T$ 与 $(3,0,1)^T$。"
+        ],
+        "source": "课件 13，第 36、39-42 页"
+      },
+      {
+        "id": "la-ex-basis-plane",
+        "type": "example",
+        "label": "例 2.5.13",
+        "title": "例1：平面型子空间的一组基",
+        "statement": [
+          "求 $\\mathbb{R}^3$ 的子空间 $V=\\{(x,y,z)^T\\mid x+2y-3z=0\\}$ 的一组基。"
+        ],
+        "conditions": [
+          "这是一个过原点的平面，直观上维数应为 $2$。"
+        ],
+        "conclusion": [
+          "$\\alpha_1=(-2,1,0)^T$，$\\alpha_2=(3,0,1)^T$ 是 $V$ 的一组基，$\\dim V=2$。"
+        ],
+        "derivation": [
+          "由 $x=-2y+3z$ 得 $V=\\{(-2y+3z,y,z)^T\\mid y,z\\in\\mathbb{R}\\}=y(-2,1,0)^T+z(3,0,1)^T$，说明 $V$ 中向量都能由 $\\alpha_1,\\alpha_2$ 表示。",
+          "若 $y\\alpha_1+z\\alpha_2=0$，比较分量得 $y=0$，$z=0$，故 $\\alpha_1,\\alpha_2$ 线性无关。",
+          "又 $\\alpha_1,\\alpha_2$ 满足方程 $x+2y-3z=0$，确实属于 $V$。三条合起来即为基。"
+        ],
+        "pitfalls": [
+          "只写「解出参数」就结束，没有验证无关性与「确实在 $V$ 中」。"
+        ],
+        "source": "课件 13，第 36 页"
+      },
+      {
+        "id": "la-thm-max-is-basis-of-span",
+        "type": "theorem",
+        "label": "定理 2.5.14",
+        "title": "极大无关组是生成子空间的基",
+        "statement": [
+          "设 $\\alpha_{i_1},\\dots,\\alpha_{i_r}$ 是向量组 $\\alpha_1,\\dots,\\alpha_s$ 的一个极大无关组，则它是 $V=L(\\alpha_1,\\dots,\\alpha_s)$ 的一组基，且 $\\dim L(\\alpha_1,\\dots,\\alpha_s)=r\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "conditions": [
+          "$V$ 是由这组向量生成的子空间。"
+        ],
+        "conclusion": [
+          "生成子空间的维数就等于原向量组的秩；求 $\\dim L$ 的问题完全化为求秩。"
+        ],
+        "derivation": [
+          "极大无关组线性无关（定义条件 (1)）；$V$ 中每个向量是 $\\alpha_1,\\dots,\\alpha_s$ 的线性组合，而每个 $\\alpha_j$ 能由极大无关组表示，代入即知 $V$ 中向量都能由极大无关组表示。",
+          "所以极大无关组是 $V$ 的基，$\\dim V$ 等于其个数，即 $r\\{\\alpha_1,\\dots,\\alpha_s\\}$。"
+        ],
+        "pitfalls": [
+          "把 $\\dim L(\u0007lpha_1,\\dots,\u0007lpha_s)$ 说成向量个数 $s$。"
+        ],
+        "source": "课件 13，第 38 页"
+      },
+      {
+        "id": "la-ex-basis-column-space",
+        "type": "example",
+        "label": "例 2.5.15",
+        "title": "例2：求 $L(\\alpha_1,\\dots,\\alpha_4)$ 的基与维数",
+        "statement": [
+          "设 $A=(\\alpha_1,\\alpha_2,\\alpha_3,\\alpha_4)=\\begin{pmatrix}1&2&1&-1\\\\0&-1&-1&1\\\\-1&0&1&-1\\end{pmatrix}$，求 $L(\\alpha_1,\\alpha_2,\\alpha_3,\\alpha_4)$ 的一组基和维数。"
+        ],
+        "conditions": [
+          "四个三维向量，维数不超过 $3$。"
+        ],
+        "conclusion": [
+          "$\\alpha_1,\\alpha_2$ 是一组基，$\\dim L(\\alpha_1,\\alpha_2,\\alpha_3,\\alpha_4)=2$。"
+        ],
+        "derivation": [
+          "对 $A$ 作初等行变换化为 $\\begin{pmatrix}1&2&1&-1\\\\0&-1&-1&1\\\\0&0&0&0\\end{pmatrix}$，再化为行最简形 $\\begin{pmatrix}1&0&-1&1\\\\0&1&1&-1\\\\0&0&0&0\\end{pmatrix}$。",
+          "主元在第 $1,2$ 列，且非零行有 $2$ 行，故秩为 $2$，$\\alpha_1,\\alpha_2$ 是极大无关组。",
+          "由定理 2.5.14，$\\alpha_1,\\alpha_2$ 就是 $L$ 的一组基，维数为 $2$。"
+        ],
+        "pitfalls": [
+          "取化简后矩阵的列作为基向量（这些列属于 $\\mathbb{R}^3$ 的另一个子空间，不是原向量组的部分组）。"
+        ],
+        "source": "课件 13，第 39-42 页"
+      }
+    ]
+  },
+  {
+    "number": "2.6",
+    "title": "坐标、过渡矩阵与坐标变换",
+    "lead": "在选定基之后用坐标把抽象向量变成数组，用过渡矩阵把不同基下的坐标互相换算。",
+    "map": [
+      "坐标的定义",
+      "过渡矩阵",
+      "过渡矩阵可逆",
+      "坐标变换公式",
+      "典型例题"
+    ],
+    "entries": [
+      {
+        "id": "la-def-coordinates",
+        "type": "definition",
+        "label": "定义 2.6.1",
+        "title": "向量在给定基下的坐标",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 是向量空间 $V$ 的一组基，$\\alpha\\in V$。则存在唯一的有序数组 $k_1,\\dots,k_s$ 使 $\\alpha=k_1\\alpha_1+\\dots+k_s\\alpha_s$，称 $(k_1,\\dots,k_s)^T$ 为 $\\alpha$ 在基 $\\alpha_1,\\dots,\\alpha_s$ 下的坐标。"
+        ],
+        "conditions": [
+          "必须先指定基，坐标才有意义。",
+          "坐标是列向量，顺序与基向量的排列顺序一致。"
+        ],
+        "conclusion": [
+          "「坐标」是向量相对某组基的唯一表示系数，换基就会换坐标。"
+        ],
+        "derivation": [
+          "存在性由基的定义（能表示全空间）给出；唯一性：若 $\\alpha=k_1\\alpha_1+\\dots+k_s\\alpha_s=l_1\\alpha_1+\\dots+l_s\\alpha_s$，相减得 $(k_1-l_1)\\alpha_1+\\dots+(k_s-l_s)\\alpha_s=0$，由基线性无关得 $k_i=l_i$。"
+        ],
+        "pitfalls": [
+          "不写「在基 $\u0007lpha_1,\\dots,\u0007lpha_s$ 下」就直接说坐标，缺少前提。"
+        ],
+        "source": "课件 13，第 44-45 页"
+      },
+      {
+        "id": "la-ex-coordinates-standard",
+        "type": "example",
+        "label": "例 2.6.2",
+        "title": "标准基下的坐标就是分量本身",
+        "statement": [
+          "在 $\\mathbb{R}^n$ 中取基 $e_1,\\dots,e_n$，则 $(a_1,\\dots,a_n)^T=a_1e_1+\\dots+a_ne_n$，故向量在 $e_1,\\dots,e_n$ 下的坐标就是 $(a_1,\\dots,a_n)^T$。"
+        ],
+        "conditions": [
+          "仅对标准基（基本单位向量组）成立。"
+        ],
+        "conclusion": [
+          "标准基让坐标与分量重合，其它基下一般不再相等。"
+        ],
+        "derivation": [
+          "例如在 $\\mathbb{R}^3$ 中 $\\varepsilon_1=(1,0,1)^T,\\varepsilon_2=(1,1,0)^T,\\varepsilon_3=(1,1,1)^T$ 下，$(a,b,c)^T$ 的坐标是 $(a-b,a-c,-a+b+c)^T$（见例 2.6.8）。"
+        ],
+        "pitfalls": [
+          "把任意基下的坐标都当成向量的分量。"
+        ],
+        "source": "课件 13，第 45 页"
+      },
+      {
+        "id": "la-prop-matrix-product-representation",
+        "type": "property",
+        "label": "性质 2.6.3",
+        "title": "向量组线性表示即矩阵乘积",
+        "statement": [
+          "设 $(\\gamma_1,\\dots,\\gamma_n)=(\\alpha_1,\\dots,\\alpha_s)B$，其中 $B=(b_{ij})_{s\\times n}$，则 $\\gamma_j=b_{1j}\\alpha_1+\\dots+b_{sj}\\alpha_s$。"
+        ],
+        "conditions": [
+          "$B$ 的行数必须等于 $\u0007lpha$ 组中向量的个数。"
+        ],
+        "conclusion": [
+          "「$\\gamma$ 组能由 $\u0007lpha$ 组线性表示」等价于存在矩阵 $B$ 使 $C=AB$，$B$ 的每一列就是对应 $\\gamma_j$ 的系数。"
+        ],
+        "derivation": [
+          "按分块矩阵乘法展开：$(\\alpha_1,\\dots,\\alpha_s)B$ 的第 $j$ 列正是 $\\sum_i b_{ij}\\alpha_i$。"
+        ],
+        "pitfalls": [
+          "把系数矩阵 $B$ 的行列顺序写反（$B$ 的列数是被表示的向量个数）。"
+        ],
+        "source": "课件 13，第 47 页"
+      },
+      {
+        "id": "la-def-transition-matrix",
+        "type": "definition",
+        "label": "定义 2.6.4",
+        "title": "过渡矩阵",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 与 $\\beta_1,\\dots,\\beta_s$ 是 $V$ 的两组基，记 $A=(\\alpha_1,\\dots,\\alpha_s)$，$B=(\\beta_1,\\dots,\\beta_s)$。若 $(\\beta_1,\\dots,\\beta_s)=(\\alpha_1,\\dots,\\alpha_s)C$，即 $B=AC$，其中 $C$ 为 $s$ 阶矩阵，则称 $C$ 为从基 $\\alpha_1,\\dots,\\alpha_s$ 到基 $\\beta_1,\\dots,\\beta_s$ 的过渡矩阵。"
+        ],
+        "conditions": [
+          "两组基的向量个数必须相同（都等于 $\\dim V$）。",
+          "$C$ 的第 $j$ 列是 $\beta_j$ 在基 $\u0007lpha$ 下的坐标。"
+        ],
+        "conclusion": [
+          "过渡矩阵把「新基」用「旧基」表示出来：$C$ 的列就是新基向量的旧坐标。"
+        ],
+        "derivation": [
+          "$C=P_{\\alpha\\to\\beta}$ 的列向量 $c_j$ 满足 $\\beta_j=c_{1j}\\alpha_1+\\dots+c_{sj}\\alpha_s$，正是 $\\beta_j$ 在 $\\alpha$ 下的坐标。"
+        ],
+        "pitfalls": [
+          "把 $C$ 的列理解成「旧基在新基下的坐标」，方向反了。"
+        ],
+        "source": "课件 13，第 46、48 页"
+      },
+      {
+        "id": "la-thm-transition-invertible",
+        "type": "theorem",
+        "label": "定理 2.6.5",
+        "title": "过渡矩阵可逆，反向过渡矩阵是 $C^{-1}$",
+        "statement": [
+          "设 $C$ 是从 $\\alpha_1,\\dots,\\alpha_s$ 到 $\\beta_1,\\dots,\\beta_s$ 的过渡矩阵，则 $C$ 可逆，且从 $\\beta_1,\\dots,\\beta_s$ 到 $\\alpha_1,\\dots,\\alpha_s$ 的过渡矩阵是 $C^{-1}$。"
+        ],
+        "conditions": [
+          "两组都是同一个空间 $V$ 的基。"
+        ],
+        "conclusion": [
+          "$A=BC^{-1}$，$B=AC$，两个方向互为逆矩阵。"
+        ],
+        "derivation": [
+          "$s=\\text{秩}(B)\\le\\text{秩}(C)\\le s$（$B=AC$ 且 $A$ 列满秩），故 $\\text{秩}(C)=s$，$C$ 可逆。",
+          "由 $B=AC$ 两边左乘 $C^{-1}$ 得 $A=BC^{-1}$，即从 $\\beta$ 到 $\\alpha$ 的过渡矩阵为 $C^{-1}$。"
+        ],
+        "pitfalls": [
+          "把反向过渡矩阵写成 $C^T$ 或 $C$。"
+        ],
+        "source": "课件 13，第 49 页"
+      },
+      {
+        "id": "la-ex-transition-cube",
+        "type": "example",
+        "label": "例 2.6.6",
+        "title": "例3：由标准基到 $\\varepsilon$ 基的过渡矩阵",
+        "statement": [
+          "在 $\\mathbb{R}^3$ 中取基 $e_1,e_2,e_3$ 与 $\\varepsilon_1=(1,0,1)^T$，$\\varepsilon_2=(1,1,0)^T$，$\\varepsilon_3=(1,1,1)^T$，求从 $e_1,e_2,e_3$ 到 $\\varepsilon_1,\\varepsilon_2,\\varepsilon_3$ 的过渡矩阵，以及反方向的过渡矩阵。"
+        ],
+        "conditions": [
+          "起点是标准基，此时过渡矩阵的列就是 $\u000barepsilon_j$ 本身。"
+        ],
+        "conclusion": [
+          "从 $e$ 到 $\\varepsilon$ 的过渡矩阵 $C=\\begin{pmatrix}1&1&1\\\\0&1&1\\\\1&0&1\\end{pmatrix}$，$|C|=1\\ne0$。",
+          "从 $\\varepsilon$ 到 $e$ 的过渡矩阵为 $C^{-1}=\\begin{pmatrix}1&-1&0\\\\1&0&-1\\\\-1&1&1\\end{pmatrix}$。"
+        ],
+        "derivation": [
+          "$(\\varepsilon_1,\\varepsilon_2,\\varepsilon_3)=(e_1,e_2,e_3)C$ 直接按列拼出 $C$。",
+          "求逆可用初等行变换 $(C\\mid E)\\to(E\\mid C^{-1})$，或按伴随矩阵公式。"
+        ],
+        "pitfalls": [
+          "把 $C$ 的列拼成 $\u000barepsilon_1,\u000barepsilon_2,\u000barepsilon_3$ 的行（转置错误）。"
+        ],
+        "source": "课件 13，第 50 页"
+      },
+      {
+        "id": "la-thm-coordinate-transform",
+        "type": "theorem",
+        "label": "定理 2.6.7",
+        "title": "坐标变换公式",
+        "statement": [
+          "设 $\\eta$ 在基 $\\alpha_1,\\dots,\\alpha_s$ 下的坐标为 $x$，在基 $\\beta_1,\\dots,\\beta_s$ 下的坐标为 $y$，从 $\\alpha$ 到 $\\beta$ 的过渡矩阵为 $C$，则 $x=Cy$，$y=C^{-1}x$。"
+        ],
+        "conditions": [
+          "$C$ 必须是从 $\u0007lpha$ 基到 $\beta$ 基的过渡矩阵，方向不能反。"
+        ],
+        "conclusion": [
+          "「新坐标 $y$ 乘过渡矩阵 $C$ 得旧坐标 $x$」：$x=Cy$；反过来 $y=C^{-1}x$。"
+        ],
+        "derivation": [
+          "$\\eta=x_1\\alpha_1+\\dots+x_s\\alpha_s=Ax$，同时 $\\eta=y_1\\beta_1+\\dots+y_s\\beta_s=By$。",
+          "由 $B=AC$ 得 $Ax=ACy$，左乘 $A$ 的列满秩性质（或直接比较唯一坐标）得 $x=Cy$，于是 $y=C^{-1}x$。"
+        ],
+        "pitfalls": [
+          "记成 $y=Cx$：过渡矩阵作用在「新坐标」上得到「旧坐标」。"
+        ],
+        "source": "课件 13，第 51-52 页"
+      },
+      {
+        "id": "la-ex-coordinates-epsilon",
+        "type": "example",
+        "label": "例 2.6.8",
+        "title": "例4：求 $\\eta$ 在 $\\varepsilon$ 基下的坐标",
+        "statement": [
+          "在 $\\mathbb{R}^3$ 中，求 $\\eta=(a,b,c)^T$ 在基 $\\varepsilon_1=(1,0,1)^T$，$\\varepsilon_2=(1,1,0)^T$，$\\varepsilon_3=(1,1,1)^T$ 下的坐标。"
+        ],
+        "conditions": [
+          "$\\eta$ 在标准基 $e$ 下的坐标就是 $(a,b,c)^T$。"
+        ],
+        "conclusion": [
+          "坐标为 $C^{-1}x=(a-b,\\ a-c,\\ -a+b+c)^T$。"
+        ],
+        "derivation": [
+          "由例 2.6.6，$x=Cy$，$y=C^{-1}x$，其中 $x=(a,b,c)^T$。",
+          "代入 $C^{-1}=\\begin{pmatrix}1&-1&0\\\\1&0&-1\\\\-1&1&1\\end{pmatrix}$，得 $y=(a-b,\\ a-c,\\ -a+b+c)^T$。",
+          "可直接验算：$(a-b)\\varepsilon_1+(a-c)\\varepsilon_2+(-a+b+c)\\varepsilon_3$ 的第一个分量为 $(a-b)+(a-c)+(-a+b+c)=a$，其余分量同样还原。"
+        ],
+        "pitfalls": [
+          "把 $y=C^{-1}x$ 写成 $y=Cx$，得到 $(a+b+c,\\ b+c,\\ a+c)^T$ 之类的错误结果。"
+        ],
+        "source": "课件 13，第 53 页"
+      },
+      {
+        "id": "la-method-transition-howto",
+        "type": "method",
+        "label": "方法 2.6.9",
+        "title": "求过渡矩阵的三种常见情形",
+        "statement": [
+          "情形一（两组基都给出具体向量）：把新基向量按列写成矩阵 $B$，旧基按列写成 $A$，解 $AC=B$ 得 $C=A^{-1}B$；起点是标准基时 $A=E$，直接 $C=B$。",
+          "情形二（只给抽象关系）：利用 $B=AC$ 与「$A$ 可逆」把问题化成矩阵方程。",
+          "情形三（求坐标）：先用 $y=C^{-1}x$ 或解方程组 $By=\\eta$。"
+        ],
+        "conditions": [
+          "确认方向：$C$ 的列是「新基在旧基下的坐标」。"
+        ],
+        "conclusion": [
+          "求 $C$ 与求 $C^{-1}$ 是两件事，题目问哪一个要看清。"
+        ],
+        "derivation": [
+          "$AC=B$ 中 $A,B$ 都可逆，故 $C=A^{-1}B$；若已知 $C$ 求 $C^{-1}$，用 $(C\\mid E)$ 化行最简形。"
+        ],
+        "pitfalls": [
+          "默认 $C=A^{-1}B$ 中 $A$ 一定可逆而忘记说明「两组都是基」。"
+        ],
+        "source": "课件 13，第 48-53 页"
+      },
+      {
+        "id": "la-pitfall-transition-direction",
+        "type": "pitfall",
+        "label": "易错点 2.6.10",
+        "title": "过渡矩阵的方向与坐标方向相反",
+        "statement": [
+          "从 $\\alpha$ 到 $\\beta$ 的过渡矩阵记为 $C$ 时：$(\\beta)=(\\alpha)C$，而坐标满足 $x=Cy$、$y=C^{-1}x$。向量组的变换方向与坐标的变换方向恰好相反。"
+        ],
+        "conditions": [
+          "两组基都是同一空间的基，个数相同。"
+        ],
+        "conclusion": [
+          "记住一句话：基按 $C$ 变，坐标就按 $C^{-1}$ 变（「基变坐标反变」）。"
+        ],
+        "derivation": [
+          "代入验证：$\\eta=Ax=A(Cy)=(AC)y=By$，所以 $x=Cy$ 与 $B=AC$ 自洽。"
+        ],
+        "pitfalls": [
+          "把「从 $\u0007lpha$ 到 $\beta$」理解成「把 $\u0007lpha$ 坐标换成 $\beta$ 坐标用 $C$ 乘」。"
+        ],
+        "source": "课件 13，第 48-52 页"
+      }
+    ]
   }
 ];
