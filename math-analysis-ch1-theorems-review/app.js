@@ -24,6 +24,11 @@
       number: "习题课",
       title: "第四章",
       subtitle: "连续函数习题课"
+    },
+    "5": {
+      number: "习题课",
+      title: "第五章",
+      subtitle: "求导法与中值定理习题课"
     }
   };
   chapters.forEach((chapter) => {
