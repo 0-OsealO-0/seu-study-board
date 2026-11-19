@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线性代数 课后复习题</title>
+  <style>
+    :root { --bg:#f4f6f8; --surface:#fff; --text:#18212b; --muted:#5f6b76; --line:#d9e0e6; --blue:#1769aa; --amber:#9a6500; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.65; }
+    .page { width:min(900px,calc(100% - 32px)); margin:0 auto; padding:28px 0 48px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    .subtitle,.meta { color:var(--muted); }
+    .notice { margin:20px 0; padding:14px 16px; border-left:4px solid var(--amber); background:#fbf0d5; border-radius:5px; }
+    ol { margin:0; padding:18px 18px 8px 46px; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+    li { margin-bottom:16px; }
+    @media (max-width:620px) { .page { width:min(100% - 20px,900px); padding-top:18px; } h1 { font-size:23px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>线性代数 课后复习题</h1>
+    <p class="subtitle">2026-11-19 课堂内容。先独立作答，不查课件或答案。</p>
+    <p class="meta">共 12 题</p>
+    <div class="notice">先独立作答，不查课件或答案。回忆题要把定义的条件写全、把关键一步（判别式、与 αi 作内积、QᵀQ 的元素）写出来；计算题要写出每一步的内积与系数，Schmidt 题先写 β 再单位化，正交矩阵题要验证 QᵀQ=E 并说明依据。</div>
+    <ol><li id="q1">写出 Rⁿ 中向量内积 ⟨α,β⟩ 的定义（用分量和矩阵两种写法），并逐条说明它的三条基本性质；再证明 ⟨α,α⟩=0 ⇔ α=0。</li>
+<li id="q2">写出向量长度 ||α|| 的定义，证明 ||kα||=|k|·||α||，并说明什么是单位向量、如何把非零向量 α 单位化（验证单位化后长度确实为 1）。</li>
+<li id="q3">叙述 Cauchy 不等式及其等号成立条件，并写出用 γ=β−xα 与判别式的完整证明（要说明为什么 Δ≤0）。</li>
+<li id="q4">证明三角不等式 ||α+β|| ≤ ||α||+||β||，并指出证明中哪一步用了 Cauchy 不等式。</li>
+<li id="q5">写出两个非零向量夹角的定义，并说明为什么这个定义是合法的（余弦值必须在 [−1,1] 内）；再写出 α⊥β 的定义，并证明此时 ||α+β||²=||α||²+||β||²。</li>
+<li id="q6">写出正交向量组与标准正交向量组（标准正交基）的定义；叙述定理3（正交向量组线性无关）并给出证明。</li>
+<li id="q7">叙述标准正交基下坐标公式（例1）：若 α1,…,αs 是标准正交向量组，α=k1α1+…+ksαs，证明 ki=⟨α,αi⟩；并说明为什么这个公式让「求坐标」变成算内积。</li>
+<li id="q8">用 Schmidt 正交化把 α1=(1,1,0)ᵀ, α2=(1,0,1)ᵀ, α3=(0,1,1)ᵀ 化为标准正交组。要求写出 β1,β2,β3 与 η1,η2,η3 的每个系数。</li>
+<li id="q9">（例3）求 R³ 的子空间 V={(x,y,z)ᵀ | x+2y−3z=0} 的一组标准正交基。要求先写出一组基，再完成正交化与单位化，并说明最后得到的两个向量确实正交且都在 V 中。</li>
+<li id="q10">判断下列矩阵是否为正交阵，并求行列式：(1) Q1=[[1/√2,−1/√2],[1/√2,1/√2]]；(2) Q2=[[1,0],[0,−1]]；(3) Q3=[[1,1],[0,1]]。对正交阵再写出 Qᵀ 与 Q⁻¹。</li>
+<li id="q11">证明正交阵的四条性质：(1) |Q|=±1；(2) Q⁻¹=Qᵀ 也是正交阵；(3) 同阶正交阵 A,B 的乘积 AB 是正交阵；(4) ⟨Qx,Qy⟩=⟨x,y⟩，并由此说明 ||Qx||=||x||。</li>
+<li id="q12">综合本课内容回答：(1) 用 Schmidt 正交化证明「每个非零向量空间都有标准正交基」；(2) 若 V=Rⁿ，把这组标准正交基按列排成矩阵 Q，说明 Q 为什么是正交阵；(3) 用性质 ⟨Qx,Qy⟩=⟨x,y⟩ 解释正交变换为什么保持长度与夹角，并联系旋转矩阵与反射矩阵的行列式。</li></ol>
+  </main>
+</body>
+</html>
