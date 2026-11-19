@@ -1457,6 +1457,21 @@ window.LINEAR_REVIEW_SECTIONS = [
       "坐标变换公式",
       "典型例题"
     ]
+  },
+  {
+    "number": "2.7",
+    "title": "向量的内积与正交性",
+    "lead": "用内积把长度、夹角、正交统一起来，再用 Schmidt 正交化造出标准正交基，最后用行列式与内积刻画正交矩阵与正交变换。",
+    "map": [
+      "内积与性质",
+      "长度与单位化",
+      "Cauchy 不等式",
+      "夹角与正交",
+      "正交向量组",
+      "标准正交基",
+      "Schmidt 正交化",
+      "正交矩阵"
+    ]
   }
 ];
 
@@ -5582,6 +5597,503 @@ window.LINEAR_REVIEW_CHAPTERS = [
           "把「从 $\\alpha$ 到 $\\beta$」理解成「把 $\\alpha$ 坐标换成 $\\beta$ 坐标用 $C$ 乘」。"
         ],
         "source": "课件 13，第 48-52 页"
+      }
+    ]
+  },
+  {
+    "number": "2.7",
+    "title": "向量的内积与正交性",
+    "lead": "用内积把长度、夹角、正交统一起来，再用 Schmidt 正交化造出标准正交基，最后用行列式与内积刻画正交矩阵与正交变换。",
+    "map": [
+      "内积与性质",
+      "长度与单位化",
+      "Cauchy 不等式",
+      "夹角与正交",
+      "正交向量组",
+      "标准正交基",
+      "Schmidt 正交化",
+      "正交矩阵"
+    ],
+    "entries": [
+      {
+        "id": "la-def-inner-product",
+        "type": "definition",
+        "label": "定义 2.7.1",
+        "title": "向量的内积",
+        "statement": [
+          "设 $\\alpha=(a_1,a_2,\\dots,a_n)^T$，$\\beta=(b_1,b_2,\\dots,b_n)^T$，称",
+          "$$\\langle\\alpha,\\beta\\rangle=a_1b_1+a_2b_2+\\dots+a_nb_n=\\sum_{i=1}^{n}a_ib_i=\\alpha^T\\beta$$",
+          "为 $\\alpha$ 与 $\\beta$ 的内积。"
+        ],
+        "conditions": [
+          "$\\alpha,\\beta$ 必须是同维数的实向量。",
+          "内积的结果是一个实数，不是向量。"
+        ],
+        "conclusion": [
+          "内积把 $\\mathbb{R}^n$ 中两个向量映成一个数，是长度与夹角的共同来源。",
+          "用矩阵写法 $\\langle\\alpha,\\beta\\rangle=\\alpha^T\\beta$，可以把内积运算转成矩阵乘法。"
+        ],
+        "derivation": [
+          "内积是点积的推广：先对应分量相乘，再全部相加。",
+          "记 $\\alpha^T\\beta$ 时注意 $\\alpha^T\\beta$ 是 $1\\times1$ 矩阵，按惯例等同于它的唯一元素。"
+        ],
+        "pitfalls": [
+          "把 $\\langle\\alpha,\\beta\\rangle$ 与 $\\alpha\\beta^T$（$n\\times n$ 矩阵）弄混。"
+        ],
+        "source": "课件 14，第 2 页"
+      },
+      {
+        "id": "la-prop-inner-product-properties",
+        "type": "property",
+        "label": "性质 2.7.2",
+        "title": "内积的三条基本性质",
+        "statement": [
+          "(1) 对称性：$\\langle\\alpha,\\beta\\rangle=\\langle\\beta,\\alpha\\rangle$。",
+          "(2) 双线性：$\\langle a\\alpha+b\\beta,\\gamma\\rangle=a\\langle\\alpha,\\gamma\\rangle+b\\langle\\beta,\\gamma\\rangle$，对第二个位置同理。",
+          "(3) 正定性：$\\langle\\alpha,\\alpha\\rangle\\ge 0$，且 $\\langle\\alpha,\\alpha\\rangle=0\\iff\\alpha=0$。"
+        ],
+        "conditions": [
+          "$a,b$ 为任意实数，$\\alpha,\\beta,\\gamma$ 为同维实向量。"
+        ],
+        "conclusion": [
+          "$\\langle\\alpha,\\alpha\\rangle=a_1^2+a_2^2+\\dots+a_n^2$，是一串平方和。"
+        ],
+        "derivation": [
+          "对称性来自实数乘法交换律；双线性来自乘法对加法的分配律；正定性来自实数的平方非负，且平方和为 $0$ 只能每个分量都为 $0$。"
+        ],
+        "pitfalls": [
+          "只记住 $\\langle\\alpha,\\alpha\\rangle\\ge 0$，忽略等号情形 $\\alpha=0$。"
+        ],
+        "source": "课件 14，第 2 页"
+      },
+      {
+        "id": "la-def-vector-length",
+        "type": "definition",
+        "label": "定义 2.7.3",
+        "title": "向量的长度（模）与单位向量",
+        "statement": [
+          "称 $\\|\\alpha\\|=\\sqrt{\\langle\\alpha,\\alpha\\rangle}=\\sqrt{a_1^2+a_2^2+\\dots+a_n^2}$ 为向量 $\\alpha$ 的长度（模）。",
+          "若 $\\|\\alpha\\|=1$，则称 $\\alpha$ 为单位向量。"
+        ],
+        "conditions": [
+          "长度由内积定义，必须先有内积。"
+        ],
+        "conclusion": [
+          "$\\|\\alpha\\|\\ge 0$，且 $\\|\\alpha\\|=0\\iff\\alpha=0$。",
+          "长度是「到原点的距离」，$\\|\\alpha-\\beta\\|$ 是两点间距离。"
+        ],
+        "derivation": [
+          "二维情形就是勾股定理：$\\sqrt{a_1^2+a_2^2}$ 是直角三角形的斜边。"
+        ],
+        "pitfalls": [
+          "把 $\\|\\alpha\\|$ 写成 $\\alpha$（长度是数，不是向量）。"
+        ],
+        "source": "课件 14，第 3 页"
+      },
+      {
+        "id": "la-prop-length-unitization",
+        "type": "property",
+        "label": "性质 2.7.4",
+        "title": "长度的性质与单位化",
+        "statement": [
+          "(1) $\\|k\\alpha\\|=|k|\\cdot\\|\\alpha\\|$，$k\\in\\mathbb{R}$。",
+          "(2) $\\|\\alpha\\|^2=\\langle\\alpha,\\alpha\\rangle$。",
+          "(3) 若 $\\alpha\\ne 0$，令 $\\varepsilon=\\dfrac{\\alpha}{\\|\\alpha\\|}$，则 $\\|\\varepsilon\\|=1$，称把 $\\alpha$ 单位化。"
+        ],
+        "conditions": [
+          "单位化只对非零向量有意义（零向量不能作除数）。"
+        ],
+        "conclusion": [
+          "任何非零向量都可以单位化，得到同方向的单位向量。",
+          "单位化后方向不变、长度变为 $1$。"
+        ],
+        "derivation": [
+          "$\\|k\\alpha\\|^2=\\langle k\\alpha,k\\alpha\\rangle=k^2\\langle\\alpha,\\alpha\\rangle=k^2\\|\\alpha\\|^2$，开方取绝对值。",
+          "$\\|\\alpha/\\|\\alpha\\|\\|=(1/\\|\\alpha\\|)\\cdot\\|\\alpha\\|=1$。"
+        ],
+        "pitfalls": [
+          "单位化时漏掉绝对值，把 $\\|k\\alpha\\|$ 写成 $k\\|\\alpha\\|$。"
+        ],
+        "source": "课件 14，第 3 页"
+      },
+      {
+        "id": "la-thm-cauchy-inequality",
+        "type": "theorem",
+        "label": "定理 2.7.5",
+        "title": "Cauchy 不等式",
+        "statement": [
+          "设 $\\alpha,\\beta\\in\\mathbb{R}^n$，则",
+          "(1) $|\\langle\\alpha,\\beta\\rangle|\\le\\|\\alpha\\|\\cdot\\|\\beta\\|$；",
+          "(2) $|\\langle\\alpha,\\beta\\rangle|=\\|\\alpha\\|\\cdot\\|\\beta\\|\\iff\\alpha,\\beta$ 线性相关。"
+        ],
+        "conditions": [
+          "对任意实向量都成立，不要求非零。"
+        ],
+        "conclusion": [
+          "内积的绝对值不超过两个长度之积；等号只在两向量共线时出现。",
+          "它是夹角定义合法、三角不等式成立的根本依据。"
+        ],
+        "derivation": [
+          "见证明 2.7.6：构造 $\\gamma=\\beta-x\\alpha$，用 $\\langle\\gamma,\\gamma\\rangle\\ge 0$ 的判别式。"
+        ],
+        "pitfalls": [
+          "忘记等号条件，把「线性相关」误写成「相等」或「同向」。"
+        ],
+        "source": "课件 14，第 4-5 页"
+      },
+      {
+        "id": "la-proof-cauchy-discriminant",
+        "type": "proof",
+        "label": "证明 2.7.6",
+        "title": "Cauchy 不等式的判别式证明",
+        "statement": [
+          "不妨设 $\\alpha\\ne 0$（否则两边都为 $0$）。对任意实数 $x$，令 $\\gamma=\\beta-x\\alpha$，则",
+          "$$0\\le\\langle\\gamma,\\gamma\\rangle=\\langle\\beta-x\\alpha,\\beta-x\\alpha\\rangle=\\langle\\alpha,\\alpha\\rangle x^2-2\\langle\\alpha,\\beta\\rangle x+\\langle\\beta,\\beta\\rangle.$$",
+          "这是关于 $x$ 的非负二次式，二次项系数 $\\langle\\alpha,\\alpha\\rangle>0$，故判别式 $\\Delta=(2\\langle\\alpha,\\beta\\rangle)^2-4\\langle\\alpha,\\alpha\\rangle\\langle\\beta,\\beta\\rangle\\le 0$，即 $\\langle\\alpha,\\beta\\rangle^2\\le\\|\\alpha\\|^2\\|\\beta\\|^2$，开方得 (1)。"
+        ],
+        "conditions": [
+          "需要 $\\langle\\alpha,\\alpha\\rangle>0$，即 $\\alpha\\ne 0$。"
+        ],
+        "conclusion": [
+          "非负二次式的判别式必然 $\\le 0$，这是整节最常用的技巧。",
+          "等号成立对应二次式有重根，即存在 $x$ 使 $\\beta=x\\alpha$，也就是线性相关。"
+        ],
+        "derivation": [
+          "若 $\\alpha,\\beta$ 线性无关，则 $\\gamma\\ne 0$ 对一切 $x$，$\\langle\\gamma,\\gamma\\rangle>0$，$\\Delta<0$，不等式严格。"
+        ],
+        "pitfalls": [
+          "把 $\\Delta\\le 0$ 与 $\\Delta<0$ 混用，导致等号条件说不清。"
+        ],
+        "source": "课件 14，第 4-5 页"
+      },
+      {
+        "id": "la-thm-triangle-inequality",
+        "type": "theorem",
+        "label": "定理 2.7.7",
+        "title": "三角不等式",
+        "statement": [
+          "设 $\\alpha,\\beta\\in\\mathbb{R}^n$，则 $\\|\\alpha+\\beta\\|\\le\\|\\alpha\\|+\\|\\beta\\|$。"
+        ],
+        "conditions": [
+          "对任意实向量成立。"
+        ],
+        "conclusion": [
+          "和的长度不超过长度之和，等号当且仅当 $\\alpha,\\beta$ 同向（一个非负倍数于另一个）。"
+        ],
+        "derivation": [
+          "$\\|\\alpha+\\beta\\|^2=\\|\\alpha\\|^2+2\\langle\\alpha,\\beta\\rangle+\\|\\beta\\|^2\\le\\|\\alpha\\|^2+2|\\langle\\alpha,\\beta\\rangle|+\\|\\beta\\|^2\\le\\|\\alpha\\|^2+2\\|\\alpha\\|\\|\\beta\\|+\\|\\beta\\|^2=(\\|\\alpha\\|+\\|\\beta\\|)^2$。",
+          "第一次放缩因为 $\\langle\\alpha,\\beta\\rangle\\le|\\langle\\alpha,\\beta\\rangle|$，第二次放缩用的正是 Cauchy 不等式。"
+        ],
+        "pitfalls": [
+          "忘记第一次放缩，直接用 $\\langle\\alpha,\\beta\\rangle\\le\\|\\alpha\\|\\|\\beta\\|$ 会漏掉内积为负的情形（其实也能用，但要说明 $\\langle\\alpha,\\beta\\rangle\\le|\\langle\\alpha,\\beta\\rangle|$）。"
+        ],
+        "source": "课件 14，第 6 页"
+      },
+      {
+        "id": "la-def-angle-orthogonal",
+        "type": "definition",
+        "label": "定义 2.7.8",
+        "title": "夹角与正交",
+        "statement": [
+          "设 $\\alpha,\\beta$ 为 $\\mathbb{R}^n$ 中的非零向量，称 $\\theta=\\arccos\\dfrac{\\langle\\alpha,\\beta\\rangle}{\\|\\alpha\\|\\cdot\\|\\beta\\|}$ 为 $\\alpha$ 与 $\\beta$ 的夹角。",
+          "若 $\\langle\\alpha,\\beta\\rangle=0$，则称 $\\alpha$ 与 $\\beta$ 正交，记为 $\\alpha\\perp\\beta$。"
+        ],
+        "conditions": [
+          "夹角只对非零向量定义；正交对任意向量（含零向量）有意义。"
+        ],
+        "conclusion": [
+          "夹角 $\\theta\\in[0,\\pi]$，由内积与长度完全确定。",
+          "零向量与任何向量都正交。"
+        ],
+        "derivation": [
+          "Cauchy 不等式保证 $\\dfrac{\\langle\\alpha,\\beta\\rangle}{\\|\\alpha\\|\\|\\beta\\|}\\in[-1,1]$，所以 $\\arccos$ 有意义。"
+        ],
+        "pitfalls": [
+          "对零向量谈夹角；把「正交」理解为「垂直」而忘记零向量情形。"
+        ],
+        "source": "课件 14，第 7 页"
+      },
+      {
+        "id": "la-prop-pythagorean",
+        "type": "property",
+        "label": "性质 2.7.9",
+        "title": "正交时的勾股定理",
+        "statement": [
+          "若 $\\alpha\\perp\\beta$，则 $\\|\\alpha+\\beta\\|^2=\\|\\alpha\\|^2+\\|\\beta\\|^2$。"
+        ],
+        "conditions": [
+          "需要 $\\langle\\alpha,\\beta\\rangle=0$。"
+        ],
+        "conclusion": [
+          "正交向量的「和」满足勾股关系，几何上就是直角三角形。"
+        ],
+        "derivation": [
+          "$\\|\\alpha+\\beta\\|^2=\\langle\\alpha,\\alpha\\rangle+\\langle\\alpha,\\beta\\rangle+\\langle\\beta,\\alpha\\rangle+\\langle\\beta,\\beta\\rangle=\\|\\alpha\\|^2+\\|\\beta\\|^2$，交叉项因正交而消失。"
+        ],
+        "pitfalls": [
+          "对不正交的向量使用勾股定理，漏掉 $2\\langle\\alpha,\\beta\\rangle$。"
+        ],
+        "source": "课件 14，第 7 页"
+      },
+      {
+        "id": "la-def-orthogonal-vector-group",
+        "type": "definition",
+        "label": "定义 2.7.10",
+        "title": "正交向量组",
+        "statement": [
+          "设 $\\alpha_1,\\alpha_2,\\dots,\\alpha_s$ 为 $\\mathbb{R}^n$ 中的非零向量，若它们两两正交（$i\\ne j$ 时 $\\langle\\alpha_i,\\alpha_j\\rangle=0$），则称之为一个正交向量组。"
+        ],
+        "conditions": [
+          "组内每个向量都非零。",
+          "「两两正交」是任意两个不同向量的内积为零。"
+        ],
+        "conclusion": [
+          "$\\mathbb{R}^n$ 的基本单位向量组 $e_1,\\dots,e_n$ 是正交向量组。",
+          "$\\mathbb{R}^3$ 中 $(1,2,1)^T,(1,-1,1)^T,(1,0,-1)^T$ 也是正交向量组。"
+        ],
+        "derivation": [
+          "正交向量组是「互相垂直」的一族向量，是标准正交基的雏形。"
+        ],
+        "pitfalls": [
+          "只验证相邻两个正交，没有验证「两两」。"
+        ],
+        "source": "课件 14，第 8 页"
+      },
+      {
+        "id": "la-thm-orthogonal-group-independent",
+        "type": "theorem",
+        "label": "定理 2.7.11",
+        "title": "正交向量组必线性无关",
+        "statement": [
+          "设 $\\alpha_1,\\alpha_2,\\dots,\\alpha_s$ 是正交向量组，则它们线性无关。"
+        ],
+        "conditions": [
+          "组内向量都非零，且两两正交。"
+        ],
+        "conclusion": [
+          "正交向量组的秩等于向量个数 $s$。",
+          "因此 $n$ 维空间中正交向量组最多含 $n$ 个向量。"
+        ],
+        "derivation": [
+          "设 $k_1\\alpha_1+\\dots+k_s\\alpha_s=0$。两边与 $\\alpha_i$ 作内积：$\\sum_j k_j\\langle\\alpha_j,\\alpha_i\\rangle=k_i\\langle\\alpha_i,\\alpha_i\\rangle=0$。因 $\\langle\\alpha_i,\\alpha_i\\rangle=\\|\\alpha_i\\|^2>0$，故 $k_i=0$，对每个 $i$ 成立。"
+        ],
+        "pitfalls": [
+          "忘记「非零」条件：若组内含零向量，零向量与谁都正交，但组会线性相关。"
+        ],
+        "source": "课件 14，第 9-10 页"
+      },
+      {
+        "id": "la-def-orthonormal-basis",
+        "type": "definition",
+        "label": "定义 2.7.12",
+        "title": "标准正交向量组与标准正交基",
+        "statement": [
+          "若 $\\alpha_1,\\dots,\\alpha_s$ 两两正交且都是单位向量，则称它们为一个标准正交向量组。",
+          "特别地，若向量空间 $V$ 的一组基 $\\alpha_1,\\dots,\\alpha_s$ 是标准正交向量组，则称之为 $V$ 的一组标准正交基。"
+        ],
+        "conditions": [
+          "两个条件：两两正交 + 每个都是单位向量。"
+        ],
+        "conclusion": [
+          "$e_1,\\dots,e_n$ 是 $\\mathbb{R}^n$ 的一组标准正交基。",
+          "正交组单位化后就是标准正交组；标准正交基是最「好用」的基。"
+        ],
+        "derivation": [
+          "标准正交基下内积就是对应坐标相乘求和，坐标可以直接用内积读出。"
+        ],
+        "pitfalls": [
+          "把「正交组」直接当「标准正交组」，漏掉单位化。"
+        ],
+        "source": "课件 14，第 11-12 页"
+      },
+      {
+        "id": "la-prop-coordinates-orthonormal",
+        "type": "proposition",
+        "label": "命题 2.7.13",
+        "title": "标准正交基下的坐标公式",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 是一个标准正交向量组，$\\alpha=k_1\\alpha_1+\\dots+k_s\\alpha_s$，则 $k_i=\\langle\\alpha,\\alpha_i\\rangle$，$i=1,\\dots,s$。"
+        ],
+        "conditions": [
+          "前提是标准正交（既正交又单位）。"
+        ],
+        "conclusion": [
+          "坐标就是内积（投影），不必解线性方程组。",
+          "在标准正交基下，向量的第 $i$ 个坐标等于它与第 $i$ 个基向量的内积。"
+        ],
+        "derivation": [
+          "两边与 $\\alpha_i$ 作内积：$\\langle\\alpha,\\alpha_i\\rangle=\\sum_j k_j\\langle\\alpha_j,\\alpha_i\\rangle=k_i\\langle\\alpha_i,\\alpha_i\\rangle=k_i$，交叉项全为 $0$，自身内积为 $1$。"
+        ],
+        "pitfalls": [
+          "在一般基下套用 $k_i=\\langle\\alpha,\\alpha_i\\rangle$，忽略基不正交时交叉项不为零。"
+        ],
+        "source": "课件 14，第 13-14 页"
+      },
+      {
+        "id": "la-method-schmidt",
+        "type": "method",
+        "label": "方法 2.7.14",
+        "title": "Schmidt 正交化与单位化",
+        "statement": [
+          "设 $\\alpha_1,\\dots,\\alpha_s$ 线性无关。令",
+          "$$\\beta_1=\\alpha_1,\\quad \\beta_k=\\alpha_k-\\sum_{i=1}^{k-1}\\frac{\\langle\\alpha_k,\\beta_i\\rangle}{\\langle\\beta_i,\\beta_i\\rangle}\\beta_i\\quad(k=2,\\dots,s),$$",
+          "则 $\\beta_1,\\dots,\\beta_s$ 两两正交；再令 $\\eta_i=\\dfrac{\\beta_i}{\\|\\beta_i\\|}$，得到与 $\\alpha_1,\\dots,\\alpha_s$ 等价的标准正交向量组。"
+        ],
+        "conditions": [
+          "原向量组必须线性无关（否则某步 $\\beta_k=0$）。"
+        ],
+        "conclusion": [
+          "正交化保持张成的子空间不变，只把基换成正交基。",
+          "单位化是最后一步，顺序不能反。"
+        ],
+        "derivation": [
+          "系数 $-\\langle\\alpha_k,\\beta_i\\rangle/\\langle\\beta_i,\\beta_i\\rangle$ 由强制 $\\beta_k\\perp\\beta_i$ 解出：$\\langle\\alpha_k-\\lambda\\beta_i,\\beta_i\\rangle=0\\Rightarrow\\lambda=\\langle\\alpha_k,\\beta_i\\rangle/\\langle\\beta_i,\\beta_i\\rangle$。"
+        ],
+        "pitfalls": [
+          "用 $\\langle\\alpha_k,\\alpha_i\\rangle$ 代替 $\\langle\\alpha_k,\\beta_i\\rangle$；漏掉某些 $i$；先单位化后正交化。"
+        ],
+        "source": "课件 14，第 15-17 页"
+      },
+      {
+        "id": "la-thm-existence-orthonormal-basis",
+        "type": "theorem",
+        "label": "定理 2.7.15",
+        "title": "每个非零向量空间都有标准正交基",
+        "statement": [
+          "每个非零向量空间都有标准正交基。"
+        ],
+        "conditions": [
+          "空间必须非零（$\\dim V\\ge 1$）。"
+        ],
+        "conclusion": [
+          "任意有限维非零子空间都能找到标准正交基，维数不变。"
+        ],
+        "derivation": [
+          "取 $V$ 的一组基 $\\alpha_1,\\dots,\\alpha_s$，经 Schmidt 正交化与单位化得等价的 $\\eta_1,\\dots,\\eta_s$；等价向量组也是 $V$ 的基，故 $\\eta$ 组是标准正交基。"
+        ],
+        "pitfalls": [
+          "对 $\\{0\\}$ 也套用定理（$\\{0\\}$ 没有基，$\\dim\\{0\\}=0$）。"
+        ],
+        "source": "课件 14，第 18、20 页"
+      },
+      {
+        "id": "la-def-orthogonal-matrix",
+        "type": "definition",
+        "label": "定义 2.7.16",
+        "title": "正交矩阵与正交变换",
+        "statement": [
+          "若 $n$ 阶实矩阵 $Q$ 满足 $Q^TQ=E$（即 $Q^{-1}=Q^T$），则称 $Q$ 为一个正交矩阵（正交阵）。",
+          "称映射 $f:\\mathbb{R}^n\\to\\mathbb{R}^n,\\ \\alpha\\mapsto Q\\alpha$ 为 $\\mathbb{R}^n$ 上的正交变换。"
+        ],
+        "conditions": [
+          "$Q$ 必须是实方阵。"
+        ],
+        "conclusion": [
+          "正交阵一定可逆，且逆矩阵就是转置。",
+          "旋转矩阵 $Q=\\begin{pmatrix}\\cos\\theta&-\\sin\\theta\\\\\\sin\\theta&\\cos\\theta\\end{pmatrix}$ 是正交阵。"
+        ],
+        "derivation": [
+          "$Q^TQ=E$ 说明 $Q$ 的列向量两两正交且长度为 $1$，正是标准正交基。"
+        ],
+        "pitfalls": [
+          "把条件写成 $QQ^T=E$ 却不说明方阵（对方阵两者等价，对非方阵不等价）。"
+        ],
+        "source": "课件 14，第 23 页"
+      },
+      {
+        "id": "la-thm-orthogonal-matrix-columns",
+        "type": "theorem",
+        "label": "定理 2.7.17",
+        "title": "正交阵的列向量刻画",
+        "statement": [
+          "$n$ 阶实矩阵 $Q$ 为正交阵 $\\iff$ $Q$ 的列向量组构成 $\\mathbb{R}^n$ 的一组标准正交基。"
+        ],
+        "conditions": [
+          "$Q$ 为 $n$ 阶方阵。"
+        ],
+        "conclusion": [
+          "判断正交阵只需看列向量是否两两正交且长度为 $1$。"
+        ],
+        "derivation": [
+          "设 $Q=(q_1,\\dots,q_n)$，则 $Q^TQ$ 的第 $(i,j)$ 元是 $q_i^Tq_j=\\langle q_i,q_j\\rangle$；$Q^TQ=E$ 等价于 $i\\ne j$ 时 $\\langle q_i,q_j\\rangle=0$、$i=j$ 时 $\\|q_i\\|^2=1$。"
+        ],
+        "pitfalls": [
+          "只验证列向量两两正交，忘记验证长度为 $1$。"
+        ],
+        "source": "课件 14，第 27-28 页"
+      },
+      {
+        "id": "la-prop-orthogonal-matrix-properties",
+        "type": "property",
+        "label": "性质 2.7.18",
+        "title": "正交阵的五条性质",
+        "statement": [
+          "(1) $Q$ 为正交阵 $\\Rightarrow|Q|=\\pm1$。",
+          "(2) $Q$ 为正交阵 $\\Rightarrow Q^{-1}=Q^T$ 也是正交阵。",
+          "(3) $A,B$ 为同阶正交阵 $\\Rightarrow AB$ 为正交阵。",
+          "(4) $Q$ 为 $n$ 阶正交阵 $\\Rightarrow\\langle Qx,Qy\\rangle=\\langle x,y\\rangle$，$\\forall x,y\\in\\mathbb{R}^n$。",
+          "(5) $Q$ 为 $n$ 阶正交阵 $\\Rightarrow\\|Qx\\|=\\|x\\|$，$\\forall x\\in\\mathbb{R}^n$。"
+        ],
+        "conditions": [
+          "所有结论都从 $Q^TQ=E$ 出发。"
+        ],
+        "conclusion": [
+          "正交变换保持内积、长度与夹角，只做旋转（$|Q|=1$）或反射（$|Q|=-1$）。"
+        ],
+        "derivation": [
+          "(1) $|Q|^2=|Q^T||Q|=|Q^TQ|=1$；(2) $(Q^T)^TQ^T=QQ^T=E$；(3) $(AB)^T(AB)=B^TA^TAB=B^TB=E$；(4) $(Qx)^T(Qy)=x^TQ^TQy=x^Ty$；(5) 取 $y=x$ 由 (4) 得。"
+        ],
+        "pitfalls": [
+          "把 $|Q|=\\pm1$ 记成 $|Q|=1$；认为正交阵必对称（只有对合正交阵才对称）。"
+        ],
+        "source": "课件 14，第 28-33 页"
+      },
+      {
+        "id": "la-example-plane-orthonormal-basis",
+        "type": "example",
+        "label": "例 2.7.19",
+        "title": "求平面 $x+2y-3z=0$ 的一组标准正交基",
+        "statement": [
+          "求 $\\mathbb{R}^3$ 的子空间 $V=\\{(x,y,z)^T\\mid x+2y-3z=0\\}$ 的一组标准正交基。"
+        ],
+        "conditions": [
+          "先求 $V$ 的一组基，再 Schmidt 正交化，最后单位化。"
+        ],
+        "conclusion": [
+          "$\\eta_1=\\dfrac{1}{\\sqrt5}(-2,1,0)^T$，$\\eta_2=\\dfrac{1}{\\sqrt{70}}(3,6,5)^T$ 是 $V$ 的一组标准正交基。"
+        ],
+        "derivation": [
+          "由 $x=-2y+3z$ 得 $V=\\{y(-2,1,0)^T+z(3,0,1)^T\\}$，取 $\\alpha_1=(-2,1,0)^T,\\alpha_2=(3,0,1)^T$。",
+          "$\\beta_1=\\alpha_1$；$\\langle\\alpha_2,\\beta_1\\rangle=-6$，$\\langle\\beta_1,\\beta_1\\rangle=5$，故 $\\beta_2=\\alpha_2+\\tfrac65\\beta_1=(\\tfrac35,\\tfrac65,1)^T$。",
+          "$\\|\\beta_1\\|=\\sqrt5$，$\\|\\beta_2\\|=\\sqrt{70}/5$，单位化得 $\\eta_1,\\eta_2$。"
+        ],
+        "pitfalls": [
+          "正交化时把 $\\alpha_2$ 减成 $\\alpha_2-\\langle\\alpha_2,\\beta_1\\rangle\\beta_1$（漏除 $\\langle\\beta_1,\\beta_1\\rangle$）。"
+        ],
+        "source": "课件 14，第 21-22 页"
+      },
+      {
+        "id": "la-pitfall-schmidt-and-orthogonal",
+        "type": "pitfall",
+        "label": "易错点 2.7.20",
+        "title": "Schmidt 与正交阵的两类高频错误",
+        "statement": [
+          "(a) Schmidt 正交化中系数写成 $\\langle\\alpha_k,\\alpha_i\\rangle/\\langle\\alpha_i,\\alpha_i\\rangle$，或忘记单位化。",
+          "(b) 判断正交阵时只验证 $Q^TQ=E$ 的一半，或把 $|Q|=\\pm1$ 写成 $|Q|=1$。"
+        ],
+        "conditions": [
+          "两类错误都出在「对象」和「条件」上。"
+        ],
+        "conclusion": [
+          "正交化里作内积的对象是已造好的 $\\beta_i$，不是原来的 $\\alpha_i$；正交阵行列式可正可负。"
+        ],
+        "derivation": [
+          "单位化不改变正交性，但不做单位化得到的是正交基而非标准正交基；$|Q|=-1$ 对应反射，仍是正交阵。"
+        ],
+        "pitfalls": [
+          "把 Schmidt 的系数与「投影系数」混为一谈；看到 $|Q|=-1$ 就判定不是正交阵。"
+        ],
+        "source": "课件 14，第 15-17、28 页"
       }
     ]
   }
