@@ -23,10 +23,11 @@
         </div>
         <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航"></nav>
         <p class="sidebar-source">
-          依据第 1 章 5 份课件和第 2 章 5 份课件整理。第二章节覆盖导数、微分、中值定理、Taylor 定理与函数性态。
-          第三章为 2026-11-05 习题课「数列极限」的 16 题全解与套路总结。
-          第四章为 2026-11-10 习题课「连续函数」的 22 题全解与套路总结。
-          第五章为 2026-11-18 习题课「求导法与中值定理」的 40 题全解与套路总结。
+          依据第 1 章 5 份、第 2 章 5 份、第 3 章 6 份课件整理。第一章覆盖极限与连续；第二章覆盖导数、微分、中值定理、Taylor 定理与函数性态。
+          第三章为定积分与微积分基本定理：定义与可积性、性质、原函数与变限积分、换元与分部积分、几何与物理应用、反常积分与 Γ 函数。
+          第四章为 2026-11-05 习题课「数列极限」的 16 题全解与套路总结。
+          第五章为 2026-11-10 习题课「连续函数」的 22 题全解与套路总结。
+          第六章为 2026-11-18 习题课「求导法与中值定理」的 40 题全解与套路总结。
         </p>
       </aside>
 
@@ -44,13 +45,13 @@
 
       <main class="main">
         <header class="page-header">
-          <p class="page-kicker">第一、二章 + 三节习题课 · 一元函数微积分</p>
+          <p class="page-kicker">第一至三章 + 三节习题课 · 一元函数微积分</p>
           <h1>工科数学分析知识整理</h1>
           <p class="page-intro">
             按章节整理核心结论、前置定义、证明骨架和依赖关系。切换章节后，可使用搜索与类型筛选定位当前章内容。
-            第三章是数列极限习题课：九种套路、常考知识点、16 题全解与易错清单；
-            第四章是连续函数习题课：八种套路、22 题全解与易错清单；
-            第五章是求导法与中值定理习题课：八套求导套路、公式工具箱、中值定理家族与辅助函数构造、16 道关键题精解与易错清单。
+            第三章是定积分与微积分基本定理：定义、可积条件、性质、原函数与变限积分、基本积分表；第四章是数列极限习题课：九种套路、常考知识点、16 题全解与易错清单；
+            第五章是连续函数习题课：八种套路、22 题全解与易错清单；
+            第六章是求导法与中值定理习题课：八套求导套路、公式工具箱、中值定理家族与辅助函数构造、16 道关键题精解与易错清单。
           </p>
 
           <nav class="book-chapter-tabs" id="book-chapter-tabs" aria-label="章节选取">
@@ -78,8 +79,8 @@
               data-book-chapter="3"
               aria-pressed="false"
             >
-              <span class="book-chapter-tab__index">习题课</span>
-              <span class="book-chapter-tab__title">数列极限 16 题</span>
+              <span class="book-chapter-tab__index">第三章</span>
+              <span class="book-chapter-tab__title">一元函数积分学</span>
             </button>
             <button
               class="book-chapter-tab"
@@ -88,12 +89,21 @@
               aria-pressed="false"
             >
               <span class="book-chapter-tab__index">习题课</span>
-              <span class="book-chapter-tab__title">连续函数 22 题</span>
+              <span class="book-chapter-tab__title">数列极限 16 题</span>
             </button>
             <button
               class="book-chapter-tab"
               type="button"
               data-book-chapter="5"
+              aria-pressed="false"
+            >
+              <span class="book-chapter-tab__index">习题课</span>
+              <span class="book-chapter-tab__title">连续函数 22 题</span>
+            </button>
+            <button
+              class="book-chapter-tab"
+              type="button"
+              data-book-chapter="6"
               aria-pressed="false"
             >
               <span class="book-chapter-tab__index">习题课</span>
@@ -193,6 +203,7 @@
     <script src="assets/katex/katex.min.js" defer></script>
     <script src="content-data.js" defer></script>
     <script src="chapter2-data.js" defer></script>
+  <script src="chapter3-data.js" defer></script>
     <script src="extra-knowledge-data.js" defer></script>
     <script src="proof-data.js" defer></script>
     <script src="derivative-proofs-data.js" defer></script>

@@ -3,8 +3,8 @@
 window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || []).concat(
 [
   {
-    "number": "5.1",
-    "bookChapter": "5",
+    "number": "6.1",
+    "bookChapter": "6",
     "title": "方法地图：四十题背后的八套套路",
     "lead": "这 40 道题看着五花八门，实际只有两条主线：前半段把「求导」拆成四件套，后半段把「证存在」拆成「造辅助函数」。先看这张地图，再做题，就不会在题海里迷路。",
     "map": [
@@ -248,8 +248,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "5.2",
-    "bookChapter": "5",
+    "number": "6.2",
+    "bookChapter": "6",
     "title": "公式工具箱：求导四件套",
     "lead": "求导题的失分点几乎全在「公式记混」和「结构认错」两处。这一页把本节真正用到的公式按「什么时候用」排好，配一条最容易错的写法。",
     "map": [
@@ -574,8 +574,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "5.3",
-    "bookChapter": "5",
+    "number": "6.3",
+    "bookChapter": "6",
     "title": "中值定理家族与辅助函数",
     "lead": "罗尔、拉格朗日、柯西、泰勒是同一个家族的四级台阶。证题的关键不在定理本身，而在「从结论倒推辅助函数」。这一页给出三入口与两套变体。",
     "map": [
@@ -843,8 +843,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "5.4",
-    "bookChapter": "5",
+    "number": "6.4",
+    "bookChapter": "6",
     "title": "十六道关键题精解",
     "lead": "从 40 题里挑出 16 道：覆盖链式、隐函数二阶、参数方程二阶、极坐标切线、拆项高阶导、莱布尼茨、相关变化率、绝对值可导性、求和构造、双中值点、泰勒型三次罗尔、一致连续、分段连续可导、数列极限、判阶。每题给出「卡住的地方」而不是完整抄解。",
     "map": [
@@ -1308,8 +1308,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "5.5",
-    "bookChapter": "5",
+    "number": "6.5",
+    "bookChapter": "6",
     "title": "易错点清单",
     "lead": "这 40 题里最容易失分的地方集中列在这里。考前只翻这一页，比刷十道新题有用。",
     "map": [

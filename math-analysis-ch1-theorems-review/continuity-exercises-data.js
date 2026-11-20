@@ -3,8 +3,8 @@
 window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || []).concat(
 [
   {
-    "number": "4.1",
-    "bookChapter": "4",
+    "number": "5.1",
+    "bookChapter": "5",
     "title": "方法地图：二十二题背后的八种套路",
     "lead": "二十二道题不是二十二个技巧，而是八种套路的不同外壳。连续函数这一节，一半的题在「求极限」，一半在「用连续性」。先按题面信号锁定套路，再按模板写步骤。",
     "map": [
@@ -253,8 +253,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "4.2",
-    "bookChapter": "4",
+    "number": "5.2",
+    "bookChapter": "5",
     "title": "常考知识点",
     "lead": "这些是必须能默写出来的东西：定义、等价无穷小、两个重要极限、间断点分类、闭区间三大性质与一致连续的判据。",
     "map": [
@@ -633,8 +633,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "4.3",
-    "bookChapter": "4",
+    "number": "5.3",
+    "bookChapter": "5",
     "title": "二十二题精解",
     "lead": "按课件顺序逐题给出答案、思路、步骤与易错点；折叠区是完整论证，默写时先自己写再对照。",
     "map": [
@@ -1216,8 +1216,8 @@ window.MATH_REVIEW_EXERCISE_CHAPTERS = (window.MATH_REVIEW_EXERCISE_CHAPTERS || 
     ]
   },
   {
-    "number": "4.4",
-    "bookChapter": "4",
+    "number": "5.4",
+    "bookChapter": "5",
     "title": "易错点清单",
     "lead": "这 22 题里最容易失分的地方集中列在这里。考前只翻这一页，比刷十道新题有用。",
     "map": [

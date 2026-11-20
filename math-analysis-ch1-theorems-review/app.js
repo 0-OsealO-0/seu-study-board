@@ -16,19 +16,24 @@
       subtitle: "一元函数微分学"
     },
     "3": {
-      number: "习题课",
+      number: "3",
       title: "第三章",
-      subtitle: "数列极限习题课"
+      subtitle: "一元函数积分学"
     },
     "4": {
       number: "习题课",
-      title: "第四章",
-      subtitle: "连续函数习题课"
+      title: "习题课",
+      subtitle: "数列极限 16 题"
     },
     "5": {
       number: "习题课",
-      title: "第五章",
-      subtitle: "求导法与中值定理习题课"
+      title: "习题课",
+      subtitle: "连续函数 22 题"
+    },
+    "6": {
+      number: "习题课",
+      title: "习题课",
+      subtitle: "求导法与中值定理 40 题"
     }
   };
   chapters.forEach((chapter) => {
@@ -345,6 +350,7 @@
     const section = createElement("section", "chapter-section");
     section.id = `chapter-${chapter.number.replace(".", "-")}`;
     section.dataset.chapter = chapter.number;
+    section.dataset.bookChapter = chapter.bookChapter;
 
     const header = createElement("header", "chapter-header");
     const parent = bookChapterMeta[chapter.bookChapter];
@@ -447,7 +453,7 @@
     });
     document.querySelectorAll(".chapter-section").forEach((section) => {
       section.dataset.activeBookChapter = String(
-        section.dataset.chapter.split(".")[0] === bookChapter
+        section.dataset.bookChapter === bookChapter
       );
     });
 
@@ -460,7 +466,7 @@
   }
 
   function getInitialBookChapter() {
-    const hashMatch = window.location.hash.match(/^#chapter-([1-4])(?:-|$)/);
+    const hashMatch = window.location.hash.match(/^#chapter-([1-6])(?:-|$)/);
     if (hashMatch && bookChapterMeta[hashMatch[1]]) {
       return hashMatch[1];
     }
@@ -753,7 +759,7 @@
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     window.addEventListener("hashchange", () => {
-      const hashMatch = window.location.hash.match(/^#chapter-([1-4])(?:-|$)/);
+      const hashMatch = window.location.hash.match(/^#chapter-([1-6])(?:-|$)/);
       if (hashMatch && bookChapterMeta[hashMatch[1]] && hashMatch[1] !== state.bookChapter) {
         setBookChapter(hashMatch[1]);
       }
