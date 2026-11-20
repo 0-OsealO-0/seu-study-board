@@ -1,0 +1,396 @@
+{
+  "date": "2026-11-20",
+  "course": "工科数学分析",
+  "duration_minutes": 90,
+  "source_files": [
+    "C:\\Users\\30139\\Downloads\\ch3.5定积分的应用.pdf",
+    "C:\\Users\\30139\\Downloads\\ch3.6反常积分.pdf"
+  ],
+  "source_pages": [
+    "课件 3-5 第 1-20 页：§3.5.1 微元法——四步简化成两步、微元与 dx 的线性关系、可加性条件",
+    "课件 3-5 第 20-60 页：§3.5.2 一、平面曲线的弧长——弧微分、参数方程/直角坐标/极坐标三种弧长公式、例 1-3（旋轮线、椭圆、抛物线）",
+    "课件 3-5 第 60-150 页：二、平面图形的面积——直角坐标、参数方程、极坐标曲边扇形；例 4-12（双纽线、圆与双纽线公共部分）",
+    "课件 3-5 第 150-200 页：三、体积——平行截面面积已知的立体、旋转体体积（圆盘法、柱壳法）；例 13-18（圆柱楔、旋转椭球体、摆线）",
+    "课件 3-5 第 200-210 页：四、旋转曲面的面积——面积微元 $2\\pi y\\,\\mathrm{d}s$、三种坐标形式；例 18-20（球面、圆环面、摆线）",
+    "课件 3-5 第 210-258 页：§3.5.3 物理应用——细棒质量与质心、液体静压力（例 22 储油罐）、引力（例 23）、变力做功（例 24 抽水、第二宇宙速度）",
+    "课件 3-6 第 1-6 页：§3.6 导言——正常积分的两条限制被放开",
+    "课件 3-6 第 6-100 页：§3.6.1 概念——定义 3.6.1 无穷限积分、定义 3.6.2 瑕积分与奇点、p 积分与 q 积分、N-L 公式推广；例 1-7",
+    "课件 3-6 第 101-200 页：§3.6.2 判敛法——有界判别法（定理 3.6.1）、比较判别法（定理 3.6.2）、极限形式（推论 3.6.1）、Cauchy 准则（定理 3.6.5）、线性性质、绝对收敛与条件收敛（定理 3.6.6）；例 8-15",
+    "课件 3-6 第 200-298 页：统计判敛与计算——无界函数的比较判别法（定理 3.6.7-3.6.9）、反常积分的换元与分部积分、例 16-25",
+    "课件 3-6 第 299-360 页：§3.6.3 Gamma 函数与 Beta 函数——定义、递推公式、概率积分、Beta 的对称性与整数情形；例 26-28"
+  ],
+  "summary": [
+    "微元法把 §3.1 的\"分割—近似—求和—取极限\"四步压缩成两步：先在 $[x,x+\\mathrm{d}x]$ 上取一个与 $\\mathrm{d}x$ 成线性关系、误差为高阶小量的局部近似 $\\mathrm{d}Q=f(x)\\mathrm{d}x$，再在整段上积分，这就是全部应用题的共同模板。",
+    "弧长、面积、体积、曲面面积四套公式没有本质区别，都来自同一个弧微分或面积微元：平面曲线 $\\mathrm{d}s=\\sqrt{\\mathrm{d}x^2+\\mathrm{d}y^2}$，面积 $\\mathrm{d}A=\\frac12\\rho^2\\mathrm{d}\\theta$，体积 $\\mathrm{d}V=\\pi y^2\\mathrm{d}x$，旋转曲面 $\\mathrm{d}S=2\\pi y\\,\\mathrm{d}s$。",
+    "三种坐标系（直角、参数、极坐标）的公式只是同一个微元在不同变量下的写法，做题第一步永远是\"选积分变量、写微元、定积分限\"，而不是背四套公式。",
+    "物理应用的关键不是积分，而是把物理规律写成微元：质量 $\\mathrm{d}m=\\rho(x)\\mathrm{d}x$、压力 $\\mathrm{d}P=\\rho g x\\,w(x)\\mathrm{d}x$、功 $\\mathrm{d}W=F(x)\\mathrm{d}x$、引力 $\\mathrm{d}F=\\frac{k\\,\\mathrm{d}m}{r^2}$ 要做矢量分解。",
+    "反常积分放开的是正常积分的两条限制——区间有限、函数有界；无穷限积分是上限趋于无穷的极限，瑕积分是奇点邻域被挖掉的极限，两类都统一定义为\"正常积分的极限\"。",
+    "判敛的核心是两把尺子：无穷限用 p 积分（$p>1$ 收敛），无界函数用 q 积分（$q<1$ 收敛），再配合比较判别法及其极限形式。两个临界值方向相反，是本章最容易记错的地方。",
+    "比较判别法只对被积函数非负的情形有效（有界判别法要求部分积分单调有界）；一般函数要先看绝对收敛，由 $\\int|f|$ 收敛推出 $\\int f$ 收敛，而条件收敛的反面典型是 $\\int_1^{+\\infty}\\frac{\\sin x}{x}\\mathrm{d}x$。",
+    "反常积分与定积分一样保持线性、区间可加、换元与分部积分，只是每次用 N-L 公式或分部积分前都要单独检查原函数（或边界项）在奇点、无穷远处的极限是否存在。",
+    "Gamma 函数 $\\Gamma(x)=\\int_0^{+\\infty}t^{x-1}e^{-t}\\mathrm{d}t$ 是阶乘的连续推广，递推 $\\Gamma(x+1)=x\\Gamma(x)$ 由分部积分得到；Beta 函数 $\\mathrm{B}(p,q)=\\int_0^1x^{p-1}(1-x)^{q-1}\\mathrm{d}x$ 有对称性 $\\mathrm{B}(p,q)=\\mathrm{B}(q,p)$ 与递推公式，整数情形就是组合数。"
+  ],
+  "key_points": [
+    {
+      "title": "微元法的两步与三个条件",
+      "detail": "$Q$ 对区间可加；在 $[x,x+\\mathrm{d}x]$ 上 $\\Delta Q\\approx\\mathrm{d}Q=f(x)\\mathrm{d}x$ 且误差是 $\\mathrm{d}x$ 的高阶无穷小；$f$ 连续。步骤只有\"取微元、积分\"两步，原来四步（分割、近似、求和、取极限）被 N-L 公式与极限理论吸收掉了。写微元时可以先画出那一小段图形，用直线/平面/圆柱近似曲线/曲面，再取 $\\mathrm{d}x\\to0$。"
+    },
+    {
+      "title": "弧微分与三种弧长公式",
+      "detail": "$\\mathrm{d}s=\\sqrt{\\mathrm{d}x^2+\\mathrm{d}y^2}$。参数方程 $s=\\int_\\alpha^\\beta\\sqrt{x'^2+y'^2}\\,\\mathrm{d}t$；直角坐标 $s=\\int_a^b\\sqrt{1+f'^2}\\,\\mathrm{d}x$；极坐标 $s=\\int_{\\theta_1}^{\\theta_2}\\sqrt{\\rho^2+\\rho'^2}\\,\\mathrm{d}\\theta$。极坐标公式由 $x=\\rho\\cos\\theta$、$y=\\rho\\sin\\theta$ 代入参数公式得到，是最容易抄错的一条。"
+    },
+    {
+      "title": "面积三公式",
+      "detail": "直角坐标 $A=\\int_a^b[f(x)-g(x)]\\mathrm{d}x$（上减下）；参数方程 $A=\\int_\\alpha^\\beta y(t)x'(t)\\,\\mathrm{d}t$（要求 $x'(t)\\ne0$）；极坐标 $A=\\frac12\\int_\\alpha^\\beta\\rho^2(\\theta)\\,\\mathrm{d}\\theta$（曲边扇形，$\\beta-\\alpha\\le2\\pi$）。求两曲线围成的公共部分时先求交点定分段。"
+    },
+    {
+      "title": "体积两法",
+      "detail": "平行截面已知 $V=\\int_a^b A(x)\\mathrm{d}x$；绕 $x$ 轴旋转 $V=\\pi\\int_a^b f^2(x)\\mathrm{d}x$（圆盘法）；绕 $y$ 轴旋转可用柱壳法 $V=2\\pi\\int_a^b x f(x)\\mathrm{d}x$，也可把 $x$ 表成 $y$ 的函数后仍用圆盘法 $\\pi\\int x^2(y)\\mathrm{d}y$。柱壳法的微元是\"周长 × 高 × 厚\"。"
+    },
+    {
+      "title": "旋转曲面面积",
+      "detail": "$S=2\\pi\\int_a^b f(x)\\sqrt{1+f'^2(x)}\\,\\mathrm{d}x=2\\pi\\int y\\,\\mathrm{d}s$。参数形式 $S=2\\pi\\int_\\alpha^\\beta y(t)\\sqrt{x'^2+y'^2}\\mathrm{d}t$；极坐标绕极轴 $S=2\\pi\\int_\\alpha^\\beta\\rho\\sin\\theta\\sqrt{\\rho^2+\\rho'^2}\\mathrm{d}\\theta$。注意与圆柱侧面 $2\\pi y\\,\\mathrm{d}x$ 的区别：必须用弧微分 $\\mathrm{d}s$。"
+    },
+    {
+      "title": "物理应用的四个微元",
+      "detail": "质量 $\\mathrm{d}m=\\rho(x)\\mathrm{d}x$；静压力 $\\mathrm{d}P=\\rho g x\\,w(x)\\mathrm{d}x$（$x$ 为深度、$w$ 为宽度）；变力做功 $\\mathrm{d}W=F(x)\\mathrm{d}x$；引力 $\\mathrm{d}F=\\frac{k\\,\\mathrm{d}m}{r^2}$ 需按方向分解（对称方向的分量相互抵消）。建系时把原点放在液面或对称轴上最省事。"
+    },
+    {
+      "title": "反常积分的定义与 N-L 推广",
+      "detail": "无穷限：$\\int_a^{+\\infty}f=\\lim_{b\\to+\\infty}\\int_a^b f$；瑕积分：$a$ 为奇点时 $\\int_a^b f=\\lim_{\\varepsilon\\to0^+}\\int_{a+\\varepsilon}^b f$；$(-\\infty,+\\infty)$ 或内部奇点都要拆成两段，两段都收敛才算收敛。N-L 推广：$\\int_a^{+\\infty}f=F(+\\infty)-F(a)$，前提是极限存在。"
+    },
+    {
+      "title": "p 积分与 q 积分",
+      "detail": "$\\int_a^{+\\infty}\\frac{\\mathrm{d}x}{x^p}$（$a>0$）：$p>1$ 收敛于 $\\frac{a^{1-p}}{p-1}$，$p\\le1$ 发散；$\\int_a^b\\frac{\\mathrm{d}x}{(x-a)^q}$：$q<1$ 收敛于 $\\frac{(b-a)^{1-q}}{1-q}$，$q\\ge1$ 发散。两个临界值方向相反，是判敛尺子的全部内容。"
+    },
+    {
+      "title": "比较判别法与极限形式",
+      "detail": "定理 3.6.2：$0\\le f\\le g$ 时，$\\int g$ 收敛 $\\Rightarrow\\int f$ 收敛；$\\int f$ 发散 $\\Rightarrow\\int g$ 发散（充分远处成立即可）。推论 3.6.1（极限形式）：$\\lim\\frac{f}{g}=l$，$0<l<+\\infty$ 同敛散；$l=0$ 且 $\\int g$ 收敛则 $\\int f$ 收敛；$l=+\\infty$ 且 $\\int g$ 发散则 $\\int f$ 发散。"
+    },
+    {
+      "title": "有界判别法与 Cauchy 准则",
+      "detail": "定理 3.6.1：$f\\ge0$ 连续时，$\\int_a^{+\\infty}f$ 收敛 $\\Leftrightarrow$ 部分积分 $F(b)=\\int_a^b f$ 有界。定理 3.6.5（Cauchy 准则）：$\\int_a^{+\\infty}f$ 收敛 $\\Leftrightarrow\\forall\\varepsilon>0,\\exists X,\\forall b_2>b_1>X$ 有 $\\left|\\int_{b_1}^{b_2}f\\right|<\\varepsilon$。前者依赖非负，后者不依赖。"
+    },
+    {
+      "title": "绝对收敛与条件收敛",
+      "detail": "$\\int|f|$ 收敛 $\\Rightarrow\\int f$ 收敛（绝对收敛）；$\\int|f|$ 发散而 $\\int f$ 收敛称条件收敛。证明用 $0\\le|f|\\pm f\\le2|f|$ 加比较判别法。经典条件收敛例子 $\\int_1^{+\\infty}\\frac{\\sin x}{x}\\mathrm{d}x$（Dirichlet 判别法，本课件未展开）。"
+    },
+    {
+      "title": "反常积分的运算性质",
+      "detail": "线性、区间可加、换元、分部积分全部成立，但每次都要检查极限存在：$\\int_a^{+\\infty}u\\,\\mathrm{d}v=uv\\big|_a^{+\\infty}-\\int_a^{+\\infty}v\\,\\mathrm{d}u$，其中 $uv\\big|_a^{+\\infty}=\\lim_{b\\to+\\infty}u(b)v(b)-u(a)v(a)$。换元时若代换把有限区间映成无限区间，可把一类反常积分化为另一类。"
+    },
+    {
+      "title": "Gamma 函数",
+      "detail": "$\\Gamma(x)=\\int_0^{+\\infty}t^{x-1}e^{-t}\\mathrm{d}t$（$x>0$），$\\Gamma(x+1)=x\\Gamma(x)$，$\\Gamma(n+1)=n!$，$\\Gamma\\left(\\frac12\\right)=\\sqrt\\pi$（由概率积分 $\\int_0^{+\\infty}e^{-u^2}\\mathrm{d}u=\\frac{\\sqrt\\pi}{2}$ 与 $t=u^2$ 换元得到）。"
+    },
+    {
+      "title": "Beta 函数",
+      "detail": "$\\mathrm{B}(p,q)=\\int_0^1x^{p-1}(1-x)^{q-1}\\mathrm{d}x$（$p,q>0$）。对称性 $\\mathrm{B}(p,q)=\\mathrm{B}(q,p)$（代 $x=1-t$）；递推 $\\mathrm{B}(p,q)=\\frac{p-1}{p+q-1}\\mathrm{B}(p-1,q)$；整数情形 $\\mathrm{B}(m,n)=\\frac{(m-1)!(n-1)!}{(m+n-1)!}$，与 $\\Gamma$ 的关系 $\\mathrm{B}(p,q)=\\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}$。"
+    }
+  ],
+  "review": {
+    "question_count": 14,
+    "instructions": "先独立做完再对答案。做题前先写三行：选哪个变量作积分变量、微元是什么、积分限从哪里到哪里。物理题画坐标系，标出深度/距离/宽度的表达式。判敛题先把奇点和无穷远点找齐，再用 p／q 积分作尺子比较；计算题用 N-L 推广时单独检查原函数在奇点处的极限。",
+    "questions": [
+      {
+        "id": 1,
+        "type": "recall",
+        "question": "叙述微元法的两步与三个前提条件，并说明它为什么能把原来的四步（分割、近似、求和、取极限）压缩成两步。"
+      },
+      {
+        "id": 2,
+        "type": "recall",
+        "question": "写出平面曲线在参数方程、直角坐标、极坐标三种情形下的弧长公式与弧微分，并说明三者为什么本质相同。"
+      },
+      {
+        "id": 3,
+        "type": "recall",
+        "question": "写出平面图形面积的三个公式（直角坐标、参数方程、极坐标），并说明用参数方程求面积时 $x'(t)\\ne0$ 起什么作用、换元后积分限怎么定。"
+      },
+      {
+        "id": 4,
+        "type": "recall",
+        "question": "写出旋转体体积的圆盘法与柱壳法（分别绕 $x$ 轴、绕 $y$ 轴），并说明二者各自的适用条件与\"选哪一个\"的判断标准。"
+      },
+      {
+        "id": 5,
+        "type": "recall",
+        "question": "写出旋转曲面面积公式（直角坐标、参数方程、极坐标绕极轴），并说明它与\"圆柱侧面面积 $2\\pi y\\,\\mathrm{d}x$\"的区别。"
+      },
+      {
+        "id": 6,
+        "type": "recall",
+        "question": "写出质量、液体静压力、变力做功、细棒引力四个物理量的微元，并各说明建系时要注意什么。"
+      },
+      {
+        "id": 7,
+        "type": "recall",
+        "question": "叙述反常积分的两类定义（无穷限积分与瑕积分），说明为什么 $(-\\infty,+\\infty)$ 或内部有奇点时必须拆成两段，并写出 N-L 公式的推广。"
+      },
+      {
+        "id": 8,
+        "type": "recall",
+        "question": "写出 p 积分与 q 积分的敛散性结论，并总结\"无穷限积分与瑕积分在判敛上的三条对应关系\"。"
+      },
+      {
+        "id": 9,
+        "type": "recall",
+        "question": "叙述比较判别法及其极限形式、有界判别法、Cauchy 收敛准则，并说明它们各自对\"被积函数非负\"的依赖。"
+      },
+      {
+        "id": 10,
+        "type": "recall",
+        "question": "什么是绝对收敛与条件收敛？证明\"绝对收敛蕴含收敛\"，并解释 $\\int_1^{+\\infty}\\frac{\\sin x}{x}\\mathrm{d}x$ 为什么是条件收敛。"
+      },
+      {
+        "id": 11,
+        "type": "calculation-application",
+        "question": "计算：(1) 旋轮线 $x=a(t-\\sin t)$、$y=a(1-\\cos t)$（$0\\le t\\le2\\pi$）一拱的弧长；(2) 求双纽线 $\\rho^2=a^2\\cos2\\theta$ 所围图形的面积。"
+      },
+      {
+        "id": 12,
+        "type": "calculation-application",
+        "question": "计算：(1) 由抛物线 $y=x^2$ 与直线 $y=x+2$ 围成的图形面积；(2) 该图形绕 $x$ 轴旋转一周所得旋转体的体积。"
+      },
+      {
+        "id": 13,
+        "type": "calculation-application",
+        "question": "判断下列反常积分的敛散性并计算收敛者：(1) $\\int_1^{+\\infty}\\frac{\\mathrm{d}x}{x^2}$；(2) $\\int_0^{1}\\frac{\\mathrm{d}x}{\\sqrt{x}}$；(3) $\\int_1^{+\\infty}\\frac{\\mathrm{d}x}{x\\sqrt{x^2-1}}$（提示：令 $x=\\sec t$）；(4) $\\int_0^{+\\infty}xe^{-x}\\mathrm{d}x$。"
+      },
+      {
+        "id": 14,
+        "type": "integration",
+        "question": "(1) 证明 $\\Gamma(x+1)=x\\Gamma(x)$（$x>0$），并由此求 $\\Gamma(3)$、$\\Gamma(4)$；(2) 用 $t=u^2$ 证明 $\\Gamma\\left(\\frac12\\right)=\\sqrt\\pi$；(3) 证明 Beta 函数的对称性 $\\mathrm{B}(p,q)=\\mathrm{B}(q,p)$ 与整数情形公式 $\\mathrm{B}(m,n)=\\frac{(m-1)!(n-1)!}{(m+n-1)!}$。"
+      }
+    ],
+    "answer_key": [
+      {
+        "id": 1,
+        "answer": "两步：① 在 $[x,x+\\mathrm{d}x]$ 上取局部近似 $\\Delta Q\\approx\\mathrm{d}Q=f(x)\\mathrm{d}x$，要求 $\\mathrm{d}Q$ 与 $\\Delta Q$ 之差是 $\\mathrm{d}x$ 的高阶无穷小、且 $\\mathrm{d}Q$ 与 $\\mathrm{d}x$ 成线性关系；② 在 $[a,b]$ 上积分 $Q=\\int_a^b f(x)\\mathrm{d}x$。三个前提：$Q$ 对区间可加；局部近似误差是高阶小量；$f$ 连续。压缩的原因：一旦写成 $\\mathrm{d}Q=f(x)\\mathrm{d}x$，整段上的积分就直接由 N-L 公式算出，\"分割、求和、取极限\"三步正是定积分定义本身，已经被证明过了，不需要每次重做。"
+      },
+      {
+        "id": 2,
+        "answer": "参数方程 $x=x(t)$、$y=y(t)$（$t\\in[\\alpha,\\beta]$，$x'$、$y'$ 连续且不同时为零）：$s=\\int_\\alpha^\\beta\\sqrt{x'^2+y'^2}\\,\\mathrm{d}t$，$\\mathrm{d}s=\\sqrt{x'^2+y'^2}\\mathrm{d}t$。直角坐标 $y=f(x)$：$s=\\int_a^b\\sqrt{1+f'^2(x)}\\mathrm{d}x$，$\\mathrm{d}s=\\sqrt{1+y'^2}\\mathrm{d}x$。极坐标 $\\rho=\\rho(\\theta)$：$s=\\int_{\\theta_1}^{\\theta_2}\\sqrt{\\rho^2+\\rho'^2}\\,\\mathrm{d}\\theta$，$\\mathrm{d}s=\\sqrt{\\rho^2+\\rho'^2}\\mathrm{d}\\theta$。三者本质相同：都来自 $\\mathrm{d}s=\\sqrt{\\mathrm{d}x^2+\\mathrm{d}y^2}$，把 $x,y$ 用各自参数表出后代入即可；直角坐标即取 $x$ 为参数，极坐标即取 $\\theta$ 为参数（$x=\\rho\\cos\\theta$、$y=\\rho\\sin\\theta$）。"
+      },
+      {
+        "id": 3,
+        "answer": "直角坐标：$A=\\int_a^b[f(x)-g(x)]\\mathrm{d}x$（$f\\ge g$，上减下），被积函数变号时要分段或加绝对值。参数方程：$A=\\int_\\alpha^\\beta y(t)x'(t)\\,\\mathrm{d}t$，条件为 $y(t)$ 连续、$x(t)$ 有连续导数且 $x'(t)\\ne0$、$x(\\alpha)=a$、$x(\\beta)=b$。极坐标：$A=\\frac12\\int_\\alpha^\\beta\\rho^2(\\theta)\\mathrm{d}\\theta$（曲边扇形，$0<\\beta-\\alpha\\le2\\pi$）；原点在区域内部时 $A=\\frac12\\int_0^{2\\pi}\\rho^2\\mathrm{d}\\theta$。$x'(t)\\ne0$ 保证 $x$ 与 $t$ 一一对应（否则同一条竖直线上会被重复计入）。换元后积分限按 $x(\\alpha)=a$、$x(\\beta)=b$ 对应确定，不要求 $\\alpha<\\beta$；如椭圆参数方程 $x=a\\cos t$ 中 $x$ 从 $0$ 变到 $a$ 时 $t$ 从 $\\frac\\pi2$ 变到 $0$。"
+      },
+      {
+        "id": 4,
+        "answer": "绕 $x$ 轴（圆盘法）：$V=\\pi\\int_a^b f^2(x)\\mathrm{d}x$，微元 $\\pi f^2(x)\\mathrm{d}x$。绕 $y$ 轴（柱壳法）：$V=2\\pi\\int_a^b x f(x)\\mathrm{d}x$，微元 $2\\pi x f(x)\\mathrm{d}x$（周长 $2\\pi x$ × 高 $f(x)$ × 厚 $\\mathrm{d}x$）；也可把 $x=x(y)$ 反解出来用圆盘法 $V=\\pi\\int x^2(y)\\mathrm{d}y$。另外，平行截面面积已知时统一为 $V=\\int_a^b A(x)\\mathrm{d}x$。选择标准：截面垂直于旋转轴时用圆盘法最省事（截面是圆），截面是圆柱薄壳时用柱壳法（绕 $y$ 轴且函数以 $x$ 为自变量时，柱壳法不必反解）。判断依据是\"哪个方向切片后截面形状简单\"。"
+      },
+      {
+        "id": 5,
+        "answer": "直角坐标（$f\\ge0$、$f$ 连续可导）：$S=2\\pi\\int_a^b f(x)\\sqrt{1+f'^2(x)}\\,\\mathrm{d}x$。参数方程（$y(t)\\ge0$）：$S=2\\pi\\int_\\alpha^\\beta y(t)\\sqrt{x'^2(t)+y'^2(t)}\\,\\mathrm{d}t$。极坐标绕极轴（$\\sin\\theta\\ge0$）：$S=2\\pi\\int_\\alpha^\\beta\\rho(\\theta)\\sin\\theta\\sqrt{\\rho^2+\\rho'^2}\\,\\mathrm{d}\\theta$。三者都是 $\\mathrm{d}S=2\\pi y\\,\\mathrm{d}s$。与圆柱侧面的区别：$2\\pi y\\,\\mathrm{d}x$ 用的是水平方向的长 $\\mathrm{d}x$，只有在曲线近似水平（$f'\\approx0$）时才等于 $\\mathrm{d}s$；一般曲线的一小段是斜的，其旋转面是圆台侧面，面积要用弧长 $\\mathrm{d}s$ 而不是 $\\mathrm{d}x$。"
+      },
+      {
+        "id": 6,
+        "answer": "质量（细棒）：$\\mathrm{d}m=\\rho(x)\\mathrm{d}x$，$\\rho$ 为线密度，要求单位统一（$\\mathrm{kg/m}$ 配米）。静压力：$\\mathrm{d}P=\\rho g x\\,w(x)\\mathrm{d}x$（$x$ 为深度、$w(x)$ 为该深度处薄板的宽度），建系时原点放在液面、$x$ 轴竖直向下，否则深度写成 $x+h$。变力做功：$\\mathrm{d}W=F(x)\\mathrm{d}x$，抽水问题中的位移是\"薄层到池口的竖直距离\"而不是高度；火箭问题 $W=\\int_R^{+\\infty}\\frac{kMm}{r^2}\\mathrm{d}r=mgR$。引力：$\\mathrm{d}F=\\frac{k\\,\\mathrm{d}m}{r^2}$，方向沿连线，必须投影到同一方向后积分（对称方向上分量相互抵消，如质点在细棒垂直平分线上时沿棒方向的分量为零）。"
+      },
+      {
+        "id": 7,
+        "answer": "无穷限积分：设 $f$ 在 $[a,+\\infty)$ 上有定义且 $\\forall b>a$ 在 $[a,b]$ 上可积，定义 $\\int_a^{+\\infty}f(x)\\mathrm{d}x=\\lim_{b\\to+\\infty}\\int_a^b f(x)\\mathrm{d}x$，极限存在则收敛。瑕积分：若 $a$ 为奇点（$f$ 在 $a$ 的任何右邻域内无界），定义 $\\int_a^b f=\\lim_{\\varepsilon\\to0^+}\\int_{a+\\varepsilon}^b f$；$b$ 为奇点类似。拆两段的理由：$\\int_{-\\infty}^{+\\infty}f$ 定义为 $\\int_{-\\infty}^c f+\\int_c^{+\\infty}f$，若只取 $\\lim_{b\\to+\\infty}\\int_{-b}^{b}f$，那是 Cauchy 主值，可能两个部分都发散而\"对称截断\"的极限存在（如 $\\int_{-\\infty}^{+\\infty}x\\,\\mathrm{d}x$），这与反常积分的定义不符；内部奇点同理，两段必须独立地各自收敛才算收敛。N-L 推广：若 $f$ 连续、$F'=f$，则 $\\int_a^{+\\infty}f(x)\\mathrm{d}x=F(+\\infty)-F(a)$（$F(+\\infty)=\\lim_{x\\to+\\infty}F(x)$），瑕积分 $\\int_a^b f=F(b)-F(a+0)$，前提是极限存在。"
+      },
+      {
+        "id": 8,
+        "answer": "p 积分：$\\int_a^{+\\infty}\\frac{\\mathrm{d}x}{x^p}$（$a>0$）当 $p>1$ 时收敛于 $\\frac{a^{1-p}}{p-1}$，$p\\le1$ 时发散。q 积分：$\\int_a^b\\frac{\\mathrm{d}x}{(x-a)^q}$ 当 $q<1$ 时收敛于 $\\frac{(b-a)^{1-q}}{1-q}$，$q\\ge1$ 时发散（$\\int_a^b\\frac{\\mathrm{d}x}{(b-x)^q}$ 同样 $q<1$ 收敛）。三条对应：① 极限结构相同，都是\"部分区间上的正常积分取极限\"；② 尺子形状相同，都是幂函数在端点处的奇异行为，只是 $x\\to+\\infty$ 用 $\\frac1{x^p}$、$x\\to a$ 用 $\\frac1{(x-a)^q}$；③ 临界值方向相反——无穷远处要求衰减得快（$p>1$），奇点附近要求发散得慢（$q<1$）。判敛时把被积函数在奇点/无穷远处做等价变换，得到幂次后直接套这两条。"
+      },
+      {
+        "id": 9,
+        "answer": "比较判别法（定理 3.6.2）：$f,g$ 在 $[a,+\\infty)$ 上非负连续且 $0\\le f\\le g$，则 $\\int g$ 收敛 $\\Rightarrow\\int f$ 收敛，$\\int f$ 发散 $\\Rightarrow\\int g$ 发散；只需在充分远处成立。极限形式（推论 3.6.1）：$\\lim_{x\\to+\\infty}\\frac{f}{g}=l$，$0<l<+\\infty$ 时同敛散；$l=0$ 且 $\\int g$ 收敛则 $\\int f$ 收敛；$l=+\\infty$ 且 $\\int g$ 发散则 $\\int f$ 发散。有界判别法（定理 3.6.1）：$f\\ge0$ 连续时 $\\int_a^{+\\infty}f$ 收敛 $\\Leftrightarrow$ 部分积分 $F(b)=\\int_a^b f$ 在 $[a,+\\infty)$ 上有界。Cauchy 准则（定理 3.6.5）：$\\int_a^{+\\infty}f$ 收敛 $\\Leftrightarrow\\forall\\varepsilon>0,\\exists X>a,\\forall b_2>b_1>X$ 有 $|\\int_{b_1}^{b_2}f|<\\varepsilon$。依赖关系：前三者都要求 $f$（及 $g$）非负——非负保证部分积分单调，才能\"有界即收敛\"和\"比较大小\"；Cauchy 准则不要求非负（它来自数列的 Cauchy 准则），正因为不要求符号，才能用来证明条件收敛。"
+      },
+      {
+        "id": 10,
+        "answer": "定义：若 $\\int_a^{+\\infty}|f|\\mathrm{d}x$ 收敛，称 $\\int_a^{+\\infty}f\\mathrm{d}x$ 绝对收敛；若 $\\int|f|$ 发散而 $\\int f$ 收敛，称条件收敛。证明：由 $0\\le|f|\\pm f\\le2|f|$ 与比较判别法，$\\int(|f|+f)$ 与 $\\int(|f|-f)$ 都收敛；两式相减得 $\\int2f$ 收敛，即 $\\int f$ 收敛。$\\int_1^{+\\infty}\\frac{\\sin x}{x}\\mathrm{d}x$ 条件收敛：先对 $\\int_1^b\\frac{\\sin x}{x}\\mathrm{d}x$ 分部积分，$\\int_1^b\\frac{\\sin x}{x}\\mathrm{d}x=\\left[-\\frac{\\cos x}{x}\\right]_1^b-\\int_1^b\\frac{\\cos x}{x^2}\\mathrm{d}x$，边界项趋于 $\\frac{\\cos1}{1}$（有界），而 $\\int_1^{+\\infty}\\frac{\\cos x}{x^2}\\mathrm{d}x$ 绝对收敛（$\\frac{|\\cos x|}{x^2}\\le\\frac1{x^2}$，$p=2>1$），故原积分收敛；但 $\\frac{|\\sin x|}{x}\\ge\\frac{\\sin^2x}{x}=\\frac{1-\\cos2x}{2x}$，右端第一项 $\\int\\frac{1}{2x}$ 发散、第二项 $\\int\\frac{\\cos2x}{2x}$ 收敛（同上分部积分），故 $\\int\\frac{|\\sin x|}{x}$ 发散。所以条件收敛。"
+      },
+      {
+        "id": 11,
+        "answer": "(1) $x'=a(1-\\cos t)$，$y'=a\\sin t$，$\\sqrt{x'^2+y'^2}=a\\sqrt{(1-\\cos t)^2+\\sin^2t}=a\\sqrt{2-2\\cos t}=2a\\left|\\sin\\frac t2\\right|$。在 $[0,2\\pi]$ 上 $\\sin\\frac t2\\ge0$，故 $s=\\int_0^{2\\pi}2a\\sin\\frac t2\\,\\mathrm{d}t=2a\\left[-2\\cos\\frac t2\\right]_0^{2\\pi}=2a(2+2)=8a$。(2) 双纽线在极坐标下关于两坐标轴都对称，第一象限对应 $0\\le\\theta\\le\\frac\\pi4$（$\\cos2\\theta\\ge0$）。$A=4\\cdot\\frac12\\int_0^{\\pi/4}a^2\\cos2\\theta\\,\\mathrm{d}\\theta=2a^2\\cdot\\frac12\\left[\\sin2\\theta\\right]_0^{\\pi/4}=a^2$。"
+      },
+      {
+        "id": 12,
+        "answer": "先求交点：$x^2=x+2\\Rightarrow x^2-x-2=0\\Rightarrow x=-1,2$，此时 $y=1,4$。(1) 在 $[-1,2]$ 上直线在上：$A=\\int_{-1}^{2}\\left[(x+2)-x^2\\right]\\mathrm{d}x=\\left[\\frac{x^2}{2}+2x-\\frac{x^3}{3}\\right]_{-1}^{2}=\\left(2+4-\\frac83\\right)-\\left(\\frac12-2+\\frac13\\right)=\\frac{10}{3}-\\left(-\\frac76\\right)=\\frac{9}{2}$。(2) 绕 $x$ 轴旋转时外半径 $R=x+2$、内半径 $r=x^2$（两曲线都非负，$x\\in[-1,2]$ 时 $x+2>0$、$x^2\\ge0$），用垫圈法：$V=\\pi\\int_{-1}^{2}\\left[(x+2)^2-x^4\\right]\\mathrm{d}x=\\pi\\left[\\frac{(x+2)^3}{3}-\\frac{x^5}{5}\\right]_{-1}^{2}=\\pi\\left[\\left(\\frac{64}{3}-\\frac{32}{5}\\right)-\\left(\\frac13+\\frac15\\right)\\right]=\\pi\\left(\\frac{224-96-5-3}{15}\\right)=\\frac{72\\pi}{5}$。"
+      },
+      {
+        "id": 13,
+        "answer": "(1) p 积分 $p=2>1$ 收敛：$\\int_1^{+\\infty}x^{-2}\\mathrm{d}x=\\left[-x^{-1}\\right]_1^{+\\infty}=1$。(2) q 积分，奇点 $x=0$、$q=\\frac12<1$ 收敛：$\\int_0^1x^{-1/2}\\mathrm{d}x=\\left[2\\sqrt x\\right]_0^1=2$。(3) 奇点在 $x=1$，令 $x=\\sec t$、$t\\in[0,\\frac\\pi2)$，$\\mathrm{d}x=\\sec t\\tan t\\,\\mathrm{d}t$，$\\sqrt{x^2-1}=\\tan t$：$\\int\\frac{\\mathrm{d}x}{x\\sqrt{x^2-1}}=\\int\\frac{\\sec t\\tan t}{\\sec t\\tan t}\\mathrm{d}t=t+C=\\arccos\\frac1x+C$，故 $\\int_1^{+\\infty}\\frac{\\mathrm{d}x}{x\\sqrt{x^2-1}}=\\left[\\arccos\\frac1x\\right]_1^{+\\infty}=\\frac\\pi2-0=\\frac\\pi2$，收敛。(4) 用 Gamma 函数：$\\int_0^{+\\infty}xe^{-x}\\mathrm{d}x=\\Gamma(2)=1!=1$；也可分部积分 $\\left[-xe^{-x}\\right]_0^{+\\infty}+\\int_0^{+\\infty}e^{-x}\\mathrm{d}x=0+1=1$。"
+      },
+      {
+        "id": 14,
+        "answer": "(1) $\\Gamma(x+1)=\\int_0^{+\\infty}t^xe^{-t}\\mathrm{d}t$，取 $u=t^x$、$\\mathrm{d}v=e^{-t}\\mathrm{d}t$，分部积分得 $\\Gamma(x+1)=\\left[-t^xe^{-t}\\right]_0^{+\\infty}+x\\int_0^{+\\infty}t^{x-1}e^{-t}\\mathrm{d}t$。边界项：$t\\to+\\infty$ 时 $t^xe^{-t}\\to0$（指数衰减快于幂增长），$t=0$ 时 $t^x\\to0$（$x>0$），故为零，于是 $\\Gamma(x+1)=x\\Gamma(x)$。由 $\\Gamma(1)=1$，$\\Gamma(2)=1\\Gamma(1)=1$，$\\Gamma(3)=2\\Gamma(2)=2$，$\\Gamma(4)=3\\Gamma(3)=6$，即 $\\Gamma(n)=(n-1)!$。(2) 在 $\\Gamma\\left(\\frac12\\right)=\\int_0^{+\\infty}t^{-1/2}e^{-t}\\mathrm{d}t$ 中令 $t=u^2$（$u>0$），$\\mathrm{d}t=2u\\,\\mathrm{d}u$，$t^{-1/2}=\\frac1u$，得 $\\Gamma\\left(\\frac12\\right)=\\int_0^{+\\infty}\\frac{1}{u}e^{-u^2}\\cdot2u\\,\\mathrm{d}u=2\\int_0^{+\\infty}e^{-u^2}\\mathrm{d}u=2\\cdot\\frac{\\sqrt\\pi}{2}=\\sqrt\\pi$。(3) 对称性：$\\mathrm{B}(p,q)=\\int_0^1x^{p-1}(1-x)^{q-1}\\mathrm{d}x$，作 $x=1-t$、$\\mathrm{d}x=-\\mathrm{d}t$，上下限互换后得 $\\int_0^1t^{q-1}(1-t)^{p-1}\\mathrm{d}t=\\mathrm{B}(q,p)$。整数情形：对 $\\mathrm{B}(p,q)$ 分部积分（取 $u=(1-x)^{q-1}$、$\\mathrm{d}v=x^{p-1}\\mathrm{d}x$）得递推 $\\mathrm{B}(p,q)=\\frac{q-1}{p+q-1}\\mathrm{B}(p,q-1)$；反复用到 $q=1$（此时 $\\mathrm{B}(p,1)=\\frac1p$），得 $\\mathrm{B}(m,n)=\\frac{(n-1)!}{(m+n-1)(m+n-2)\\cdots(m+1)}\\cdot\\frac{1}{m}=\\frac{(m-1)!(n-1)!}{(m+n-1)!}$。"
+      }
+    ]
+  },
+  "anki": {
+    "deck": "大一上::工科数学分析",
+    "model_name": "大一上课程基础卡",
+    "output": "course-loop/2026-11-20-math-analysis-integral-applications/math-analysis-integral-applications-2026-11-20.apkg",
+    "notes": [
+      {
+        "front": "微元法的两步与三个前提？",
+        "back": "① 在 $[x,x+\\mathrm{d}x]$ 上取 $\\Delta Q\\approx f(x)\\mathrm{d}x$（误差是 $\\mathrm{d}x$ 高阶小量、与 $\\mathrm{d}x$ 线性）；② 积分 $Q=\\int_a^b f(x)\\mathrm{d}x$。前提：可加性、近似误差高阶、$f$ 连续。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "微元法"
+        ]
+      },
+      {
+        "front": "三个弧长公式？",
+        "back": "参数方程 $\\int_\\alpha^\\beta\\sqrt{x'^2+y'^2}\\mathrm{d}t$；直角坐标 $\\int_a^b\\sqrt{1+y'^2}\\mathrm{d}x$；极坐标 $\\int_{\\theta_1}^{\\theta_2}\\sqrt{\\rho^2+\\rho'^2}\\mathrm{d}\\theta$。都来自 $\\mathrm{d}s=\\sqrt{\\mathrm{d}x^2+\\mathrm{d}y^2}$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "弧长"
+        ]
+      },
+      {
+        "front": "三个面积公式？",
+        "back": "直角坐标 $\\int_a^b[f-g]\\mathrm{d}x$（上减下）；参数方程 $\\int_\\alpha^\\beta y(t)x'(t)\\mathrm{d}t$（$x'(t)\\ne0$）；极坐标 $\\frac12\\int_\\alpha^\\beta\\rho^2\\mathrm{d}\\theta$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "面积"
+        ]
+      },
+      {
+        "front": "旋转体体积的圆盘法与柱壳法？",
+        "back": "绕 $x$ 轴 $V=\\pi\\int_a^b f^2\\mathrm{d}x$；绕 $y$ 轴柱壳法 $V=2\\pi\\int_a^b xf(x)\\mathrm{d}x$，或反解 $x(y)$ 后用 $\\pi\\int x^2\\mathrm{d}y$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "旋转体"
+        ]
+      },
+      {
+        "front": "旋转曲面面积公式？与圆柱侧面面积的区别？",
+        "back": "$S=2\\pi\\int y\\,\\mathrm{d}s$（直角坐标 $2\\pi\\int f\\sqrt{1+f'^2}\\mathrm{d}x$）。必须用弧微分 $\\mathrm{d}s$；$2\\pi y\\,\\mathrm{d}x$ 只在曲线近似水平时成立。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "曲面面积"
+        ]
+      },
+      {
+        "front": "反常积分的两类定义？",
+        "back": "无穷限 $\\int_a^{+\\infty}f=\\lim_{b\\to+\\infty}\\int_a^b f$；瑕积分（$a$ 为奇点）$\\int_a^b f=\\lim_{\\varepsilon\\to0^+}\\int_{a+\\varepsilon}^b f$。$(-\\infty,+\\infty)$ 与内部奇点必须拆两段、各自收敛。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "反常积分"
+        ]
+      },
+      {
+        "front": "p 积分与 q 积分的敛散临界值？",
+        "back": "$\\int_a^{+\\infty}x^{-p}\\mathrm{d}x$（$a>0$）：$p>1$ 收敛、$p\\le1$ 发散。$\\int_a^b(x-a)^{-q}\\mathrm{d}x$：$q<1$ 收敛、$q\\ge1$ 发散。两个方向相反。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "判敛"
+        ]
+      },
+      {
+        "front": "比较判别法及其极限形式？",
+        "back": "$0\\le f\\le g$：$\\int g$ 收敛 $\\Rightarrow\\int f$ 收敛；$\\int f$ 发散 $\\Rightarrow\\int g$ 发散。极限形式 $\\lim f/g=l$：$0<l<+\\infty$ 同敛散；$l=0$ 且 $\\int g$ 收敛则 $\\int f$ 收敛；$l=+\\infty$ 且 $\\int g$ 发散则 $\\int f$ 发散。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "判敛"
+        ]
+      },
+      {
+        "front": "有界判别法与 Cauchy 准则的区别？",
+        "back": "有界判别法（要求 $f\\ge0$）：$\\int_a^{+\\infty}f$ 收敛 $\\Leftrightarrow$ 部分积分 $F(b)=\\int_a^b f$ 有界。Cauchy 准则（不要求符号）：$\\forall\\varepsilon>0,\\exists X,\\forall b_2>b_1>X$ 有 $|\\int_{b_1}^{b_2}f|<\\varepsilon$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "判敛"
+        ]
+      },
+      {
+        "front": "绝对收敛与条件收敛？绝对收敛为什么蕴含收敛？",
+        "back": "$\\int|f|$ 收敛称绝对收敛；$\\int|f|$ 发散而 $\\int f$ 收敛称条件收敛。由 $0\\le|f|\\pm f\\le2|f|$ 加比较判别法得 $\\int(|f|\\pm f)$ 收敛，相减得 $\\int f$ 收敛。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "绝对收敛"
+        ]
+      },
+      {
+        "front": "N-L 公式在反常积分中的推广？",
+        "back": "$f$ 连续、$F'=f$ 时 $\\int_a^{+\\infty}f=F(+\\infty)-F(a)$；瑕积分 $\\int_a^b f=F(b)-F(a+0)$。前提是相应极限存在，否则积分发散。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "Newton-Leibniz"
+        ]
+      },
+      {
+        "front": "反常积分的分部积分公式？",
+        "back": "$\\int_a^{+\\infty}u\\,\\mathrm{d}v=uv\\big|_a^{+\\infty}-\\int_a^{+\\infty}v\\,\\mathrm{d}u$，其中 $uv\\big|_a^{+\\infty}=\\lim_{b\\to+\\infty}u(b)v(b)-u(a)v(a)$，须单独检查极限存在。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "分部积分"
+        ]
+      },
+      {
+        "front": "Gamma 函数的定义、递推与特殊值？",
+        "back": "$\\Gamma(x)=\\int_0^{+\\infty}t^{x-1}e^{-t}\\mathrm{d}t$（$x>0$）；$\\Gamma(x+1)=x\\Gamma(x)$，$\\Gamma(n)=(n-1)!$，$\\Gamma\\left(\\frac12\\right)=\\sqrt\\pi$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "Gamma函数"
+        ]
+      },
+      {
+        "front": "Beta 函数的定义与性质？",
+        "back": "$\\mathrm{B}(p,q)=\\int_0^1x^{p-1}(1-x)^{q-1}\\mathrm{d}x$（$p,q>0$）；对称性 $\\mathrm{B}(p,q)=\\mathrm{B}(q,p)$；整数情形 $\\mathrm{B}(m,n)=\\frac{(m-1)!(n-1)!}{(m+n-1)!}$；与 $\\Gamma$ 的关系 $\\mathrm{B}=\\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "Beta函数"
+        ]
+      }
+    ]
+  },
+  "dashboard_tasks": [
+    {
+      "id": "review-20261120-math-analysis-integral-applications",
+      "title": "完成工科数学分析复习题，共 14 题",
+      "detail": "完成后把工科数学分析、题号和答案发回 Codex 批改。",
+      "link": "course-loop/2026-11-20-math-analysis-integral-applications/review-questions.html",
+      "link_label": "打开复习题"
+    },
+    {
+      "id": "anki-import-20261120-math-analysis-integral-applications",
+      "title": "导入工科数学分析 Anki 卡包",
+      "detail": "导入本次课程生成的 14 张复习卡片。",
+      "link": "course-loop/2026-11-20-math-analysis-integral-applications/math-analysis-integral-applications-2026-11-20.apkg",
+      "link_label": "打开 Anki 卡包"
+    },
+    {
+      "id": "resource-review-20261120-math-analysis-integral-applications",
+      "title": "回看工科数学分析学习资料整理新增内容",
+      "detail": "打开学习资料整理页，核对本次新增的 33 条知识点。",
+      "link": "math-analysis-ch1-theorems-review-single.html",
+      "link_label": "打开学习资料"
+    }
+  ],
+  "learning_resource": {
+    "enabled": true,
+    "mode": "update",
+    "course_group": "math-analysis",
+    "resource_page": "math-analysis-ch1-theorems-review/index.html",
+    "single_file": "math-analysis-ch1-theorems-review-single.html",
+    "card_title": "工科数学分析 I：第一至三章知识整理 + 三节习题课",
+    "knowledge_points_added": 33,
+    "notes_path": "course-loop/2026-11-20-math-analysis-integral-applications/notes.md"
+  },
+  "assessment_updates": [],
+  "follow_up_dates": [
+    "2026-11-22",
+    "2026-11-25"
+  ]
+}

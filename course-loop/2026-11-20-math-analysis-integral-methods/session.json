@@ -1,0 +1,371 @@
+{
+  "date": "2026-11-20",
+  "course": "工科数学分析",
+  "duration_minutes": 90,
+  "source_files": [
+    "C:\\Users\\30139\\Downloads\\ch3.3不定积分的换元积分法和分部积分法.pdf",
+    "C:\\Users\\30139\\Downloads\\ch3.4定积分的换元积分法和分部积分法.pdf"
+  ],
+  "source_pages": [
+    "课件 3-3 第 1-4 页：§3.3 导言与目录（换元积分法、分部积分法、有理函数的不定积分、可化为有理函数的积分）",
+    "课件 3-3 第 5-30 页：§3.3.1 一、第一类换元法——定理 3.3.1（凑微分法）及其链式法则证明",
+    "课件 3-3 第 31-136 页：常见凑微分形式与例 1-14（含 $\\int\\tan x\\,dx$、$\\int\\sec x\\,dx$ 等基本结果）",
+    "课件 3-3 第 91-172 页：第二类换元法——定理 3.3.2（要求 $\\varphi'\\ne0$、必须回代）与三角代换（例 15-19）",
+    "课件 3-3 第 173-200 页：倒代换 $x=\\frac1t$ 与根式代换",
+    "课件 3-3 第 137-234 页：二、分部积分法——公式、选元策略（降幂/升幂/循环）、例 21-32 与递推公式",
+    "课件 3-3 第 235-270 页：§3.3.3 有理函数——真分式与假分式、部分分式定理、两类简单分式的积分",
+    "课件 3-3 第 271-305 页：§3.3.4 待定系数法与三角有理式、万能代换 $t=\\tan\\frac x2$",
+    "课件 3-3 第 306-319 页：无理函数代换（$\\sqrt[n]{ax+b}$ 与 $\\sqrt[n]{\\frac{ax+b}{cx+d}}$）",
+    "课件 3-4 第 1-101 页：§3.4.1 定理 3.4.1 定积分换元公式、注 1（不需反函数）、注 2（上下限对应）、例 1-4、对称区间奇偶性、周期性与例 11",
+    "课件 3-4 第 102-152 页：§3.4.2 定积分分部积分公式、例 13-15、Wallis 公式与例 17-19"
+  ],
+  "summary": [
+    "换元法解决的是\"被积函数不在基本积分表里\"的问题：第一类换元（凑微分）把 $\\varphi'(x)\\,dx$ 收成 $d\\varphi(x)$，积分立刻变成基本表形式；第二类换元则反过来，把 $x$ 换成 $\\varphi(t)$（三角代换、倒代换、根式代换），目的是去掉根号或降次。",
+    "两类换元的规则正好相反：第一类换元后不必回代（$\\varphi(x)$ 直接留在结果里），第二类换元必须把 $t$ 用反函数换回 $x$，且要求 $\\varphi'(t)\\ne0$ 以保证反函数存在。",
+    "三角代换按根号形状分三套：$\\sqrt{a^2-x^2}$ 用 $x=a\\sin t$、$\\sqrt{a^2+x^2}$ 用 $x=a\\tan t$、$\\sqrt{x^2-a^2}$ 用 $x=a\\sec t$；根号内是二次式时先配方再选代换，开根号时要留意 $t$ 的范围决定符号。",
+    "分部积分 $\\int u\\,dv=uv-\\int v\\,du$ 是乘积求导公式的逆用，选元口诀\"反对幂三指\"：多项式配三角或指数时取多项式作 $u$（降幂），配对数或反三角时取对数/反三角作 $u$（升幂），指数配三角则分部两次出现循环后移项解出。",
+    "递推公式是分部积分的延伸：$I_n=\\int\\sin^nx\\,dx$ 与 $I_n=\\int\\frac{dx}{(x^2+a^2)^n}$ 都能用一次分部把 $n$ 降下来，考试中按 $n=0,1$ 的初始值逐层代入。",
+    "有理函数积分有一条\"原则上全部解决\"的路线：假分式先做带余除法，真分式按部分分式定理拆成四类简单分式，第一类积出对数或幂，第二类配方后用 $\\arctan$ 与递推——待定系数法虽然机械，但计算量大。",
+    "三角有理式用万能代换 $t=\\tan\\frac x2$ 一定有理化，但常把分母次数抬得很高；能看出对称性时改用 $t=\\sin x$、$t=\\cos x$、$t=\\tan x$ 这类整角代换更快。无理函数的积分类似，取根指数的最小公倍数作代换即可化为有理函数。",
+    "定积分换元多了一件事：上下限必须同步换，而且不要求 $\\varphi$ 有反函数（这与不定积分不同）；上下限只需满足 $\\varphi(\\alpha)=a$、$\\varphi(\\beta)=b$，不必考虑 $\\alpha$ 与 $\\beta$ 谁大。",
+    "定积分的两条\"结构性质\"极大简化计算：对称区间上偶函数积分加倍、奇函数积分为零；周期函数在一个周期上的积分与起点无关。",
+    "定积分分部积分多出边界项 $uv\\big|_a^b$，它常直接用上端点条件（如已知 $f(0)$、$f(2)$、$f'(2)$ 求含 $f''$ 的积分），并把 $\\int_0^{\\pi/2}\\sin^nx\\,dx$ 化成 Wallis 递推公式。"
+  ],
+  "key_points": [
+    {
+      "title": "第一类换元法（定理 3.3.1）",
+      "detail": "$\\int f(\\varphi(x))\\varphi'(x)\\,dx=\\int f(\\varphi(x))\\,d\\varphi(x)=F(\\varphi(x))+C$，其中 $F$ 是 $f$ 的原函数。本质是链式法则的逆：先把 $\\varphi'(x)\\,dx$ 凑成 $d\\varphi(x)$，再\"视 $\\varphi(x)$ 为一个新变量\"套基本积分表。算完不必回代，因为结果里本来就保留 $\\varphi(x)$。检验方式仍是对结果求导。"
+    },
+    {
+      "title": "常见凑微分",
+      "detail": "$x\\,dx=\\frac12 d(x^2)$，$\\frac{dx}{x}=d(\\ln|x|)$，$\\frac{dx}{\\sqrt x}=2d(\\sqrt x)$，$\\frac{dx}{x^2}=d(-\\frac1x)$，$e^x dx=d(e^x)$，$\\cos x\\,dx=d(\\sin x)$，$\\sin x\\,dx=-d(\\cos x)$，$\\sec^2x\\,dx=d(\\tan x)$，$\\frac{dx}{1+x^2}=d(\\arctan x)$，$dx=\\frac1a d(ax+b)$。做不出题时先在这张表里找\"被积函数有没有藏着一个内层导数\"。"
+    },
+    {
+      "title": "第二类换元法（定理 3.3.2）",
+      "detail": "设 $x=\\varphi(t)$ 可导且 $\\varphi'(t)\\ne0$，$f(\\varphi(t))\\varphi'(t)$ 有原函数 $F(t)$，则 $\\int f(x)\\,dx=F(\\varphi^{-1}(x))+C$。与第一类相反，这里必须回代（把 $t$ 换成 $x$），因为 $F$ 是关于 $t$ 的函数；$\\varphi'\\ne0$ 保证反函数存在。三角代换、倒代换、根式代换都是它的实例。"
+    },
+    {
+      "title": "三套三角代换",
+      "detail": "$\\sqrt{a^2-x^2}$ 令 $x=a\\sin t$，$t\\in[-\\frac{\\pi}{2},\\frac{\\pi}{2}]$，$\\sqrt{a^2-x^2}=a\\cos t$；$\\sqrt{a^2+x^2}$ 令 $x=a\\tan t$，$t\\in(-\\frac{\\pi}{2},\\frac{\\pi}{2})$，$\\sqrt{a^2+x^2}=a\\sec t$；$\\sqrt{x^2-a^2}$ 令 $x=a\\sec t$，$\\sqrt{x^2-a^2}=a|\\tan t|$（$x>a$ 取 $t\\in(0,\\frac\\pi2)$，$x<-a$ 取 $t\\in(\\frac\\pi2,\\pi)$）。根号内是 $ax^2+bx+c$ 时先配方。"
+    },
+    {
+      "title": "倒代换与根式代换",
+      "detail": "分母次数明显高于分子或形如 $\\frac{1}{x^n\\sqrt{ax^2+bx+c}}$ 时令 $x=\\frac1t$，$dx=-\\frac{dt}{t^2}$，把高次项压到分子。含 $\\sqrt[n]{ax+b}$ 时令 $t=\\sqrt[n]{ax+b}$；含 $\\sqrt[n]{\\frac{ax+b}{cx+d}}$ 时令 $t$ 等于整个根式；多个根号时取根指数的最小公倍数（如 $\\sqrt x$ 与 $\\sqrt[3]x$ 同时出现取 $t=\\sqrt[6]x$）。"
+    },
+    {
+      "title": "分部积分与选元",
+      "detail": "$\\int u\\,dv=uv-\\int v\\,du$。选元口诀\"反对幂三指\"：反三角、对数、幂、三角、指数，靠前者优先作 $u$。三类典型：多项式×三角/指数取 $u=$ 多项式（降幂）；多项式×对数/反三角取 $u=$ 对数/反三角（升幂）；$e^{ax}\\sin bx$ 分部两次后与原积分同型，移项解出（循环型）。分部后必须检查 $\\int v\\,du$ 是否比原积分简单。"
+    },
+    {
+      "title": "递推公式",
+      "detail": "$I_n=\\int\\sin^nx\\,dx$ 满足 $I_n=-\\frac1n\\sin^{n-1}x\\cos x+\\frac{n-1}{n}I_{n-2}$；$I_n=\\int\\frac{dx}{(x^2+a^2)^n}$ 满足 $I_n=\\frac{x}{2a^2(n-1)(x^2+a^2)^{n-1}}+\\frac{2n-3}{2a^2(n-1)}I_{n-1}$，$I_1=\\frac1a\\arctan\\frac xa+C$。用法：先代初始值，再逐层降到 $I_0$ 或 $I_1$。"
+    },
+    {
+      "title": "有理函数积分总路线",
+      "detail": "第一步，假分式（分子次数 $\\ge$ 分母次数）做带余除法，拆成多项式 + 真分式；第二步，分母在实数范围内分解为一次因式与不可约二次因式；第三步，按部分分式定理写成四类简单分式之和（每个因式的幂次都要写满项）；第四步，待定系数法定出系数（比较系数或代特殊值）；第五步，逐项积分：$\\frac{A}{(x-a)^k}$ 得对数或幂，$\\frac{Mx+N}{(x^2+px+q)^k}$ 配方后拆成对数项与 $\\arctan$ 项（高次走递推）。"
+    },
+    {
+      "title": "万能代换与整角代换",
+      "detail": "$t=\\tan\\frac x2$ 给出 $\\sin x=\\frac{2t}{1+t^2}$、$\\cos x=\\frac{1-t^2}{1+t^2}$、$dx=\\frac{2dt}{1+t^2}$，把 $R(\\sin x,\\cos x)$ 化为 $t$ 的有理函数。它是\"一定行得通\"的兜底，但常使次数升高；若 $R(-\\sin x,\\cos x)=-R(\\sin x,\\cos x)$ 可取 $t=\\cos x$，$R(\\sin x,-\\cos x)=-R(\\sin x,\\cos x)$ 可取 $t=\\sin x$，$R(-\\sin x,-\\cos x)=R(\\sin x,\\cos x)$ 可取 $t=\\tan x$。"
+    },
+    {
+      "title": "定积分换元（定理 3.4.1）与两条注",
+      "detail": "$f\\in C([a,b])$，$x=\\varphi(t)$ 连续可导、$\\varphi(\\alpha)=a$、$\\varphi(\\beta)=b$，则 $\\int_a^b f(x)\\,dx=\\int_\\alpha^\\beta f(\\varphi(t))\\varphi'(t)\\,dt$。注 1：不需要 $\\varphi$ 有反函数（与不定积分不同），因为定积分换元只用 N-L 公式，不要求把结果表成 $x$ 的函数；注 2：上下限必须对应，但不必考虑 $\\alpha$ 与 $\\beta$ 的大小，符号由公式自动处理。"
+    },
+    {
+      "title": "对称区间与周期性",
+      "detail": "$f$ 在 $[-a,a]$ 上连续：$f$ 偶 $\\Rightarrow\\int_{-a}^a f=2\\int_0^a f$，$f$ 奇 $\\Rightarrow\\int_{-a}^a f=0$（对 $\\int_{-a}^0$ 作 $x=-t$ 即证）。周期 $T$ 的函数：$\\int_a^{a+T}f=\\int_0^T f$，$\\int_a^{a+nT}f=n\\int_0^T f$。配合\"互补代换\" $\\int_0^{\\pi/2}f(\\sin x)dx=\\int_0^{\\pi/2}f(\\cos x)dx$，可解出 $\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}dx=\\frac\\pi4$ 这类题。"
+    },
+    {
+      "title": "定积分分部积分与 Wallis 公式",
+      "detail": "$\\int_a^b u\\,dv=uv\\big|_a^b-\\int_a^b v\\,du$，多出的边界项常直接由端点条件给出（如已知 $f(0),f(2),f'(2)$ 求 $\\int_0^2 xf''(x)dx$）。由此得 $I_n=\\int_0^{\\pi/2}\\sin^nx\\,dx$ 的递推 $I_n=\\frac{n-1}{n}I_{n-2}$，$I_0=\\frac\\pi2$、$I_1=1$，故 $I_{2k}=\\frac{(2k-1)!!}{(2k)!!}\\frac\\pi2$、$I_{2k+1}=\\frac{(2k)!!}{(2k+1)!!}$。"
+    }
+  ],
+  "review": {
+    "question_count": 12,
+    "instructions": "先独立做完再对答案。回忆题要写清条件（$\\varphi'\\ne0$、$\\varphi(\\alpha)=a$、区间对称、$g$ 不变号等）与\"回不回代\"的区别；计算题每一步注明用的是第一类换元、第二类换元还是分部积分，并写清代换后的新上下限；证明题要写清代换与所用定理。所有不定积分结果都求导验算一遍。",
+    "questions": [
+      {
+        "id": 1,
+        "type": "recall",
+        "question": "叙述第一类换元法（定理 3.3.1）的条件与结论，说明它为什么叫\"凑微分法\"、与链式法则是什么关系，以及算完为什么不必回代。"
+      },
+      {
+        "id": 2,
+        "type": "recall",
+        "question": "写出至少六条常用凑微分形式，并各举一个用到它的积分。"
+      },
+      {
+        "id": 3,
+        "type": "recall",
+        "question": "叙述第二类换元法（定理 3.3.2）的条件与结论，说明它与第一类换元法的三点不同。"
+      },
+      {
+        "id": 4,
+        "type": "recall",
+        "question": "写出三套三角代换（$\\sqrt{a^2-x^2}$、$\\sqrt{a^2+x^2}$、$\\sqrt{x^2-a^2}$）的代换式、$t$ 的范围与根号的化简结果，并解释 $x<-a$ 时 $\\sqrt{x^2-a^2}=a\\tan t$ 为什么不能直接写。"
+      },
+      {
+        "id": 5,
+        "type": "recall",
+        "question": "写出分部积分公式及其证明思路，并总结\"降幂、升幂、循环\"三类情形分别怎么选 $u$ 与 $dv$。"
+      },
+      {
+        "id": 6,
+        "type": "recall",
+        "question": "叙述有理函数的积分路线：为什么要先做带余除法？部分分式定理把真分式拆成哪四类？每一类怎么积？"
+      },
+      {
+        "id": 7,
+        "type": "recall",
+        "question": "写出万能代换的三个换元公式，说明它的适用范围与缺点；再说明什么情况下应改用整角代换 $t=\\sin x$、$t=\\cos x$、$t=\\tan x$。"
+      },
+      {
+        "id": 8,
+        "type": "recall",
+        "question": "叙述定积分的换元公式（定理 3.4.1）及两条注，并写出对称区间的奇偶性结论与周期函数的积分性质。"
+      },
+      {
+        "id": 9,
+        "type": "calculation-application",
+        "question": "计算不定积分：(1) $\\int x e^{x^2}\\,dx$；(2) $\\int \\frac{\\ln x}{x}\\,dx$；(3) $\\int \\frac{dx}{x^2+2x+5}$。"
+      },
+      {
+        "id": 10,
+        "type": "calculation-application",
+        "question": "计算不定积分：(1) $\\int\\sqrt{1-x^2}\\,dx$；(2) $\\int x\\arctan x\\,dx$。"
+      },
+      {
+        "id": 11,
+        "type": "calculation-application",
+        "question": "计算定积分：(1) $\\int_0^2\\frac{dx}{(x^2+1)^{3/2}}$；(2) $\\int_0^{\\pi/2}\\frac{\\sin x}{\\sin x+\\cos x}\\,dx$；(3) 设 $f''$ 连续，$f(0)=1$、$f(2)=3$、$f'(2)=5$，求 $\\int_0^2 xf''(x)\\,dx$。"
+      },
+      {
+        "id": 12,
+        "type": "integration",
+        "question": "(1) 证明 $I_n=\\int_0^{\\pi/2}\\sin^nx\\,dx$ 满足递推公式 $I_n=\\frac{n-1}{n}I_{n-2}$（$n\\ge2$），并写出 $I_n$ 的闭式；(2) 由此计算 $\\int_0^{\\pi/2}\\sin^4x\\,dx$ 与 $\\int_0^{\\pi/2}\\sin^5x\\,dx$。"
+      }
+    ],
+    "answer_key": [
+      {
+        "id": 1,
+        "answer": "设 $F(u)$ 是 $f(u)$ 在区间 $I$ 上的原函数，$u=\\varphi(x)$ 可微，则 $\\int f(\\varphi(x))\\varphi'(x)dx=\\int f(\\varphi(x))d\\varphi(x)=F(\\varphi(x))+C$。叫\"凑微分\"是因为关键动作是把 $\\varphi'(x)dx$ 整体改写成 $d\\varphi(x)$，被积函数就变成 $f(u)$ 的形式，可直接查基本积分表。与链式法则的关系：由 $\\frac{d}{dx}F(\\varphi(x))=F'(\\varphi(x))\\varphi'(x)=f(\\varphi(x))\\varphi'(x)$ 可知 $F(\\varphi(x))$ 就是左端的原函数，所以第一类换元本质上是链式法则的逆运算。不必回代是因为结果 $F(\\varphi(x))$ 里保留的仍是原来的 $x$ 的表达式，从头到尾没有引入需要消去的新变量 $t$。"
+      },
+      {
+        "id": 2,
+        "answer": "$x\\,dx=\\frac12d(x^2)$（$\\int xe^{x^2}dx=\\frac12e^{x^2}+C$）；$\\frac{dx}{x}=d(\\ln x)$（$\\int\\frac{\\ln x}{x}dx=\\frac12\\ln^2x+C$）；$\\frac{dx}{\\sqrt x}=2d(\\sqrt x)$（$\\int\\frac{e^{\\sqrt x}}{\\sqrt x}dx=2e^{\\sqrt x}+C$）；$\\cos x\\,dx=d(\\sin x)$（$\\int\\cos x\\sin^2x\\,dx=\\frac13\\sin^3x+C$）；$\\sin x\\,dx=-d(\\cos x)$（$\\int\\sin x\\cos^2x\\,dx=-\\frac13\\cos^3x+C$）；$\\frac{dx}{1+x^2}=d(\\arctan x)$（$\\int\\frac{\\arctan x}{1+x^2}dx=\\frac12\\arctan^2x+C$）；$\\sec^2x\\,dx=d(\\tan x)$（$\\int\\tan x\\sec^2x\\,dx=\\frac12\\tan^2x+C$）。注意系数与负号：$x\\,dx$ 前面有 $\\frac12$，$\\sin x\\,dx$ 前面有 $-1$。"
+      },
+      {
+        "id": 3,
+        "answer": "设 $x=\\varphi(t)$ 可导且 $\\varphi'(t)\\ne0$，若 $f(\\varphi(t))\\varphi'(t)$ 有原函数 $F(t)$，则 $\\int f(x)dx=F(\\varphi^{-1}(x))+C$，其中 $t=\\varphi^{-1}(x)$ 是 $x=\\varphi(t)$ 的反函数。三点不同：① 方向相反——第一类是把 $x$ 的表达式凑成 $\\varphi(x)$，第二类是把 $x$ 直接换成 $\\varphi(t)$；② 回代要求相反——第一类不必回代，第二类必须把 $t$ 换回 $x$；③ 条件不同——第二类要求 $\\varphi'(t)\\ne0$ 以保证反函数存在，第一类只要求 $\\varphi$ 可微。"
+      },
+      {
+        "id": 4,
+        "answer": "① $\\sqrt{a^2-x^2}$：$x=a\\sin t$，$t\\in[-\\frac\\pi2,\\frac\\pi2]$，$\\sqrt{a^2-x^2}=a\\cos t$（此时 $\\cos t\\ge0$），$dx=a\\cos t\\,dt$。② $\\sqrt{a^2+x^2}$：$x=a\\tan t$，$t\\in(-\\frac\\pi2,\\frac\\pi2)$，$\\sqrt{a^2+x^2}=a\\sec t$（$\\sec t>0$），$dx=a\\sec^2t\\,dt$。③ $\\sqrt{x^2-a^2}$：$x=a\\sec t$，$x>a$ 时 $t\\in(0,\\frac\\pi2)$、$x<-a$ 时 $t\\in(\\frac\\pi2,\\pi)$，$dx=a\\sec t\\tan t\\,dt$，$\\sqrt{x^2-a^2}=a|\\tan t|$。$x<-a$ 时 $\\tan t<0$，若直接写成 $a\\tan t$ 会得到负数，而根号必非负，所以必须取绝对值；回代时按 $x<-a$ 定号。根号内是 $ax^2+bx+c$ 时先配方再选（如 $\\int\\frac{dx}{\\sqrt{x^2+2x+5}}$ 配方成 $(x+1)^2+4$ 后用第二套）。"
+      },
+      {
+        "id": 5,
+        "answer": "公式 $\\int u\\,dv=uv-\\int v\\,du$，即 $\\int u(x)v'(x)dx=u(x)v(x)-\\int u'(x)v(x)dx$，条件是 $u,v$ 可微且导数连续。证明：由乘积求导 $(uv)'=u'v+uv'$ 移项得 $uv'=(uv)'-u'v$，两边积分即得。选元：① 降幂——多项式乘三角或指数（$\\int x^n\\cos x\\,dx$、$\\int x^ne^x\\,dx$）取 $u=$ 多项式、$dv=$ 三角/指数，每分部一次多项式降一次；② 升幂——多项式乘对数或反三角（$\\int x^n\\ln x\\,dx$、$\\int x^n\\arctan x\\,dx$）取 $u=\\ln x$ 或 $\\arctan x$、$dv=x^n dx$，虽然 $v$ 的次数升高，但 $u'$ 变成简单分式；③ 循环——$e^{ax}\\sin bx$ 或 $\\sec^3x$ 这类，分部两次后出现与原积分同型的项，把所有含原积分的项移到同一边解出。口诀\"反对幂三指\"给出优先作 $u$ 的顺序。"
+      },
+      {
+        "id": 6,
+        "answer": "路线：① 假分式（分子次数 $\\ge$ 分母次数）先做带余除法，化成一个多项式与一个真分式之和——多项式直接积分，问题归结到真分式；② 分母在实数范围内分解为一次因式 $(x-a)^\\alpha$ 与不可约二次因式 $(x^2+px+q)^\\mu$（$p^2-4q<0$）的乘积；③ 按部分分式定理把真分式写成 $\\frac{A_1}{x-a}+\\cdots+\\frac{A_\\alpha}{(x-a)^\\alpha}+\\frac{M_1x+N_1}{x^2+px+q}+\\cdots+\\frac{M_\\mu x+N_\\mu}{(x^2+px+q)^\\mu}$，每个因式的幂次都要写满；④ 待定系数法定系数。四类简单分式：$\\frac{A}{x-a}$ 积出 $A\\ln|x-a|$；$\\frac{A}{(x-a)^k}$（$k\\ge2$）积出 $\\frac{A}{(1-k)(x-a)^{k-1}}$；$\\frac{Mx+N}{x^2+px+q}$ 配方后拆成 $\\frac{M}{2}\\ln(x^2+px+q)$ 与 $\\arctan$ 项；高次幂 $\\frac{Mx+N}{(x^2+px+q)^\\mu}$ 配方后先凑 $d(t^2+a^2)$，再用递推公式。"
+      },
+      {
+        "id": 7,
+        "answer": "令 $t=\\tan\\frac x2$，则 $\\sin x=\\frac{2t}{1+t^2}$，$\\cos x=\\frac{1-t^2}{1+t^2}$，$dx=\\frac{2dt}{1+t^2}$，于是 $\\int R(\\sin x,\\cos x)dx=\\int R\\left(\\frac{2t}{1+t^2},\\frac{1-t^2}{1+t^2}\\right)\\frac{2dt}{1+t^2}$，右端是 $t$ 的有理函数积分。适用：任何三角有理式，一定能化为有理函数（兜底方法）。缺点：$t=\\tan\\frac x2$ 常使分母次数翻倍，后续待定系数计算量很大。改用整角代换：若 $R(-\\sin x,\\cos x)=-R(\\sin x,\\cos x)$（只含 $\\sin x$ 的奇次幂），令 $t=\\cos x$；若 $R(\\sin x,-\\cos x)=-R(\\sin x,\\cos x)$（只含 $\\cos x$ 的奇次幂），令 $t=\\sin x$；若 $R(-\\sin x,-\\cos x)=R(\\sin x,\\cos x)$（偶函数），令 $t=\\tan x$。"
+      },
+      {
+        "id": 8,
+        "answer": "定理 3.4.1：设 $f(x)\\in C([a,b])$，$x=\\varphi(t)$ 在 $[\\alpha,\\beta]$（或 $[\\beta,\\alpha]$）上连续可导，且 $\\varphi(\\alpha)=a$、$\\varphi(\\beta)=b$，$\\varphi$ 的值域含于 $[a,b]$，则 $\\int_a^b f(x)dx=\\int_\\alpha^\\beta f(\\varphi(t))\\varphi'(t)dt$。注 1：不要求 $x=\\varphi(t)$ 有反函数（与不定积分的第二类换元不同），因为定积分换元只用 N-L 公式。注 2：上下限必须与原上下限对应，但不必考虑 $\\alpha,\\beta$ 的大小，符号自动由公式处理。对称区间：$f$ 在 $[-a,a]$ 上连续，偶函数时 $\\int_{-a}^a f=2\\int_0^a f$，奇函数时 $\\int_{-a}^a f=0$。周期：$f$ 以 $T$ 为周期则 $\\int_a^{a+T}f=\\int_0^T f$，$\\int_a^{a+nT}f=n\\int_0^T f$。"
+      },
+      {
+        "id": 9,
+        "answer": "(1) 凑微分 $x\\,dx=\\frac12d(x^2)$：$\\int xe^{x^2}dx=\\frac12\\int e^{x^2}d(x^2)=\\frac12e^{x^2}+C$。验算：$(\\frac12e^{x^2})'=xe^{x^2}$。(2) $\\frac{dx}{x}=d(\\ln x)$：$\\int\\frac{\\ln x}{x}dx=\\int\\ln x\\,d(\\ln x)=\\frac12\\ln^2x+C$。(3) 配方 $x^2+2x+5=(x+1)^2+4$，用 $\\int\\frac{du}{u^2+a^2}=\\frac1a\\arctan\\frac ua$：$\\int\\frac{dx}{(x+1)^2+2^2}=\\frac12\\arctan\\frac{x+1}{2}+C$。"
+      },
+      {
+        "id": 10,
+        "answer": "(1) 令 $x=\\sin t$，$t\\in[-\\frac\\pi2,\\frac\\pi2]$，$dx=\\cos t\\,dt$，$\\sqrt{1-x^2}=\\cos t$：$\\int\\sqrt{1-x^2}dx=\\int\\cos^2t\\,dt=\\int\\frac{1+\\cos2t}{2}dt=\\frac t2+\\frac{\\sin2t}{4}+C=\\frac12\\arcsin x+\\frac12x\\sqrt{1-x^2}+C$（最后一步用 $\\sin2t=2\\sin t\\cos t=2x\\sqrt{1-x^2}$，这正是\"必须回代\"的一步）。(2) 分部积分，取 $u=\\arctan x$、$dv=x\\,dx$，$v=\\frac{x^2}{2}$：$\\int x\\arctan x\\,dx=\\frac{x^2}{2}\\arctan x-\\int\\frac{x^2}{2}\\cdot\\frac{dx}{1+x^2}=\\frac{x^2}{2}\\arctan x-\\frac12\\int\\left(1-\\frac{1}{1+x^2}\\right)dx=\\frac{x^2}{2}\\arctan x-\\frac x2+\\frac12\\arctan x+C$。"
+      },
+      {
+        "id": 11,
+        "answer": "(1) 令 $x=\\tan t$，$dx=\\sec^2t\\,dt$，$x=0\\Rightarrow t=0$，$x=2\\Rightarrow t=\\arctan2$：$\\int_0^2\\frac{dx}{(1+x^2)^{3/2}}=\\int_0^{\\arctan2}\\frac{\\sec^2t}{\\sec^3t}dt=\\int_0^{\\arctan2}\\cos t\\,dt=\\sin(\\arctan2)=\\frac{2}{\\sqrt5}$（新上下限随代换一起换，且不需回代）。(2) 由互补代换 $x=\\frac\\pi2-t$：$I=\\int_0^{\\pi/2}\\frac{\\cos t}{\\cos t+\\sin t}dt$，与 $I$ 相加得 $2I=\\int_0^{\\pi/2}1\\,dx=\\frac\\pi2$，故 $I=\\frac\\pi4$。(3) 取 $u=x$、$dv=f''(x)dx$：$\\int_0^2xf''(x)dx=xf'(x)\\big|_0^2-\\int_0^2f'(x)dx=2f'(2)-0-\\left[f(2)-f(0)\\right]=10-(3-1)=8$。"
+      },
+      {
+        "id": 12,
+        "answer": "(1) 对 $I_n=\\int_0^{\\pi/2}\\sin^nx\\,dx=\\int_0^{\\pi/2}\\sin^{n-1}x\\cdot\\sin x\\,dx$ 取 $u=\\sin^{n-1}x$、$dv=\\sin x\\,dx$，则 $v=-\\cos x$：$I_n=\\left[-\\sin^{n-1}x\\cos x\\right]_0^{\\pi/2}+\\int_0^{\\pi/2}(n-1)\\sin^{n-2}x\\cos^2x\\,dx$。边界项在两端都为零（$x=0$ 时 $\\cos0\\ne0$ 但 $\\sin0=0$；$x=\\frac\\pi2$ 时 $\\cos\\frac\\pi2=0$），故 $I_n=(n-1)\\int_0^{\\pi/2}\\sin^{n-2}x(1-\\sin^2x)dx=(n-1)I_{n-2}-(n-1)I_n$，移项得 $nI_n=(n-1)I_{n-2}$，即 $I_n=\\frac{n-1}{n}I_{n-2}$。初始值 $I_0=\\frac\\pi2$、$I_1=1$，于是 $I_{2k}=\\frac{(2k-1)!!}{(2k)!!}\\cdot\\frac\\pi2$，$I_{2k+1}=\\frac{(2k)!!}{(2k+1)!!}$。(2) $I_4=\\frac34I_2=\\frac34\\cdot\\frac12\\cdot\\frac\\pi2=\\frac{3\\pi}{16}$；$I_5=\\frac45I_3=\\frac45\\cdot\\frac23\\cdot1=\\frac{8}{15}$。"
+      }
+    ]
+  },
+  "anki": {
+    "deck": "大一上::工科数学分析",
+    "model_name": "大一上课程基础卡",
+    "output": "course-loop/2026-11-20-math-analysis-integral-methods/math-analysis-integral-methods-2026-11-20.apkg",
+    "notes": [
+      {
+        "front": "第一类换元法（凑微分）的公式与本质？",
+        "back": "$\\int f(\\varphi(x))\\varphi'(x)dx=\\int f(\\varphi(x))d\\varphi(x)=F(\\varphi(x))+C$；本质是链式法则的逆运算，把 $\\varphi'(x)dx$ 凑成 $d\\varphi(x)$ 后\"把 $\\varphi(x)$ 看成新变量\"套基本积分表，不必回代。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "换元法"
+        ]
+      },
+      {
+        "front": "常用凑微分形式至少说出五条。",
+        "back": "$x\\,dx=\\frac12d(x^2)$、$\\frac{dx}{x}=d(\\ln|x|)$、$\\cos x\\,dx=d(\\sin x)$、$\\sin x\\,dx=-d(\\cos x)$、$\\frac{dx}{1+x^2}=d(\\arctan x)$、$\\sec^2x\\,dx=d(\\tan x)$、$e^xdx=d(e^x)$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "换元法"
+        ]
+      },
+      {
+        "front": "第二类换元法的条件与结论？为什么必须回代？",
+        "back": "$x=\\varphi(t)$ 可导且 $\\varphi'(t)\\ne0$，$f(\\varphi(t))\\varphi'(t)$ 有原函数 $F(t)$，则 $\\int f(x)dx=F(\\varphi^{-1}(x))+C$。求出的原函数 $F$ 是 $t$ 的函数，必须用反函数 $t=\\varphi^{-1}(x)$ 换回 $x$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "换元法"
+        ]
+      },
+      {
+        "front": "三套三角代换分别怎么设？",
+        "back": "$\\sqrt{a^2-x^2}$ 设 $x=a\\sin t$（$t\\in[-\\pi/2,\\pi/2]$）；$\\sqrt{a^2+x^2}$ 设 $x=a\\tan t$（$t\\in(-\\pi/2,\\pi/2)$）；$\\sqrt{x^2-a^2}$ 设 $x=a\\sec t$，并注意 $\\sqrt{x^2-a^2}=a|\\tan t|$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "三角代换"
+        ]
+      },
+      {
+        "front": "分部积分公式与\"反对幂三指\"？",
+        "back": "$\\int u\\,dv=uv-\\int v\\,du$；反三角、对数、幂、三角、指数依次优先作 $u$。多项式配三角/指数时取多项式作 $u$（降幂），配对数/反三角时取对数/反三角作 $u$（升幂）。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "分部积分"
+        ]
+      },
+      {
+        "front": "分部积分的\"循环型\"怎么处理？",
+        "back": "对 $\\int e^{ax}\\sin bx\\,dx$ 分部两次后右端又出现与原积分同型的项 $J$，把 $J$ 移到等式同一边、除以系数即得结果，不能直接约掉。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "分部积分"
+        ]
+      },
+      {
+        "front": "$\\int\\sin^nx\\,dx$ 的递推公式？",
+        "back": "$I_n=-\\frac1n\\sin^{n-1}x\\cos x+\\frac{n-1}{n}I_{n-2}$（$n\\ge2$），$I_0=x+C$、$I_1=-\\cos x+C$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "递推公式"
+        ]
+      },
+      {
+        "front": "有理函数积分的五步路线？",
+        "back": "① 假分式做带余除法；② 分母实数分解；③ 部分分式定理拆成四类简单分式（每类幂次要写满）；④ 待定系数定出系数；⑤ 逐项积分（对数、幂、$\\arctan$、递推）。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "有理函数"
+        ]
+      },
+      {
+        "front": "部分分式展开时一次因式与不可约二次因式各对应什么项？",
+        "back": "$(x-a)^\\alpha$ 对应 $\\frac{A_1}{x-a}+\\cdots+\\frac{A_\\alpha}{(x-a)^\\alpha}$；$(x^2+px+q)^\\mu$（$p^2-4q<0$）对应 $\\frac{M_1x+N_1}{x^2+px+q}+\\cdots+\\frac{M_\\mu x+N_\\mu}{(x^2+px+q)^\\mu}$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "有理函数"
+        ]
+      },
+      {
+        "front": "万能代换的三个公式？",
+        "back": "$t=\\tan\\frac x2$ 时 $\\sin x=\\frac{2t}{1+t^2}$、$\\cos x=\\frac{1-t^2}{1+t^2}$、$dx=\\frac{2dt}{1+t^2}$。缺点是常把分母次数抬高，能用整角代换时优先用。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "三角有理式"
+        ]
+      },
+      {
+        "front": "定积分换元公式（定理 3.4.1）的两条注？",
+        "back": "① 不要求 $x=\\varphi(t)$ 有反函数（与不定积分不同）；② 上下限必须对应 $\\varphi(\\alpha)=a$、$\\varphi(\\beta)=b$，但不必考虑 $\\alpha,\\beta$ 的大小。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "定积分换元"
+        ]
+      },
+      {
+        "front": "对称区间上奇偶函数的积分结论？",
+        "back": "$f$ 在 $[-a,a]$ 上连续：偶函数时 $\\int_{-a}^a f=2\\int_0^a f$；奇函数时 $\\int_{-a}^a f=0$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "定积分性质"
+        ]
+      },
+      {
+        "front": "Wallis 公式？",
+        "back": "$I_n=\\int_0^{\\pi/2}\\sin^nx\\,dx=\\int_0^{\\pi/2}\\cos^nx\\,dx$，$I_n=\\frac{n-1}{n}I_{n-2}$，$I_{2k}=\\frac{(2k-1)!!}{(2k)!!}\\frac\\pi2$，$I_{2k+1}=\\frac{(2k)!!}{(2k+1)!!}$。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "Wallis"
+        ]
+      },
+      {
+        "front": "定积分分部积分公式与不定积分的区别？",
+        "back": "$\\int_a^b u\\,dv=uv\\big|_a^b-\\int_a^b v\\,du$，多一个边界项 $uv\\big|_a^b$，它常由端点条件直接给出数值；不定积分没有边界项。",
+        "tags": [
+          "工科数学分析",
+          "第三章",
+          "分部积分"
+        ]
+      }
+    ]
+  },
+  "dashboard_tasks": [
+    {
+      "id": "review-20261120-math-analysis-integral-methods",
+      "title": "完成工科数学分析复习题，共 12 题",
+      "detail": "完成后把工科数学分析、题号和答案发回 Codex 批改。",
+      "link": "course-loop/2026-11-20-math-analysis-integral-methods/review-questions.html",
+      "link_label": "打开复习题"
+    },
+    {
+      "id": "anki-import-20261120-math-analysis-integral-methods",
+      "title": "导入工科数学分析 Anki 卡包",
+      "detail": "导入本次课程生成的 14 张复习卡片。",
+      "link": "course-loop/2026-11-20-math-analysis-integral-methods/math-analysis-integral-methods-2026-11-20.apkg",
+      "link_label": "打开 Anki 卡包"
+    },
+    {
+      "id": "resource-review-20261120-math-analysis-integral-methods",
+      "title": "回看工科数学分析学习资料整理新增内容",
+      "detail": "打开学习资料整理页，核对本次新增的 28 条知识点。",
+      "link": "math-analysis-ch1-theorems-review-single.html",
+      "link_label": "打开学习资料"
+    }
+  ],
+  "learning_resource": {
+    "enabled": true,
+    "mode": "update",
+    "course_group": "math-analysis",
+    "resource_page": "math-analysis-ch1-theorems-review/index.html",
+    "single_file": "math-analysis-ch1-theorems-review-single.html",
+    "card_title": "工科数学分析 I：第一至三章知识整理 + 三节习题课",
+    "knowledge_points_added": 28,
+    "notes_path": "course-loop/2026-11-20-math-analysis-integral-methods/notes.md"
+  },
+  "assessment_updates": [],
+  "follow_up_dates": [
+    "2026-11-22",
+    "2026-11-25"
+  ]
+}
