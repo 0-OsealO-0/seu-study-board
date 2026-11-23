@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大学英语 Unit 5 · 词汇练习（28 题）</title>
+<meta name="description" content="Unit 5 Decision-Making 词汇练习：16 道单选 + 12 空选词填空，即时判分。">
+<style>
+:root{
+  --ink:#1c2a23; --muted:#66776d; --paper:#f6f4ee; --card:#fffdf8;
+  --line:#e2dccd; --green:#1f6b4a; --green-d:#124430; --green-l:#e9f2ec;
+  --gold:#a8762a; --red:#a5432f; --shadow:0 1px 2px rgba(28,42,35,.05),0 10px 26px rgba(28,42,35,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 72px}
+header.hero{background:linear-gradient(135deg,#124430 0%,#1f6b4a 58%,#2c8a5f 100%);
+  color:#f4f8f4;padding:46px 0 40px;margin-bottom:26px}
+header.hero .wrap{padding-bottom:0}
+.kicker{font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;opacity:.78;margin:0 0 10px}
+header.hero h1{margin:0;font-size:34px;line-height:1.25;font-weight:650;letter-spacing:.01em}
+header.hero .sub{margin:10px 0 0;font-size:15px;opacity:.85;max-width:820px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;padding:0;list-style:none}
+.stats li{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;padding:8px 13px;font-size:13px;letter-spacing:.02em}
+.stats b{font-size:16px;font-weight:700;margin-right:4px}
+.toolbar{position:sticky;top:0;z-index:30;background:rgba(246,244,238,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 0;margin-bottom:24px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
+  padding:7px 14px;font-size:13.5px;cursor:pointer;transition:.16s}
+.tab:hover{border-color:var(--green);color:var(--green)}
+.tab.active{background:var(--green);border-color:var(--green);color:#fff}
+input.search{flex:1 1 220px;min-width:180px;border:1px solid var(--line);border-radius:999px;
+  padding:9px 16px;font-size:14px;background:#fff;color:var(--ink);outline:none}
+input.search:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-l)}
+.section{margin:0 0 40px}
+.section > h2{font-size:19px;margin:0 0 4px;letter-spacing:.01em;display:flex;align-items:baseline;gap:10px}
+.section > h2 .cn{font-size:12.5px;font-weight:400;color:var(--muted);letter-spacing:.14em}
+.section > .lead{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+h3.group{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);
+  margin:26px 0 12px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+h3.group.sub{font-size:12.5px;letter-spacing:.1em;margin:18px 0 10px;color:var(--green);border-bottom-style:dotted}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(292px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+  box-shadow:var(--shadow);transition:.18s}
+.card:hover{transform:translateY(-2px);border-color:#cfd8cf}
+.card .w{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card .w b{font-size:18px;letter-spacing:.01em}
+.card .ipa{color:var(--muted);font-size:12.5px;font-family:"Cambria","Times New Roman",serif}
+.card .pos{font-size:11.5px;color:var(--green);background:var(--green-l);
+  border-radius:5px;padding:1px 6px;font-style:italic}
+.card .def{font-size:13.5px;margin:8px 0 0;color:#33453c}
+.card .zh{font-size:13px;color:var(--muted);margin:6px 0 0}
+.card .ex{font-size:12.5px;margin:8px 0 0;padding-left:11px;border-left:2px solid var(--green-l);color:#3d4f45}
+.card .ex i{color:var(--muted);font-style:normal;display:block;margin-top:2px}
+.tag{font-size:11px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);
+  border-radius:4px;padding:0 5px}
+.lp{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--green);
+  border-radius:12px;padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.lp .lp-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.lp .lp-h .num{font-size:12px;letter-spacing:.16em;color:var(--gold);font-weight:700}
+.lp .lp-h .name{font-size:15.5px;font-weight:650}
+.lp .lp-h .loc{font-size:12px;color:var(--muted)}
+.lp .sent{font-family:"Cambria","Georgia",serif;font-size:15px;background:var(--green-l);
+  border-radius:8px;padding:10px 13px;margin:0 0 10px;color:#22392c}
+.lp .note{font-size:13.5px;color:#374a40;margin:0}
+.lp .note p{margin:0 0 6px}
+.lp .note p:last-child{margin-bottom:0}
+.lp .eg{font-size:12.8px;color:var(--muted);margin:8px 0 0}
+.lp .eg b{color:#374a40;font-weight:600}
+.lp .eg .eg-zh{display:block;font-size:12.2px;color:var(--muted);margin-top:1px}
+.para{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
+.para .p-h,.tcp .p-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.para .p-h .badge,.tcp .p-h .badge{background:var(--green);color:#fff;font-size:11.5px;letter-spacing:.1em;
+  border-radius:5px;padding:2px 8px}
+.para .p-h .cap,.tcp .p-h .cap{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.para p{margin:0 0 8px;font-size:14.4px;line-height:1.95;text-indent:2em;color:#2d4037}
+.para p:last-child{margin-bottom:0}
+.pn{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pn-item{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px 13px}
+.pn .pn-en{display:block;font-size:13.8px;font-weight:600;color:#2b3d33;line-height:1.5}
+.pn .pn-en .ipa{font-weight:400;font-size:12px}
+.pn .pn-zh{display:block;color:var(--muted);font-size:12.6px;margin-top:3px;line-height:1.5}
+.pp{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:9px 13px;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:4px 12px;font-size:13.4px;align-items:baseline}
+.pp span:first-child{color:#2b3d33}
+.pp span:last-child{color:var(--muted);font-size:12.8px}
+/* Text comprehension */
+.tcbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
+.minibtn{border:1px solid var(--line);background:#fff;color:var(--green);border-radius:8px;
+  padding:7px 13px;font-size:13px;cursor:pointer}
+.minibtn:hover{border-color:var(--green);background:var(--green-l)}
+.tcp{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+  margin-bottom:14px;box-shadow:var(--shadow)}
+.tc-item{border-top:1px dashed var(--line);padding:12px 0 10px}
+.tc-item:first-of-type{border-top:none;padding-top:4px}
+.tc-top{display:flex;gap:9px;align-items:flex-start;margin:0 0 8px}
+.tc-q{flex:1;margin:0;font-size:14.2px;color:#26382e;line-height:1.8}
+.tc-top .qno{flex:none;margin-top:3px;display:block;min-width:20px;height:20px;line-height:20px;
+  text-align:center;background:var(--green-l);color:var(--green);border-radius:5px;
+  font-size:11.5px;font-weight:700}
+.tc-a{display:none;font-size:13.8px;color:#1d5c40;background:#f2f8f3;border-left:3px solid var(--green);
+  border-radius:6px;padding:10px 13px;margin:0 0 8px;line-height:1.85}
+.tc-item.open .tc-a{display:block}
+.tc-a .src{display:block;margin-top:6px;color:var(--muted);font-size:12.4px}
+.tc-a b{color:#124430}
+.reveal{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:6px;
+  padding:3px 10px;font-size:12.2px;cursor:pointer;flex:none;margin-top:1px;white-space:nowrap}
+.reveal:hover{border-color:var(--green);color:var(--green)}
+.tc-table{width:100%;border-collapse:collapse;font-size:12.8px;margin-top:4px}
+.tc-table th,.tc-table td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+.tc-table th{background:var(--green-l);color:var(--green);font-size:12px;letter-spacing:.06em}
+.practice-box{background:linear-gradient(135deg,#173d2c,#245c42);color:#eef5ee;
+  border-radius:16px;padding:24px 26px;display:flex;flex-wrap:wrap;gap:18px;
+  align-items:center;justify-content:space-between;box-shadow:var(--shadow)}
+.practice-box h3{margin:0 0 6px;font-size:19px}
+.practice-box p{margin:0;font-size:13.5px;opacity:.85;max-width:620px}
+.btn{display:inline-block;background:#f6f1e6;color:#173d2c;border-radius:10px;
+  padding:11px 20px;font-size:14px;font-weight:650;white-space:nowrap}
+.btn:hover{text-decoration:none;background:#fff}
+.btn.ghost{background:transparent;color:#eef5ee;border:1px solid rgba(255,255,255,.45)}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+footer.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:14px;display:none}
+/* practice */
+.quiz{max-width:900px;margin:0 auto}
+.q{background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:16px 19px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q .q-h{font-size:12px;letter-spacing:.14em;color:var(--gold);margin-bottom:6px;font-weight:700}
+.q .stem{font-size:14.6px;margin:0 0 12px;color:#26382e;line-height:1.7}
+.q .stem em{font-style:normal;border-bottom:1.5px solid var(--green);padding:0 2px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;
+  padding:9px 12px;font-size:13.8px;cursor:pointer;background:#fff;transition:.14s}
+.opt:hover{border-color:#bfd0c4;background:#fbfdfa}
+.opt input{margin:3px 0 0;accent-color:var(--green)}
+.opt .lt{color:var(--muted);font-weight:700;font-size:12.5px}
+.opt.right{border-color:#2f8a5f;background:#eef8f1}
+.opt.wrong{border-color:#c26a52;background:#fdf0ec}
+.blank{border:none;border-bottom:1.6px solid var(--green);background:transparent;
+  font-size:14px;width:150px;padding:2px 6px;color:var(--ink);outline:none;font-family:inherit}
+.blank:focus{background:var(--green-l)}
+.blank.right{border-color:#2f8a5f;color:#1d6b46;font-weight:600}
+.blank.wrong{border-color:#c26a52;color:#a5432f}
+.blank.empty{border-color:#c9c2b2}
+.cloze{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px 22px;
+  box-shadow:var(--shadow);font-size:14.4px;line-height:2.15;color:#2d4037}
+.cloze p{margin:0 0 10px}
+.bank{background:var(--green-l);border:1px solid #cfe2d5;border-radius:10px;padding:13px 16px;
+  margin:0 0 14px;font-size:13.2px;color:#274a38;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px 12px}
+.bank b{color:var(--green);margin-right:3px}
+.ansline{font-size:12.8px;color:#1d6b46;margin-top:8px;display:none}
+.ansbox{display:none;background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:14px 18px;margin-top:14px;font-size:13.4px;color:#274a38}
+.ansbox b{display:block;font-size:12.5px;letter-spacing:.1em;color:var(--gold);margin-bottom:8px}
+.ansgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 14px}
+.ansgrid span{font-family:"Cambria","Georgia",serif}
+.ansgrid .okline{color:#1d6b46}
+.ansgrid .noline{color:#a5432f}
+.q.revealed .ansline{display:block}
+.qmsg{margin-top:8px;font-size:12.8px;display:none}
+.qmsg.show{display:block}
+.qmsg.ok{color:#1d6b46}.qmsg.no{color:#a5432f}
+.scorebar{position:sticky;top:0;z-index:20;background:rgba(246,244,238,.95);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:22px}
+.scorebar .inner{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;
+  align-items:center;justify-content:space-between}
+.scorebar .sc{font-size:14px;color:var(--muted)}
+.scorebar .sc b{font-size:20px;color:var(--green)}
+.hint{font-size:12.6px;color:var(--muted);margin:0 0 18px}
+@media (max-width:640px){
+  header.hero h1{font-size:26px}
+  .wrap{padding:0 16px 56px}
+  .grid{grid-template-columns:1fr}
+  .pn{grid-template-columns:1fr}
+  .blank{width:110px}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">College English · Unit 5 · Practice</p>
+    <h1>Unit 5 词汇练习 · 28 题</h1>
+    <p class="sub">Section I：16 道单项选择；Section II：12 空选词填空。提交后显示分数、正确答案与解析。</p>
+  </div>
+</header>
+<div class="scorebar"><div class="inner">
+  <div class="sc">得分 <b id="sc">—</b></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" onclick="grade()">提交判分</button>
+    <button class="btn ghost" style="color:#173d2c;border-color:#173d2c" onclick="reset()">重做</button>
+    <a class="btn ghost" style="color:#173d2c;border-color:#173d2c" href="college-english-unit5-review-single.html">返回复习页</a>
+  </div>
+</div></div>
+<div class="wrap">
+<div class="quiz"><div class="q" id="c0"><div class="q-h">Q1 · 单项选择</div><p class="stem">But some historians suggest that the ______ of opponents may not have been as smart an idea as Lincoln had hoped in uniting all forces.</p><div class="opts"><label class="opt"><input type="radio" name="q0" value="0"><span class="lt">A</span><span>inclusion</span></label><label class="opt"><input type="radio" name="q0" value="1"><span class="lt">B</span><span>diversion</span></label><label class="opt"><input type="radio" name="q0" value="2"><span class="lt">C</span><span>exclusion</span></label><label class="opt"><input type="radio" name="q0" value="3"><span class="lt">D</span><span>diversity</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c1"><div class="q-h">Q2 · 单项选择</div><p class="stem">Sound engineers utilize a range of techniques to ______ the quality of the recordings.</p><div class="opts"><label class="opt"><input type="radio" name="q1" value="0"><span class="lt">A</span><span>impose</span></label><label class="opt"><input type="radio" name="q1" value="1"><span class="lt">B</span><span>enhance</span></label><label class="opt"><input type="radio" name="q1" value="2"><span class="lt">C</span><span>inherit</span></label><label class="opt"><input type="radio" name="q1" value="3"><span class="lt">D</span><span>facilitate</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c2"><div class="q-h">Q3 · 单项选择</div><p class="stem">For a good career in almost any field, computer ______ is a must.</p><div class="opts"><label class="opt"><input type="radio" name="q2" value="0"><span class="lt">A</span><span>techniques</span></label><label class="opt"><input type="radio" name="q2" value="1"><span class="lt">B</span><span>level</span></label><label class="opt"><input type="radio" name="q2" value="2"><span class="lt">C</span><span>competence</span></label><label class="opt"><input type="radio" name="q2" value="3"><span class="lt">D</span><span>utilization</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c3"><div class="q-h">Q4 · 单项选择</div><p class="stem">This ticket can ______ you to have a free meal in this hotel.</p><div class="opts"><label class="opt"><input type="radio" name="q3" value="0"><span class="lt">A</span><span>enhance</span></label><label class="opt"><input type="radio" name="q3" value="1"><span class="lt">B</span><span>ensure</span></label><label class="opt"><input type="radio" name="q3" value="2"><span class="lt">C</span><span>include</span></label><label class="opt"><input type="radio" name="q3" value="3"><span class="lt">D</span><span>entitle</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c4"><div class="q-h">Q5 · 单项选择</div><p class="stem">Quite a few people managed to ______ their will on the others.</p><div class="opts"><label class="opt"><input type="radio" name="q4" value="0"><span class="lt">A</span><span>impose</span></label><label class="opt"><input type="radio" name="q4" value="1"><span class="lt">B</span><span>afford</span></label><label class="opt"><input type="radio" name="q4" value="2"><span class="lt">C</span><span>influence</span></label><label class="opt"><input type="radio" name="q4" value="3"><span class="lt">D</span><span>affect</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c5"><div class="q-h">Q6 · 单项选择</div><p class="stem">When it comes to the Internet, people hold ______ views.</p><div class="opts"><label class="opt"><input type="radio" name="q5" value="0"><span class="lt">A</span><span>diversion</span></label><label class="opt"><input type="radio" name="q5" value="1"><span class="lt">B</span><span>divergent</span></label><label class="opt"><input type="radio" name="q5" value="2"><span class="lt">C</span><span>divert</span></label><label class="opt"><input type="radio" name="q5" value="3"><span class="lt">D</span><span>distinctive</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c6"><div class="q-h">Q7 · 单项选择</div><p class="stem">He nurses an ______ to be a poet.</p><div class="opts"><label class="opt"><input type="radio" name="q6" value="0"><span class="lt">A</span><span>compassion</span></label><label class="opt"><input type="radio" name="q6" value="1"><span class="lt">B</span><span>inspiration</span></label><label class="opt"><input type="radio" name="q6" value="2"><span class="lt">C</span><span>aspiration</span></label><label class="opt"><input type="radio" name="q6" value="3"><span class="lt">D</span><span>passion</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c7"><div class="q-h">Q8 · 单项选择</div><p class="stem">The hospital has a ______ to provide the best possible medical care.</p><div class="opts"><label class="opt"><input type="radio" name="q7" value="0"><span class="lt">A</span><span>devotion</span></label><label class="opt"><input type="radio" name="q7" value="1"><span class="lt">B</span><span>compassion</span></label><label class="opt"><input type="radio" name="q7" value="2"><span class="lt">C</span><span>commission</span></label><label class="opt"><input type="radio" name="q7" value="3"><span class="lt">D</span><span>commitment</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c8"><div class="q-h">Q9 · 单项选择</div><p class="stem">Cuba is a composite of ______ traditions and people.</p><div class="opts"><label class="opt"><input type="radio" name="q8" value="0"><span class="lt">A</span><span>diverse</span></label><label class="opt"><input type="radio" name="q8" value="1"><span class="lt">B</span><span>diverge</span></label><label class="opt"><input type="radio" name="q8" value="2"><span class="lt">C</span><span>divert</span></label><label class="opt"><input type="radio" name="q8" value="3"><span class="lt">D</span><span>division</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c9"><div class="q-h">Q10 · 单项选择</div><p class="stem">Giving a helping hand to those who are desperate for help can make our society more ______.</p><div class="opts"><label class="opt"><input type="radio" name="q9" value="0"><span class="lt">A</span><span>prosperous</span></label><label class="opt"><input type="radio" name="q9" value="1"><span class="lt">B</span><span>harmonious</span></label><label class="opt"><input type="radio" name="q9" value="2"><span class="lt">C</span><span>vigorous</span></label><label class="opt"><input type="radio" name="q9" value="3"><span class="lt">D</span><span>vibrant</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c10"><div class="q-h">Q11 · 单项选择</div><p class="stem">Elegance, she believes, does not ______ from expensive clothes and accessories.</p><div class="opts"><label class="opt"><input type="radio" name="q10" value="0"><span class="lt">A</span><span>gain</span></label><label class="opt"><input type="radio" name="q10" value="1"><span class="lt">B</span><span>obtain</span></label><label class="opt"><input type="radio" name="q10" value="2"><span class="lt">C</span><span>derive</span></label><label class="opt"><input type="radio" name="q10" value="3"><span class="lt">D</span><span>sustain</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c11"><div class="q-h">Q12 · 单项选择</div><p class="stem">He is a ______ member of the team.</p><div class="opts"><label class="opt"><input type="radio" name="q11" value="0"><span class="lt">A</span><span>determined</span></label><label class="opt"><input type="radio" name="q11" value="1"><span class="lt">B</span><span>sincere</span></label><label class="opt"><input type="radio" name="q11" value="2"><span class="lt">C</span><span>passionate</span></label><label class="opt"><input type="radio" name="q11" value="3"><span class="lt">D</span><span>committed</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c12"><div class="q-h">Q13 · 单项选择</div><p class="stem">The Olympic Games ______ in 776 B.C. in Olympia, a small town in Greece.</p><div class="opts"><label class="opt"><input type="radio" name="q12" value="0"><span class="lt">A</span><span>originated</span></label><label class="opt"><input type="radio" name="q12" value="1"><span class="lt">B</span><span>stemmed</span></label><label class="opt"><input type="radio" name="q12" value="2"><span class="lt">C</span><span>descended</span></label><label class="opt"><input type="radio" name="q12" value="3"><span class="lt">D</span><span>derived</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c13"><div class="q-h">Q14 · 单项选择</div><p class="stem">He plays tennis to the ______ of all other sports.</p><div class="opts"><label class="opt"><input type="radio" name="q13" value="0"><span class="lt">A</span><span>eradication</span></label><label class="opt"><input type="radio" name="q13" value="1"><span class="lt">B</span><span>exclusion</span></label><label class="opt"><input type="radio" name="q13" value="2"><span class="lt">C</span><span>extension</span></label><label class="opt"><input type="radio" name="q13" value="3"><span class="lt">D</span><span>inclusion</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c14"><div class="q-h">Q15 · 单项选择</div><p class="stem">Our seemingly small decisions can lead us towards ______ paths of our journey that we never anticipated because they are caught up in other narratives — our own and those of other people.</p><div class="opts"><label class="opt"><input type="radio" name="q14" value="0"><span class="lt">A</span><span>misunderstanding</span></label><label class="opt"><input type="radio" name="q14" value="1"><span class="lt">B</span><span>ambiguous</span></label><label class="opt"><input type="radio" name="q14" value="2"><span class="lt">C</span><span>divergent</span></label><label class="opt"><input type="radio" name="q14" value="3"><span class="lt">D</span><span>opposite</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><div class="q" id="c15"><div class="q-h">Q16 · 单项选择</div><p class="stem">Instead of promising to change the world, the firm merely ______ to “enrich the everyday life of young generations in China”.</p><div class="opts"><label class="opt"><input type="radio" name="q15" value="0"><span class="lt">A</span><span>respire</span></label><label class="opt"><input type="radio" name="q15" value="1"><span class="lt">B</span><span>conspire</span></label><label class="opt"><input type="radio" name="q15" value="2"><span class="lt">C</span><span>perspire</span></label><label class="opt"><input type="radio" name="q15" value="3"><span class="lt">D</span><span>aspires</span></label></div><div class="qmsg"></div><div class="ansline"></div></div><h2 style="font-size:17px;margin:30px 0 8px">Section II · 选词填空（12 空）</h2><p class="hint">从词库中为每个空选一个词，每个词只能用一次；不区分大小写。</p><div class="bank"><span><b>A.</b> articulate</span><span><b>B.</b> commendation</span><span><b>C.</b> constructive</span><span><b>D.</b> dedication</span><span><b>E.</b> devastating</span><span><b>F.</b> divergent</span><span><b>G.</b> expenditure</span><span><b>H.</b> legitimacy</span><span><b>I.</b> lobby</span><span><b>J.</b> mobilize</span><span><b>K.</b> optimal</span><span><b>L.</b> perception</span><span><b>M.</b> proceed</span><span><b>N.</b> refusal</span><span><b>O.</b> sustain</span></div><div class="cloze"><p>After a <input class="blank" id="b0" autocomplete="off" spellcheck="false" placeholder="17" aria-label="blank 17"> data breach exposed sensitive customer information, the tech company had to <input class="blank" id="b1" autocomplete="off" spellcheck="false" placeholder="18" aria-label="blank 18"> its cybersecurity team immediately. The CEO emphasized the need to <input class="blank" id="b2" autocomplete="off" spellcheck="false" placeholder="19" aria-label="blank 19"> transparency in communications while ensuring the <input class="blank" id="b3" autocomplete="off" spellcheck="false" placeholder="20" aria-label="blank 20"> of their response under international regulations.</p><p>Despite rising <input class="blank" id="b4" autocomplete="off" spellcheck="false" placeholder="21" aria-label="blank 21"> on damage control, the team’s <input class="blank" id="b5" autocomplete="off" spellcheck="false" placeholder="22" aria-label="blank 22"> to resolving the crisis was unwavering. During a press conference, the spokesperson struggled to <input class="blank" id="b6" autocomplete="off" spellcheck="false" placeholder="23" aria-label="blank 23"> the technical details clearly, which affected public <input class="blank" id="b7" autocomplete="off" spellcheck="false" placeholder="24" aria-label="blank 24"> of the company’s trustworthiness.</p><p>Investors urged the board to <input class="blank" id="b8" autocomplete="off" spellcheck="false" placeholder="25" aria-label="blank 25"> with caution, but activists began to <input class="blank" id="b9" autocomplete="off" spellcheck="false" placeholder="26" aria-label="blank 26"> for stricter data laws, arguing that current policies were not <input class="blank" id="b10" autocomplete="off" spellcheck="false" placeholder="27" aria-label="blank 27">. To regain trust, the company announced a <input class="blank" id="b11" autocomplete="off" spellcheck="false" placeholder="28" aria-label="blank 28"> program to reward employees who demonstrate exceptional commitment.</p></div><div class="ansbox" id="blank-answers"></div><div class="q" id="bc0" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc1" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc2" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc3" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc4" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc5" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc6" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc7" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc8" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc9" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc10" style="display:none"><div class="qmsg"></div></div><div class="q" id="bc11" style="display:none"><div class="qmsg"></div></div></div>
+</div>
+<script id="quiz-data" type="application/json">{"mcq": [{"stem": "But some historians suggest that the ______ of opponents may not have been as smart an idea as Lincoln had hoped in uniting all forces.", "opts": ["inclusion", "diversion", "exclusion", "diversity"], "ans": 0, "why": "inclusion 意为“接纳、使加入”；林肯把政敌纳入内阁以“uniting all forces”，与“把反对者排除在外”正相反。diversion 转移，exclusion 排除，diversity 多样性。"}, {"stem": "Sound engineers utilize a range of techniques to ______ the quality of the recordings.", "opts": ["impose", "enhance", "inherit", "facilitate"], "ans": 1, "why": "enhance the quality 提高质量；impose 强加，inherit 继承，facilitate 促进（宾语多为过程、讨论），不能接 quality。"}, {"stem": "For a good career in almost any field, computer ______ is a must.", "opts": ["techniques", "level", "competence", "utilization"], "ans": 2, "why": "computer competence 计算机能力，是固定搭配；competence 指胜任某项工作的能力，比 level 具体、比 utilization 更符合“个人能力”的语境。"}, {"stem": "This ticket can ______ you to have a free meal in this hotel.", "opts": ["enhance", "ensure", "include", "entitle"], "ans": 3, "why": "entitle sb to do sth 使某人有资格做某事，票据、证件类主语最常用；ensure 保证（某事发生），不能带 sb to do。"}, {"stem": "Quite a few people managed to ______ their will on the others.", "opts": ["impose", "afford", "influence", "affect"], "ans": 0, "why": "impose one’s will on sb 把自己的意志强加于人，是固定搭配；influence / affect 只表“影响”，不能与 on 搭配表达“强加”。"}, {"stem": "When it comes to the Internet, people hold ______ views.", "opts": ["diversion", "divergent", "divert", "distinctive"], "ans": 1, "why": "修饰 views 需要形容词，divergent views 意见相左；diversion（名词，转移）、divert（动词）词性不符，distinctive 意为“独特的”。"}, {"stem": "He nurses an ______ to be a poet.", "opts": ["compassion", "inspiration", "aspiration", "passion"], "ans": 2, "why": "an aspiration to do sth 渴望／志向做某事；nurse an aspiration 抱有志向。compassion 同情，inspiration 灵感，passion 热情（多用 a passion for）。"}, {"stem": "The hospital has a ______ to provide the best possible medical care.", "opts": ["devotion", "compassion", "commission", "commitment"], "ans": 3, "why": "have a commitment to do sth 有做某事的承诺／责任；devotion 后常接 to sb/sth，compassion 同情，commission 委员会／佣金。"}, {"stem": "Cuba is a composite of ______ traditions and people.", "opts": ["diverse", "diverge", "divert", "division"], "ans": 0, "why": "修饰 traditions and people 需形容词 diverse（多种多样的）；diverge、divert 为动词，division 为名词。"}, {"stem": "Giving a helping hand to those who are desperate for help can make our society more ______.", "opts": ["prosperous", "harmonious", "vigorous", "vibrant"], "ans": 1, "why": "harmonious society 和谐社会，是最贴切的搭配；prosperous 繁荣，vigorous 精力充沛，vibrant 充满活力，均不直接对应“互助带来和睦”。"}, {"stem": "Elegance, she believes, does not ______ from expensive clothes and accessories.", "opts": ["gain", "obtain", "derive", "sustain"], "ans": 2, "why": "derive from 源自，是不及物搭配；gain / obtain 为及物动词“获得”，sustain 维持，均不能与 from 构成“源自”之意。"}, {"stem": "He is a ______ member of the team.", "opts": ["determined", "sincere", "passionate", "committed"], "ans": 3, "why": "a committed member 尽心尽力的成员，committed 强调投入与忠诚；determined 坚决的，sincere 真诚的，passionate 热情的，语义都不如 committed 贴合。"}, {"stem": "The Olympic Games ______ in 776 B.C. in Olympia, a small town in Greece.", "opts": ["originated", "stemmed", "descended", "derived"], "ans": 0, "why": "originate in 起源于（某地／某时）；stem from 源自（原因），descend from 是……的后代，derive from 从……衍生，均不接地点 + 时间。"}, {"stem": "He plays tennis to the ______ of all other sports.", "opts": ["eradication", "exclusion", "extension", "inclusion"], "ans": 1, "why": "to the exclusion of 把……排除在外，是固定短语；eradication 根除，extension 延伸，inclusion 包含，均无此搭配。"}, {"stem": "Our seemingly small decisions can lead us towards ______ paths of our journey that we never anticipated because they are caught up in other narratives — our own and those of other people.", "opts": ["misunderstanding", "ambiguous", "divergent", "opposite"], "ans": 2, "why": "divergent paths 分岔的、越走越远的路，与“never anticipated（始料未及）”呼应；ambiguous 含糊的，opposite 相反的，misunderstanding 为名词。"}, {"stem": "Instead of promising to change the world, the firm merely ______ to “enrich the everyday life of young generations in China”.", "opts": ["respire", "conspire", "perspire", "aspires"], "ans": 3, "why": "aspire to do sth 立志做某事，与 merely 形成的克制语气相符；respire 呼吸，conspire 密谋，perspire 出汗。"}], "blank": [{"answers": ["devastating"], "letter": "E"}, {"answers": ["mobilize"], "letter": "J"}, {"answers": ["sustain"], "letter": "O"}, {"answers": ["legitimacy"], "letter": "H"}, {"answers": ["expenditure"], "letter": "G"}, {"answers": ["dedication"], "letter": "D"}, {"answers": ["articulate"], "letter": "A"}, {"answers": ["perception"], "letter": "L"}, {"answers": ["proceed"], "letter": "M"}, {"answers": ["lobby"], "letter": "I"}, {"answers": ["optimal"], "letter": "K"}, {"answers": ["commendation"], "letter": "B"}]}</script>
+<script>
+const DATA=JSON.parse(document.getElementById('quiz-data').textContent);
+function norm(s){return (s||'').toLowerCase().replace(/[^a-z0-9'\- ]/g,'').replace(/\s+/g,' ').trim();}
+function grade(){
+  let score=0,total=DATA.mcq.length+DATA.blank.length;
+  DATA.mcq.forEach((q,i)=>{
+    const opts=document.querySelectorAll('input[name="q'+i+'"]');
+    const chosen=[...opts].find(o=>o.checked);
+    const card=document.getElementById('c'+i);
+    card.querySelectorAll('.opt').forEach(l=>l.classList.remove('right','wrong'));
+    card.querySelectorAll('.opt')[q.ans].classList.add('right');
+    const msg=card.querySelector('.qmsg');
+    if(chosen){
+      const idx=[...opts].indexOf(chosen);
+      if(idx===q.ans){score++;msg.className='qmsg show ok';msg.textContent='✓ 正确。'+q.why;}
+      else{chosen.closest('.opt').classList.add('wrong');
+           msg.className='qmsg show no';msg.textContent='✗ 正确答案：'+'ABCD'[q.ans]+'。'+q.why;}
+    }else{msg.className='qmsg show no';msg.textContent='未作答。正确答案：'+'ABCD'[q.ans]+'。'+q.why;}
+    card.classList.add('revealed');
+    card.querySelector('.ansline').textContent='答案：'+'ABCD'[q.ans]+'　'+q.opts[q.ans];
+  });
+  const lines=[];
+  DATA.blank.forEach((b,i)=>{
+    const inp=document.getElementById('b'+i);
+    const ok=b.answers.some(a=>norm(a)===norm(inp.value));
+    inp.classList.remove('right','wrong','empty');
+    if(!(inp.value||'').trim()){inp.classList.add('empty');}
+    else{inp.classList.add(ok?'right':'wrong');}
+    if(ok)score++;
+    lines.push('<span class="'+(ok?'okline':'noline')+'">'+(i+17)+'. '+b.letter+' · '+b.answers[0]+'</span>');
+  });
+  document.getElementById('sc').textContent=score+' / '+total;
+  document.getElementById('blank-answers').innerHTML='<b>选词填空答案</b><div class="ansgrid">'+lines.join('')+'</div>';
+  document.getElementById('blank-answers').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function reset(){
+  document.querySelectorAll('input[type=radio]').forEach(o=>o.checked=false);
+  document.querySelectorAll('.blank').forEach(b=>{b.value='';b.classList.remove('right','wrong','empty');});
+  document.querySelectorAll('.opt').forEach(l=>l.classList.remove('right','wrong'));
+  document.querySelectorAll('.qmsg').forEach(m=>{m.className='qmsg';m.textContent='';});
+  document.querySelectorAll('.q').forEach(c=>c.classList.remove('revealed'));
+  const ba=document.getElementById('blank-answers');
+  ba.style.display='none';ba.innerHTML='';
+  document.getElementById('sc').textContent='—';
+}
+</script>
+</body>
+</html>
