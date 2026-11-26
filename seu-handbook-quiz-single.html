@@ -139,7 +139,11 @@ input[type=search]{min-width:240px}
 .bopts .kk{color:var(--muted);flex:0 0 16px}
 .bopts .right{color:var(--ok);font-weight:600}
 .bexp{margin:12px 0 0;font-size:13.5px;color:#4a534d;background:#f8f7f2;border-radius:8px;padding:9px 12px}
-.btagline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.btagline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.btagline .fold-hint{margin-left:auto;font-size:12px;line-height:20px;padding:0 9px;color:#78807a;background:#fff;border:1px solid var(--line);border-radius:20px;white-space:nowrap}
+.btagline .fold-hint::after{content:"点击看答案"}
+.bitem[open] .btagline .fold-hint{margin-left:auto;color:var(--brand);border-color:#bcd8cf;background:#f1f7f4}
+.bitem[open] .btagline .fold-hint::after{content:"收起"}
 
 /* ---------- exam ---------- */
 .exam-top{
@@ -293,7 +297,7 @@ table.hist th{color:var(--muted);font-weight:600;font-size:12px}
   <div class="bar">
     <input type="search" id="bSearch" placeholder="搜索题干、选项或解析，如「门禁」「国家奖学金」">
     <label>难度 <select id="bDiff"><option value="">全部</option><option>易</option><option>中</option><option>难</option></select></label>
-    <label class="chk"><input type="checkbox" id="bShow"> 显示答案</label>
+    <label class="chk"><input type="checkbox" id="bShow"> 全部展开</label>
     <button class="btn ghost small" id="bPrint">打印（含答案）</button>
     <span class="hint" id="bCount"></span>
   </div>
@@ -558,12 +562,12 @@ function renderBank(){
     <details class="bitem" ${showAns?"open":""}>
       <summary>
         <p class="bstem"><span class="hint">#${q.id}</span> ${esc(q.q)}</p>
-        <div class="btagline">${diffBadge(q.d)}${topicBadge(q)}${q.f?`<span class="badge b-flag">${esc(q.f)}</span>`:""}</div>
+        <div class="btagline">${diffBadge(q.d)}${topicBadge(q)}${q.f?`<span class="badge b-flag">${esc(q.f)}</span>`:""}<span class="fold-hint"></span></div>
       </summary>
       <div class="bopts">
-        ${q.o.map((o,k) => `<div class="${showAns && k===q.a ? "right":""}"><span class="kk">${LETTER[k]}</span><span>${esc(o)}</span></div>`).join("")}
+        ${q.o.map((o,k) => `<div class="${k===q.a ? "right":""}"><span class="kk">${LETTER[k]}</span><span>${esc(o)}</span></div>`).join("")}
       </div>
-      ${showAns ? `<div class="bexp"><b>答案 ${LETTER[q.a]}。</b>${esc(q.e)}</div>` : ""}
+      <div class="bexp"><b>答案 ${LETTER[q.a]}。</b>${esc(q.e)}</div>
     </details>`).join("");
 }
 $("bTopics").addEventListener("click", e => {
