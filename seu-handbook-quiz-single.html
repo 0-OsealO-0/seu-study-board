@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>东南大学《大学生手册》题库 · 2026</title>
+<style>
+:root{
+  --bg:#f6f4ef; --paper:#fffefb; --ink:#1d2321; --muted:#6b7570; --line:#e4e1d9;
+  --green:#0b5d4b; --green2:#0e7360; --gold:#a8813c; --ok:#1a7f52; --bad:#b3342c;
+  --soft-green:#e8f1ed; --soft-gold:#f6efdf; --soft-red:#f8e9e7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); line-height:1.65;
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:"Songti SC","SimSun","Noto Serif SC",serif;font-weight:700;letter-spacing:.01em}
+button{font:inherit;cursor:pointer;color:inherit}
+input,select{font:inherit;color:inherit}
+
+/* ---------- top ---------- */
+.top{
+  position:sticky;top:0;z-index:30;background:rgba(255,254,251,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.top-in{max-width:1080px;margin:0 auto;padding:14px 20px 0;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center;min-width:0}
+.seal{
+  width:42px;height:42px;flex:0 0 42px;border-radius:10px;background:var(--green);color:#fff;
+  display:grid;place-items:center;font-size:12px;font-weight:700;letter-spacing:.06em;
+  font-family:Georgia,serif;
+}
+h1{font-size:19px;margin:0;line-height:1.25}
+.sub{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;padding-bottom:0}
+.tabs button{
+  border:0;background:transparent;padding:10px 14px;border-radius:10px 10px 0 0;font-size:14px;
+  color:var(--muted);border-bottom:2px solid transparent;
+}
+.tabs button:hover{color:var(--ink);background:#f1efe8}
+.tabs button.on{color:var(--green);border-bottom-color:var(--green);font-weight:600;background:var(--soft-green)}
+.tabs .pill{
+  display:inline-block;min-width:18px;padding:0 5px;margin-left:4px;border-radius:9px;
+  background:var(--bad);color:#fff;font-size:11px;line-height:17px;text-align:center
+}
+
+main{max-width:1080px;margin:0 auto;padding:22px 20px 80px}
+.view{display:none}
+.view.on{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ---------- generic ---------- */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.bar label{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+select,input[type=text],input[type=search]{
+  border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:7px 10px;font-size:13px;
+  outline:none;
+}
+select:focus,input:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(14,115,96,.08)}
+input[type=search]{min-width:240px}
+.chk{gap:6px!important;cursor:pointer;user-select:none}
+.chk input{accent-color:var(--green)}
+.btn{
+  border:1px solid var(--green);background:var(--green);color:#fff;border-radius:9px;
+  padding:8px 16px;font-size:13.5px;transition:.15s;
+}
+.btn:hover{background:var(--green2);border-color:var(--green2)}
+.btn.ghost{background:transparent;color:var(--green);border-color:#cfd8d3}
+.btn.ghost:hover{background:var(--soft-green);border-color:var(--green2)}
+.btn.small{padding:5px 10px;font-size:12px;border-radius:7px}
+.btn.danger{background:transparent;color:var(--bad);border-color:#e8c9c5}
+.btn.danger:hover{background:var(--soft-red)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 1px 2px rgba(0,0,0,.035)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.badge{display:inline-block;padding:1px 8px;border-radius:6px;font-size:11.5px;line-height:19px;white-space:nowrap}
+.b-easy{background:var(--soft-green);color:var(--ok)}
+.b-mid{background:var(--soft-gold);color:#8a6a2c}
+.b-hard{background:var(--soft-red);color:var(--bad)}
+.b-topic{background:#eeece5;color:#5c6560}
+.b-flag{background:#fdf3d7;color:#8a6a2c;border:1px dashed #d9bd7e}
+.hint{font-size:12px;color:var(--muted)}
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:#232a27;color:#fff;
+  padding:9px 18px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- question ---------- */
+.qtext{font-size:17px;line-height:1.75;margin:0 0 18px;font-weight:500}
+.qtext .num{color:var(--muted);font-weight:400;font-size:13px;margin-right:8px}
+.opts{display:grid;gap:10px}
+.opt{
+  display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;
+  border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;font-size:15px;
+  transition:.12s;line-height:1.6;
+}
+.opt:hover{border-color:#b9c6c0;background:#fbfaf6}
+.opt .k{
+  flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:#f0eee7;color:var(--muted);
+  display:grid;place-items:center;font-size:12.5px;font-weight:700;margin-top:1px;
+}
+.opt.ok{border-color:#8fc7ae;background:#f1f9f4}
+.opt.ok .k{background:var(--ok);color:#fff}
+.opt.bad{border-color:#e2aaa4;background:#fdf3f1}
+.opt.bad .k{background:var(--bad);color:#fff}
+.opt.sel{border-color:var(--green2);background:var(--soft-green)}
+.opt.lock{cursor:default}
+.opt.lock:hover{background:inherit;border-color:inherit}
+.exp{
+  margin-top:16px;padding:13px 16px;border-radius:10px;background:#f7f6f1;border-left:3px solid var(--gold);
+  font-size:14px;line-height:1.7;color:#3c443f;
+}
+.exp b{color:var(--green)}
+
+/* ---------- practice pager ---------- */
+.pager{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:16px}
+.progress{height:4px;background:#e9e6de;border-radius:3px;overflow:hidden;margin-bottom:14px}
+.progress > i{display:block;height:100%;background:var(--green2);width:0;transition:width .25s}
+
+/* ---------- bank ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 16px}
+.chip{
+  border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px;font-size:12.5px;
+  color:var(--muted);
+}
+.chip:hover{border-color:#b9c6c0;color:var(--ink)}
+.chip.on{background:var(--green);border-color:var(--green);color:#fff}
+.bitem{padding:16px 20px;margin-bottom:10px;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.bitem summary{list-style:none;cursor:pointer}
+.bitem summary::-webkit-details-marker{display:none}
+.bstem{font-size:15px;line-height:1.7;margin:0}
+.bopts{margin:12px 0 0;display:grid;gap:6px;font-size:14px;color:#414a45}
+.bopts div{display:flex;gap:9px}
+.bopts .kk{color:var(--muted);flex:0 0 16px}
+.bopts .right{color:var(--ok);font-weight:600}
+.bexp{margin:12px 0 0;font-size:13.5px;color:#4a534d;background:#f8f7f2;border-radius:8px;padding:9px 12px}
+.btagline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+/* ---------- exam ---------- */
+.exam-top{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between;
+  margin-bottom:14px;padding:12px 18px;background:var(--paper);border:1px solid var(--line);border-radius:12px;
+}
+.timer{font-family:Georgia,"Times New Roman",serif;font-size:30px;font-weight:700;color:var(--green);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.timer.warn{color:var(--bad)}
+.exam-wrap{display:grid;grid-template-columns:1fr 250px;gap:16px;align-items:start}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;position:sticky;top:92px}
+.sheet h3{font-size:13px;margin:0 0 10px;color:var(--muted);font-weight:600;font-family:inherit}
+.sheet-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.sq{
+  aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:6px;font-size:12px;
+  display:grid;place-items:center;padding:0;
+}
+.sq.done{background:var(--green);color:#fff;border-color:var(--green)}
+.sq.flag{border:2px solid var(--gold);font-weight:700}
+.sq.cur{outline:2px solid var(--green);outline-offset:1px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+/* ---------- result ---------- */
+.score-hero{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.score-num{font-family:Georgia,serif;font-size:66px;line-height:1;font-weight:700;color:var(--green)}
+.score-num small{font-size:16px;color:var(--muted);font-weight:400}
+.verdict{padding:4px 14px;border-radius:999px;font-size:13px;display:inline-block;margin-top:8px}
+.v-pass{background:var(--soft-green);color:var(--ok)}
+.v-fail{background:var(--soft-red);color:var(--bad)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:12.5px;margin:7px 0}
+.bar-row .lbl{flex:0 0 132px;color:#4a534d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-row .track{flex:1;height:8px;background:#eceae3;border-radius:5px;overflow:hidden}
+.bar-row .track i{display:block;height:100%;background:var(--green2);border-radius:5px}
+.bar-row .val{flex:0 0 74px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev:first-child{border-top:0}
+.rev .qq{font-size:14.5px;margin:0 0 8px}
+.rev .line{font-size:13px;color:var(--muted)}
+.rev .line b.ok{color:var(--ok)}
+.rev .line b.bad{color:var(--bad)}
+
+/* ---------- stats ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi .n{font-family:Georgia,serif;font-size:28px;font-weight:700;color:var(--green);line-height:1.1}
+.kpi .t{font-size:12px;color:var(--muted);margin-top:4px}
+table.hist{width:100%;border-collapse:collapse;font-size:13px}
+table.hist th,table.hist td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+table.hist th{color:var(--muted);font-weight:600;font-size:12px}
+
+.print-title{display:none}
+
+@media (max-width:780px){
+  .exam-wrap{grid-template-columns:1fr}
+  .sheet{position:static}
+  .sheet-grid{grid-template-columns:repeat(10,1fr)}
+  .grid2,.kpis{grid-template-columns:1fr 1fr}
+  .score-num{font-size:52px}
+  input[type=search]{min-width:0;width:100%}
+  .bar label{font-size:12px}
+  h1{font-size:17px}
+}
+
+/* ---------- phone (≤640px) ---------- */
+@media (max-width:640px){
+  .top-in{padding:10px 14px 0;gap:10px}
+  h1{font-size:16.5px}
+  .sub{font-size:11px}
+  main{padding:14px 12px 72px}
+  .card{padding:16px 14px;border-radius:12px}
+  .grid2{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr;gap:10px}
+  .score-num{font-size:44px}
+  .score-hero{gap:14px}
+  .pager{justify-content:space-between;gap:8px}
+  .pager .hint{display:none}
+  .pager .btn{flex:1 1 0;text-align:center}
+  .sheet-grid{grid-template-columns:repeat(6,1fr);gap:5px}
+  .opt{padding:12px 12px;gap:10px}
+  .qtext{font-size:16px;line-height:1.55}
+  .tabs{gap:2px;flex-wrap:nowrap}
+  .tabs button{padding:9px 9px;font-size:13px;white-space:nowrap}
+  .bar-row{margin:6px 0}
+  .bar-row .lbl{flex-basis:104px;font-size:11.5px}
+  .bar-row .val{flex-basis:52px;font-size:11.5px}
+  .exam-top{gap:10px;padding:12px 14px}
+  .exam-top .timer{font-size:30px}
+  .chips{gap:6px}
+  .chip{padding:5px 10px;font-size:12px}
+}
+@media print{
+  .top,.bar,.chips,.pager,.exam-top,.sheet,.legend,.toast,#view-practice,#view-exam,#view-wrong,#view-stats{display:none!important}
+  body{background:#fff}
+  main{padding:0;max-width:none}
+  #view-bank{display:block!important}
+  .print-title{display:block;margin:0 0 16px;font-size:18px}
+  .bitem{break-inside:avoid;border:1px solid #ddd;box-shadow:none;margin-bottom:8px;padding:10px 12px}
+  .bopts{display:grid!important}
+  .bexp{background:#fafafa}
+  .badge{border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <div class="seal">SEU</div>
+      <div>
+        <h1>东南大学《大学生手册》题库</h1>
+        <p class="sub">2026 · 188 道单选 · 纸质闭卷备考</p>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-v="practice" class="on">刷题</button>
+      <button data-v="bank">题库</button>
+      <button data-v="exam">模拟考试</button>
+      <button data-v="wrong">错题本<span class="pill" id="wrongCount" hidden>0</span></button>
+      <button data-v="stats">统计</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ 刷题 ============ -->
+<section id="view-practice" class="view on">
+  <div class="bar">
+    <label>板块 <select id="pTopic"><option value="">全部板块</option></select></label>
+    <label>难度 <select id="pDiff"><option value="">全部</option><option>易</option><option>中</option><option>难</option></select></label>
+    <label class="chk"><input type="checkbox" id="pUnseen"> 只看没做过的</label>
+    <label class="chk"><input type="checkbox" id="pShuffle" checked> 随机顺序</label>
+    <button class="btn ghost small" id="pRestart">换一组</button>
+    <span class="hint" id="pPool"></span>
+  </div>
+  <div class="progress"><i id="pBar"></i></div>
+  <div class="meta" id="pMeta"></div>
+  <div class="card" id="pCard"></div>
+  <div class="pager">
+    <button class="btn ghost" id="pPrev">← 上一题</button>
+    <span class="hint">快捷键：A/B/C/D 或 1–4 作答，Enter 下一题</span>
+    <button class="btn" id="pNext">下一题 →</button>
+  </div>
+</section>
+
+<!-- ============ 题库 ============ -->
+<section id="view-bank" class="view">
+  <h2 class="print-title">东南大学大学生手册题库（含答案）</h2>
+  <div class="bar">
+    <input type="search" id="bSearch" placeholder="搜索题干、选项或解析，如「门禁」「国家奖学金」">
+    <label>难度 <select id="bDiff"><option value="">全部</option><option>易</option><option>中</option><option>难</option></select></label>
+    <label class="chk"><input type="checkbox" id="bShow"> 显示答案</label>
+    <button class="btn ghost small" id="bPrint">打印（含答案）</button>
+    <span class="hint" id="bCount"></span>
+  </div>
+  <div class="chips" id="bTopics"></div>
+  <div id="bList"></div>
+</section>
+
+<!-- ============ 模拟考试 ============ -->
+<section id="view-exam" class="view">
+  <div id="exStart">
+    <div class="card">
+      <h2 class="serif" style="margin:0 0 6px;font-size:22px">模拟考试</h2>
+      <p class="hint" style="margin:0 0 16px">按难度比例随机组卷，模拟纸质闭卷的答题节奏。</p>
+      <div class="grid2" style="margin-bottom:18px">
+        <div>
+          <div class="bar" style="margin:0 0 6px"><b>试卷结构</b></div>
+          <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.9">
+            <li>共 <b>50</b> 道单选：易 20 · 中 20 · 难 10</li>
+            <li>每题 <b>2</b> 分，满分 100 分，<b>60</b> 分及格</li>
+            <li>限时 <b>90</b> 分钟，到时自动交卷</li>
+          </ul>
+        </div>
+        <div>
+          <div class="bar" style="margin:0 0 6px"><b>说明</b></div>
+          <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.9">
+            <li>同组近似题不会同时出现</li>
+            <li>拿不准的题可打标记，交卷前回看</li>
+            <li>交卷后逐题给解析，错题自动入错题本</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bar" style="margin:0">
+        <button class="btn" id="exBegin" style="padding:11px 26px;font-size:15px">开始考试</button>
+        <button class="btn ghost" id="exResume" hidden>继续上次考试</button>
+        <span class="hint" id="exResumeHint"></span>
+      </div>
+    </div>
+    <div id="exLast" style="margin-top:16px"></div>
+  </div>
+
+  <div id="exRun" hidden>
+    <div class="exam-top">
+      <div><div class="hint" style="margin-bottom:2px">剩余时间</div><div class="timer" id="exTimer">90:00</div></div>
+      <div style="text-align:center">
+        <div class="hint">已答</div>
+        <div style="font-size:20px;font-weight:700"><span id="exDone">0</span> / 50</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost small" id="exFlagBtn">标记本题</button>
+        <button class="btn" id="exSubmit">交卷</button>
+      </div>
+    </div>
+    <div class="exam-wrap">
+      <div>
+        <div class="card" id="exQ"></div>
+        <div class="pager">
+          <button class="btn ghost" id="exPrev">← 上一题</button>
+          <span class="hint" id="exPos"></span>
+          <button class="btn" id="exNext">下一题 →</button>
+        </div>
+      </div>
+      <aside class="sheet">
+        <h3>答题卡</h3>
+        <div class="sheet-grid" id="exSheet"></div>
+        <div class="legend">
+          <span><i style="background:var(--green)"></i>已答</span>
+          <span><i style="border:2px solid var(--gold);background:#fff"></i>标记</span>
+          <span><i style="border:1px solid var(--line);background:#fff"></i>未答</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="exResult" hidden></div>
+</section>
+
+<!-- ============ 错题本 ============ -->
+<section id="view-wrong" class="view">
+  <div class="bar">
+    <button class="btn" id="wPractice">开始错题练习</button>
+    <button class="btn ghost small" id="wClear">清空错题本</button>
+    <span class="hint" id="wCount"></span>
+  </div>
+  <div id="wList"></div>
+</section>
+
+<!-- ============ 统计 ============ -->
+<section id="view-stats" class="view">
+  <div class="kpis">
+    <div class="kpi"><div class="n" id="sAnswered">0</div><div class="t">累计作答（题次）</div></div>
+    <div class="kpi"><div class="n" id="sAcc">—</div><div class="t">累计正确率</div></div>
+    <div class="kpi"><div class="n" id="sCover">0%</div><div class="t">题库覆盖率</div></div>
+    <div class="kpi"><div class="n" id="sExams">0</div><div class="t">模拟考次数</div></div>
+  </div>
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="card">
+      <h3 style="margin:0 0 12px;font-size:15px">各板块正确率</h3>
+      <div id="sTopics"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 12px;font-size:15px">各难度正确率</h3>
+      <div id="sDiffs"></div>
+      <p class="hint" style="margin:14px 0 0">数据只保存在本机浏览器，换设备或清缓存会丢失。</p>
+      <button class="btn danger small" id="sReset" style="margin-top:10px">清空全部记录</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin:0 0 12px;font-size:15px">模拟考记录</h3>
+    <div id="sHist"></div>
+  </div>
+</section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {"topics":{"T1":"图书馆与校园秩序","T2":"学生公寓","T3":"学籍·注册·学费","T4":"考试与考场纪律","T5":"违纪处分与申诉","T6":"奖学金与评优","T7":"助学贷款·勤工助学","T8":"课外研学·竞赛·实践","T9":"体育与军训","T10":"实验室安全","T11":"毕业设计·推免·辅修","T12":"校史·出版物·网络"},"questions":[{"id":1,"q":"遵循图书馆的公共场所规范，主要包括：（  ）","o":["根据馆内不同区域功能要求，保持安静或小声交谈","讲究公共卫生，保持环境整洁，移动阅览座位后请及时复位","禁止在阅览区及书库内用餐、吃零食、喝由无盖器皿盛装的有色饮料","以上都是"],"a":3,"t":"T1","d":"易","e":"图书馆三类场所规范（安静、卫生、禁饮食）都属要求，故选“以上都是”。","g":"","f":""},{"id":2,"q":"自2019级开始，我校文、理、工、医学、艺术各专业本科生正常修读课程学费按学年收取。学生毕业离校前根据在校期间所修读的总学分数和所在专业培养方案要求毕业需达到最低学分数差值计收学费，在校期间所修读的正常选课课程总学分数-专业培养方案要求毕业最低学分数≤（  ），免收加修学费；","o":["3","5","7","8"],"a":1,"t":"T3","d":"难","e":"超出培养方案毕业最低学分的部分不超过5学分时，免收加修学费。","g":"","f":""},{"id":3,"q":"专业分流时，各专业在接收学生时坚持（  ）原则。","o":["兴趣优先","志愿优先","分数优先","综合素质优先"],"a":1,"t":"T3","d":"中","e":"专业分流接收学生坚持“志愿优先”原则。","g":"","f":""},{"id":4,"q":"住宿人员有以下行为的，属违反《东南大学学生违纪处分条例》：（  ）","o":["私自将钥匙转借他人但未造成不良后果的","私自在公寓内调换床位或者占用空床位，导致他人无法正常 入住的","手机、计算机播放音量过大或者大声喧哗、唱歌、嬉闹等影响他人学习和休息的","以上都是"],"a":3,"t":"T2","d":"易","e":"所列住宿违规行为均属违反违纪处分条例。","g":"G3","f":""},{"id":5,"q":"住宿人员有以下行为的，不属于违反《东南大学学生违纪处分条例》：（  ）","o":["私自在公寓内调换床位或者占用空床位，导致他人无法正常入住的","未按照指定位置停放车辆（包括自行车、电动车、机动车等）的","在学生公寓楼内吸烟的","在指定地点张贴、散发宣传品的"],"a":3,"t":"T2","d":"难","e":"反向题：在指定地点张贴、散发宣传品是合规行为，不算违纪。","g":"","f":""},{"id":6,"q":"住宿人员应自觉维护自身和他人人身安全，除学校组织的活动，在学生公寓区域内不得有下列哪些行为：（  ）","o":["带犬、猫、鼠等各类动物进学生公寓区域","作身体碰撞游戏、翻越围墙（围栏）、爬树等","其它危及自身及他人人身安全的行为","以上选项都是"],"a":3,"t":"T2","d":"易","e":"公寓区域内禁止的治安、消防、留宿等行为全部在内。","g":"","f":""},{"id":7,"q":"住宿人员若有以下严重违反学校规定行为的，属违反《东南大学学生违纪处分条例》，且情节严重：（  ）","o":["擅自占用、骗取、转让、出租、出借床位的","在学生公寓内短暂容留、短暂滞留或留宿非本宿舍成员的","违规使用门禁，将门禁卡私自借与他人使用，或者故意放任陌生人进入学生公寓等","以上都是"],"a":3,"t":"T2","d":"中","e":"严重违反公寓规定的行为均属违纪且情节严重。","g":"G3","f":""},{"id":8,"q":"中途申请住宿的学生，按实际住宿情况结算费用，当月不足15日（含15日）（  ）。","o":["不收费","收一半费用","收整月费用","以上都不对"],"a":0,"t":"T2","d":"难","e":"中途住宿按实际天数结算，当月不足15日（含15日）不收费。","g":"","f":""},{"id":9,"q":"制作、复制、传播淫秽物品的，给予什么处分：（  ）。","o":["警告","严重警告","记过","留校察看或开除学籍"],"a":3,"t":"T5","d":"中","e":"制作、复制、传播淫秽物品，给予留校察看或开除学籍处分。","g":"","f":""},{"id":10,"q":"在学校规定的学习年限内，平均学分绩点未达（  ）不能授予学士学位。","o":["1","1.5","2","2.5"],"a":2,"t":"T3","d":"难","e":"平均学分绩点未达2.0，不能授予学士学位。","g":"","f":""},{"id":11,"q":"在网络上宣扬、传播、从事有违宪法法律、公共秩序、社会公德，或危害国家安全、荣誉和利益，撰写或转载具有歪曲事实或侮辱诽谤他人人格、暴力或反动等内容的文章信息的，编造、传播虚假信息扰乱社会秩序，造成恶劣影响，视其情节轻重给予什么处分：（  ）。","o":["警告","严重警告","通报批评","记过或记过以上"],"a":3,"t":"T5","d":"中","e":"网络传播违法有害信息，视情节给予记过或记过以上处分。","g":"","f":""},{"id":12,"q":"在考场有下列行为之一的，属违反考场纪律：（  ）","o":["未经监考人员同意在考试过程中擅自进出、离开考场","擅自将试卷、答卷（含答题纸、答题卡等，下同）、草稿 纸等考试用纸带出考场","在考场喧哗、吸烟或者实施其他影响考场秩序的行为","以上都是"],"a":3,"t":"T4","d":"易","e":"考场违纪的具体情形（携带资料、交头接耳等）全部属于违纪。","g":"G7","f":""},{"id":13,"q":"在教室、图书馆、实验室等校内公共场所携带播放工具、通讯设备影响公共秩序，经教育不改的，给予什么处分：（  ）。","o":["警告或严重警告","记过","留校察看","开除学籍"],"a":0,"t":"T5","d":"易","e":"在公共场所使用播放、通讯设备影响秩序且教育不改，警告或严重警告。","g":"","f":""},{"id":14,"q":"在对学生作出处分决定之前，以书面形式，告知学生作出决定的事实、理由及依据，并告知学生享有陈述和申辩的权利，学生及其代理人可在收到告知书之日起（  ）日内进行陈述和申辩。","o":["5","10","15","30"],"a":0,"t":"T5","d":"难","e":"收到处分告知书之日起5日内可陈述、申辩。","g":"","f":""},{"id":15,"q":"在不超过学校规定的最长学习年限的前提下，最多可以延长学习年限（  ）。","o":["一次","两次","三次","四次"],"a":1,"t":"T3","d":"中","e":"最长学习年限内，最多可延长学习年限两次。","g":"","f":""},{"id":16,"q":"在不超过学校规定的最长学习年限的前提下，延长学习年限后在校实际学习时间不得超过所学专业标准学制加（  ）。","o":["一年","两年","三年","四年"],"a":1,"t":"T3","d":"中","e":"延长后在校实际学习时间不得超过标准学制加两年。","g":"","f":""},{"id":17,"q":"有下列行为之一的，属考试作弊：（  ）","o":["交换试卷、答卷、草稿纸的","评卷过程中被发现同一科目同一考场有两份以上（含两份）答卷答案雷同的","代替他人或者让他人代替自己参加考试","以上都是"],"a":3,"t":"T4","d":"易","e":"考试作弊情形（夹带、抄袭、替考等）全部属于作弊。","g":"G1","f":""},{"id":18,"q":"有下列哪些行为之一的，属考试作弊：（  ）","o":["携带规定以外的与考试内容相关的材料的","故意销毁试卷、答卷、物证或者考试材料的","在答卷上填写与本人身份不符的姓名、考号（学号）等信息的","以上都是"],"a":3,"t":"T4","d":"易","e":"与第17题同源：所列作弊情形全部属于作弊。","g":"G1","f":""},{"id":19,"q":"有违反宪法，反对四项基本原则的言论和行为，组织和煽动闹事，扰乱社会秩序、破坏安定团结，策划、组织非法游行示威，未受到国家有权机关处理的，经教育尚能改正的，给予什么处分：（  ）。","o":["警告","严重警告","记过或留校察看","开除学籍"],"a":2,"t":"T5","d":"中","e":"反对四项基本原则但经教育尚能改正，记过或留校察看。","g":"","f":""},{"id":20,"q":"优秀毕业生评选条件中要求，在校期间学生行为规范综合考评必须为良及以上，其中至少有（  ）次为优，在校期间未受过处分。","o":["一","二","三","（无）"],"a":1,"t":"T6","d":"难","e":"优秀毕业生要求行为规范综合考评良及以上，其中至少2次为优。","g":"","f":""},{"id":21,"q":"优秀毕业生的评选时间为（  ）。","o":["标准学制的最后一学年","标准学制的最后一学期","标准学制的最后一个月","以上都不是"],"a":1,"t":"T6","d":"中","e":"优秀毕业生在标准学制最后一学期评选。","g":"","f":""},{"id":22,"q":"因患病转学学生需（  ）。","o":["提供任意医院的诊断证明，并经校医院复核签署意见","提供三甲及以上医院的诊断证明，并经校医院复核签署意见","提供我校指定医院的诊断证明即可","提供我校指定医院的诊断证明，并经校医院复核签署意见"],"a":3,"t":"T3","d":"难","e":"患病转学须提供指定医院诊断证明，并经校医院复核签署意见。","g":"","f":""},{"id":23,"q":"以现金、有价证券等物品为赌注，屡次参与赌博的，给予什么处分：（  ）。","o":["警告","严重警告","记过或留校察看","开除学籍"],"a":2,"t":"T5","d":"中","e":"屡次参与赌博，记过或留校察看。","g":"","f":""},{"id":24,"q":"以下选项符合优秀学生干部评选条件的是：（  ）","o":["在学院学生会担任干事一年","学习态度端正，刻苦认真，积极创新，本学年无不及格课程，学习成绩绩点3.5","所评学年个人宿舍卫生成绩在85分","积极参加文体活动，坚持早操和课外体育锻炼，本学年体育成绩及格"],"a":1,"t":"T6","d":"中","e":"本题称优秀学生干部绩点3.5，与第28题“3.0及以上”冲突，以手册原文为准。","g":"G6","f":"存疑"},{"id":25,"q":"以下选项符合评选东南大学本科先进班集体实施办法的是：（  ）","o":["全班同学积极参加体育活动，坚持早操和课外锻炼，出勤合格率达100%，体育成绩有三分之二为良好及以上","所评学年全班无受纪律处分的","省级先进班集体在校先进班集体中产生","以上都是"],"a":3,"t":"T6","d":"易","e":"先进班集体评选实施办法的表述全部正确。","g":"","f":""},{"id":26,"q":"以下哪种行为没有违反实验室安全守则：（  ）","o":["携带与实验无关的物品进入实验室","对实验室固定电源插座进行拆装、改线","清理实验室外的废旧物品与垃圾","改变、改造实验室布局"],"a":2,"t":"T10","d":"中","e":"清理实验室外的废旧物品与垃圾不属于违规，其余均违反安全守则。","g":"","f":""},{"id":27,"q":"以下哪些行为不是实验室明令禁止的行为：（  ）","o":["吸烟","用膳","留宿","接打电话"],"a":3,"t":"T10","d":"难","e":"吸烟、用膳、留宿被明令禁止，接打电话不在禁止之列。","g":"","f":""},{"id":28,"q":"以下哪项符合优秀学生干部评选条件：（  ）","o":["在学院学生会担任干事一年；","学习态度端正，刻苦认真，积极创新，本学年无不及格课程，学习成绩绩点3.0及以上","所评学年个人宿舍卫生成绩在85分","积极参加文体活动，坚持早操和课外体育锻炼，本学年体育成绩及格"],"a":1,"t":"T6","d":"中","e":"优秀学生干部绩点要求3.0及以上。","g":"G6","f":""},{"id":29,"q":"以下哪项符合三好学生评选条件：（  ）","o":["学习态度端正，刻苦认真，积极创新，本学年无不及格课程，学习成绩绩点3.0及以上","所评学年个人宿舍卫生成绩在90分及以上","积极参加文体活动，坚持早操和课外体育锻炼，所评学年体育成绩两学期均须达到80分及以上，并达到《国家学生体质健康标准》良好成绩","以上都是"],"a":3,"t":"T6","d":"易","e":"三好学生评选条件全部符合。","g":"","f":""},{"id":30,"q":"以下哪项符合勤工助学的要求：（  ）","o":["参加勤工助学需本人自愿提出申请，通过考核，培训上岗","参加校内勤工助学的，须遵守国家及学校勤工助学相关管理规定。从事勤工助学必须做到认真负责，诚实守信，遵守社会公德、树立服务观念，按质按量完成工作任务","在勤工助学过程中要自觉提高安全防范意识，防止发生人身伤害和财物损失","以上选项都符合"],"a":3,"t":"T7","d":"易","e":"勤工助学的时间、岗位、报酬等要求全部符合。","g":"","f":""},{"id":31,"q":"以下哪项符合国家奖学金的破格申请条件：（  ）","o":["学习成绩排名在10%-30%之间，在道德风尚、学术研究、学科竞赛、创新发明、社会实践、社会工作、体育竞赛、艺术展演等某一方面表现特别优秀，可申请国家奖学金","在学术研究上取得显著成绩，以第一作者发表的论文被SCI、SSCI、EI、A&HCI、CSSCI、CSCD核心库及扩展库全文收录，以第一、二作者出版学术专著（须通过专家鉴定）","在学科竞赛方面取得显著成绩，在国际和全国性专业学科竞赛、课外学术科技竞赛等竞赛中获特等奖奖励，在中国“互联网＋”大学生创新创业大赛中获一等奖（或金奖）及以上奖励","以上选项都是"],"a":3,"t":"T6","d":"中","e":"国家奖学金破格申请条件全部符合。","g":"","f":""},{"id":32,"q":"以下哪项符合东南大学本科优秀毕业生评选的优先条件：（  ）。","o":["至少一次被评为校级及校级以上三好学生、三好学生标兵、优秀学生干部、优秀党（团）员","培养创新能力，至少获得一次大学生学科竞赛奖","响应国家号召，到国家需要的地方去","以上都是"],"a":3,"t":"T6","d":"易","e":"优秀毕业生评选的优先条件全部符合。","g":"","f":""},{"id":33,"q":"以下哪项符合《东南大学学生考试管理办法》考试纪律：（  ）","o":["考生进入考场应当携带准考证、学生证、有效身份证件，以及指定的考试必需用具。","闭卷考试可以携带书包、书籍（含电子字 典）、笔记、纸张、通讯设备等物品","考试过程中未经监考人员允许，考生可以互借任何文具或其他物品","考试进行十五分钟后，考生方可离开考场"],"a":0,"t":"T4","d":"中","e":"考试纪律要求携带准考证、学生证、有效身份证件及指定用具。","g":"G8","f":""},{"id":34,"q":"以下哪项符合《东南大学校园网络系统安全管理制度》的安全保护运行：（  ）","o":["用户的校园网账户密码需妥善保管，不得向任何单位和个人提供","任何单位和个人不得在校园网及其联网计算机上传送危害国家安全信息（包括多媒体信息）、录阅传送淫秽、色情资料","严禁在校园网上使用来历不明、引发病毒传染的软件；对于来历不明的可能引起计算机病毒的软件应使用公安部门推荐的杀毒软件检查、杀毒","以上都是"],"a":3,"t":"T12","d":"易","e":"校园网络安全管理制度的安全保护运行要求全部符合。","g":"","f":""},{"id":35,"q":"以下哪项不符合国家励志奖学金的基本申请条件：（  ）。","o":["具有中华人民共和国国籍","家庭经济困难，生活俭朴","在校期间学习成绩优秀（上学年成绩排名在本专业前50%，且无不及格课程），社会实践、创新能力、综合素质等方面突出","同一学年内，申请国家励志奖学金的学生可以同时获得国家奖学金"],"a":3,"t":"T6","d":"难","e":"反向题：同一学年获励志奖学金者不得同时获国家奖学金。","g":"","f":""},{"id":36,"q":"以下哪项不符合国家奖学金的基本申请条件：（  ）。","o":["符合校三好学生条件","上一学年成绩排名在本专业前10%，且无不及格课程","同一学年内，获得国家奖学金的家庭经济困难学生可以同时申请并获得国家助学金","同一学年内，获得国家奖学金的家庭经济困难学生可以同时获得国家励志奖学金"],"a":3,"t":"T6","d":"难","e":"反向题：获国家奖学金者不得同时获国家励志奖学金。","g":"","f":""},{"id":37,"q":"一学期累计病、事假不得超过（  ）。","o":["一周","半个月","一个月","两个月"],"a":2,"t":"T3","d":"难","e":"一学期累计病、事假不得超过一个月。","g":"","f":""},{"id":38,"q":"延长学习年限的学生，（  ）。","o":["依然享受公费医疗待遇，学校会安排住宿；","依然享受公费医疗待遇，但学校原则上不安排住宿；","不再享受公费医疗待遇，但学校会安排住宿；","不再享受公费医疗待遇，且学校原则上不安排住宿。"],"a":3,"t":"T3","d":"中","e":"延长学习年限的学生不再享受公费医疗，学校原则上不安排住宿。","g":"","f":""},{"id":39,"q":"延长学习办理时间一般在（  ）。","o":["入学学期第12～16 周内","入学学期第16～18 周内","毕业学期第12～16 周内","毕业学期第16～18 周内"],"a":3,"t":"T3","d":"难","e":"延长学习年限一般在毕业学期第16～18周办理。","g":"","f":""},{"id":40,"q":"学校设立参军入伍服义务兵役专项奖励。该奖励为校级奖励，标准为（  ）元每人，在参军入伍取得军籍后（  ）发放。","o":["10000；分批次","10000；一次性","20000；分批次","20000；一次性"],"a":3,"t":"T6","d":"难","e":"参军入伍专项奖励20000元/人，取得军籍后一次性发放。","g":"","f":""},{"id":41,"q":"学校禁止有以下内容的出版物发行：（  ）","o":["扰乱校园秩序，破坏校园稳定的","宣扬淫秽、赌博、暴力或者教唆犯罪的","危害社会公德或者民族优秀文化传统的","以上都是"],"a":3,"t":"T12","d":"易","e":"禁止发行的出版物内容（违法、淫秽、危害国家安全等）全部在内。","g":"","f":""},{"id":42,"q":"学校对违纪学生的处分原则不包括（  ）。","o":["证据充分","依据明确","定性准确","流程不清"],"a":3,"t":"T5","d":"难","e":"反向题：处分原则含事实清楚、依据充分、程序正当等，“流程不清”不是原则。","g":"","f":""},{"id":43,"q":"学校、院（系）两级SRTP项目成绩等级为“优秀”的合作项目中个人得分不得大于（  ）分。","o":["6","3","2.5","2"],"a":1,"t":"T8","d":"难","e":"两级SRTP合作项目评“优秀”时，个人得分不得大于3分。","g":"","f":""},{"id":44,"q":"学生证件是学生的身份证明，（  ）。","o":["可以转借他人","可以出售他人","不得出售他人","不得转借他人"],"a":3,"t":"T1","d":"中","e":"学生证是身份证明，不得转借他人。","g":"","f":""},{"id":45,"q":"学生证件如不慎丢失或损坏，应当（  ）","o":["直接到教务处提交补办申请，并提供相关证明材料进行处理。","填写东南大学补办学生证申请表，经学院负责人审核签署意见后，到学生处办理补办学生证件手续。","到所在学院办公室填写遗失报告，并附上详细说明，之后学院办公室会进行相关审核并指导后续步骤。","填写东南大学补办学生证申请表，经学院负责人审核签署意见后，到教务处办理补办学生证件手续。"],"a":3,"t":"T1","d":"中","e":"学生证丢失或损坏，须填表、学院审核后到教务处补办。","g":"","f":""},{"id":46,"q":"学生在收到退学警告书之日起（  ）内，可向所在学院申请办理退学试读，经审批同意后，学生进入退学试读。退学试读期限为（  ），学生逾期未提出申请办理退学试读手续的，视为学生放弃试读。","o":["7日；一学期","10日；一学期","15日；一学期","20日；一学期"],"a":1,"t":"T3","d":"难","e":"收到退学警告书10日内可申请试读，试读期限为一学期。","g":"","f":""},{"id":47,"q":"学生有下列情况之一，予以退学处理：（  ）","o":["二年级结束，在读期间（不含保留入学资格、休学或保留学籍时间）累计获得学籍审核学分小于55学分","第二次受到退学警告的","休学、保留学籍期满，超过两周未提出复学申请或者申请复学经复查不合格的","以上都是"],"a":3,"t":"T3","d":"易","e":"退学处理的各类情形全部包括。","g":"G9","f":""},{"id":48,"q":"学生有下列哪种情形，不得转学（  ）。","o":["入学未满一学期或者毕业前一年的","由低学历层次转为高学历层次","以定向就业招生录取的","以上都是"],"a":3,"t":"T3","d":"中","e":"不得转学的情形（未满一学期、应予退学等）全部包括。","g":"","f":""},{"id":49,"q":"学生应征参加中国人民解放军（含武警部队），学校为其保留学籍或入学资格至退役后（  ）。","o":["一年","两年","三年","四年"],"a":1,"t":"T9","d":"难","e":"应征入伍保留学籍或入学资格至退役后两年。","g":"","f":""},{"id":50,"q":"学生选定修读课程后，可自该课程开课后试修（  ）。学生因各自原因在开学后第三周内退选课程的，免收退选课程的学分学费。","o":["1周","2周","3周","4周"],"a":1,"t":"T3","d":"难","e":"课程开课后可试修2周，第三周内退选免收退选课程学分学费。","g":"","f":""},{"id":51,"q":"学生无故缺课累计超过该门课程学时的（  ），或抽查旷课三次，或缺交作业（含实验报告）三次者，原则上不得参加该门课程学期结束考试（考查），该课程成绩记为缺考，成绩绩点以“零”计算，（  ）补考。","o":["1/2；予以","1/2；不予","1/3；予以","1/3；不予"],"a":3,"t":"T3","d":"难","e":"无故缺课超课程学时1/3或旷课三次，不得参加考试，且不予补考。","g":"","f":""},{"id":52,"q":"学生提出申诉时，应当向学生申诉处理委员会办公室（  ），并附上身份证明材料、处理或处分决定书等相应证明材料。","o":["进行电话申诉","当面申诉","递交书面申诉书","不用提供任何申诉材料"],"a":2,"t":"T5","d":"中","e":"提出申诉应向申诉处理委员会办公室递交书面申诉书。","g":"","f":""},{"id":53,"q":"学生实验应选用对环境无害或减少环境危害的实验方案，尽可能减少废弃物的排放。实验过程中产生的有毒有害废弃物要遵循的原则不包括：（  ）","o":["集中收集","定点存放","专人管理","集中处理"],"a":0,"t":"T10","d":"难","e":"反向题：有毒有害废弃物应分类收集、定点存放、专人管理、集中处理，“集中收集”不是原则。","g":"","f":""},{"id":54,"q":"学生申诉处理委员会对学生提出的申诉进行复查，并在收到书面申诉之日起 15 日内，作出复查结论并告知申诉人。情况复杂不能在规定期限内作出结论的，经学校负责人批准，可延长（  ）日。","o":["5","10","15","30"],"a":2,"t":"T5","d":"难","e":"复查一般15日内作出，情况复杂经批准可延长15日。","g":"","f":""},{"id":55,"q":"学生如有下列情况之一，予以退学处理：（  ）","o":["未经批准连续两周未参加学校规定的教学活动的","不按时注册超过两周又未履行暂缓注册手续的","学校规定的在校学习年限期满未完成学业且未达到结业要求 的","以上都是"],"a":3,"t":"T3","d":"易","e":"退学处理情形与第47题同类，全部包括。","g":"G9","f":""},{"id":56,"q":"学生确有违反校规、校纪的行为，但情节轻微尚不足给予违纪处分的，由（  ）进行批评教育或通报批评，督促其改正错误。","o":["学生处","学生所在院（系）","教务处","校长办公室"],"a":1,"t":"T5","d":"中","e":"情节轻微不足处分的，由学生所在院（系）批评教育或通报批评。","g":"","f":""},{"id":57,"q":"学生取得课外研学分值的主要途径：","o":["参加各级大学生创新创业训练计划项目（即SRTP项目）","参加学科竞赛并获奖","聆听研学讲座并撰写报告","以上选项都是"],"a":3,"t":"T8","d":"易","e":"课外研学分值途径（竞赛、论文、讲座、SRTP等）全部包括。","g":"","f":""},{"id":58,"q":"学生论文提交需经过（  ）等环节，下列不属于的是：","o":["学术不端检测","指导教师评阅","评阅教师评阅","答辩小组提问"],"a":3,"t":"T8","d":"难","e":"反向题：论文提交环节不包括“答辩小组提问”。","g":"","f":""},{"id":59,"q":"学生公寓的访客须登记后，方可进入宿舍区域，并于（  ）前离开。","o":["16:30","18:30","21:30","23:30"],"a":2,"t":"T2","d":"难","e":"公寓访客登记后须在21:30前离开。","g":"G13","f":""},{"id":60,"q":"学生对于学校作出的涉及本人权益的处理或处分决定有异议，须在接到学校处理或者处分决定书之日起（  ）日内，向学校学生申诉处理委员会提出书面申诉。","o":["5","10","15","30"],"a":1,"t":"T5","d":"中","e":"接到处理或处分决定书之日起10日内提出书面申诉。","g":"","f":""},{"id":61,"q":"学生对复查决定有异议的，在收到学校复查决定书之日起（  ）日内，可以向学校所在地省级教育行政部门提出书面申诉。","o":["5","10","15","30"],"a":2,"t":"T5","d":"难","e":"对复查决定有异议，收到复查决定书15日内向省级教育行政部门申诉。","g":"","f":""},{"id":62,"q":"学生参加勤工助学的时间原则上每周不超过（  ）小时，每月不超过（  ）小时。","o":["5；25","6；30","7；35","8；40"],"a":3,"t":"T7","d":"中","e":"勤工助学每周不超过8小时，每月不超过40小时。","g":"","f":""},{"id":63,"q":"学生参加课程考核（含过程考核）有违纪或者作弊的，该门课程成绩记为（  ），（  ）。","o":["无效；给予补考","无效；不予补考","有效；给予补考","有效；不予补考"],"a":1,"t":"T4","d":"中","e":"考试违纪或作弊，该课程成绩记为无效，且不予补考。","g":"G2","f":""},{"id":64,"q":"学生参加课程考核（含过程考核）有违纪或者作弊的，该课程成绩记为（  ），（  ）；并视其违纪或者作弊情节，给予相应的纪律处分。","o":["无效；不予补考","无效；予以补考","（无）","（无）"],"a":0,"t":"T4","d":"中","e":"与第63题同源：成绩无效，不予补考，并视情节给予纪律处分。","g":"G2","f":""},{"id":65,"q":"行为同时违反两条以上校纪的，或由一个违纪行为引发另一个违纪行为的，按（  ）处理。","o":["第一个违纪行为","第二个违纪行为","多个违纪行为处分中较轻的","多个违纪行为处分中较重的"],"a":3,"t":"T5","d":"中","e":"同时违反两条以上校纪，按多个处分中较重的处理。","g":"","f":""},{"id":66,"q":"携带、持有易燃、易爆或者其他危险品的，造成事故或有造成事故危险的，给予什么处分：（  ）。","o":["警告","严重警告","记过","留校察看或开除学籍"],"a":3,"t":"T5","d":"中","e":"携带易燃易爆等危险品造成事故或危险，留校察看或开除学籍。","g":"","f":""},{"id":67,"q":"携带、持有枪支、匕首、三棱刀、弹簧刀或其他管制刀具的，造成事故或有事故危险的，给予什么处分：（  ）。","o":["警告","严重警告","记过","留校察看或开除学籍"],"a":3,"t":"T5","d":"中","e":"携带管制刀具造成事故或危险，留校察看或开除学籍。","g":"","f":""},{"id":68,"q":"校长奖学金申请的破格条件中，要求本年度内考核成绩达到（  ）。","o":["各门课程平均学分绩点3.0（含）-3.5之间","各门课程平均学分绩点3.5（含）-4.0之间","各门课程平均学分绩点4.0以上（包括4.0）","（无）"],"a":0,"t":"T6","d":"难","e":"校长奖学金破格条件：平均学分绩点3.0（含）至3.5之间。","g":"","f":""},{"id":69,"q":"校长奖学金评选条件中要求本年度内各门课程考核成绩平均学分绩点（  ），且无不及格课程。","o":["大于3.5","大于3.0","大于等于3.5","大于等于3.0"],"a":2,"t":"T6","d":"中","e":"校长奖学金要求平均学分绩点不低于3.5且无不及格课程。","g":"","f":""},{"id":70,"q":"校长奖学金奖励金额为（  ）元/人","o":["5000","6000","8000","10000"],"a":2,"t":"T6","d":"难","e":"校长奖学金8000元/人。","g":"","f":""},{"id":71,"q":"校长奖学金的评选要求：（  ）","o":["必须是所评学年的校级及校级以上三好学生、三好学生标兵、优秀学生干部","本年度内各门课程考核成绩平均学分绩点≥3.5，且无不及格课程","获得校级以上竞赛奖项或承担一定的社会工作和志愿服务，表现优秀","以上选项都是"],"a":3,"t":"T6","d":"易","e":"校长奖学金评选要求全部符合。","g":"","f":""},{"id":72,"q":"校园卡不得转借他人，因遗失或转借而产生的问题由本人负责。（  ）","o":["是","否","（无）","（无）"],"a":0,"t":"T1","d":"中","e":"校园卡不得转借，遗失或转借产生的问题由本人负责。","g":"","f":""},{"id":73,"q":"校园地国家助学贷款期限为学制加（  ）年、最长不超过（  ）年。学生可根据本人家庭经济状况在毕业时一次性还清贷款本金，不需要支付任何利息；也可根据本人毕业后的就业和收入情况，在毕业后（  ）年内选择开始归还本金的时间。","o":["8；16；4","10；18；4","12；20；5","15；22；5"],"a":3,"t":"T7","d":"难","e":"校园地贷款期限为学制加15年、最长22年，毕业后5年内可选开始还本时间。","g":"","f":""},{"id":74,"q":"校园地国家助学贷款的申请条件：（  ）。","o":["家庭经济困难，不能支付完成学业所需基本费用","诚实守信，遵纪守法，无违法违纪行为","严格遵守国家、经办银行以及校园地国家助学贷款的各项规定，承诺正确使用所贷款项并按规定履行还款义务","以上选项都符合"],"a":3,"t":"T7","d":"易","e":"校园地国家助学贷款申请条件全部符合。","g":"","f":""},{"id":75,"q":"校园地国家助学贷款的贷款金额每人每学年本科生、预科生最高不超过（  ）元。","o":["8000","10000","12000","16000"],"a":3,"t":"T7","d":"难","e":"校园地国家助学贷款每学年最高16000元。","g":"","f":""},{"id":76,"q":"校内固定岗位（  ）。","o":["按月计酬","按周计酬","按天计酬","按小时计酬"],"a":0,"t":"T7","d":"中","e":"校内固定岗位按月计酬。","g":"","f":""},{"id":77,"q":"下列哪种情形下，学生可以申请转学（  ）。","o":["因患病或有特殊困难","高考成绩低于拟转入学校相关专业同一生源地相应年份录取成绩的","以定向就业招生录取的","由低学历层次转为高学历层次的"],"a":0,"t":"T3","d":"中","e":"因患病或有特殊困难可以申请转学。","g":"","f":""},{"id":78,"q":"下列（  ）情况停止发放贷款并清偿贷款本息。","o":["借款学生家庭经济情况好转并主动提出停止发放贷款","借款学生未按合同规定的用途使用贷款的","借款学生有违法乱纪行为，受校方行政处分或有关部门刑 事处罚的","以上都是"],"a":3,"t":"T7","d":"易","e":"停止发放贷款并清偿本息的情形全部包括。","g":"","f":""},{"id":79,"q":"无故迟到超过（  ）者，不准参加该课程考试，按旷考处理","o":["15分钟","20分钟","30分钟","60分钟"],"a":0,"t":"T4","d":"难","e":"无故迟到超过15分钟不准参加考试，按旷考处理。","g":"","f":""},{"id":80,"q":"我校实施家庭经济困难学生（  ）级认定。","o":["二","三","四","五"],"a":1,"t":"T7","d":"中","e":"家庭经济困难学生实行三级认定。","g":"","f":""},{"id":81,"q":"违纪处分种类不包括（  ）。","o":["警告","留校察看","通报批评","开除学籍"],"a":2,"t":"T5","d":"难","e":"反向题：处分种类为警告、严重警告、记过、留校察看、开除学籍，“通报批评”不是处分。","g":"","f":""},{"id":82,"q":"违反学术道德规范的，视情节给予警告、严重警告直至（  ）处分。","o":["记过","通报批评","留校察看","开除学籍"],"a":3,"t":"T5","d":"中","e":"违反学术道德规范，视情节警告、严重警告直至开除学籍。","g":"","f":""},{"id":83,"q":"违反校纪校规受（  ）处分且经校学位评定委员会讨论，决定不授予学士学位者。","o":["警告以上（含警告）","严重警告以上（含严重警告）","记过以上（含记过）","留校察看以上（含留校察看）"],"a":2,"t":"T3","d":"难","e":"受记过以上（含记过）处分且经学位评定委员会决定，不授予学士学位。","g":"","f":""},{"id":84,"q":"违反校纪，有下列情形之一的，可以从重处分：（  ）。","o":["教唆、胁迫、诱骗、指使他人违纪的","确有违纪行为，但拒不承认错误的","已受过违纪处分或者通报批评的","以上都是"],"a":3,"t":"T5","d":"易","e":"从重处分的情形（拒不承认、打击报复等）全部包括。","g":"","f":""},{"id":85,"q":"违反国家法律，构成刑事犯罪，被处刑罚者的，给予什么处分：（  ）。","o":["警告","严重警告","记过或留校察看","开除学籍"],"a":3,"t":"T5","d":"易","e":"构成刑事犯罪被处刑罚，给予开除学籍处分。","g":"","f":""},{"id":86,"q":"偷窃、诈骗、故意损毁等侵害公私财物的，除追回赃款、赃物或赔偿损失外，违反治安管理规定受到处罚，性质恶劣或构成刑事犯罪的，给予什么处分：（  ）。","o":["警告或严重警告","记过","留校察看","开除学籍"],"a":3,"t":"T5","d":"中","e":"偷窃诈骗情节恶劣或构成刑事犯罪，开除学籍。","g":"","f":""},{"id":87,"q":"同一学年内，申请并获得国家助学金的学生可以同时申请并获得国家奖学金或国家励志奖学金吗？（  ）","o":["可以","不可以","（无）","（无）"],"a":0,"t":"T7","d":"难","e":"获国家助学金者可同时申请国家奖学金或国家励志奖学金。","g":"","f":""},{"id":88,"q":"体育课程为（  ）课，计（  ）个学分","o":["选修；3","必修；3","选修；2","必修；2"],"a":1,"t":"T9","d":"中","e":"体育课为必修课，计3个学分。","g":"","f":""},{"id":89,"q":"体弱多病或有慢性病或学习过程中发生重大伤病不能完成正常体育课程的学生，须于第八周前提出申请，（  ）。","o":["经校医院保健科证明，院（系）审核，保健课教师认定，可修读体育保健课，成绩由保健课教师考核评定（注明体育保健班成绩）","提供三甲医院证明，院（系）审核，体育系同意，可修读体育保健课，成绩由保健课教师考核评定（注明体育保健班成绩）","经校医院保健科证明，院（系）审核，学校同意，可修读体育保健课，成绩由保健课教师考核评定（注明体育保健班成绩）","提供三甲医院证明，院（系）审核，学校同意，可修读体育保健课，成绩由保健课教师考核评定（注明体育保健班成绩）"],"a":0,"t":"T9","d":"中","e":"伤病学生第八周前申请，经校医院证明、院系审核、保健课教师认定，可修保健课。","g":"","f":""},{"id":90,"q":"提高图书馆的公共场所安全防范意识，主要包括哪些（  ）。①严禁携带易燃、易爆品入馆；②严禁在馆内任何地方吸烟或使用明火；③严禁随意触碰消防按钮、监控探头等设施；④贵重物品随身携带，谨防遗失；⑤离馆时如遇门禁系统报警，请自觉配合工作人员和保安检查。","o":["②③④⑤","③④⑤①","④⑤①②","①②③④⑤"],"a":3,"t":"T1","d":"中","e":"图书馆安全防范的①至⑤项全部正确。","g":"","f":""},{"id":91,"q":"所有课程不论其考核方式为考试或考查，均需取得（  ）及以上成绩方可取得该课程学分，并根据成绩等级确定学分绩点。","o":["60分","65分","70分","75分"],"a":0,"t":"T3","d":"中","e":"所有课程须取得60分及以上成绩方可取得学分。","g":"","f":""},{"id":92,"q":"受到警告、严重警告、记过处分后，在（  ）个月内不具有申请“三好学生”等荣誉称号及奖助学金的资格；受到留校察看处分后，在（  ）个月内不具有申请“三好学生”等荣誉称号及奖助学金的资格。","o":["6；12","6；6","3；6","12；24"],"a":0,"t":"T6","d":"难","e":"警告、严重警告、记过处分后6个月内，留校察看后12个月内不得申请荣誉称号及奖助学金。","g":"","f":""},{"id":93,"q":"实验室不允许将实验废弃物与生活垃圾存放在一起，以下哪一项不属于实验废弃物：（  ）","o":["剧毒化学品","记录实验数据的废弃纸张","有毒、有害废液","实验动物尸体和器官"],"a":1,"t":"T10","d":"中","e":"记录实验数据的废弃纸张属生活垃圾，不是实验废弃物。","g":"","f":""},{"id":94,"q":"实验前，要检查设备及配套设施的安全情况，掌握实验的安全操作规程和应急预案。实验中，需严格遵守实验安全操作规程，不得擅自脱岗。实验后，也应注意实验室的安全，以下哪一选项不是离开实验室前的必要操作：（  ）","o":["切断电源","熄灭火种","门窗通风","清理设备、场地和实验废弃物"],"a":2,"t":"T10","d":"难","e":"反向题：“门窗通风”不是离开实验室前的必要操作。","g":"","f":""},{"id":95,"q":"实行学分制收费后，学校给考试不及格未能取得该课程学分的学生（  ）免费补考机会。","o":["0次","1次","2次","3次"],"a":1,"t":"T3","d":"中","e":"学分制收费后，不及格课程有1次免费补考机会。","g":"","f":""},{"id":96,"q":"实行学分制收费后，经本人申请，所在专业学院和教务处审批同意获得课程免修者，带有实验、实践环节的课程可按该课程规定的学分学费标准缴纳（  ）的学分学费，其它课程不收学分学费。","o":["1/3","1/4","1/2","1/5"],"a":0,"t":"T3","d":"难","e":"免修带实验、实践环节的课程，按1/3标准缴纳学分学费。","g":"","f":""},{"id":97,"q":"申诉的范围不包括（  ）。","o":["对学生作出的警告、严重警告、记过、留校察看、开除学籍等行政处分","对学生作出的取消入学资格、取消学籍、退学处理","法律、法规、规章或其他规范性文件规定可以提出申诉的其它处理决定","科目成绩不理想"],"a":3,"t":"T5","d":"中","e":"反向题：申诉范围为处分及取消学籍、退学等处理，“科目成绩不理想”不在其内。","g":"","f":""},{"id":98,"q":"申请修读辅修专业/辅修学士学位的资格：（  ） ①入学满一学期的在籍在校本科学生 ②入学满一学年的在籍在校本科学生 ③主修专业平均学分绩点≥2.0 ④主修专业平均学分绩点≥3.0","o":["①③","①④","②③","②④"],"a":0,"t":"T11","d":"难","e":"辅修资格：入学满一学期、主修平均学分绩点不低于2.0。","g":"","f":""},{"id":99,"q":"申请入住、调整或退宿，学生需在学校审批通过后（  ）内办理相关手续。","o":["七天","十天","两个星期","一个月"],"a":0,"t":"T2","d":"难","e":"入住、调宿、退宿须在审批通过后七天内办理手续。","g":"","f":""},{"id":100,"q":"社会实践为我校本科生必修课程，计（  ）个学分，社会实践成绩达及格需累计实践分值为（  ）学分。","o":["1；1","1；2","2；1","2；2"],"a":0,"t":"T8","d":"中","e":"社会实践为必修课，计1学分，累计实践分值达1学分及格。","g":"","f":""},{"id":101,"q":"三好学生评选条件中要求所评学年个人宿舍卫生成绩在（  ）。","o":["80分及以上","85分及以上","90分及以上","95分及以上"],"a":2,"t":"T6","d":"难","e":"三好学生要求所评学年宿舍卫生成绩90分及以上。","g":"","f":""},{"id":102,"q":"三好学生评选条件中，学生应学习态度端正，刻苦认真，积极创新，本学年无不及格课程，学习成绩绩点（   ）。","o":["3.0及以上","3.5及以上","3.8及以上","4.0及以上"],"a":0,"t":"T6","d":"中","e":"三好学生要求本学年无不及格课程，绩点3.0及以上。","g":"","f":""},{"id":103,"q":"三好学生标兵和优秀学生干部奖励金额分别为（  ）元/人、（  ）元/人，学校授予其荣誉称号，颁发证书，予以表彰，并填写登记表存入学生本人档案。","o":["2000；1500","2000；1000","1500；1500","1500；1000"],"a":3,"t":"T6","d":"难","e":"三好学生标兵1500元/人，优秀学生干部1000元/人。","g":"","f":""},{"id":104,"q":"三好学生、三好学生标兵和优秀学生干部评选总数不超过全校本科生（除大一新生）总数的（  ），其中优秀学生干部评选人数不超过全校本科生（除大一新生）总数的（  ）。","o":["15%；2%","15%；1%","10%；2%","10%；1%"],"a":3,"t":"T6","d":"难","e":"评选总数不超过本科生（除大一）10%，优秀学生干部不超过1%。","g":"","f":""},{"id":105,"q":"取得的成绩为91分，对应的绩点为：（  ）","o":["4","4.5","3.8","4.8"],"a":0,"t":"T3","d":"难","e":"91分对应绩点4.0。","g":"","f":""},{"id":106,"q":"免修考试成绩在（  ）以上者获准免修，记载实得成绩并注明“免修”字样。","o":["70分","75分","80分","85分"],"a":1,"t":"T3","d":"难","e":"免修考试成绩75分以上获准免修。","g":"","f":""},{"id":107,"q":"每学期开学第一周，学生应当缴费并持本人学生证到所在学院办理注册手续（每学年第一学期第一周交齐本学年应交费用后方可注册），因故不能如期注册者，需履行暂缓注册手续。不按时注册超过（  ）又未履行暂缓注册手续的，予以（    ）处理。","o":["两周；休学","两周；退学","一个月；休学","一个月；退学"],"a":1,"t":"T3","d":"难","e":"不按时注册超过两周且未办暂缓手续，予以退学处理。","g":"","f":""},{"id":108,"q":"每学期开学（  ）内，交清费用的学生需持学生证到所在学院办理报到注册手续。未经注册的学生证无效。","o":["一周","两周","一个月","两个月"],"a":0,"t":"T3","d":"中","e":"开学一周内持学生证到学院办理报到注册。","g":"","f":""},{"id":109,"q":"每个学生除完成专业指导性教学计划规定的课内学分要求外，还必须完成至少（  ）课外学分和安全教育的要求。","o":["2个","3个","4个","5个"],"a":2,"t":"T8","d":"中","e":"除课内学分外，还须完成至少4个课外学分和安全教育要求。","g":"","f":""},{"id":110,"q":"两人以上共同违纪的，根据各自的行为、情节、危害后果，按（  ）分别给予处分。","o":["共同违纪","一般违纪","特殊违纪","分别违纪"],"a":0,"t":"T5","d":"中","e":"两人以上共同违纪，按各自行为、情节、危害后果分别处分。","g":"","f":""},{"id":111,"q":"理、工、医科类专业学生通过聆听研学讲座获得的课外研学分值上限为（  ）分。","o":["0.5","1","1.5","2"],"a":1,"t":"T8","d":"难","e":"理、工、医科类学生听讲座获得的课外研学分值上限为1分。","g":"","f":""},{"id":112,"q":"课外研学成绩及格需要累计研学（  ）学分。","o":["1","1.5","2","3"],"a":2,"t":"T8","d":"中","e":"课外研学成绩及格需累计2学分。","g":"","f":""},{"id":113,"q":"课外研学成绩达到优秀需要累计研学分值达到（  ）。","o":["6分及以上","6分以上","7分及以上","7分以上"],"a":0,"t":"T8","d":"难","e":"课外研学达到优秀需累计6分及以上。","g":"","f":""},{"id":114,"q":"开展志愿服务的个人要求所参加活动需经过校团委或学院团委认定，一次志愿服务活动时长至少（  ）个小时，志愿服务成果至少为1份（  ）字以上的心得体会、3-5张精选照片。","o":["2；1200","2；1000","2.5；1200","2.5；1000"],"a":1,"t":"T8","d":"难","e":"单次志愿服务至少2小时，成果需1份1000字以上心得及3-5张照片。","g":"","f":""},{"id":115,"q":"警告、严重警告、记过处分的期限为（  ）个月，留校察看的期限为（  ）个月，处分期限从作出处分决定之日起计算。","o":["3；6","6；12","6；6","12；12"],"a":1,"t":"T5","d":"中","e":"警告、严重警告、记过期限6个月，留校察看12个月。","g":"","f":""},{"id":116,"q":"结伙斗殴或殴打他人、侵犯他人人身权利的，虽未动手打人，但挑起事端或偏袒一方，促使事态扩大的，给予什么处分：（  ）。","o":["警告或严重警告","记过","留校察看","开除学籍"],"a":0,"t":"T5","d":"中","e":"虽未动手但挑起事端、偏袒一方致事态扩大，警告或严重警告。","g":"","f":""},{"id":117,"q":"结伙斗殴或殴打他人、侵犯他人人身权利的，动手打人情节严重或造成严重后果的，给予什么处分：（  ）。","o":["警告","严重警告","通报批评","记过、留校察看直至开除学籍"],"a":3,"t":"T5","d":"中","e":"动手打人情节严重或后果严重，记过、留校察看直至开除学籍。","g":"","f":""},{"id":118,"q":"家庭经济困难学生认定依据：（  ）","o":["家庭经济因素：主要包括家庭收入、财产、债务等情况","突发状况因素：主要指遭受重大自然灾害、重大突发意外 事件等情况","学生消费因素：主要指学生消费的金额、结构等是否合 理","以上都是"],"a":3,"t":"T7","d":"易","e":"家庭经济困难认定依据全部包括。","g":"","f":""},{"id":119,"q":"家庭经济困难学生认定结果有效期为（  ）学年。","o":["一","二","三","四"],"a":0,"t":"T7","d":"中","e":"困难认定结果有效期为一学年。","g":"","f":""},{"id":120,"q":"家庭经济困难学生认定程序是（  ）。","o":["提前告知--建档备案学生申请-学校认定-结果公示","提前告知-学生申请-建档备案-学校认定-结果公示","提前告知-学生申请-学校认定-建档备案-结果公示","提前告知-学生申请-学校认定-结果公示-建档备案"],"a":3,"t":"T7","d":"中","e":"认定程序：提前告知—学生申请—学校认定—结果公示—建档备案。","g":"","f":""},{"id":121,"q":"基层就业学费补偿贷款代偿中，对符合要求的学生补偿学费或代偿国家助学贷款，每生每年不高于（  ）。","o":["10000元","12000元","16000元","20000元"],"a":3,"t":"T7","d":"难","e":"基层就业学费补偿或贷款代偿，每生每年不高于20000元。","g":"","f":""},{"id":122,"q":"寒暑假期间，返家探亲的学生可凭学生证享受（  ）。","o":["购票免费","购票优惠","抢票优先","不用抢票"],"a":1,"t":"T1","d":"中","e":"寒暑假返家探亲可凭学生证享受购票优惠。","g":"","f":""},{"id":123,"q":"国家助学金主要资助家庭经济困难学生的生活费用开支。我校国家助学金分为（  ）。","o":["一等","二等","三等","四等"],"a":2,"t":"T7","d":"中","e":"我校国家助学金分为三等。","g":"","f":""},{"id":124,"q":"国家助学金（  ）评审一次，实行（  ）评审，坚持公开、公平、公正的原则，德育为先，严禁不正之风。","o":["每学年；等额","每学年；差额","每学期；等额","每学期；差额"],"a":0,"t":"T7","d":"中","e":"国家助学金每学年评审一次，实行等额评审。","g":"","f":""},{"id":125,"q":"国家励志奖学金评审细则中要求各学院在确定人选后在学院内公示不得少于（  ）天，学校审核后公示不得少于（  ）个工作日。","o":["4；5","3；5","5；3","5；4"],"a":1,"t":"T6","d":"难","e":"励志奖学金学院内公示不少于3天，学校审核后公示不少于5个工作日。","g":"","f":""},{"id":126,"q":"国家励志奖学金的奖励对象为我校品学兼优的家庭经济困难的（  ）的全日制本科学生。","o":["一年级以上（含一年级）","二年级以上（含二年级）","三年级以上（含三年级）","四年级"],"a":1,"t":"T6","d":"中","e":"国家励志奖学金对象为二年级以上（含二年级）品学兼优的困难学生。","g":"","f":""},{"id":127,"q":"国家励志奖学金的奖励标准为每人（  ）元。","o":["3000","6000","5000","8000"],"a":1,"t":"T6","d":"难","e":"国家励志奖学金6000元/人。","g":"","f":""},{"id":128,"q":"国家奖学金评审细则中要求各学院在确定人选后在学院内公示不得少于（  ）天，学校审核后公示不得少于（  ）个工作日。","o":["4；5","3；5","5；3","5；4"],"a":1,"t":"T6","d":"难","e":"国家奖学金学院内公示3天，学校公示5个工作日。","g":"","f":""},{"id":129,"q":"国家奖学金的奖励对象为我校特别优秀的（  ）的全日制本科学生。","o":["一年级以上（含一年级）","二年级以上（含二年级）","三年级以上（含三年级）","四年级"],"a":1,"t":"T6","d":"中","e":"国家奖学金对象为二年级以上（含二年级）特别优秀的本科生。","g":"","f":""},{"id":130,"q":"国家奖学金的奖励标准为每人（  ）元。","o":["5000","6000","10000","8000"],"a":2,"t":"T6","d":"难","e":"国家奖学金10000元/人。","g":"","f":""},{"id":131,"q":"关于《东南大学全日制本科生经济困难学生资助管理办法》中资助政策体系及类别，说法正确的是：（  ）","o":["绿色通道：家庭经济特别困难的新生如暂时筹集不齐学费和住宿费，可在开学报到期间，通过学校开设的“绿色通道”先办理入学手续。入学后，学生处根据学生具体情况开展家庭经济困难学生认定，采取不同措施给予资助","学费减免：孤残学生、烈士子女及优抚家庭子女等，确因家庭经济特别困难，无法交纳学费的，视在校期间受助情况，给予全部或部分减免学费；符合国家有关规定的减免对象可按情况全部或部分减免学费","困难补助：学校认定的家庭经济困难学生或因自然灾害侵袭、父母突发重病或死亡、学生本人突发疾病等情况造成在校期间生活困难的学生，可申请困难补助","以上说法都对"],"a":3,"t":"T7","d":"易","e":"资助政策体系及类别的表述全部正确。","g":"","f":""},{"id":132,"q":"公寓内不得储藏或者使用危险品及违章电器；为违章电器充电，视为使用违章电器。学生公寓内的违章电器（经允许安装的空调、配备的电水壶除外）包括：（  ）","o":["800W以上的超功率电器","热得快、电炉、电热毯、电煮锅、电热水器、暖手宝等， 电饭锅、微波炉、电磁炉等炊事用电器","洗衣机、电冰箱、电视机、电动车电池","以上都是"],"a":3,"t":"T2","d":"易","e":"违章电器清单（热得快、电炉、炊具等）全部包括。","g":"","f":""},{"id":133,"q":"公寓的床位一经分配，不得擅自调整，住宿人员应（  ）。","o":["按指定的房间和床号住宿","按指定的房间，可不按指定的床号住宿","不按指定的房间和床号住宿","随意住宿"],"a":0,"t":"T2","d":"易","e":"床位分配后不得擅自调整，应按指定房间和床号住宿。","g":"","f":""},{"id":134,"q":"各学院在对申请国家助学金的学生进行考核、评审时，应区别家庭经济困难程度，按资助优先顺序依次为：（  ）","o":["孤儿-烈士子女（含因公牺牲军人子女）-无收入（指父母均丧失劳动能力）-重病户（指家庭成员有重大疾病）","孤儿-无收入（指父母均丧失劳动能力）-烈士子女（含因公牺牲军人子女）-重病户（指家庭成员有重大疾病）","孤儿-重病户（指家庭成员有重大疾病）-烈士子女（含因公牺牲军人子女）-无收入（指父母均丧失劳动能力）","孤儿-无收入（指父母均丧失劳动能力）-重病户（指家庭成员有重大疾病）-烈士子女（含因公牺牲军人子女）"],"a":0,"t":"T7","d":"难","e":"资助优先顺序：孤儿—烈士子女—无收入—重病户。","g":"","f":""},{"id":135,"q":"各类荣誉称号及奖学金评选应遵循下列基本条件：（  ）","o":["拥护中国共产党领导，努力学习马克思列宁主义、毛泽东思想、中国特色社会主义理论体系，深入学习习近平总书记系列重要讲话精神和治国理政新理念新思想新战略，坚定”四个自信，树立正确的世界观、人生观、价值观，坚定理想信念，涵养高尚的道德情操","树立爱国主义思想，具有团结统一、爱好和平、勤劳勇敢、自强不息的精神","增强法治观念，遵守宪法、法律、法规，遵守公民道德规范，诚信守信，遵守学校管理制度，具有良好的道德品质和行为习惯","以上选项都符合"],"a":3,"t":"T6","d":"易","e":"荣誉称号及奖学金评选基本条件全部符合。","g":"","f":""},{"id":136,"q":"辅修专业教学计划一般为(   )学分；辅修学位教学计划一般为(   )学分（含毕业论文）。","o":["16-18学分；20-22学分","18-20学分；22-24学分","20-22学分；40-45学分","22-24学分；45-55学分"],"a":3,"t":"T11","d":"难","e":"辅修专业22-24学分，辅修学位45-55学分（含毕业论文）。","g":"","f":""},{"id":137,"q":"服役期间被评为“优秀士兵”或荣立（  ）的退役人员，符合免试研究生推荐条件的，优先获得免试推研资格。","o":["三等功及以上","二等功及以上","一等功","（无）"],"a":0,"t":"T11","d":"难","e":"服役期间评“优秀士兵”或荣立三等功及以上，推免优先。","g":"","f":""},{"id":138,"q":"非毕业班学生在校期间，本专业教学计划一个学期可选课程的学籍审核学分大于等于12学分时，出现一个学期获得学籍审核学分小于（  ），予以其退学警告（同一门课程的重修不累计记分）。","o":["10学分","12学分","小于可选课程的学籍审核学分的2/3，大于可选课程的学籍审核学分1/2","小于可选课程的学籍审核学分的3/4，大于可选课程的学籍审核学分1/2"],"a":1,"t":"T3","d":"难","e":"学期学籍审核学分小于12学分，予以退学警告。","g":"","f":""},{"id":139,"q":"凡违反考场纪律的，给予什么处分：（  ）。","o":["警告或严重警告","记过","留校察看","开除学籍"],"a":0,"t":"T4","d":"易","e":"凡违反考场纪律，给予警告或严重警告处分。","g":"","f":""},{"id":140,"q":"对于考试不合格课程，（  ）课程可以参加补考。","o":["首修","重修","首修和重修","辅修"],"a":0,"t":"T4","d":"中","e":"首修课程可以参加补考。","g":"","f":""},{"id":141,"q":"对回校参加考试时发生违纪行为（  ）或作弊及以上行为的学生，学校将不再允许其回校参加所有的考试。","o":["一次及以上","两次及以上","三次及以上","四次及以上"],"a":1,"t":"T4","d":"难","e":"回校考试违纪两次及以上，不再允许回校参加考试。","g":"","f":""},{"id":142,"q":"东南大学学生出版物管理办法所指出的出版物，是指以（  ）等形式，采用线上或线下方式，将其内容在校内外公开传播的宣传品。①文字；②音像；③图案；④视频","o":["①②③","①③④","②③④","①②③④"],"a":3,"t":"T12","d":"易","e":"出版物含文字、音像、图案、视频等形式，①至④全选。","g":"","f":""},{"id":143,"q":"东南大学校训“止於至善”出自《四书》的（  ）。","o":["《论语》","《孟子》","《大学》","《中庸》"],"a":2,"t":"T12","d":"易","e":"校训“止於至善”出自《大学》。","g":"","f":""},{"id":144,"q":"东南大学本科优秀毕业生评选比例不超过本专业本科毕业生总数的（  ）%。","o":["1","2","5","6"],"a":2,"t":"T6","d":"难","e":"优秀毕业生评选比例不超过本专业毕业生总数5%。","g":"","f":""},{"id":145,"q":"东南大学本科先进班集体奖励金额为（  ）元/班。","o":["500","1000","1500","2000"],"a":1,"t":"T6","d":"难","e":"先进班集体奖励1000元/班。","g":"","f":""},{"id":146,"q":"东南大学本科先进班集体评选条件中要求全班同学积极参加体育活动，坚持早操和课外锻炼，出勤合格率达100%，体育成绩有（  ）为良好及以上，所评学年全班每个宿舍的平均卫生成绩都不低于（  ）。","o":["三分之一；90分","三分之一；85分","三分之二；85分","三分之二；90分"],"a":2,"t":"T6","d":"难","e":"先进班集体要求体育成绩三分之二良好及以上，宿舍平均卫生不低于85分。","g":"","f":""},{"id":147,"q":"东南大学本科先进班集体评选比例为全校本科班集体（除大一）总数的（  ）%。","o":["3","4","5","6"],"a":2,"t":"T6","d":"难","e":"先进班集体评选比例为全校本科班集体（除大一）5%。","g":"","f":""},{"id":148,"q":"盗用、涂改、伪造学历、学位证书的，给予什么处分：（  ）。","o":["警告","严重警告","通报批评","记过以上"],"a":3,"t":"T5","d":"中","e":"盗用、涂改、伪造学历学位证书，记过以上处分。","g":"","f":""},{"id":149,"q":"存在盗用他人 IP 地址、用户帐号，非法入侵他人电脑、网络，干扰他人网络正常功能等任一行为的，视其情节轻重，给予什么处分：（  ）。","o":["警告或严重警告","记过","留校察看","开除学籍"],"a":0,"t":"T12","d":"中","e":"盗用IP、非法入侵他人网络等，警告或严重警告。","g":"","f":""},{"id":150,"q":"除必修课、研讨课和规定必须开设的课程外，选修人数少于（  ）人的课程原则上停开？","o":["5","8","10","15"],"a":2,"t":"T3","d":"难","e":"选修人数少于10人的课程原则上停开。","g":"","f":""},{"id":151,"q":"参与或者介绍他人参加非法传销活动，或其他非法商业活动，不听劝阻，给予什么处分：（  ）。","o":["警告","严重警告","记过或留校察看","开除学籍"],"a":1,"t":"T5","d":"中","e":"参与或介绍他人参加非法传销且不听劝阻，严重警告。","g":"","f":""},{"id":152,"q":"补考和重修成绩（  ）。","o":["可参与校长奖、课程奖等的评选，包括参与免研、评优排名等选拨优秀类排名","可参与校长奖、课程奖等的评选，但不能参与免研、评优排名等选拨优秀类排名","不可参与校长奖、课程奖等的评选，但可以参与免研、评优排名等选拨优秀类排名","既不能参与校长奖、课程奖等的评选，也不能参与免研、评优排名等选拨优秀类排名"],"a":3,"t":"T3","d":"中","e":"补考和重修成绩不能参与校长奖、课程奖评选及免研、评优排名。","g":"","f":""},{"id":153,"q":"毕业设计（论文）由指导教师、评阅教师和答辩小组分别评定成绩，三者评分在总成绩中的比例为：","o":["5:2:3","4:2:4","3:3:4","6:3:1"],"a":2,"t":"T11","d":"难","e":"毕业设计成绩由指导教师、评阅教师、答辩小组按3:3:4评定。","g":"","f":""},{"id":154,"q":"毕业设计（论文）成绩评定必须坚持标准，“优秀”成绩的比例不超过（  ）%，“中等”及其以下成绩的比例一般不得低于（  ）%","o":["20；10","10；20","15；15","30；10"],"a":0,"t":"T11","d":"难","e":"毕业设计“优秀”比例不超过20%，“中等”及以下不低于10%。","g":"","f":""},{"id":155,"q":"本科生参加社会实践的主要内容包括：（  ）","o":["通识调研类","志愿服务类","基层体验类","以上选项都是"],"a":3,"t":"T8","d":"易","e":"社会实践主要内容全部包括。","g":"","f":""},{"id":156,"q":"被开除学籍的学生由学校发给学习证明，档案、户口退回其家庭户籍所在地，在（  ）日内办完离校手续并离校。","o":["10","15","30","60"],"a":1,"t":"T5","d":"中","e":"被开除学籍者15日内办完离校手续并离校。","g":"","f":""},{"id":157,"q":"办理调宿或者退宿手续后，未在（  ）天内搬清个人物品，导致他人无法正常入住的，属违反《东南大学学生违纪处分条例》。","o":["15","10","5","3"],"a":3,"t":"T2","d":"难","e":"调宿或退宿后未在3天内搬清物品，属违纪。","g":"","f":""},{"id":158,"q":"按学术水平高低和影响力，东南大学学科竞赛分为（  ）四个类别。","o":["A,B,C,D","A+,A,B,C","A+,A,B+,B","A,A-,B,B-"],"a":1,"t":"T8","d":"中","e":"按学术水平与影响力，学科竞赛分A+、A、B、C四类。","g":"","f":""},{"id":159,"q":"按竞赛规模和主办单位，学科竞赛分为（  ）。","o":["国际级，国家级，省部级，校级","国家级，省部级，校级，院级","国际级，国家级，省部级，市级，校级","国际级，国家级，省部级，校级，院级"],"a":0,"t":"T8","d":"中","e":"按规模与主办单位，学科竞赛分国际级、国家级、省部级、校级。","g":"","f":""},{"id":160,"q":"《东南大学全日制本科生经济困难学生资助管理办法》适用于（  ）。","o":["我校注册的全日制本科生","我校有正式学籍的全日制本科生","我校注册的有正式学籍的本科生","我校注册的有正式学籍的全日制本科生"],"a":3,"t":"T7","d":"中","e":"资助管理办法适用于我校注册、有正式学籍的全日制本科生。","g":"","f":""},{"id":161,"q":"“卓越工程师教育培养计划”学生的毕业设计（论文）时间不得少于（  ）周。","o":["14","15","16","17"],"a":2,"t":"T11","d":"中","e":"“卓越工程师教育培养计划”学生毕业设计不得少于16周。","g":"","f":""},{"id":162,"q":"（  ）的处分决定，由院（系）讨论决定，主管部门审核后报学校备案。","o":["严重警告以下（含严重警告）","记过","留校察看","开除学籍"],"a":0,"t":"T5","d":"难","e":"严重警告以下（含严重警告）处分由院（系）讨论决定并报学校备案。","g":"","f":""},{"id":163,"q":"（  ）以下及格课程可跟班重修一次。","o":["65分（含）","70分（含）","75分（含）","80分（含）"],"a":2,"t":"T3","d":"难","e":"75分（含）以下及格课程可跟班重修一次。","g":"","f":""},{"id":164,"q":"在考场有下列行为之一的，属违反考场纪律：（  ）","o":["携带规定以外的物品进入考场，未放在指定位置，且不听监考人员劝告","不按指定位置就坐，不听从监考人员调动","考试开始信号发出前答题或者考试结束信号发出后继续答题","以上都是"],"a":3,"t":"T4","d":"易","e":"考场违纪情形全部包括。","g":"G7","f":""},{"id":165,"q":"学位申请人或者学位获得者申请学术复核。学校自受理学术复核申请之日起（  ）日内重新组织专家进行复核并做出复核决定。","o":["30","15","7","10"],"a":0,"t":"T11","d":"难","e":"学术复核申请受理后30日内重新组织专家复核。","g":"","f":""},{"id":166,"q":"辅修学士学位在主修学士学位证书中（  ），（  ）发放学位证书","o":["予以注明，不单独","予以注明，单独","不予以注明，单独","不予以注明，不单独"],"a":0,"t":"T11","d":"中","e":"辅修学士学位在主修学位证书中注明，不单独发放学位证书。","g":"","f":""},{"id":167,"q":"辅修课程学分按每学分（  ）元计，每（  ）结算一次","o":["200，学年","200，学期","100，学年","100，学期"],"a":2,"t":"T11","d":"难","e":"辅修课程100元/学分，按学年结算。","g":"","f":""},{"id":168,"q":"优秀应届本科毕业生免试攻读研究生的推荐条件包括：","o":["热爱祖国，拥护中国共产党的领导，理想信念坚定，自觉践行社会主义核心价值观。","品行端正，身心健康，遵纪守法，诚实守信，无考试作弊、论文（文章）抄袭、虚报获奖或科研成果等学术不端行为；无违法违纪行为和受记过及以上处分记录。","勤奋学习，修完并通过前三年（五年制前四年）所属专业指导性教学计划中规定的所有课程，成绩优良，外语水平较高，具体要求以当年学校发布的正式文件为准。","以上都是"],"a":3,"t":"T11","d":"易","e":"推免推荐条件全部包括。","g":"","f":""},{"id":169,"q":"推免优秀应届本科毕业生免试攻读研究生时，综合成绩由课程成绩和综合能力成绩构成，其中课程成绩权重不少于（  ），综合能力成绩包括参军入伍服兵役、志愿服务、到国际组织实习、科研成果、竞赛获奖等符合全面发展价值导向等因素，各项之和满分为（  ）分。","o":["90%，100","85%，95","80%，100","75%，95"],"a":2,"t":"T11","d":"难","e":"推免综合成绩中课程成绩权重不少于80%，综合能力成绩满分100分。","g":"","f":""},{"id":170,"q":"学生如对考试成绩确有疑问，需于该课程考试成绩公布后至下一学期开学（  ）内向所在学院教务助理提交成绩复核申请，填写《东南大学本科生成绩复核申请表》。","o":["一周内","两周内","三周内","一个月内"],"a":1,"t":"T3","d":"难","e":"成绩公布后至下一学期开学两周内可申请成绩复核。","g":"","f":""},{"id":171,"q":"及格重修实行网上申请，每学期允许申请不超过（  ），如遇课程冲突学生可通过办理相关手续申请免听。及格重修课程的记载按《东南大学全日制本科学生学籍管理规定》执行。","o":["一门","两门","三门","五门"],"a":1,"t":"T3","d":"难","e":"及格重修每学期最多申请两门。","g":"","f":""},{"id":172,"q":"学生申请免修考试，应在课程开设学期第（  ）周，从网上提交免修申请，经院（系）审核批准后，方可参加免修考试。免修课程原则上不得超过（  ）。","o":["1，两门","2，两门","1，一门","2，一门"],"a":0,"t":"T3","d":"难","e":"免修考试在第1周网上申请，免修课程原则上不超过两门。","g":"","f":""},{"id":173,"q":"以下哪项符合《东南大学学生考试管理办法》考试纪律：（  ）","o":["考生应当按时交卷，不得拖延时间。交卷后，考生应当立即离开考场，不得在考场内外喧哗。","在考试过程中，考生不得擅自离开考场，否则按交卷处理。","考试结束后，学生不得直接找任课教师查卷、查分，不得要求教师提高得分。","以上都是"],"a":3,"t":"T4","d":"易","e":"考试纪律的表述全部符合。","g":"G8","f":""},{"id":174,"q":"学生因公、特殊疾病或其他不可抗拒因素并且缺课未达（  ）次者，不能参加课程考核时，可以向任课教师提出缓考申请（提交病历等相关证明材料），在下一学期开学（  ）内由任课教师安排补考，成绩以实得成绩记载。","o":["4，7日","4，14日","3，15日","4，15日"],"a":1,"t":"T3","d":"难","e":"因不可抗拒因素缺课未达4次可申请缓考，下一学期开学14日内补考。","g":"","f":""},{"id":175,"q":"学生若有行动不便、伤病可以向学生公寓管理中心提交申请，暂住爱心宿舍。申请暂住时间一般不超过（  ），如有特殊情况需提前联系（  ）。学生身体恢复后，须及时返回原宿舍，不得长期占用爱心宿舍。","o":["3个月，学生公寓管理中心","1个月，学生公寓管理中心","3个月，学院辅导员","1个月，学院辅导员"],"a":0,"t":"T2","d":"中","e":"爱心宿舍暂住一般不超过3个月，特殊情况联系公寓管理中心。","g":"","f":""},{"id":176,"q":"关于《东南大学学生公寓管理办法》中的内容，说法正确的是：（  ）","o":["财务处负责组织住宿费等有关费用标准的核定和收费管理的相关工作。","网络与信息中心负责保障公寓公共网络设施、学校信息系统的正常使用。","学院负责学生在公寓内的教育管理工作，落实育人阵地建设、审批床位调配、引导学生文明宿舍创建，配合做好宿舍分配、调整、搬迁和各类学生的退宿工作。","以上都对"],"a":3,"t":"T2","d":"易","e":"公寓管理办法的表述全部正确。","g":"","f":""},{"id":177,"q":"门禁制度。学生公寓实行门禁制度，每日（  ）开门，（  ）关门。本（预）科学生公寓星期日至星期四晚上熄灯时间为 23:00，星期五、星期六及其他节假日晚上不熄灯，研究生公寓不熄灯。","o":["6:00，23:30","5:30，24:00","6:00，24:00","5:30，23:30"],"a":2,"t":"T2","d":"难","e":"公寓6:00开门、24:00关门；周日至周四23:00熄灯。","g":"","f":""},{"id":178,"q":"关于《东南大学学生公寓管理办法》中门禁制度内容，说法错误的是：（  ）","o":["晚上24:00至次日6:00进入学生公寓，视为“未归”；至次日6:00 仍未进入学生公寓，视为当日“晚归”","晚上24:00之后不得随意外出，晚出、晚归者要履行登记备案手续。","每日6:00开门，24:00关门。","本（预）科学生公寓星期日至星期四晚上熄灯时间为 23:00，星期五、星期六及其他节假日晚上不熄灯，研究生公寓不熄灯。"],"a":0,"t":"T2","d":"难","e":"反向题：24:00至6:00进入是“晚归”，6:00仍未进入才是“未归”。","g":"","f":""},{"id":179,"q":"学生公寓内的违章电器不包括：（  ）","o":["热得快、电炉、电热毯、电热水器、电熨斗、烘干器、烘鞋机等容易引发火灾的电器","电饭锅、微波炉、电磁炉、烤箱、空气炸锅、电煮锅等炊具","洗衣机、电冰箱、制冰机等","吹风机"],"a":3,"t":"T2","d":"难","e":"反向题：吹风机不在违章电器之列。","g":"","f":""},{"id":180,"q":"住宿人员存在以下行为，属于违反规定且情节严重是：（  ）","o":["宿舍卫生成绩不合格","未按照指定区域停放自行车、电动车、机动车等交通工具","转让、出租、出借学生公寓宿舍房间床位等，对外发布相关信息视为同等违规行为","使用计算机、手机等播放音量过大或大声喧哗、唱歌、嬉闹等，影响他人学习和休息"],"a":2,"t":"T2","d":"中","e":"转让、出租、出借宿舍床位属情节严重。","g":"","f":""},{"id":181,"q":"正常退宿、毕（结）业、住宿协议到期、退学、休学、出国或达到最长学习年限、开除学籍等学生，应当按照学校规定办理相应退宿手续，结清相关费用，在（  ）内搬离公寓","o":["一天","三天","五天","七天"],"a":1,"t":"T2","d":"难","e":"退宿学生结清费用后三天内搬离公寓。","g":"","f":""},{"id":182,"q":"住宿人员不得留宿非本宿舍成员（包括校外人员）。访客登记后方可进入宿舍区域，须在（  ）前离开。","o":["21:30:00","22:00:00","22:30:00","23:00:00"],"a":0,"t":"T2","d":"难","e":"访客21:30前离开。","g":"G13","f":""},{"id":183,"q":"学生公寓内的违章电器包括：（  ）","o":["有自动断电保护装置的电器","热水壶","有国家3C认证的电器","电动车电瓶"],"a":3,"t":"T2","d":"中","e":"电动车电瓶属违章电器。","g":"","f":""},{"id":184,"q":"住宿人员应当自觉遵守国家法律法规和公民道德规范，公寓区内严禁进行任何违反国家法律法规、校纪校规的活动，包括但不限于：（  ）","o":["不得从事非法集会、游行，不得有观看、下载、传播非法信息等破坏安定团结、危害国家安全的行为","不得有赌博、吸毒、结伙滋事、携带枪支、管制刀具、打架斗殴等违法、违规、违纪行为","不得燃点煤气炉、蜡烛等明火，不得燃放烟花、爆竹，禁止燃烧杂物","以上都是"],"a":3,"t":"T2","d":"易","e":"公寓区禁止的违法违纪活动全部包括。","g":"","f":""},{"id":185,"q":"住宿人员存在以下行为，属于违反规定的一般情节，包括但不限于：（  ）","o":["私借宿舍房间钥匙、一卡通等但尚未造成不良后果","在学生公寓及周边非指定地点张贴、散发宣传品等","在学生公寓区内酗酒、吸烟","以上都是"],"a":3,"t":"T2","d":"易","e":"违反规定的一般情节全部包括。","g":"G4","f":""},{"id":186,"q":"住宿人员存在以下行为，属于违反规定的一般情节，包括但不限于：（  ）","o":["进出公寓时，身份信息认证失败且拒不配合学生公寓管理人员进行登记","借用公用物品未及时归还或丢失、损坏","未及时关闭电器等造成安全隐患但尚未造成不良后果","以上都是"],"a":3,"t":"T2","d":"易","e":"违反规定的一般情节全部包括。","g":"G4","f":""},{"id":187,"q":"住宿人员存在以下行为，属于违反规定且情节严重，包括但不限于：（  ）","o":["私自更换门锁，私借宿舍房间钥匙、一卡通等给他人造成不良后果，协助未登记的其他人员进入学生公寓；","未经批准在学生公寓内滞留、容留非本宿舍人员过夜","私自在宿舍内调换床位或占用他人床位、空床位，拒不改正，导致他人无法正常入住","以上都是"],"a":3,"t":"T2","d":"易","e":"违反规定的严重情节全部包括。","g":"G5","f":""},{"id":188,"q":"住宿人员存在以下行为，属于违反规定且情节严重，包括但不限于：（  ）","o":["随意动用消防器材","带入、饲养动物，影响公共秩序或他人身心健康","存放、使用违章电器或使用明火，私拉电线、私接管线、改装水表等手段盗用水电","以上都是"],"a":3,"t":"T2","d":"易","e":"违反规定的严重情节全部包括。","g":"G5","f":""}]};
+const Q = DATA.questions, T = DATA.topics;
+const QMAP = Object.create(null);
+Q.forEach(q => QMAP[q.id] = q);
+const LETTER = "ABCD";
+
+/* ---------- storage ---------- */
+const LS = (() => {
+  try { localStorage.setItem("__t","1"); localStorage.removeItem("__t"); return localStorage; }
+  catch (e) { const m = {}; return { getItem:k=> (k in m? m[k]:null), setItem:(k,v)=>{m[k]=v}, removeItem:k=>{delete m[k]} }; }
+})();
+const KEY = "seu_handbook_v1";
+let S = { p:{}, w:{}, rm:{}, hist:[] };
+try { const raw = LS.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
+function save(){ try{ LS.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function record(id, ok){
+  const s = S.p[id] || (S.p[id] = {c:0,t:0});
+  s.t++; if (ok) s.c++;
+  if (!ok) S.w[id] = (S.w[id]||0) + 1;
+  save();
+}
+
+/* ---------- helpers ---------- */
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+let toastT;
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("on"), 1800); }
+function diffBadge(d){ const c = d==="易"?"b-easy":d==="中"?"b-mid":"b-hard"; return `<span class="badge ${c}">${d}</span>`; }
+function topicBadge(q){ return `<span class="badge b-topic">${esc(T[q.t])}</span>`; }
+function pct(a,b){ return b ? Math.round(a*100/b) : 0; }
+function fmtTime(ms){ const s = Math.max(0, Math.floor(ms/1000)); const m = Math.floor(s/60), ss = s%60; return String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0"); }
+
+/* ---------- nav ---------- */
+let VIEW = "practice";
+function show(v){
+  VIEW = v;
+  document.querySelectorAll(".view").forEach(el => el.classList.toggle("on", el.id === "view-"+v));
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  window.scrollTo({top:0, behavior:"instant"});
+  if (v === "bank") renderBank();
+  if (v === "wrong") renderWrong();
+  if (v === "stats") renderStats();
+  if (v === "exam") { renderExamView(); }
+}
+document.getElementById("tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[data-v]"); if (b) show(b.dataset.v);
+});
+
+/* ---------- practice ---------- */
+let P = { queue:[], i:0, mark:{}, right:0, done:0, mode:"all" };
+const $ = id => document.getElementById(id);
+
+function fillTopicSelect(){
+  const sel = $("pTopic");
+  Object.keys(T).forEach(k => {
+    const o = document.createElement("option"); o.value = k; o.textContent = T[k]; sel.appendChild(o);
+  });
+}
+function buildQueue(msg){
+  const topic = $("pTopic").value, diff = $("pDiff").value, unseen = $("pUnseen").checked;
+  let list = Q.filter(q => (!topic || q.t===topic) && (!diff || q.d===diff) && (!unseen || !S.p[q.id]));
+  if (P.mode === "wrong"){ list = list.filter(q => S.w[q.id] && !S.rm[q.id]); }
+  if ($("pShuffle").checked) list = shuffle(list);
+  P = { queue:list.map(q => q.id), i:0, mark:{}, right:0, done:0, mode:P.mode };
+  $("pPool").textContent = msg || `本轮 ${list.length} 题`;
+  renderPractice();
+}
+function renderPractice(){
+  const card = $("pCard"), meta = $("pMeta"), bar = $("pBar");
+  if (!P.queue.length){
+    card.innerHTML = `<p class="hint" style="margin:0">这个筛选条件下没有题目了。换个板块，或把“只看没做过的”关掉。</p>`;
+    meta.innerHTML = ""; bar.style.width = "0"; return;
+  }
+  const q = QMAP[P.queue[P.i]];
+  const answered = q.id in P.mark;
+  const picked = P.mark[q.id];
+  meta.innerHTML = `<span>第 <b>${P.i+1}</b> / ${P.queue.length} 题</span>
+    <span>·</span><span>本轮 正确 ${P.right} / ${P.done}</span>
+    <span>·</span><span>#${q.id}</span>${diffBadge(q.d)}${topicBadge(q)}${q.f?`<span class="badge b-flag">${esc(q.f)}</span>`:""}`;
+  bar.style.width = (P.i/P.queue.length*100) + "%";
+  card.innerHTML = `
+    <p class="qtext">${esc(q.q)}</p>
+    <div class="opts" id="pOpts">
+      ${q.o.map((o,k) => {
+        let cls = "opt";
+        if (answered){
+          cls += " lock";
+          if (k === q.a) cls += " ok";
+          else if (k === picked) cls += " bad";
+        }
+        return `<button class="${cls}" data-k="${k}"><span class="k">${LETTER[k]}</span><span>${esc(o)}</span></button>`;
+      }).join("")}
+    </div>
+    ${answered ? `<div class="exp"><b>正确答案：${LETTER[q.a]}。</b>${esc(q.e)}</div>` : ""}`;
+}
+$("pCard").addEventListener("click", e => {
+  const b = e.target.closest("button.opt[data-k]");
+  if (!b || !P.queue.length) return;
+  const q = QMAP[P.queue[P.i]];
+  if (q.id in P.mark) return;
+  const k = +b.dataset.k;
+  P.mark[q.id] = k;
+  P.done++; if (k === q.a) P.right++;
+  record(q.id, k === q.a);
+  renderPractice();
+  updateHUD();
+});
+function pMove(d){
+  if (!P.queue.length) return;
+  const n = P.i + d;
+  if (n < 0){ toast("已经是第一题"); return; }
+  if (n >= P.queue.length){ toast("这组已经刷完了，点“换一组”再来"); return; }
+  P.i = n; renderPractice();
+}
+$("pPrev").onclick = () => pMove(-1);
+$("pNext").onclick = () => pMove(1);
+$("pRestart").onclick = () => { P.mode = "all"; buildQueue(); };
+["pTopic","pDiff","pUnseen","pShuffle"].forEach(id => $(id).addEventListener("change", () => { P.mode = "all"; buildQueue(); }));
+
+/* ---------- bank ---------- */
+let bankTopic = "";
+function renderBankTopics(){
+  const counts = {}; Q.forEach(q => counts[q.t] = (counts[q.t]||0)+1);
+  const list = [["", `全部 ${Q.length}`]].concat(Object.keys(T).map(k => [k, `${T[k]} ${counts[k]||0}`]));
+  $("bTopics").innerHTML = list.map(([k,label]) =>
+    `<button class="chip ${bankTopic===k?"on":""}" data-t="${k}">${esc(label)}</button>`).join("");
+}
+function renderBank(){
+  renderBankTopics();
+  const kw = $("bSearch").value.trim().toLowerCase();
+  const diff = $("bDiff").value;
+  const showAns = $("bShow").checked;
+  const list = Q.filter(q => {
+    if (bankTopic && q.t !== bankTopic) return false;
+    if (diff && q.d !== diff) return false;
+    if (kw){
+      const hay = (q.q + " " + q.o.join(" ") + " " + q.e).toLowerCase();
+      if (!hay.includes(kw)) return false;
+    }
+    return true;
+  });
+  $("bCount").textContent = `共 ${list.length} 题`;
+  if (!list.length){ $("bList").innerHTML = `<div class="card hint">没有匹配的题目。</div>`; return; }
+  $("bList").innerHTML = list.map(q => `
+    <details class="bitem" ${showAns?"open":""}>
+      <summary>
+        <p class="bstem"><span class="hint">#${q.id}</span> ${esc(q.q)}</p>
+        <div class="btagline">${diffBadge(q.d)}${topicBadge(q)}${q.f?`<span class="badge b-flag">${esc(q.f)}</span>`:""}</div>
+      </summary>
+      <div class="bopts">
+        ${q.o.map((o,k) => `<div class="${showAns && k===q.a ? "right":""}"><span class="kk">${LETTER[k]}</span><span>${esc(o)}</span></div>`).join("")}
+      </div>
+      ${showAns ? `<div class="bexp"><b>答案 ${LETTER[q.a]}。</b>${esc(q.e)}</div>` : ""}
+    </details>`).join("");
+}
+$("bTopics").addEventListener("click", e => {
+  const b = e.target.closest("button.chip"); if (!b) return;
+  bankTopic = b.dataset.t; renderBank();
+});
+$("bSearch").addEventListener("input", renderBank);
+$("bDiff").addEventListener("change", renderBank);
+$("bShow").addEventListener("change", renderBank);
+$("bPrint").onclick = () => { $("bShow").checked = true; renderBank(); setTimeout(()=>window.print(), 120); };
+
+/* ---------- exam ---------- */
+let E = null, timerId = null;
+const EXAM_N = 50, EXAM_MS = 90*60*1000, PER = 2, PASS = 60;
+const DRAFT = "seu_handbook_draft_v1";
+
+function loadDraft(){
+  try { const d = JSON.parse(LS.getItem(DRAFT)||"null"); if (d && d.endTs > Date.now() && d.ids && d.ids.length===EXAM_N) return d; } catch(e){}
+  return null;
+}
+function saveDraft(){ if (E) try{ LS.setItem(DRAFT, JSON.stringify(E)); }catch(e){} }
+function clearDraft(){ try{ LS.removeItem(DRAFT); }catch(e){} }
+
+function sampleExam(){
+  const cfg = {"易":20, "中":20, "难":10};
+  const usedGroup = new Set(); const ids = [];
+  for (const d of Object.keys(cfg)){
+    const pool = shuffle(Q.filter(q => q.d===d && !q.f));
+    let need = cfg[d];
+    for (const q of pool){
+      if (need<=0) break;
+      if (q.g && usedGroup.has(q.g)) continue;
+      if (q.g) usedGroup.add(q.g);
+      ids.push(q.id); need--;
+    }
+    for (const q of pool){
+      if (need<=0) break;
+      if (ids.includes(q.id)) continue;
+      ids.push(q.id); need--;
+    }
+  }
+  return shuffle(ids);
+}
+
+function renderExamView(){
+  if (E){ $("exStart").hidden = true; $("exResult").hidden = true; $("exRun").hidden = false; renderExam(); return; }
+  if (RES){ $("exStart").hidden = true; $("exRun").hidden = true; $("exResult").hidden = false; return; }
+  $("exStart").hidden = false; $("exRun").hidden = true; $("exResult").hidden = true;
+  renderExamEntry();
+}
+function renderExamEntry(){
+  const d = loadDraft();
+  $("exResumeHint").textContent = d ? `检测到未完成的考试（剩 ${fmtTime(d.endTs-Date.now())}）。` : "";
+  $("exResume").hidden = !d;
+  $("exBegin").textContent = d ? "重新组卷" : "开始考试";
+  const last = S.hist[0];
+  $("exLast").innerHTML = last ? `<div class="card" style="padding:14px 18px">
+      <div class="hint">最近一次：${new Date(last.ts).toLocaleString("zh-CN",{hour12:false})}</div>
+      <div style="font-size:20px;font-weight:700;margin-top:2px">${last.score} 分
+        <span class="badge ${last.score>=PASS?"b-easy":"b-hard"}" style="vertical-align:3px">${last.score>=PASS?"及格":"未及格"}</span>
+        <span class="hint" style="font-weight:400;font-size:13px">用时 ${fmtTime(last.used)}，答对 ${last.right}/${last.total}</span>
+      </div>
+    </div>` : "";
+}
+$("exBegin").onclick = () => {
+  if (loadDraft() && !confirm("已有未完成的考试，重新组卷会丢弃上次进度。继续？")) return;
+  clearDraft(); startExam();
+};
+$("exResume").onclick = () => {
+  const d = loadDraft(); if (!d) return;
+  E = d; $("exStart").hidden = true; $("exResult").hidden = true; $("exRun").hidden = false;
+  renderExam(); tickTimer(); clearInterval(timerId); timerId = setInterval(tickTimer, 500);
+};
+function startExam(){
+  E = { ids: sampleExam(), ans:{}, flag:{}, idx:0, endTs: Date.now()+EXAM_MS };
+  saveDraft();
+  $("exStart").hidden = true; $("exResult").hidden = true; $("exRun").hidden = false;
+  renderExam(); tickTimer(); clearInterval(timerId); timerId = setInterval(tickTimer, 500);
+}
+function tickTimer(){
+  if (!E) return;
+  const left = E.endTs - Date.now();
+  $("exTimer").textContent = fmtTime(left);
+  $("exTimer").classList.toggle("warn", left < 5*60*1000);
+  if (left <= 0){ clearInterval(timerId); examSubmit(true); }
+}
+function renderExam(){
+  const q = QMAP[E.ids[E.idx]];
+  $("exDone").textContent = Object.keys(E.ans).length;
+  $("exPos").textContent = `第 ${E.idx+1} / ${E.ids.length} 题`;
+  $("exFlagBtn").textContent = E.flag[q.id] ? "取消标记" : "标记本题";
+  $("exFlagBtn").className = E.flag[q.id] ? "btn small" : "btn ghost small";
+  const cur = E.ans[q.id];
+  $("exQ").innerHTML = `
+    <div class="meta">${diffBadge(q.d)}${topicBadge(q)}<span class="hint">#${q.id}</span></div>
+    <p class="qtext">${esc(q.q)}</p>
+    <div class="opts">
+      ${q.o.map((o,k) => `<button class="opt ${cur===k?"sel":""}" data-k="${k}"><span class="k">${LETTER[k]}</span><span>${esc(o)}</span></button>`).join("")}
+    </div>`;
+  $("exSheet").innerHTML = E.ids.map((id,i) =>
+    `<button class="sq ${E.ans[id]!==undefined?"done":""} ${E.flag[id]?"flag":""} ${i===E.idx?"cur":""}" data-i="${i}">${i+1}</button>`).join("");
+  saveDraft();
+}
+$("exQ").addEventListener("click", e => {
+  const b = e.target.closest("button.opt[data-k]"); if (!b || !E) return;
+  const q = QMAP[E.ids[E.idx]];
+  E.ans[q.id] = +b.dataset.k;
+  renderExam();
+});
+$("exPrev").onclick = () => { if (E && E.idx>0){ E.idx--; renderExam(); } };
+$("exNext").onclick = () => { if (E && E.idx<E.ids.length-1){ E.idx++; renderExam(); } else toast("已经是最后一题"); };
+$("exSheet").addEventListener("click", e => {
+  const b = e.target.closest("button.sq"); if (!b || !E) return;
+  E.idx = +b.dataset.i; renderExam();
+});
+$("exFlagBtn").onclick = () => {
+  if (!E) return;
+  const id = E.ids[E.idx];
+  if (E.flag[id]) delete E.flag[id]; else E.flag[id] = 1;
+  renderExam();
+};
+$("exSubmit").onclick = () => {
+  if (!E) return;
+  const un = E.ids.length - Object.keys(E.ans).length;
+  if (!confirm(un ? `还有 ${un} 题没答，确定现在交卷？` : "确定交卷？")) return;
+  examSubmit(false);
+};
+function examSubmit(auto){
+  if (!E) return;
+  clearInterval(timerId);
+  const used = Date.now() - (E.endTs - EXAM_MS);
+  let right = 0;
+  const byDiff = {"易":{r:0,t:0}, "中":{r:0,t:0}, "难":{r:0,t:0}};
+  const byTopic = {};
+  const detail = E.ids.map((id,i) => {
+    const q = QMAP[id]; const u = E.ans[id]; const ok = u === q.a;
+    if (ok) right++;
+    byDiff[q.d].t++; if (ok) byDiff[q.d].r++;
+    if (!byTopic[q.t]) byTopic[q.t] = {r:0,t:0};
+    byTopic[q.t].t++; if (ok) byTopic[q.t].r++;
+    record(id, ok);
+    return { id, i, u, ok };
+  });
+  const score = right * PER;
+  const rec = { ts: Date.now(), score, right, total: E.ids.length, used: Math.min(used, EXAM_MS), byDiff, byTopic };
+  S.hist.unshift(rec); S.hist = S.hist.slice(0, 20); save();
+  clearDraft();
+  const snapshot = { rec, detail, ids: E.ids.slice() };
+  E = null;
+  RES = snapshot;
+  renderExamView();
+  renderResult(snapshot, auto);
+  renderExamEntry(); updateHUD();
+  window.scrollTo({top:0, behavior:"instant"});
+}
+let RES = null;
+function renderResult(snap, auto){
+  RES = snap;
+  const { rec, detail } = snap;
+  const pass = rec.score >= PASS;
+  const diffRows = Object.keys(rec.byDiff).filter(k => rec.byDiff[k].t).map(k =>
+    `<div class="bar-row"><span class="lbl">${k}（${rec.byDiff[k].r}/${rec.byDiff[k].t}）</span>
+      <span class="track"><i style="width:${pct(rec.byDiff[k].r, rec.byDiff[k].t)}%"></i></span>
+      <span class="val">${pct(rec.byDiff[k].r, rec.byDiff[k].t)}%</span></div>`).join("");
+  const topicRows = Object.keys(rec.byTopic).filter(k=>rec.byTopic[k].t)
+    .sort((a,b)=> pct(rec.byTopic[a].r,rec.byTopic[a].t) - pct(rec.byTopic[b].r,rec.byTopic[b].t))
+    .map(k => `<div class="bar-row"><span class="lbl">${esc(T[k])}</span>
+      <span class="track"><i style="width:${pct(rec.byTopic[k].r, rec.byTopic[k].t)}%"></i></span>
+      <span class="val">${rec.byTopic[k].r}/${rec.byTopic[k].t}</span></div>`).join("");
+  const wrongN = detail.filter(d => !d.ok).length;
+  $("exStart").hidden = true;
+  $("exResult").innerHTML = `
+    <div class="card">
+      <div class="score-hero">
+        <div>
+          <div class="score-num">${rec.score}<small> / 100</small></div>
+          <div class="verdict ${pass?"v-pass":"v-fail"}">${pass ? "及格 · 高于 60 分线" : "未及格"}</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div class="hint">${auto?"时间到，已自动交卷":"已交卷"} · 用时 ${fmtTime(rec.used)} · 答对 ${rec.right}/${rec.total} · 错 ${wrongN} 道</div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" id="rAgain">再考一次</button>
+            <button class="btn ghost" id="rWrongOnly">只练这次错的题</button>
+            <button class="btn ghost" id="rHome">回到考试说明</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div><h3 style="margin:0 0 8px;font-size:14px">难度</h3>${diffRows}</div>
+        <div><h3 style="margin:0 0 8px;font-size:14px">板块（按正确率升序）</h3>${topicRows}</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="bar" style="justify-content:space-between">
+        <h3 style="margin:0;font-size:15px">逐题回顾</h3>
+        <div class="chips" style="margin:0">
+          <button class="chip on" data-f="all">全部 ${detail.length}</button>
+          <button class="chip" data-f="wrong">错题 ${wrongN}</button>
+        </div>
+      </div>
+      <div id="revList"></div>
+    </div>`;
+  drawRev("all");
+  $("rAgain").onclick = () => startExam();
+  $("rHome").onclick = () => { $("exResult").hidden = true; $("exStart").hidden = false; window.scrollTo({top:0,behavior:"instant"}); };
+  $("rWrongOnly").onclick = () => {
+    const ids = detail.filter(d=>!d.ok).map(d=>d.id);
+    if (!ids.length){ toast("这次全对，没有错题"); return; }
+    P = { queue: ids, i:0, mark:{}, right:0, done:0, mode:"wrong" };
+    $("pPool").textContent = `本轮 ${ids.length} 题`; $("pShuffle").checked = false;
+    show("practice"); renderPractice();
+  };
+  $("exResult").querySelectorAll(".chip[data-f]").forEach(c => c.onclick = () => {
+    $("exResult").querySelectorAll(".chip[data-f]").forEach(x=>x.classList.remove("on"));
+    c.classList.add("on"); drawRev(c.dataset.f);
+  });
+}
+function drawRev(f){
+  if (!RES) return;
+  const list = RES.detail.filter(d => f==="all" || !d.ok);
+  $("revList").innerHTML = list.map(d => {
+    const q = QMAP[d.id];
+    return `<div class="rev">
+      <p class="qq"><span class="hint">第 ${d.i+1} 题 · #${q.id}</span> ${esc(q.q)}</p>
+      <div class="line">你的答案：${d.u===undefined?'<b class="bad">未答</b>':`<b class="${d.ok?'ok':'bad'}">${LETTER[d.u]}</b>`}
+        　正确答案：<b class="ok">${LETTER[q.a]}</b>　${diffBadge(q.d)} ${topicBadge(q)}</div>
+      <div class="exp" style="margin-top:8px">${esc(q.e)}</div>
+    </div>`;
+  }).join("") || `<p class="hint">没有符合条件的题目。</p>`;
+}
+
+/* ---------- wrong book ---------- */
+function wrongIds(){ return Q.filter(q => S.w[q.id] && !S.rm[q.id]).map(q=>q.id); }
+function renderWrong(){
+  const ids = wrongIds();
+  $("wCount").textContent = ids.length ? `共 ${ids.length} 道错题` : "错题本是空的";
+  if (!ids.length){
+    $("wList").innerHTML = `<div class="card hint">还没有错题。去刷题或考一次模拟卷，答错的题会自动收进来。</div>`;
+    return;
+  }
+  $("wList").innerHTML = ids.map(id => {
+    const q = QMAP[id];
+    const st = S.p[id];
+    return `<details class="bitem">
+      <summary>
+        <p class="bstem"><span class="hint">#${q.id}</span> ${esc(q.q)}</p>
+        <div class="btagline">${diffBadge(q.d)}${topicBadge(q)}
+          <span class="badge b-flag">错 ${S.w[id]} 次</span>
+          ${st?`<span class="hint" style="font-size:11.5px">累计 ${st.c}/${st.t}</span>`:""}</div>
+      </summary>
+      <div class="bopts">${q.o.map((o,k)=>`<div class="${k===q.a?"right":""}"><span class="kk">${LETTER[k]}</span><span>${esc(o)}</span></div>`).join("")}</div>
+      <div class="bexp"><b>答案 ${LETTER[q.a]}。</b>${esc(q.e)}</div>
+      <div class="bar" style="margin:12px 0 0"><button class="btn ghost small" data-rm="${q.id}">移出错题本</button></div>
+    </details>`;
+  }).join("");
+}
+$("wList").addEventListener("click", e => {
+  const b = e.target.closest("button[data-rm]"); if (!b) return;
+  S.rm[b.dataset.rm] = 1; save(); renderWrong(); updateHUD();
+});
+$("wPractice").onclick = () => {
+  const ids = wrongIds();
+  if (!ids.length){ toast("错题本是空的"); return; }
+  P = { queue: shuffle(ids), i:0, mark:{}, right:0, done:0, mode:"wrong" };
+  $("pPool").textContent = `本轮 ${ids.length} 题`; $("pShuffle").checked = false;
+  show("practice"); renderPractice();
+};
+$("wClear").onclick = () => {
+  if (!confirm("清空错题本？正确率统计会保留。")) return;
+  wrongIds().forEach(id => { S.rm[id] = 1; }); save(); renderWrong(); updateHUD();
+};
+
+/* ---------- stats ---------- */
+function renderStats(){
+  let t=0, c=0, seenSet = new Set();
+  Object.keys(S.p).forEach(id => { t += S.p[id].t; c += S.p[id].c; if (S.p[id].t) seenSet.add(id); });
+  $("sAnswered").textContent = t;
+  $("sAcc").textContent = t ? pct(c,t)+"%" : "—";
+  $("sCover").textContent = pct(seenSet.size, Q.length)+"%";
+  $("sExams").textContent = S.hist.length;
+
+  const rows = Object.keys(T).map(k => {
+    let tt=0, cc=0;
+    Q.filter(q=>q.t===k).forEach(q => { if (S.p[q.id]) { tt += S.p[q.id].t; cc += S.p[q.id].c; } });
+    return {k, tt, cc};
+  }).filter(r => r.tt > 0).sort((a,b) => pct(a.cc,a.tt) - pct(b.cc,b.tt));
+  $("sTopics").innerHTML = rows.length ? rows.map(r =>
+    `<div class="bar-row"><span class="lbl">${esc(T[r.k])}</span>
+      <span class="track"><i style="width:${pct(r.cc,r.tt)}%"></i></span>
+      <span class="val">${pct(r.cc,r.tt)}%</span></div>`).join("")
+    : `<p class="hint">还没开始刷题。</p>`;
+
+  $("sDiffs").innerHTML = ["易","中","难"].map(d => {
+    let tt=0, cc=0;
+    Q.filter(q=>q.d===d).forEach(q => { if (S.p[q.id]) { tt += S.p[q.id].t; cc += S.p[q.id].c; } });
+    return `<div class="bar-row"><span class="lbl">${d}（${tt} 题次）</span>
+      <span class="track"><i style="width:${tt?pct(cc,tt):0}%"></i></span>
+      <span class="val">${tt?pct(cc,tt)+"%":"—"}</span></div>`;
+  }).join("");
+
+  $("sHist").innerHTML = S.hist.length ? `<table class="hist">
+      <thead><tr><th>时间</th><th>得分</th><th>答对</th><th>用时</th></tr></thead>
+      <tbody>${S.hist.map(h=>`<tr><td>${new Date(h.ts).toLocaleString("zh-CN",{hour12:false})}</td>
+        <td><b style="color:${h.score>=PASS?"var(--ok)":"var(--bad)"}">${h.score}</b></td>
+        <td>${h.right}/${h.total}</td><td>${fmtTime(h.used)}</td></tr>`).join("")}</tbody></table>`
+    : `<p class="hint">还没有模拟考记录。</p>`;
+}
+$("sReset").onclick = () => {
+  if (!confirm("清空全部作答记录、错题本和模拟考成绩？不可恢复。")) return;
+  S = { p:{}, w:{}, rm:{}, hist:[] }; save(); renderStats(); updateHUD(); toast("已清空");
+};
+
+/* ---------- HUD ---------- */
+function updateHUD(){
+  const n = wrongIds().length;
+  const pill = $("wrongCount");
+  pill.textContent = n; pill.hidden = n === 0;
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown", e => {
+  if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if (e.target.tagName === "BUTTON" && (e.key === "Enter" || e.key === " ")) return;
+  const k = e.key.toUpperCase();
+  if (VIEW === "practice"){
+    if (["A","B","C","D"].includes(k)) { const b = document.querySelector(`#pOpts button[data-k="${LETTER.indexOf(k)}"]`); b && b.click(); }
+    else if (["1","2","3","4"].includes(e.key)) { const b = document.querySelector(`#pOpts button[data-k="${+e.key-1}"]`); b && b.click(); }
+    else if (e.key === "Enter" || e.key === "ArrowRight") { e.preventDefault(); pMove(1); }
+    else if (e.key === "ArrowLeft") pMove(-1);
+  }
+  if (VIEW === "exam" && E && !$("exRun").hidden){
+    if (["A","B","C","D"].includes(k)) { const b = document.querySelector(`#exQ button[data-k="${LETTER.indexOf(k)}"]`); b && b.click(); }
+    else if (["1","2","3","4"].includes(e.key)) { const b = document.querySelector(`#exQ button[data-k="${+e.key-1}"]`); b && b.click(); }
+    else if (e.key === "ArrowRight") $("exNext").click();
+    else if (e.key === "ArrowLeft") $("exPrev").click();
+  }
+});
+
+/* ---------- init ---------- */
+fillTopicSelect();
+updateHUD();
+buildQueue();
+const draft = loadDraft();
+if (draft){ $("exResumeHint").textContent = `检测到未完成的考试（剩 ${fmtTime(draft.endTs-Date.now())}），点“开始考试”继续。`; }
+</script>
+</body>
+</html>
