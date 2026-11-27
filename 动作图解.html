@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f1115">
-<title>动作图解 · 12 个动作怎么做</title>
+<title>动作图解 · 13 个动作怎么做</title>
 <style>
 :root{
   --bg:#0f1115;--surface:#171a21;--surface2:#1e222b;--line:#2a2f3a;
@@ -65,7 +65,7 @@ a.vid::before{content:"▶";font-size:10px}
 <body>
 <div class="wrap">
   <header>
-    <h1>动作图解 <em>·</em> 12 个动作</h1>
+    <h1>动作图解 <em>·</em> 13 个动作</h1>
     <div class="sub">画的是示意，不是标准解剖图；真正管用的是每张图下面的三条要点</div>
   </header>
 
@@ -252,6 +252,18 @@ var M = [
     ),
     pts:["<b>背贴墙</b>，大腿尽量接近平行地面（做不到就先蹲浅一点）。","<b>膝盖在脚踝正上方</b>，别超过脚尖太多。","<b>时间</b>：从 20 秒开始，两组；膝盖不舒服就停。"],
     err:"膝盖内扣 / 憋气 → 膝盖朝脚尖方向，呼吸保持均匀。"
+  },
+  {
+    name:"卷腹", dayText:"A' 日",
+    fig: svg(
+      F.ghost(F.L(44,88,84,82) + F.head(92,80,9)) +
+      F.L(44,88,64,62) + F.head(70,50,9) + F.L(64,62,50,52) +
+      F.L(44,88,104,70) + F.L(104,70,126,106) +
+      F.arrow("M86,74 Q74,64 68,56") + F.lab(100,34,"肩胛离地") +
+      '<line x1="18" y1="106" x2="152" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>下背贴地</b>：腰别拱起来，先把肋骨往骨盆方向收一点。","<b>发力</b>：用肚子把肩胛卷离地 5–10 厘米，下巴和胸口留一个拳头。","<b>下放</b>：慢慢放回，肩胛一碰地就起，别完全躺平放松。"],
+    err:"脖子酸、手拽头 → 手只轻放耳侧，别抱死；卷不起来就是腹肌还没力，先做「只把肩胛抬离地面」的小幅度。"
   }
 ];
 
@@ -263,7 +275,8 @@ var VIDEOS = {
   "平板支撑":{u:"https://www.bilibili.com/video/av811982419",t:"你真的做对平板支撑了吗？（保姆级教学）"},
   "箭步蹲 / 分腿蹲":{u:"https://www.bilibili.com/video/av393720440",t:"练腿精讲｜箭步蹲正确示范，怎么做不伤膝盖"},
   "农夫行走":{u:"https://www.bilibili.com/video/av990890543",t:"最容易掌握而且高效的核心训练动作，农夫行走"},
-  "靠墙静蹲":{u:"https://www.bilibili.com/video/av114040558912485",t:"正确靠墙静蹲养护膝盖"}
+  "靠墙静蹲":{u:"https://www.bilibili.com/video/av114040558912485",t:"正确靠墙静蹲养护膝盖"},
+  "卷腹":{u:"https://www.bilibili.com/video/av203039949",t:"【新手向】别再用脖子做卷腹了！5 步告别脖子酸痛借力"}
 };
 
 var host = document.getElementById("cards");
