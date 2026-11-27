@@ -2682,8 +2682,10 @@
             }
 
             var weekNo = Math.floor(days(now, WEEK1_MON) / 7) + 1;
-            var plan = (dayNo === 1) ? ["A 日 · 第 1 天（蹲 + 推 + 拉）", "第一次训练。每个动作只做 3 组，留 3–4 次余力，重点是记住动作感觉。"]
-                                     : PLAN[now.getDay()];
+            var plan = PLAN[now.getDay()];
+            if (dayNo === 1) {
+              plan = ["A' 日 · 第 1 天（变式 + 核心）", "本周一、周三已经练过，今天直接从 A' 日开始。每个动作 3 组，留 3–4 次余力，记住动作感觉。"];
+            }
 
             dayEl.textContent = dayNo;
             weekEl.textContent = weekNo;

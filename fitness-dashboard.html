@@ -233,6 +233,14 @@ var WEEK_PLAN = [
   { dow: 5, type: "GYM", label: "周末 · 健身房", required: false }
 ];
 
+var TYPE_OPTS = [
+  ["A", "A 日 · 下肢主导（周一）"],
+  ["B", "B 日 · 上肢主导（周三）"],
+  ["A'", "A' 日 · 全身变式（周五）"],
+  ["GYM", "健身房日（周末）"],
+  ["CARDIO", "有氧"]
+];
+
 /* ============ 日期工具 ============ */
 function pd(s){ var p = s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
 function fd(d){ var m = d.getMonth()+1, dd = d.getDate(); return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(dd<10?"0":"")+dd; }
@@ -242,6 +250,11 @@ function dowOf(s){ return (pd(s).getDay()+6)%7; }        // 0=周一
 function weekOf(s){ return Math.floor((pd(s)-pd(WEEK1_MON))/604800000)+1; }
 function weekStart(w){ return addDays(WEEK1_MON, (w-1)*7); }
 function mmdd(s){ return s.slice(5).replace("-","/"); }
+function planTypeFor(s){                                  // 某天按周计划该练什么
+  var dw = dowOf(s);
+  var hit = WEEK_PLAN.filter(function(p){ return p.dow === dw; })[0];
+  return hit ? hit.type : "A";
+}
 
 /* ============ 存储 ============ */
 function defaultDB(){
@@ -381,7 +394,7 @@ function renderOverview(){
   var phaseTip = !started
     ? "先准备好：能装书的双肩包、两个 1.5L 水瓶、一双合脚的鞋。"
     : cw === 1
-      ? "第 1 周：今天就是第 1 天。先学动作、每个动作留 3–4 次余力，不追重量。"
+      ? "第 1 周：今天就是第 1 天，做 A' 日。先学动作、每个动作留 3–4 次余力，不追重量。"
       : cw <= 4
         ? "适应期：每个动作留 3–4 次余力，不追重量，只学动作。疼就停，酸可以继续。"
         : cw <= 8
@@ -395,7 +408,7 @@ function renderOverview(){
     var d = addDays(ws, p.dow);
     var type = p.type, label = p.label, req = p.required;
     if(cw === firstWeek && p.dow === dowOf(PLAN_START)){
-      type = "A"; label = "周五 · A 日（第 1 天）"; req = true;
+      label = p.label + "（第 1 天）"; req = true;
     }
     return { d:d, type:type, label:label, req:req };
   }).filter(function(o){ return pd(o.d) >= pd(PLAN_START); });
@@ -482,6 +495,7 @@ function renderOverview(){
 function renderTrain(){
   var el = document.getElementById("view-train");
   var hist = db.sessions.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; });
+  var ptype = planTypeFor(todayStr());   // 默认按今天该练的类型带出表单
 
   var histHTML = hist.length ? hist.map(function(s){
     var badge = s.type === "GYM" ? "badge g" : (s.type === "CARDIO" ? "badge" : "badge a");
@@ -500,11 +514,9 @@ function renderTrain(){
       '<div class="row" style="margin-bottom:14px">' +
         '<div><label>日期</label><input type="date" id="f-date" value="' + todayStr() + '"></div>' +
         '<div><label>训练类型</label><select id="f-type">' +
-          '<option value="A">A 日 · 下肢主导（周一）</option>' +
-          '<option value="B">B 日 · 上肢主导（周三）</option>' +
-          '<option value="A\'">A\' 日 · 全身变式（周五）</option>' +
-          '<option value="GYM">健身房日（周末）</option>' +
-          '<option value="CARDIO">有氧</option>' +
+          TYPE_OPTS.map(function(o){
+            return '<option value="' + o[0] + '"' + (o[0] === ptype ? " selected" : "") + '>' + o[1] + '</option>';
+          }).join("") +
         '</select></div>' +
         '<div><label>睡眠（小时）</label><input type="number" id="f-sleep" step="0.5" min="0" max="14" placeholder="7.5"></div>' +
         '<div><label>状态</label><select id="f-mood"><option value="">—</option><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>' +
@@ -515,7 +527,7 @@ function renderTrain(){
     '</div>' +
     '<div class="card"><h2>历史记录 <span class="hint">共 ' + hist.length + ' 条</span></h2>' + histHTML + '</div>';
 
-  buildForm("A");
+  buildForm(ptype);
   document.getElementById("f-type").addEventListener("change", function(){ buildForm(this.value); });
   document.getElementById("btn-save").addEventListener("click", saveSession);
   el.querySelectorAll("[data-del]").forEach(function(b){
