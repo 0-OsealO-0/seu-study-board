@@ -118,6 +118,8 @@ tr:last-child td{border-bottom:0}
 .sets input{text-align:center;padding:8px 4px}
 .del{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;cursor:pointer;padding:4px 9px;font-size:12px}
 .del:hover{color:#f87171;border-color:#f87171}
+.edit{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;cursor:pointer;padding:4px 9px;font-size:12px;margin-right:6px}
+.edit:hover{color:var(--accent);border-color:var(--accent)}
 .hist{border-bottom:1px solid #222833;padding:12px 0}
 .hist:last-child{border-bottom:0}
 .hist-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
@@ -185,7 +187,7 @@ tr:last-child td{border-bottom:0}
       <div class="sub" id="subline">12 周新手计划 · 每周一/三/五 + 周末健身房</div>
     </div>
     <div class="sub" id="today-line"></div>
-    <div class="sub"><a class="hlink" href="动作图解.html">动作图解 · 23 个动作 + 7 个拉伸 →</a></div>
+    <div class="sub"><a class="hlink" href="动作图解.html" target="_blank" rel="noopener">动作图解 · 23 个动作 + 7 个拉伸 →</a></div>
   </header>
 
   <nav class="tabs">
@@ -514,6 +516,7 @@ function renderTrain(){
     }).join("　·　");
     return '<div class="hist"><div class="hist-top"><div><span class="hist-date">' + s.date + '</span> ' +
       '<span class="' + badge + '">' + esc(s.type) + '</span></div>' +
+      '<button class="edit" data-edit="' + s.date + '|' + esc(s.type) + '">编辑</button>' +
       '<button class="del" data-del="' + s.date + '|' + esc(s.type) + '">删除</button></div>' +
       '<div class="hist-body">' + lines + (s.sleep ? '　｜睡眠 ' + s.sleep + 'h' : '') + '</div></div>';
   }).join("") : '<div class="empty">还没有训练记录。选个日期和类型，填数字就完事了。</div>';
@@ -531,7 +534,7 @@ function renderTrain(){
         '<div><label>状态</label><select id="f-mood"><option value="">—</option><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>' +
       '</div>' +
       '<div id="form-rows"></div>' +
-      '<div class="note" style="margin:6px 0 14px">负重填 kg，徒手填 0 或留空；秒数类动作（平板、侧平板）在次数框里填秒数。</div>' +
+      '<div class="note" style="margin:6px 0 14px">负重填 kg，徒手填 0 或留空；秒数类动作（平板、侧平板）在次数框里填秒数。要改以前的记录：在下面历史里点「编辑」，改完保存会覆盖那条（同一天同一类型只保存一条）。</div>' +
       '<button class="btn" id="btn-save">保存这次训练</button>' +
     '</div>' +
     '<div class="card"><h2>历史记录 <span class="hint">共 ' + hist.length + ' 条</span></h2>' + histHTML + '</div>';
@@ -539,6 +542,13 @@ function renderTrain(){
   buildForm(ptype);
   document.getElementById("f-type").addEventListener("change", function(){ buildForm(this.value); });
   document.getElementById("btn-save").addEventListener("click", saveSession);
+  el.querySelectorAll("[data-edit]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var k = b.getAttribute("data-edit").split("|");
+      var s = db.sessions.filter(function(x){ return x.date === k[0] && x.type === k[1]; })[0];
+      if(s) fillForm(s);
+    });
+  });
   el.querySelectorAll("[data-del]").forEach(function(b){
     b.addEventListener("click", function(){
       var k = b.getAttribute("data-del").split("|");
@@ -566,6 +576,26 @@ function buildForm(type){
       '</div></div>';
   }).join("");
   document.getElementById("form-rows").innerHTML = html;
+}
+
+function fillForm(s){
+  document.getElementById("f-date").value = s.date;
+  document.getElementById("f-type").value = s.type;
+  document.getElementById("f-sleep").value = (s.sleep === null || s.sleep === undefined) ? "" : s.sleep;
+  document.getElementById("f-mood").value = (s.mood === null || s.mood === undefined) ? "" : String(s.mood);
+  buildForm(s.type);
+  document.querySelectorAll("#form-rows .ex-row").forEach(function(row){
+    var name = row.getAttribute("data-name");
+    var e = s.entries.filter(function(x){ return x.name === name; })[0];
+    if(!e) return;
+    var wInp = row.querySelector(".in-w");
+    if(wInp && !wInp.readOnly) wInp.value = e.weight || 0;
+    var ins = row.querySelectorAll(".in-s");
+    e.sets.forEach(function(v, i){ if(ins[i]) ins[i].value = v; });
+    row.querySelector(".in-rpe").value = e.rpe ? String(e.rpe) : "";
+  });
+  try{ window.scrollTo({ top:0, behavior:"smooth" }); }catch(err){ window.scrollTo(0,0); }
+  toast("已载入 " + s.date + "，改完再点保存会覆盖这条");
 }
 
 function saveSession(){
@@ -621,6 +651,7 @@ function renderBody(){
         '<div style="flex:2"><label>备注</label><input type="text" id="b-note" placeholder="例如：减量周、生病、聚餐多"></div>' +
       '</div>' +
       '<button class="btn" id="btn-body">保存</button>' +
+      '<div class="note" style="margin-top:10px">想改某天的数据：把日期选成那一天、重新填一遍再保存，就会覆盖原来那条。</div>' +
     '</div>' +
     '<div class="card"><h2>历史记录</h2>' + table + '</div>';
 
