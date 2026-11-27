@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>健身进度看板</title>
+<style>
+:root{
+  --bg:#0f1115; --surface:#171a21; --surface2:#1e222c; --line:#2a303d;
+  --text:#e9edf3; --muted:#9aa3b2; --accent:#a3e635; --accent-dim:#7fb52a;
+  --blue:#60a5fa; --teal:#2dd4bf; --amber:#fbbf24;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text);
+  font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:0 0 60px;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:34px 0 10px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{font-size:24px;margin:0;letter-spacing:.5px;font-weight:650}
+h1 .dot{color:var(--accent)}
+.sub{color:var(--muted);font-size:13px;margin-top:4px}
+.tabs{display:flex;gap:6px;margin:18px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{
+  background:none;border:0;color:var(--muted);font:inherit;font-size:14px;
+  padding:10px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  min-height:44px;
+}
+.tab:hover{color:var(--text)}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;margin-bottom:16px;
+}
+.card h2{font-size:15px;margin:0 0 14px;font-weight:600;color:var(--text);letter-spacing:.3px}
+.card h2 .hint{color:var(--muted);font-weight:400;font-size:12px;margin-left:8px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:1fr 1fr}
+@media(max-width:820px){.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.kpi .k{color:var(--muted);font-size:12px;letter-spacing:.4px}
+.kpi .v{font-size:28px;font-weight:650;margin:6px 0 2px;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi .v small{font-size:14px;font-weight:400;color:var(--muted);margin-left:3px}
+.kpi .d{font-size:12px;color:var(--muted)}
+.up{color:var(--accent)} .down{color:var(--amber)}
+.bar{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:12px}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:99px;transition:width .4s}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;background:var(--surface2);
+  border:1px solid var(--line);border-radius:99px;padding:7px 13px;font-size:13px;color:var(--muted);
+}
+.chip b{color:var(--text);font-weight:600}
+.chip.done{border-color:var(--accent-dim);color:var(--accent)}
+.chip.done b{color:var(--accent)}
+.chip.opt{border-style:dashed}
+.chip .tick{font-size:12px}
+.empty{color:var(--muted);font-size:13px;padding:22px 0;text-align:center}
+svg{display:block;width:100%;height:auto}
+.hm-wrap{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start}
+@media(max-width:720px){.hm-wrap{grid-template-columns:1fr;gap:18px}}
+.hm{display:grid;grid-template-columns:36px repeat(7,26px);gap:4px;align-items:center;font-size:11px;color:var(--muted)}
+.hm .wk{text-align:right;padding-right:6px;white-space:nowrap}
+.hm .hd{text-align:center;padding-bottom:2px}
+.cell{width:26px;height:26px;border-radius:6px;background:var(--surface2);border:1px solid transparent}
+.hm-side{display:flex;flex-direction:column;gap:14px;padding-top:4px;max-width:440px}
+.lg{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)}
+.lg .cell{width:14px;height:14px;border-radius:4px;flex:none}
+.stat{display:flex;justify-content:space-between;border-bottom:1px solid #222833;padding-bottom:9px;font-size:13px}
+.stat span{color:var(--muted)}
+.stat b{font-variant-numeric:tabular-nums;font-size:15px}
+.cell.a{background:var(--accent);opacity:.85}
+.cell.g{background:var(--blue);opacity:.85}
+.cell.c{background:var(--teal);opacity:.6}
+.cell.future{opacity:.35}
+.cell.pre{opacity:.18}
+.cell.now{border-color:#fff;border-width:1px}
+.cell.today{outline:2px solid var(--amber);outline-offset:-1px}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+input,select,textarea{
+  width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--text);
+  border-radius:9px;padding:9px 11px;font:inherit;font-size:14px;min-height:42px;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-dim)}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row > div{flex:1;min-width:120px}
+button.btn{
+  background:var(--accent);color:#0f1115;border:0;border-radius:10px;padding:11px 20px;
+  font:inherit;font-weight:650;font-size:14px;cursor:pointer;min-height:44px;
+}
+button.btn:hover{filter:brightness(1.06)}
+button.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+button.btn.ghost:hover{border-color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--muted);font-weight:500;text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);font-size:12px}
+td{padding:9px 6px;border-bottom:1px solid #222833;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.ex-row{background:var(--surface2);border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:10px}
+.ex-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;gap:8px}
+.ex-name{font-weight:600;font-size:14px}
+.ex-target{color:var(--muted);font-size:12px;white-space:nowrap}
+.sets{display:grid;grid-template-columns:repeat(3,1fr) 76px 76px;gap:8px;align-items:end}
+@media(max-width:620px){.sets{grid-template-columns:repeat(3,1fr) 70px;gap:6px}}
+.sets .lbl{font-size:11px;color:var(--muted);text-align:center;margin-bottom:3px}
+.sets input{text-align:center;padding:8px 4px}
+.del{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;cursor:pointer;padding:4px 9px;font-size:12px}
+.del:hover{color:#f87171;border-color:#f87171}
+.hist{border-bottom:1px solid #222833;padding:12px 0}
+.hist:last-child{border-bottom:0}
+.hist-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.hist-date{font-weight:600;font-variant-numeric:tabular-nums}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+.badge.a{color:var(--accent);border-color:var(--accent-dim)}
+.badge.g{color:var(--blue);border-color:#2b4a75}
+.hist-body{color:var(--muted);font-size:12.5px;margin-top:5px;line-height:1.7}
+#toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
+  background:#0b0d11;border:1px solid var(--accent-dim);color:var(--text);
+  padding:10px 18px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;
+  transition:.25s;z-index:99;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.note{font-size:12.5px;color:var(--muted);line-height:1.7}
+.note b{color:var(--text)}
+.warn{border-color:#7a5a12;background:#221b0c}
+.hidden{display:none!important}
+
+/* ===== 手机端 ===== */
+@media(max-width:760px){
+  body{padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  .wrap{padding:0 14px}
+  .card{padding:15px 14px;border-radius:12px}
+  header{padding:22px 0 6px;gap:6px}
+  h1{font-size:20px}
+  .sub{font-size:12.5px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+        scrollbar-width:none;gap:2px;margin:14px 0 18px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;white-space:nowrap;padding:10px 12px;font-size:13.5px}
+  .kpi{padding:13px 14px}
+  .kpi .v{font-size:23px}
+  .kpi .d{font-size:11.5px}
+  .ex-head{flex-wrap:wrap;gap:3px}
+  .ex-target{font-size:11.5px}
+  .sets{grid-template-columns:repeat(3,1fr);gap:8px}
+  .sets input,select,textarea{font-size:16px}
+  .hm{grid-template-columns:32px repeat(7,minmax(0,1fr));gap:4px}
+  .cell{width:100%;height:auto;aspect-ratio:1;border-radius:7px}
+  .lg .cell{width:14px;height:14px;aspect-ratio:auto;border-radius:4px}
+  .stat{font-size:12.5px;padding-bottom:8px}
+  .row{gap:10px}
+  button.btn{width:100%}
+  .note{font-size:12px}
+}
+@media(max-width:400px){
+  .g4{gap:10px}
+  .kpi .v{font-size:21px}
+  .card{padding:13px 12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>健身进度看板<span class="dot">.</span></h1>
+      <div class="sub" id="subline">12 周新手计划 · 每周一/三/五 + 周末健身房</div>
+    </div>
+    <div class="sub" id="today-line"></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab on" data-view="overview">总览</button>
+    <button class="tab" data-view="train">训练打卡</button>
+    <button class="tab" data-view="body">体重围度</button>
+    <button class="tab" data-view="progress">动作进步</button>
+    <button class="tab" data-view="backup">备份</button>
+  </nav>
+
+  <main>
+    <section id="view-overview"></section>
+    <section id="view-train" class="hidden"></section>
+    <section id="view-body" class="hidden"></section>
+    <section id="view-progress" class="hidden"></section>
+    <section id="view-backup" class="hidden"></section>
+  </main>
+</div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+/* ============ 基础数据 ============ */
+var PLAN_START = "2026-11-27";   // 训练第 1 天（周五）
+var WEEK1_MON  = "2026-11-23";   // 第 1 周所在周的周一，打卡墙按周一到周日排列
+var WEEKS = 12;
+var STORE = "fitness_dash_v1";
+
+var TPL = {
+  "A": { title: "A 日 · 下肢主导", ex: [
+    ["深蹲", "3×12–15", "次"], ["俯卧撑", "3×6–12", "次"], ["单臂划船", "3×10–12/侧", "次"],
+    ["臀桥", "3×12–15", "次"], ["平板支撑", "3×30–45秒", "秒"], ["提踵", "2×20", "次"]
+  ]},
+  "B": { title: "B 日 · 上肢主导", ex: [
+    ["箭步蹲/分腿蹲", "3×8–10/侧", "次"], ["站姿肩推", "3×10–12", "次"], ["引体/反向划船", "3×3–10", "次"],
+    ["单腿臀桥", "3×10–12/侧", "次"], ["死虫", "3×8/侧", "次"], ["侧平板", "2×20–30秒", "秒"]
+  ]},
+  "A'": { title: "A' 日 · 全身变式", ex: [
+    ["慢速深蹲(3秒)", "3×10–12", "次"], ["窄距/垫高俯卧撑", "3×6–10", "次"], ["俯身飞鸟", "3×12–15", "次"],
+    ["农夫行走", "3×30–40米", "米"], ["卷腹/悬垂举腿", "3×10–12", "次"], ["靠墙静蹲/开合跳", "2×30秒", "秒"]
+  ]},
+  "GYM": { title: "健身房日", ex: [
+    ["高脚杯深蹲", "3×8–10", "次"], ["坐姿划船", "3×10–12", "次"], ["哑铃卧推", "3×8–10", "次"],
+    ["高位下拉", "3×10–12", "次"], ["罗马尼亚硬拉", "3×10", "次"]
+  ]},
+  "CARDIO": { title: "有氧", ex: [["快走/慢跑", "20–30分钟", "分钟"]] }
+};
+
+var WEEK_PLAN = [
+  { dow: 0, type: "A", label: "周一 · A 日", required: true },
+  { dow: 2, type: "B", label: "周三 · B 日", required: true },
+  { dow: 4, type: "A'", label: "周五 · A' 日", required: true },
+  { dow: 5, type: "GYM", label: "周末 · 健身房", required: false }
+];
+
+/* ============ 日期工具 ============ */
+function pd(s){ var p = s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+function fd(d){ var m = d.getMonth()+1, dd = d.getDate(); return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(dd<10?"0":"")+dd; }
+function todayStr(){ return fd(new Date()); }
+function addDays(s, n){ var d = pd(s); d.setDate(d.getDate()+n); return fd(d); }
+function dowOf(s){ return (pd(s).getDay()+6)%7; }        // 0=周一
+function weekOf(s){ return Math.floor((pd(s)-pd(WEEK1_MON))/604800000)+1; }
+function weekStart(w){ return addDays(WEEK1_MON, (w-1)*7); }
+function mmdd(s){ return s.slice(5).replace("-","/"); }
+
+/* ============ 存储 ============ */
+function defaultDB(){
+  return {
+    profile: { sex:"男", age:19, height:179, startWeight:68, goalWeight:71, startDate:PLAN_START },
+    body: [{ date:"2026-11-27", weight:68, waist:"", chest:"", arm:"", thigh:"", note:"起始" }],
+    sessions: [],
+    meta: { lastExport:null }
+  };
+}
+var storageOK = true;
+try { localStorage.setItem("__t","1"); localStorage.removeItem("__t"); } catch(e){ storageOK = false; }
+var memDB = null;
+
+function loadDB(){
+  var base = defaultDB();
+  if(!storageOK) return base;
+  var raw = null;
+  try { raw = localStorage.getItem(STORE); } catch(e){}
+  if(!raw) return base;
+  try {
+    var d = JSON.parse(raw);
+    base.profile = Object.assign(base.profile, d.profile || {});
+    base.body = Array.isArray(d.body) ? d.body : base.body;
+    base.sessions = Array.isArray(d.sessions) ? d.sessions : [];
+    base.meta = Object.assign(base.meta, d.meta || {});
+  } catch(e){}
+  return base;
+}
+function save(){
+  if(!storageOK){ memDB = db; return; }
+  try { localStorage.setItem(STORE, JSON.stringify(db)); } catch(e){ toast("保存失败，请导出备份"); }
+}
+var db = memDB || loadDB();
+
+/* ============ 小工具 ============ */
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.className = "show";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.className = ""; }, 2200);
+}
+function num(v){ var n = parseFloat(v); return isFinite(n) ? n : null; }
+function sessionsOn(date){ return db.sessions.filter(function(s){ return s.date === date; }); }
+
+/* ============ 图表 ============ */
+var gid = 0;
+function niceStep(range, n){
+  var raw = range / n;
+  var p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10));
+  var m = raw / p;
+  var s = m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10;
+  return s * p;
+}
+function chart(pts, opt){
+  opt = opt || {};
+  if(!pts.length) return '<div class="empty">还没有数据，去「体重围度」或「训练打卡」记第一条</div>';
+  var w = 600, h = opt.h || 190, L = 44, R = 16, T = 16, B = 26;
+  var extra = [];
+  if(opt.target != null) extra.push(opt.target);
+  var vals = pts.map(function(p){ return p.y; }).concat(extra);
+  var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  if(hi - lo < 1e-9){ lo -= 1; hi += 1; }
+  var step = niceStep(hi - lo, 3);
+  var min = Math.floor(lo / step) * step;
+  var max = Math.ceil(hi / step) * step;
+  if((max - min) / step < 2) max = min + step * 2;
+  var iw = w - L - R, ih = h - T - B;
+  var X = function(i){ return pts.length === 1 ? L + iw/2 : L + i * iw / (pts.length - 1); };
+  var Y = function(v){ return T + (1 - (v - min) / (max - min)) * ih; };
+  var color = opt.color || "#a3e635";
+  var id = "grad" + (gid++);
+  var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + esc(opt.title || "趋势图") + '">';
+  s += '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1">';
+  s += '<stop offset="0%" stop-color="' + color + '" stop-opacity=".28"/>';
+  s += '<stop offset="100%" stop-color="' + color + '" stop-opacity="0"/></linearGradient></defs>';
+  var ticks = Math.round((max - min) / step);
+  for(var g = 0; g <= ticks; g++){
+    var gv = min + step * g, gy = Y(gv);
+    s += '<line x1="' + L + '" y1="' + gy.toFixed(1) + '" x2="' + (w-R) + '" y2="' + gy.toFixed(1) + '" stroke="#262b36" stroke-width="1"/>';
+    s += '<text x="' + (L-8) + '" y="' + (gy+4).toFixed(1) + '" fill="#9aa3b2" font-size="11" text-anchor="end">' + (+gv.toFixed(2)) + '</text>';
+  }
+  if(opt.target != null){
+    var ty = Y(opt.target);
+    s += '<line x1="' + L + '" y1="' + ty.toFixed(1) + '" x2="' + (w-R) + '" y2="' + ty.toFixed(1) + '" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="5 5" opacity=".8"/>';
+    s += '<text x="' + (w-R) + '" y="' + (ty-6).toFixed(1) + '" fill="#fbbf24" font-size="11" text-anchor="end">目标 ' + opt.target + '</text>';
+  }
+  var dLine = "", dArea = "";
+  pts.forEach(function(p, i){
+    var x = X(i).toFixed(1), y = Y(p.y).toFixed(1);
+    dLine += (i ? " L" : "M") + x + "," + y;
+    dArea += (i ? " L" : "M") + x + "," + y;
+  });
+  dArea += " L" + X(pts.length-1).toFixed(1) + "," + (h-B) + " L" + X(0).toFixed(1) + "," + (h-B) + " Z";
+  s += '<path d="' + dArea + '" fill="url(#' + id + ')"/>';
+  s += '<path d="' + dLine + '" fill="none" stroke="' + color + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>';
+  pts.forEach(function(p, i){
+    var x = X(i), y = Y(p.y);
+    s += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (pts.length > 24 ? 2.4 : 3.6) + '" fill="#0f1115" stroke="' + color + '" stroke-width="2">';
+    s += '<title>' + esc(p.label || mmdd(p.x)) + '：' + p.y + (opt.unit || "") + '</title></circle>';
+  });
+  s += '<text x="' + X(0).toFixed(1) + '" y="' + (h-6) + '" fill="#9aa3b2" font-size="11" text-anchor="start">' + mmdd(pts[0].x) + '</text>';
+  if(pts.length > 1){
+    s += '<text x="' + X(pts.length-1).toFixed(1) + '" y="' + (h-6) + '" fill="#9aa3b2" font-size="11" text-anchor="end">' + mmdd(pts[pts.length-1].x) + '</text>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+/* ============ 总览 ============ */
+function renderOverview(){
+  var today = todayStr();
+  var cw = weekOf(today);
+  var el = document.getElementById("view-overview");
+
+  var bodySorted = db.body.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+  var latest = null;
+  for(var i = bodySorted.length-1; i >= 0; i--){ if(num(bodySorted[i].weight) != null){ latest = bodySorted[i]; break; } }
+  var curW = latest ? num(latest.weight) : db.profile.startWeight;
+  var delta = curW - db.profile.startWeight;
+
+  var thisWeek = db.sessions.filter(function(s){ return weekOf(s.date) === cw; });
+
+  var totalSessions = db.sessions.filter(function(s){ return s.type !== "CARDIO" && s.type !== "GYM"; }).length;
+
+  var started = pd(today) >= pd(PLAN_START);
+  var dayNo = Math.floor((pd(today) - pd(PLAN_START)) / 86400000) + 1;
+  var pct = Math.max(0, Math.min(100, dayNo / (WEEKS*7) * 100));
+
+  var weekLabel = !started ? "未开始" : (cw > WEEKS ? "已完成" : "第 " + cw + " 周");
+  var weekSub = !started ? ("距开始还有 " + (1 - dayNo) + " 天")
+    : (cw > WEEKS ? "12 周已走完" : "共 " + (WEEKS*7) + " 天 · 第 " + Math.min(dayNo, WEEKS*7) + " 天");
+
+  var phaseName = !started ? "准备期" : cw <= 4 ? "适应期" : cw <= 8 ? "建设期" : "强化期";
+  var phaseTip = !started
+    ? "先准备好：能装书的双肩包、两个 1.5L 水瓶、一双合脚的鞋。"
+    : cw === 1
+      ? "第 1 周：今天就是第 1 天。先学动作、每个动作留 3–4 次余力，不追重量。"
+      : cw <= 4
+        ? "适应期：每个动作留 3–4 次余力，不追重量，只学动作。疼就停，酸可以继续。"
+        : cw <= 8
+          ? (cw === 7 ? "第 7 周是减量周：组数减半、强度降一档，让身体消化前 6 周。" : "建设期：开始双进阶——做到次数上限就加难度或加一组。")
+          : "强化期：健身房日开始稳定加重，宿舍日换更难变式。第 12 周末重测。";
+
+  // 本周计划（第 1 周的起始日强制为 A 日：第一次从最基础的动作开始）
+  var ws = weekStart(cw);
+  var firstWeek = weekOf(PLAN_START);
+  var planWeek = WEEK_PLAN.map(function(p){
+    var d = addDays(ws, p.dow);
+    var type = p.type, label = p.label, req = p.required;
+    if(cw === firstWeek && p.dow === dowOf(PLAN_START)){
+      type = "A"; label = "周五 · A 日（第 1 天）"; req = true;
+    }
+    return { d:d, type:type, label:label, req:req };
+  }).filter(function(o){ return pd(o.d) >= pd(PLAN_START); });
+
+  planWeek.forEach(function(o){
+    o.done = sessionsOn(o.d).some(function(s){ return s.type === o.type; });
+  });
+  var reqList = planWeek.filter(function(o){ return o.req; });
+  var reqDone = reqList.filter(function(o){ return o.done; }).length;
+
+  var chips = planWeek.map(function(o){
+    var cls = "chip" + (o.done ? " done" : "") + (o.req ? "" : " opt");
+    return '<span class="' + cls + '"><span class="tick">' + (o.done ? "✓" : "○") + '</span>' + esc(o.label) +
+           '<b>' + mmdd(o.d) + '</b></span>';
+  }).join("");
+
+  // 热力图
+  var smap = {};
+  db.sessions.forEach(function(s){ smap[s.date] = s.type; });
+  var hm = '<div class="hm"><div class="wk"></div>';
+  ["一","二","三","四","五","六","日"].forEach(function(d){ hm += '<div class="hd">' + d + '</div>'; });
+  for(var w = 1; w <= WEEKS; w++){
+    hm += '<div class="wk">W' + w + '</div>';
+    for(var k = 0; k < 7; k++){
+      var dt = addDays(weekStart(w), k);
+      var t = smap[dt];
+      var cls = "cell";
+      if(t === "A" || t === "B" || t === "A'") cls += " a";
+      else if(t === "GYM") cls += " g";
+      else if(t === "CARDIO") cls += " c";
+      if(pd(dt) < pd(PLAN_START)) cls += " pre";
+      if(pd(dt) > pd(today)) cls += " future";
+      if(w === cw) cls += " now";
+      if(dt === today) cls += " today";
+      hm += '<div class="' + cls + '" title="' + dt + (t ? " · " + t : " · 未记录") + '"></div>';
+    }
+  }
+  hm += '</div>';
+
+  var weightPts = bodySorted.filter(function(b){ return num(b.weight) != null; })
+    .map(function(b){ return { x:b.date, y:num(b.weight) }; });
+
+  var streak = 0;
+  for(var w0 = Math.min(cw, WEEKS); w0 >= 1; w0--){
+    var has = db.sessions.some(function(s){ return weekOf(s.date) === w0; });
+    if(!has) break;
+    streak++;
+  }
+
+  el.innerHTML =
+    '<div class="grid g4" style="margin-bottom:16px">' +
+      '<div class="kpi"><div class="k">当前体重</div><div class="v">' + curW + '<small>kg</small></div>' +
+        '<div class="d ' + (delta >= 0 ? "up" : "down") + '">' + (delta >= 0 ? "+" : "") + (Math.round(delta*10)/10) + ' kg vs 起始</div></div>' +
+      '<div class="kpi"><div class="k">本周训练</div><div class="v">' + reqDone + '<small>/' + reqList.length + '</small></div>' +
+        '<div class="d">健身房 ' + thisWeek.filter(function(s){ return s.type === "GYM"; }).length + '/1 · 有氧 ' + thisWeek.filter(function(s){ return s.type === "CARDIO"; }).length + ' 次</div></div>' +
+      '<div class="kpi"><div class="k">累计完成</div><div class="v">' + totalSessions + '<small>次</small></div>' +
+        '<div class="d">正式训练（不含健身房/有氧）</div></div>' +
+      '<div class="kpi"><div class="k">进度 · ' + phaseName + '</div><div class="v">' + weekLabel + '</div>' +
+        '<div class="d">' + weekSub + '</div><div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div>' +
+    '</div>' +
+
+    '<div class="card"><h2>本周计划 <span class="hint">打勾的表示已记录</span></h2>' +
+      '<div class="chips">' + chips + '</div></div>' +
+
+    '<div class="card"><h2>体重曲线 <span class="hint">目标 ' + db.profile.goalWeight + ' kg</span></h2>' +
+      chart(weightPts, { unit:" kg", target:db.profile.goalWeight, title:"体重变化" }) + '</div>' +
+
+    '<div class="card"><h2>12 周打卡</h2><div class="hm-wrap">' + hm +
+      '<div class="hm-side">' +
+        '<div class="lg"><span class="cell a"></span> A / B / A\' 日</div>' +
+        '<div class="lg"><span class="cell g"></span> 健身房日</div>' +
+        '<div class="lg"><span class="cell c"></span> 有氧</div>' +
+        '<div style="height:6px"></div>' +
+        '<div class="stat"><span>本周完成</span><b>' + reqDone + ' / ' + reqList.length + '</b></div>' +
+        '<div class="stat"><span>累计正式训练</span><b>' + totalSessions + ' 次</b></div>' +
+        '<div class="stat"><span>连续打卡</span><b>' + streak + ' 周</b></div>' +
+      '</div></div></div>' +
+
+    '<div class="card"><h2>这周该注意什么</h2><div class="note">' + esc(phaseTip) + '</div></div>' +
+    (storageOK ? "" : '<div class="card warn"><div class="note"><b>注意：</b>这个浏览器不允许本地存储，数据只在当前页面有效。练完请立刻去「备份」导出。</div></div>');
+}
+
+/* ============ 训练打卡 ============ */
+function renderTrain(){
+  var el = document.getElementById("view-train");
+  var hist = db.sessions.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; });
+
+  var histHTML = hist.length ? hist.map(function(s){
+    var badge = s.type === "GYM" ? "badge g" : (s.type === "CARDIO" ? "badge" : "badge a");
+    var lines = s.entries.map(function(e){
+      var w = e.weight ? e.weight + "kg × " : "";
+      return esc(e.name) + " " + w + e.sets.join("/") + (e.rpe ? " (RPE" + e.rpe + ")" : "");
+    }).join("　·　");
+    return '<div class="hist"><div class="hist-top"><div><span class="hist-date">' + s.date + '</span> ' +
+      '<span class="' + badge + '">' + esc(s.type) + '</span></div>' +
+      '<button class="del" data-del="' + s.date + '|' + esc(s.type) + '">删除</button></div>' +
+      '<div class="hist-body">' + lines + (s.sleep ? '　｜睡眠 ' + s.sleep + 'h' : '') + '</div></div>';
+  }).join("") : '<div class="empty">还没有训练记录。选个日期和类型，填数字就完事了。</div>';
+
+  el.innerHTML =
+    '<div class="card"><h2>记录一次训练</h2>' +
+      '<div class="row" style="margin-bottom:14px">' +
+        '<div><label>日期</label><input type="date" id="f-date" value="' + todayStr() + '"></div>' +
+        '<div><label>训练类型</label><select id="f-type">' +
+          '<option value="A">A 日 · 下肢主导（周一）</option>' +
+          '<option value="B">B 日 · 上肢主导（周三）</option>' +
+          '<option value="A\'">A\' 日 · 全身变式（周五）</option>' +
+          '<option value="GYM">健身房日（周末）</option>' +
+          '<option value="CARDIO">有氧</option>' +
+        '</select></div>' +
+        '<div><label>睡眠（小时）</label><input type="number" id="f-sleep" step="0.5" min="0" max="14" placeholder="7.5"></div>' +
+        '<div><label>状态</label><select id="f-mood"><option value="">—</option><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>' +
+      '</div>' +
+      '<div id="form-rows"></div>' +
+      '<div class="note" style="margin:6px 0 14px">负重填 kg，徒手填 0 或留空；秒数类动作（平板、侧平板）在次数框里填秒数。</div>' +
+      '<button class="btn" id="btn-save">保存这次训练</button>' +
+    '</div>' +
+    '<div class="card"><h2>历史记录 <span class="hint">共 ' + hist.length + ' 条</span></h2>' + histHTML + '</div>';
+
+  buildForm("A");
+  document.getElementById("f-type").addEventListener("change", function(){ buildForm(this.value); });
+  document.getElementById("btn-save").addEventListener("click", saveSession);
+  el.querySelectorAll("[data-del]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var k = b.getAttribute("data-del").split("|");
+      db.sessions = db.sessions.filter(function(s){ return !(s.date === k[0] && s.type === k[1]); });
+      save(); render(); toast("已删除 " + k[0]);
+    });
+  });
+}
+
+function buildForm(type){
+  var t = TPL[type] || TPL.A;
+  var html = t.ex.map(function(ex, i){
+    return '<div class="ex-row" data-name="' + esc(ex[0]) + '" data-unit="' + ex[2] + '">' +
+      '<div class="ex-head"><span class="ex-name">' + esc(ex[0]) + '</span>' +
+      '<span class="ex-target">' + esc(ex[1]) + '</span></div>' +
+      '<div class="sets">' +
+        '<div><div class="lbl">第1组</div><input type="number" class="in-s" inputmode="numeric" min="0" placeholder="—"></div>' +
+        '<div><div class="lbl">第2组</div><input type="number" class="in-s" inputmode="numeric" min="0" placeholder="—"></div>' +
+        '<div><div class="lbl">第3组</div><input type="number" class="in-s" inputmode="numeric" min="0" placeholder="—"></div>' +
+        (type === "CARDIO"
+          ? '<div><div class="lbl">负重</div><input type="number" class="in-w" value="0" min="0" readonly></div>'
+          : '<div><div class="lbl">负重kg</div><input type="number" class="in-w" inputmode="decimal" min="0" placeholder="0"></div>') +
+        '<div><div class="lbl">RPE</div><select class="in-rpe"><option value="">—</option>' +
+          '<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>' +
+      '</div></div>';
+  }).join("");
+  document.getElementById("form-rows").innerHTML = html;
+}
+
+function saveSession(){
+  var date = document.getElementById("f-date").value;
+  var type = document.getElementById("f-type").value;
+  if(!date){ toast("先选日期"); return; }
+  var sleep = document.getElementById("f-sleep").value;
+  var mood = document.getElementById("f-mood").value;
+  var entries = [];
+  document.querySelectorAll("#form-rows .ex-row").forEach(function(row){
+    var sets = [];
+    row.querySelectorAll(".in-s").forEach(function(inp){ var v = num(inp.value); if(v && v > 0) sets.push(v); });
+    if(!sets.length) return;
+    var w = num(row.querySelector(".in-w").value) || 0;
+    var rpe = row.querySelector(".in-rpe").value;
+    entries.push({ name:row.getAttribute("data-name"), unit:row.getAttribute("data-unit"),
+                   weight:w, sets:sets, rpe:rpe ? +rpe : null });
+  });
+  if(!entries.length){ toast("至少填一个动作的次数"); return; }
+  db.sessions = db.sessions.filter(function(s){ return !(s.date === date && s.type === type); });
+  db.sessions.push({ id:Date.now(), date:date, type:type,
+                     sleep: sleep ? +sleep : null, mood: mood ? +mood : null, entries:entries });
+  db.sessions.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+  save(); render(); toast("已保存 " + date + " · " + type);
+}
+
+/* ============ 体重围度 ============ */
+function renderBody(){
+  var el = document.getElementById("view-body");
+  var rows = db.body.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; });
+  var pts = rows.slice().reverse().filter(function(b){ return num(b.weight) != null; })
+    .map(function(b){ return { x:b.date, y:num(b.weight) }; });
+
+  var table = rows.length ? '<table><tr><th>日期</th><th>体重</th><th>腰围</th><th>胸围</th><th>臂围</th><th>大腿</th><th>备注</th></tr>' +
+    rows.map(function(b){
+      return '<tr><td>' + b.date + '</td><td>' + (b.weight || "—") + '</td><td>' + (b.waist || "—") + '</td><td>' +
+        (b.chest || "—") + '</td><td>' + (b.arm || "—") + '</td><td>' + (b.thigh || "—") + '</td><td>' + esc(b.note || "") + '</td></tr>';
+    }).join("") + '</table>' : '<div class="empty">还没有记录</div>';
+
+  el.innerHTML =
+    '<div class="card"><h2>体重曲线 <span class="hint">每周固定一天早起空腹称</span></h2>' +
+      chart(pts, { unit:" kg", target:db.profile.goalWeight, title:"体重变化" }) + '</div>' +
+    '<div class="card"><h2>记一次身体数据</h2>' +
+      '<div class="row" style="margin-bottom:12px">' +
+        '<div><label>日期</label><input type="date" id="b-date" value="' + todayStr() + '"></div>' +
+        '<div><label>体重 kg</label><input type="number" id="b-weight" step="0.1" placeholder="68.0"></div>' +
+        '<div><label>腰围 cm</label><input type="number" id="b-waist" step="0.5" placeholder="—"></div>' +
+        '<div><label>胸围 cm</label><input type="number" id="b-chest" step="0.5" placeholder="—"></div>' +
+      '</div>' +
+      '<div class="row" style="margin-bottom:14px">' +
+        '<div><label>臂围 cm</label><input type="number" id="b-arm" step="0.5" placeholder="—"></div>' +
+        '<div><label>大腿围 cm</label><input type="number" id="b-thigh" step="0.5" placeholder="—"></div>' +
+        '<div style="flex:2"><label>备注</label><input type="text" id="b-note" placeholder="例如：减量周、生病、聚餐多"></div>' +
+      '</div>' +
+      '<button class="btn" id="btn-body">保存</button>' +
+    '</div>' +
+    '<div class="card"><h2>历史记录</h2>' + table + '</div>';
+
+  document.getElementById("btn-body").addEventListener("click", function(){
+    var date = document.getElementById("b-date").value;
+    if(!date){ toast("先选日期"); return; }
+    var rec = { date:date,
+      weight: num(document.getElementById("b-weight").value),
+      waist: num(document.getElementById("b-waist").value),
+      chest: num(document.getElementById("b-chest").value),
+      arm: num(document.getElementById("b-arm").value),
+      thigh: num(document.getElementById("b-thigh").value),
+      note: document.getElementById("b-note").value.trim() };
+    db.body = db.body.filter(function(b){ return b.date !== date; });
+    db.body.push(rec);
+    db.body.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    save(); render(); toast("已保存 " + date);
+  });
+}
+
+/* ============ 动作进步 ============ */
+function renderProgress(){
+  var el = document.getElementById("view-progress");
+  var names = {};
+  db.sessions.forEach(function(s){
+    s.entries.forEach(function(e){ names[e.name] = true; });
+  });
+  var list = Object.keys(names);
+
+  if(!list.length){
+    el.innerHTML = '<div class="card"><h2>动作进步</h2><div class="empty">先去「训练打卡」记一两次，这里就会出现每个动作的趋势。</div>' +
+      '<div class="note" style="margin-top:10px">进步指标：<b>总次数</b>（同一天各组次数相加）。徒手动作次数涨、负重动作次数加上重量，都能看出有没有变强。</div></div>';
+    return;
+  }
+  var cur = el.getAttribute("data-ex");
+  if(!cur || list.indexOf(cur) < 0) cur = list[0];
+
+  var series = [];
+  db.sessions.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; }).forEach(function(s){
+    s.entries.forEach(function(e){
+      if(e.name !== cur) return;
+      var total = e.sets.reduce(function(a,b){ return a+b; }, 0);
+      series.push({ date:s.date, total:total, sets:e.sets, weight:e.weight, unit:e.unit, type:s.type });
+    });
+  });
+
+  var pts = series.map(function(p){ return { x:p.date, y:p.total }; });
+  var best = series.reduce(function(a,b){ return b.total > a.total ? b : a; }, series[0]);
+
+  var opts = list.map(function(n){ return '<option' + (n === cur ? " selected" : "") + '>' + esc(n) + '</option>'; }).join("");
+
+  var rowsHTML = series.slice().reverse().map(function(p){
+    return '<tr><td>' + p.date + '</td><td>' + p.type + '</td><td>' + (p.weight ? p.weight + " kg" : "徒手") +
+      '</td><td>' + p.sets.join(" / ") + '</td><td>' + p.total + ' ' + p.unit + '</td></tr>';
+  }).join("");
+
+  el.innerHTML =
+    '<div class="card"><h2>动作进步 <span class="hint">指标：每次训练的总次数</span></h2>' +
+      '<div class="row" style="margin-bottom:14px"><div style="max-width:280px"><label>选择动作</label>' +
+      '<select id="ex-pick">' + opts + '</select></div></div>' +
+      chart(pts, { unit:" 次", color:"#60a5fa", title:cur + " 进步曲线" }) +
+      '<div class="note" style="margin-top:12px">最好一次：<b>' + best.total + ' ' + best.unit + '</b>（' + best.date + '，' +
+      best.sets.join("/") + '）。连续两次训练没超过这个数，就该加难度或减量休息了。</div>' +
+    '</div>' +
+    '<div class="card"><h2>' + esc(cur) + ' 明细</h2><table><tr><th>日期</th><th>类型</th><th>负重</th><th>各组</th><th>合计</th></tr>' +
+      rowsHTML + '</table></div>';
+
+  document.getElementById("ex-pick").addEventListener("change", function(){
+    el.setAttribute("data-ex", this.value);
+    renderProgress();
+  });
+}
+
+/* ============ 备份 ============ */
+function renderBackup(){
+  var el = document.getElementById("view-backup");
+  el.innerHTML =
+    '<div class="card"><h2>数据存在哪</h2><div class="note">' +
+      '看板的数据存在<b>这个浏览器</b>里（localStorage），双击打开就能用，不需要联网。<br>' +
+      '但浏览器存储是本地私有的：换电脑、清缓存、换浏览器都会丢。所以——<b>每周点一次「导出」，把 json 放进 fitness 文件夹</b>，那就是你的备份，也是我能读到的那份。' +
+    '</div></div>' +
+    '<div class="card"><h2>导出</h2>' +
+      '<div class="row">' +
+        '<button class="btn" id="btn-exp-json">导出 data.json</button>' +
+        '<button class="btn ghost" id="btn-exp-csv">导出 体重.csv</button>' +
+        '<button class="btn ghost" id="btn-import">导入 data.json</button>' +
+      '</div>' +
+      '<div class="note" style="margin-top:12px">导出后浏览器会下载到「下载」文件夹，文件名带日期。把它移到 <b>fitness/</b> 里覆盖旧的 data.json 即可。' +
+      (db.meta.lastExport ? '<br>上次导出：' + esc(db.meta.lastExport) : '') + '</div>' +
+      '<input type="file" id="file-import" accept=".json,application/json" class="hidden">' +
+    '</div>' +
+    '<div class="card"><h2>危险操作</h2>' +
+      '<button class="btn ghost" id="btn-reset" style="border-color:#7a2b2b;color:#f87171">清空全部数据</button>' +
+      '<div class="note" style="margin-top:10px">只在你想重新开始时点。清空前先导出。</div>' +
+    '</div>';
+
+  document.getElementById("btn-exp-json").addEventListener("click", function(){
+    var d = new Date();
+    var name = "data-" + fd(d) + ".json";
+    download(name, JSON.stringify(db, null, 2), "application/json");
+    db.meta.lastExport = fd(d) + " " + ("0"+d.getHours()).slice(-2) + ":" + ("0"+d.getMinutes()).slice(-2);
+    save(); render(); toast("已导出 " + name);
+  });
+
+  document.getElementById("btn-exp-csv").addEventListener("click", function(){
+    var head = "日期,体重kg,腰围cm,胸围cm,臂围cm,大腿围cm,备注\n";
+    var body = db.body.slice().sort(function(a,b){ return a.date < b.date ? -1 : 1; }).map(function(b){
+      return [b.date, b.weight || "", b.waist || "", b.chest || "", b.arm || "", b.thigh || "", '"' + (b.note || "") + '"'].join(",");
+    }).join("\n");
+    download("body-" + fd(new Date()) + ".csv", "\ufeff" + head + body, "text/csv;charset=utf-8");
+    toast("已导出 CSV");
+  });
+
+  document.getElementById("btn-import").addEventListener("click", function(){
+    document.getElementById("file-import").click();
+  });
+  document.getElementById("file-import").addEventListener("change", function(e){
+    var f = e.target.files[0];
+    if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{
+        var d = JSON.parse(r.result);
+        if(!d || !Array.isArray(d.body) || !Array.isArray(d.sessions)) throw new Error("格式不对");
+        db.body = d.body;
+        db.sessions = d.sessions;
+        if(d.profile) db.profile = Object.assign(db.profile, d.profile);
+        save(); render(); toast("导入成功");
+      }catch(err){ toast("导入失败：不是有效的 data.json"); }
+    };
+    r.readAsText(f);
+  });
+
+  document.getElementById("btn-reset").addEventListener("click", function(){
+    if(!confirm("确定清空全部训练和体重数据？建议先导出。")) return;
+    db = defaultDB(); save(); render(); toast("已清空");
+  });
+}
+
+function download(filename, text, mime){
+  var blob = new Blob([text], { type: mime || "text/plain" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 400);
+}
+
+/* ============ 路由 ============ */
+var current = "overview";
+function render(){
+  renderOverview();
+  renderTrain();
+  renderBody();
+  renderProgress();
+  renderBackup();
+  var cwNow = weekOf(todayStr());
+  var startedNow = pd(todayStr()) >= pd(PLAN_START);
+  var dayNow = Math.floor((pd(todayStr()) - pd(PLAN_START)) / 86400000) + 1;
+  document.getElementById("today-line").textContent = !startedNow
+    ? "今天 " + todayStr() + " · 距开始还有 " + (1 - dayNow) + " 天"
+    : (cwNow > WEEKS ? "今天 " + todayStr() + " · 12 周已完成"
+        : "今天 " + todayStr() + " · 第 " + dayNow + " 天（第 " + cwNow + " 周）");
+}
+function show(view){
+  current = view;
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("on", t.getAttribute("data-view") === view); });
+  document.querySelectorAll("main > section").forEach(function(s){ s.classList.add("hidden"); });
+  document.getElementById("view-" + view).classList.remove("hidden");
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ show(t.getAttribute("data-view")); });
+});
+render();
+</script>
+</body>
+</html>

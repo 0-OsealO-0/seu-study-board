@@ -713,7 +713,7 @@
         <span class="tag">南京 / 长三角</span>
         <span class="tag">宣传委员</span>
         <span class="tag">云端同步为主</span>
-        <span class="tag">更新：2026-11-20</span>
+        <span class="tag">更新：2026-11-27</span>
       </div>
     </header>
 
@@ -723,6 +723,7 @@
       <button class="tab" type="button" data-view="week">周计划</button>
       <button class="tab" type="button" data-view="method">学习方法</button>
       <button class="tab" type="button" data-view="resources">学习资料整理</button>
+      <button class="tab" type="button" data-view="fitness">健身</button>
     </nav>
 
     <section class="view active" id="overview">
@@ -2593,6 +2594,116 @@
           </article>
         </div>
       </section>
+    </section>
+
+    <section class="view" id="fitness">
+      <div class="callout success">
+        <strong>今日训练 · <span id="fit-today-head">—</span></strong>
+        <span id="fit-today-body">—</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="fit-day">—</strong><span>训练第几天</span></div>
+        <div class="stat"><strong id="fit-week">—</strong><span>第几周 / 共 12</span></div>
+        <div class="stat"><strong id="fit-left">—</strong><span>剩余天数</span></div>
+        <div class="stat"><strong>68 → 71 kg</strong><span>12 周体重目标</span></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>训练看板</h2>
+          <span class="section-note">打卡 · 体重曲线 · 12 周打卡墙</span>
+        </div>
+        <p><a class="resource-link" href="fitness-dashboard.html" target="_blank" rel="noopener">打开健身进度看板 →</a></p>
+        <p class="section-note">看板数据存在浏览器本地，换设备或清缓存会丢：每周日点「备份 → 导出 data.json」存回 DSH 工作区 <code>fitness/</code>。训练计划全文、饮食方案、训练日志都在那个文件夹里。</p>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>一周三练</h2>
+          <span class="section-note">每次 45–55 分钟，前 4 周只学动作不追重量</span>
+        </div>
+        <div class="callout">
+          <strong>周一 · A 日（下肢主导）</strong>
+          深蹲 3×12–15 · 俯卧撑 3×6–12 · 单臂划船 3×10–12/侧 · 臀桥 3×12–15 · 平板支撑 3×30–45 秒 · 提踵 2×20
+        </div>
+        <div class="callout success">
+          <strong>周三 · B 日（上肢主导）</strong>
+          箭步蹲 3×8–10/侧 · 站姿肩推 3×10–12 · 引体或反向划船 3×3–10 · 单腿臀桥 3×10–12/侧 · 死虫 3×8/侧 · 侧平板 2×20–30 秒
+        </div>
+        <div class="callout warning">
+          <strong>周五 · A' 日（全身变式）</strong>
+          慢速深蹲（3 秒）3×10–12 · 窄距/垫高俯卧撑 3×6–10 · 俯身飞鸟 3×12–15 · 农夫行走 3×30–40 米 · 卷腹 3×10–12 · 靠墙静蹲 2×30 秒
+        </div>
+        <div class="callout">
+          <strong>周六或周日 · 健身房日（可选）</strong>
+          高脚杯深蹲 3×8–10 · 坐姿划船 3×10–12 · 哑铃卧推 3×8–10 · 高位下拉 3×10–12 · 罗马尼亚硬拉 3×10 · 有氧 15–20 分钟
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          var START = new Date(2026, 10, 27);   // 训练第 1 天
+          var WEEK1_MON = new Date(2026, 10, 23); // 第 1 周所在周的周一
+          var WEEKS = 12, DAYS = WEEKS * 7;
+          var head = document.getElementById("fit-today-head");
+          var body = document.getElementById("fit-today-body");
+          var dayEl = document.getElementById("fit-day");
+          var weekEl = document.getElementById("fit-week");
+          var leftEl = document.getElementById("fit-left");
+          if (!head || !dayEl) return;
+
+          var PLAN = {
+            1: ["A 日 · 蹲 + 推 + 拉", "深蹲 / 俯卧撑 / 单臂划船 / 臀桥 / 平板支撑 / 提踵，每个动作 3 组，留 3–4 次余力。"],
+            3: ["B 日 · 单腿 + 肩推 + 引体", "箭步蹲 / 站姿肩推 / 引体或反向划船 / 单腿臀桥 / 死虫 / 侧平板，每个动作 3 组。"],
+            5: ["A' 日 · 变式 + 核心", "慢速深蹲 / 窄距俯卧撑 / 俯身飞鸟 / 农夫行走 / 卷腹 / 靠墙静蹲。"],
+            6: ["健身房日（可选）", "高脚杯深蹲 / 坐姿划船 / 哑铃卧推 / 高位下拉 / 罗马尼亚硬拉 + 15 分钟有氧。第一次去只学动作。"],
+            0: ["健身房日（可选）", "高脚杯深蹲 / 坐姿划船 / 哑铃卧推 / 高位下拉 / 罗马尼亚硬拉 + 15 分钟有氧。第一次去只学动作。"]
+          };
+
+          function days(a, b) { return Math.round((a - b) / 86400000); }
+
+          function update() {
+            var now = new Date();
+            now.setHours(0, 0, 0, 0);
+            var dayNo = days(now, START) + 1;
+
+            if (dayNo < 1) {
+              head.textContent = "未开始";
+              body.textContent = "今天离第 1 天还有 " + (1 - dayNo) + " 天。";
+              dayEl.textContent = "0"; weekEl.textContent = "未开始"; leftEl.textContent = DAYS;
+              return;
+            }
+            if (dayNo > DAYS) {
+              head.textContent = "12 周已走完";
+              body.textContent = "该重测了：体重、围度、深蹲和俯卧撑的最大次数，拿来和 11/27 比。";
+              dayEl.textContent = "已完成"; weekEl.textContent = WEEKS + " 周"; leftEl.textContent = "0";
+              return;
+            }
+
+            var weekNo = Math.floor(days(now, WEEK1_MON) / 7) + 1;
+            var plan = (dayNo === 1) ? ["A 日 · 第 1 天（蹲 + 推 + 拉）", "第一次训练。每个动作只做 3 组，留 3–4 次余力，重点是记住动作感觉。"]
+                                     : PLAN[now.getDay()];
+
+            dayEl.textContent = dayNo;
+            weekEl.textContent = weekNo;
+            leftEl.textContent = DAYS - dayNo;
+
+            if (plan) {
+              head.textContent = plan[0];
+              body.textContent = plan[1];
+            } else {
+              head.textContent = "休息日";
+              body.textContent = "散步或拉伸 10 分钟。今晚花 5 分钟做一次复盘：睡眠、酸痛、体重。";
+            }
+          }
+
+          update();
+          document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) { update(); }
+          });
+        })();
+      </script>
     </section>
 
     <p class="footer-note">依据：2026-09-21 至 09-27 课表、每周 25 小时学习预算、6-8 小时活动、5 小时竞赛上限及保研与通信工程分流目标。考核比例和后半学期课表待更新。</p>
