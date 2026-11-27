@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>动作图解 · 12 个动作怎么做</title>
+<style>
+:root{
+  --bg:#0f1115;--surface:#171a21;--surface2:#1e222b;--line:#2a2f3a;
+  --text:#e8ecf1;--muted:#8b93a1;--accent:#d3f56a;--accent-dim:#7d9440;
+  --amber:#f5c451;--red:#f56a6a;--blue:#6a9cf5;--teal:#4fd1c5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  padding:0 0 60px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+header{padding:34px 0 10px}
+h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+h1 em{color:var(--accent);font-style:normal}
+.sub{color:var(--muted);font-size:13.5px}
+.lead{
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:12px;padding:14px 16px;margin:18px 0 22px;font-size:13.5px;color:#c9d1dc;
+}
+.lead b{color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.card-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card h2{font-size:16px;margin:0}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+.fig{background:#12151b;border:1px solid #222833;border-radius:10px;padding:6px 4px}
+.fig svg{width:100%;height:auto;display:block}
+ul{margin:0;padding-left:18px;font-size:13px;color:#c9d1dc}
+li{margin:3px 0}
+li b{color:var(--text)}
+.err{font-size:12.5px;color:#f0a0a0;background:#241417;border:1px solid #402028;border-radius:8px;padding:7px 10px}
+.err b{color:var(--red)}
+a.vid{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--accent);
+  text-decoration:none;border-bottom:1px dashed var(--accent-dim);align-self:flex-start;
+}
+a.vid:hover{color:#fff}
+a.vid::before{content:"▶";font-size:10px}
+.foot{color:var(--muted);font-size:12.5px;margin-top:28px;line-height:1.9}
+.foot a{color:var(--accent)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 20px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.legend i.dash{background:repeating-linear-gradient(90deg,var(--accent) 0 4px,transparent 4px 8px);opacity:.5}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  h1{font-size:21px}
+  .grid{grid-template-columns:1fr;gap:13px}
+  .card{padding:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>动作图解 <em>·</em> 12 个动作</h1>
+    <div class="sub">画的是示意，不是标准解剖图；真正管用的是每张图下面的三条要点</div>
+  </header>
+
+  <div class="lead">
+    <b>怎么看：</b><b>实线</b>是你该在的位置，<b>虚线</b>是动作的另一端；橙色虚线箭头是发力方向。<br>
+    <b>先做对，再做多。</b>前 4 周每个动作都留 3–4 次余力，动作变形就停，不要硬撑。
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--accent)"></i>终点位置</span>
+    <span><i class="dash"></i>起始位置</span>
+    <span><i style="background:var(--amber)"></i>发力方向</span>
+    <span><i style="background:#5a6373"></i>地面 / 墙面</span>
+  </div>
+
+  <div class="grid" id="cards"></div>
+
+  <div class="foot">
+    <b>视频说明：</b>标「▶」的是我确认存在的 B 站视频；标「在本站搜」的是我没找到足够确定的一条，直接给搜索页，你自己挑播放量高、讲得慢的看。<br>
+    图解只是辅助，<b>最终标准是「目标肌肉有感觉、关节不疼」</b>。哪个动作练完膝盖 / 腰 / 肩不舒服，回来说一声，我给你换。<br>
+    <a href="dashboard.html">← 回到进度看板</a>
+  </div>
+</div>
+
+<script>
+var F = {
+  ground: function(y){ return '<line x1="8" y1="'+(y||106)+'" x2="162" y2="'+(y||106)+'" stroke="#5a6373" stroke-width="2" stroke-linecap="round"/>'; },
+  head: function(x,y,r){ return '<circle cx="'+x+'" cy="'+y+'" r="'+(r||8)+'" fill="none" stroke="#d3f56a" stroke-width="3.2"/>'; },
+  L: function(x1,y1,x2,y2,c){ return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(c||"#d3f56a")+'" stroke-width="3.2" stroke-linecap="round"/>'; },
+  arrow: function(d){ return '<path d="'+d+'" fill="none" stroke="#f5c451" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round" marker-end="url(#ah)"/>'; },
+  lab: function(x,y,t){ return '<text x="'+x+'" y="'+y+'" fill="#8b93a1" font-size="9" font-family="sans-serif">'+t+'</text>'; },
+  ghost: function(inner){ return '<g opacity="0.4" stroke-dasharray="3 3">'+inner+'</g>'; }
+};
+var DEFS = '<defs><marker id="ah" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#f5c451"/></marker></defs>';
+function svg(inner){ return '<svg viewBox="0 0 170 120" xmlns="http://www.w3.org/2000/svg">'+DEFS+inner+'</svg>'; }
+
+var M = [
+  {
+    name:"深蹲", dayText:"A 日 / A' 日",
+    fig: svg(
+      F.ground() +
+      F.ghost(F.head(37,30) + F.L(37,38,37,70) + F.L(37,70,37,88) + F.L(37,88,37,106) + F.L(30,106,46,106) + F.L(37,46,37,74)) +
+      F.lab(22,20,"起") +
+      F.head(122,36) + F.L(122,44,112,78) + F.L(112,78,128,88) + F.L(128,88,128,106) +
+      F.L(121,106,138,106) + F.L(120,48,146,58) + F.lab(116,26,"终") +
+      F.arrow("M104,58 C100,72 100,80 106,84")
+    ),
+    pts:["<b>脚</b>：与肩同宽，脚尖略外八，全脚掌踩实、重心在中足。","<b>髋</b>：像坐椅子一样往后往下，膝盖朝脚尖方向，不要内扣。","<b>深度</b>：大腿到与地面平行即可；下蹲数 3 秒（A' 日）。"],
+    err:"膝盖内扣 ／ 脚跟离地 → 脚掌外八一点，想象「用脚把地面掰开」。"
+  },
+  {
+    name:"俯卧撑", dayText:"A 日 / A' 日",
+    fig: svg(
+      F.ground(104) +
+      F.ghost(F.head(38,56) + F.L(48,62,54,104) + F.L(48,62,92,82) + F.L(92,82,116,92) + F.L(116,92,132,104)) +
+      F.lab(28,46,"起") +
+      F.head(40,80) + F.L(50,86,42,97) + F.L(42,97,54,104) + F.L(50,86,94,95) + F.L(94,95,118,100) + F.L(118,100,134,104) +
+      F.lab(30,70,"终") +
+      F.arrow("M66,58 L60,74")
+    ),
+    pts:["<b>身体一条线</b>：头、背、臀、脚跟成直线，别塌腰也别撅屁股。","<b>手肘</b>：与身体夹 45°，不要向外张成 90°。","<b>降级</b>：做不了就跪姿，或手撑床沿 / 桌沿（越高越省力）。"],
+    err:"下到一半就抬头看前面 → 脖子跟着躯干动，眼睛看地面斜前方。"
+  },
+  {
+    name:"单臂划船", dayText:"A 日",
+    fig: svg(
+      F.ground() +
+      F.ghost(F.L(68,58,66,92)) + F.lab(48,52,"起") +
+      F.head(56,54) + F.L(68,58,104,80) + F.L(104,80,112,92) + F.L(112,92,118,106) +
+      F.L(68,58,82,72) + F.L(82,72,96,68) + F.lab(88,52,"终") +
+      F.arrow("M74,98 C78,90 82,82 88,76")
+    ),
+    pts:["<b>背先动</b>：想象「用肘尖去够后裤兜」，先夹背再弯臂。","<b>背要平</b>：腰不塌、不左右歪，另一只手撑床或膝盖。","<b>顶点停 1 秒</b>：肩胛骨往中间挤一下，感受背侧发力。"],
+    err:"用手臂硬拽、肩膀耸起来 → 重量减半，先找到背的感觉。"
+  },
+  {
+    name:"臀桥", dayText:"A 日",
+    fig: svg(
+      F.ground(104) +
+      F.ghost(F.head(26,90) + F.L(36,96,84,100) + F.L(84,100,106,84) + F.L(106,84,112,104) + F.L(26,90,20,104)) +
+      F.lab(14,84,"起") +
+      F.head(26,90) + F.L(36,96,84,82) + F.L(84,82,108,80) + F.L(108,80,114,104) + F.L(26,90,20,102) +
+      F.lab(92,74,"终") +
+      F.arrow("M70,98 C70,90 72,85 76,82")
+    ),
+    pts:["<b>先收紧</b>：顶起前先收腹 + 夹臀，不要用腰去顶。","<b>顶到肩髋膝一条线</b>，停 1 秒再慢放（3 秒下）。","<b>脚跟发力</b>：脚离臀部约一个手掌，太远会变成练大腿后侧。"],
+    err:"顶得太高、腰悬空 → 肋骨下沉，顶到背不离地为止。"
+  },
+  {
+    name:"平板支撑", dayText:"A 日",
+    fig: svg(
+      F.head(34,66) + F.L(46,72,46,102) + F.L(46,102,58,102) +
+      F.L(46,72,86,86) + F.L(86,86,112,96) + F.L(112,96,130,104) +
+      F.arrow("M62,70 L120,94") + F.lab(40,54,"撑") +
+      '<line x1="16" y1="106" x2="148" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>身体一条线</b>：头、背、臀、脚跟一条直线。","<b>肘在肩正下方</b>，小臂平行贴地。","<b>呼吸别憋</b>：4 秒吸 4 秒呼；腰酸就停，别硬撑到塌腰。"],
+    err:"屁股越抬越高（变成休息）→ 只撑 20 秒但标准，比撑 2 分钟强。"
+  },
+  {
+    name:"箭步蹲 / 分腿蹲", dayText:"B 日",
+    fig: svg(
+      F.ground() +
+      F.ghost(F.head(78,24) + F.L(78,32,78,68) + F.L(78,68,78,84) + F.L(78,84,78,106) + F.L(78,68,92,88) + F.L(92,88,102,106) + F.L(70,106,86,106)) +
+      F.lab(64,20,"起") +
+      F.head(78,46) + F.L(78,54,78,84) + F.L(78,84,70,92) + F.L(70,92,70,106) +
+      F.L(78,84,98,98) + F.L(98,98,108,106) + F.L(63,106,78,106) + F.lab(84,38,"终") +
+      F.arrow("M92,54 L88,74")
+    ),
+    pts:["<b>前膝不过脚尖太多</b>，小腿尽量垂直地面。","<b>后膝往下沉</b>，不碰地；重心在两脚之间。","<b>先扶墙做</b>：新手扶墙 / 扶床沿找平衡，别一开始就追次数。"],
+    err:"后腿伸直、前腿膝盖内扣 → 缩小步幅，脚掌踩稳再下。"
+  },
+  {
+    name:"站姿肩推", dayText:"B 日",
+    fig: svg(
+      F.ground() +
+      F.ghost(F.L(78,46,64,54) + F.L(64,54,68,38) + F.L(78,46,92,54) + F.L(92,54,88,38)) +
+      F.head(78,26) + F.L(78,34,78,74) + F.L(78,74,76,90) + F.L(76,90,76,106) + F.L(80,90,82,106) +
+      F.L(78,46,72,24) + F.L(72,24,72,12) + F.L(78,46,84,24) + F.L(84,24,84,12) + F.lab(100,22,"起 → 终") +
+      F.arrow("M62,44 L62,20")
+    ),
+    pts:["<b>核心先收紧</b>：夹臀收腹，别用腰去顶重量。","<b>推到头顶上方</b>，手臂接近伸直但不锁死。","<b>肘不要外张</b>，小臂始终垂直地面。"],
+    err:"推的时候腰往后仰 → 重量减半，或先坐着推（靠背椅）。"
+  },
+  {
+    name:"反向划船（桌下 / 单杠）", dayText:"B 日",
+    fig: svg(
+      '<line x1="30" y1="62" x2="130" y2="62" stroke="#5a6373" stroke-width="5" stroke-linecap="round"/>' +
+      F.ghost(F.head(56,76) + F.L(68,74,68,62) + F.L(68,74,102,88) + F.L(102,88,116,99) + F.L(116,99,130,106)) +
+      F.lab(38,56,"起") +
+      F.head(58,66) + F.L(70,66,68,62) + F.L(70,66,104,81) + F.L(104,81,118,95) + F.L(118,95,132,104) +
+      F.lab(42,46,"终") +
+      F.arrow("M100,92 L96,78") +
+      '<line x1="20" y1="106" x2="150" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>身体一条线</b>，脚跟支撑；胸去找杆 / 桌沿。","<b>先收肩胛</b>再曲臂，别只用手臂拉。","<b>脚越往前越难</b>：新手脚跟踩地、身体斜一点开始。"],
+    err:"腰塌下去、屁股先动 → 夹臀收腹，把身体当一块板。"
+  },
+  {
+    name:"死虫式", dayText:"B 日",
+    fig: svg(
+      F.head(28,92) + F.L(38,98,84,100) + F.L(84,100,102,82) + F.L(102,82,100,104) +
+      F.L(84,100,112,96) + F.L(112,96,130,100) +
+      F.L(46,92,52,66) + F.L(46,96,72,102) +
+      F.arrow("M52,62 L56,48") + F.arrow("M126,98 L142,100") +
+      '<line x1="16" y1="106" x2="148" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>腰贴地</b>：整个过程下背不能离地（这是唯一标准）。","<b>对角伸展</b>：右手 + 左腿慢慢伸出，收回来再换边。","<b>越慢越好</b>：4 秒伸、4 秒收，腰一离地就是过头了。"],
+    err:"腰拱起来还在伸 → 缩小幅度，手脚只伸一半也算数。"
+  },
+  {
+    name:"俯身飞鸟", dayText:"A' 日",
+    fig: svg(
+      F.head(85,24) + F.L(62,40,108,40) + F.L(72,40,74,80) + F.L(98,40,96,80) +
+      F.ghost(F.L(62,40,52,76) + F.L(108,40,118,76)) +
+      F.lab(40,34,"起") +
+      F.L(62,40,32,48) + F.L(108,40,138,48) + F.lab(124,34,"终") +
+      F.arrow("M50,74 C40,62 34,54 32,50") + F.arrow("M120,74 C130,62 136,54 138,50")
+    ),
+    pts:["<b>背先平</b>：屈髋前倾，背别弓；膝盖微屈。","<b>肘微弯固定</b>，用肩后侧把两臂「打开」，不是甩。","<b>重量很轻</b>：两瓶 1.5L 水就够，宁可轻也别甩。"],
+    err:"耸肩 / 用手臂猛甩 → 降到最轻，放慢到 3 秒一次。"
+  },
+  {
+    name:"农夫行走", dayText:"A' 日",
+    fig: svg(
+      F.head(84,26) + F.L(84,34,84,74) + F.L(84,74,76,90) + F.L(76,90,72,106) + F.L(84,74,94,92) + F.L(94,92,100,106) +
+      F.L(84,46,66,86) + F.L(84,46,102,86) +
+      '<rect x="58" y="86" width="14" height="20" rx="3" fill="none" stroke="#8b93a1" stroke-width="2"/>' +
+      '<rect x="95" y="86" width="14" height="20" rx="3" fill="none" stroke="#8b93a1" stroke-width="2"/>' +
+      F.arrow("M116,60 L142,56") + F.lab(70,20,"别耸肩") +
+      '<line x1="58" y1="106" x2="122" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>肩往下压</b>：别耸肩，肩膀远离耳朵。","<b>核心收紧</b>，走直线，步子小而稳。","<b>重量</b>：两瓶装满的水（1.5L ≈ 1.5kg）起步，走 30–40 米。"],
+    err:"走起来左右晃 → 重量减半，先把身体走稳。"
+  },
+  {
+    name:"靠墙静蹲", dayText:"A' 日",
+    fig: svg(
+      '<line x1="40" y1="10" x2="40" y2="106" stroke="#5a6373" stroke-width="4" stroke-linecap="round"/>' +
+      F.ghost(F.L(46,42,46,70) + F.L(46,70,78,70) + F.L(78,70,78,106)) +
+      F.head(58,34) + F.L(46,42,46,84) + F.L(46,84,86,84) + F.L(86,84,86,106) + F.L(86,106,102,106) +
+      F.L(46,54,40,56) + F.lab(92,72,"≈90°") +
+      '<line x1="30" y1="106" x2="150" y2="106" stroke="#5a6373" stroke-width="2"/>'
+    ),
+    pts:["<b>背贴墙</b>，大腿尽量接近平行地面（做不到就先蹲浅一点）。","<b>膝盖在脚踝正上方</b>，别超过脚尖太多。","<b>时间</b>：从 20 秒开始，两组；膝盖不舒服就停。"],
+    err:"膝盖内扣 / 憋气 → 膝盖朝脚尖方向，呼吸保持均匀。"
+  }
+];
+
+var VIDEOS = {
+  "深蹲":{u:"https://www.bilibili.com/video/av602792980",t:"卓叔：普通人如何学会一个标准的深蹲"},
+  "俯卧撑":{u:"https://www.bilibili.com/video/av899305954",t:"跪姿俯卧撑最详细动作讲解"},
+  "单臂划船":{u:"https://www.bilibili.com/video/av227993471",t:"单臂哑铃划船——正确做法（全程无废话）"},
+  "臀桥":{u:"https://www.bilibili.com/video/av299988939",t:"臀腿塑形王牌动作，臀桥教学"},
+  "平板支撑":{u:"https://www.bilibili.com/video/av811982419",t:"你真的做对平板支撑了吗？（保姆级教学）"},
+  "箭步蹲 / 分腿蹲":{u:"https://www.bilibili.com/video/av393720440",t:"练腿精讲｜箭步蹲正确示范，怎么做不伤膝盖"},
+  "农夫行走":{u:"https://www.bilibili.com/video/av990890543",t:"最容易掌握而且高效的核心训练动作，农夫行走"},
+  "靠墙静蹲":{u:"https://www.bilibili.com/video/av114040558912485",t:"正确靠墙静蹲养护膝盖"}
+};
+
+var host = document.getElementById("cards");
+M.forEach(function(m){
+  var pts = m.pts.map(function(p){ return "<li>"+p+"</li>"; }).join("");
+  var v = VIDEOS[m.name];
+  var link = v
+    ? '<a class="vid" href="'+v.u+'" target="_blank" rel="noopener">'+v.t+'</a>'
+    : '<a class="vid" href="https://search.bilibili.com/all?keyword='+encodeURIComponent(m.name)+'" target="_blank" rel="noopener">在本站搜「'+m.name+'」</a>';
+  host.insertAdjacentHTML("beforeend",
+    '<div class="card">'+
+      '<div class="card-head"><h2>'+m.name+'</h2><span class="badge">'+m.dayText+'</span></div>'+
+      '<div class="fig">'+m.fig+'</div>'+
+      '<ul>'+pts+'</ul>'+
+      '<div class="err"><b>常见错误：</b>'+m.err+'</div>'+
+      link+
+    '</div>'
+  );
+});
+</script>
+</body>
+</html>

@@ -86,7 +86,7 @@ svg{display:block;width:100%;height:auto}
 .cell.today{outline:2px solid var(--amber);outline-offset:-1px}
 label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
 input,select,textarea{
-  width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--text);
+  width:100%;max-width:100%;min-width:0;background:var(--surface2);border:1px solid var(--line);color:var(--text);
   border-radius:9px;padding:9px 11px;font:inherit;font-size:14px;min-height:42px;
 }
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-dim)}
@@ -134,6 +134,8 @@ tr:last-child td{border-bottom:0}
 .note b{color:var(--text)}
 .warn{border-color:#7a5a12;background:#221b0c}
 .hidden{display:none!important}
+.hlink{color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent-dim);white-space:nowrap}
+.hlink:hover{color:#fff}
 
 /* ===== 手机端 ===== */
 @media(max-width:760px){
@@ -158,7 +160,9 @@ tr:last-child td{border-bottom:0}
   .cell{width:100%;height:auto;aspect-ratio:1;border-radius:7px}
   .lg .cell{width:14px;height:14px;aspect-ratio:auto;border-radius:4px}
   .stat{font-size:12.5px;padding-bottom:8px}
-  .row{gap:10px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row > div{min-width:0}
+  input[type=date]{min-width:0}
   button.btn{width:100%}
   .note{font-size:12px}
 }
@@ -177,6 +181,7 @@ tr:last-child td{border-bottom:0}
       <div class="sub" id="subline">12 周新手计划 · 每周一/三/五 + 周末健身房</div>
     </div>
     <div class="sub" id="today-line"></div>
+    <div class="sub"><a class="hlink" href="动作图解.html">动作图解 · 12 个动作怎么做 →</a></div>
   </header>
 
   <nav class="tabs">
