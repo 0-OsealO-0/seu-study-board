@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f1115">
-<title>动作图解 · 13 个动作怎么做</title>
+<title>动作图解 · 13 个动作 + 7 个练后拉伸</title>
 <style>
 :root{
   --bg:#0f1115;--surface:#171a21;--surface2:#1e222b;--line:#2a2f3a;
@@ -34,6 +34,12 @@ h1 em{color:var(--accent);font-style:normal}
   display:flex;flex-direction:column;gap:10px;
 }
 .card-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sec-head{margin:30px 0 14px;padding-top:22px;border-top:1px solid var(--line)}
+.sec-head h2{font-size:21px;margin:0 0 6px;letter-spacing:-.01em}
+.sec-head h2 em{color:var(--accent);font-style:normal}
+.sec-head .sub{font-size:13px}
+.card.sc{gap:8px}
+.card.sc ul{margin:0}
 .card h2{font-size:16px;margin:0}
 .badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
 .fig{background:#12151b;border:1px solid #222833;border-radius:10px;padding:6px 4px}
@@ -65,7 +71,7 @@ a.vid::before{content:"▶";font-size:10px}
 <body>
 <div class="wrap">
   <header>
-    <h1>动作图解 <em>·</em> 13 个动作</h1>
+    <h1>动作图解 <em>·</em> 13 个动作 + 7 个拉伸</h1>
     <div class="sub">画的是示意，不是标准解剖图；真正管用的是每张图下面的三条要点</div>
   </header>
 
@@ -82,6 +88,16 @@ a.vid::before{content:"▶";font-size:10px}
   </div>
 
   <div class="grid" id="cards"></div>
+
+  <div class="sec-head">
+    <h2>练后拉伸 <em>·</em> 7 个动作</h2>
+    <div class="sub">每个 30 秒 × 1–2 组，全套 5 分钟。趁身体还热做；拉到「紧但不疼」就停，保持呼吸——<b>别弹震、别憋气</b>。</div>
+  </div>
+  <div class="lead" style="margin:0 0 18px">
+    <b>什么时候做：</b>训练一结束就做（肌温还在，拉伸效果最好），别拖到第二天。<br>
+    <b>放在哪里：</b>只在<b>练完</b>做静态拉伸；练前热身用动态的（原地抬腿、转肩、深蹲热身组），长时间静态拉伸会让正式组发力变钝。
+  </div>
+  <div class="grid" id="stretch"></div>
 
   <div class="foot">
     <b>视频说明：</b>标「▶」的是我确认存在的 B 站视频；标「在本站搜」的是我没找到足够确定的一条，直接给搜索页，你自己挑播放量高、讲得慢的看。<br>
@@ -293,6 +309,27 @@ M.forEach(function(m){
       '<ul>'+pts+'</ul>'+
       '<div class="err"><b>常见错误：</b>'+m.err+'</div>'+
       link+
+    '</div>'
+  );
+});
+
+var S = [
+  { name:"弓步髋屈肌拉伸", time:"30 秒 × 1 / 侧", how:"单膝跪地成弓步，后膝垫个软的东西；先夹紧后侧屁股，再把髋部往前下方推一点，上身保持直立。", feel:"后腿大腿根部、髋前侧有牵拉感，腰不酸。", dont:"塌腰、撅屁股往前顶——那是在用腰椎代偿。先夹紧后侧屁股再推。" },
+  { name:"4 字臀肌拉伸", time:"30 秒 × 1 / 侧", how:"坐在椅子前半，右脚踝架到左膝上（像翘二郎腿），背挺直，从髋部往前倾，直到右臀有感觉。", feel:"架起来那条腿的臀部深处。", dont:"弓着背、低头往前够。背要挺直，只屈髋。" },
+  { name:"站姿大腿前侧拉伸", time:"30 秒 × 1 / 侧", how:"单手扶墙，另一只手抓同侧脚踝往屁股靠，两膝并拢、膝盖朝下，骨盆微微后倾。", feel:"大腿正前方到髋前侧。", dont:"膝盖外翻、塌腰挺肚子。膝盖朝下，夹紧屁股再做。" },
+  { name:"站姿腘绳肌拉伸", time:"30 秒 × 1 / 侧", how:"一只脚跟着地（或搭床沿）腿伸直，背挺直，从髋部往前折叠，双手放膝上支撑。", feel:"大腿后侧到膝窝后面。", dont:"弓背去够脚尖——那样拉的是背不是腿。背挺直，屈髋不屈腰。" },
+  { name:"门框胸肌拉伸", time:"30 秒 × 1 / 侧", how:"小臂贴门框，手肘略低于肩，同侧脚往前跨一步，身体慢慢前移。", feel:"胸口到肩膀前面。", dont:"耸肩、肘抬到高于肩。肩先沉下去，肘略低于肩更安全。" },
+  { name:"扶墙背阔肌拉伸", time:"30 秒 × 1 / 侧", how:"双手扶墙或横杆，屁股往后坐、上身前压，把腋下打开。", feel:"腋下到身体侧面一条线。", dont:"腰塌下去。收紧核心再后坐，不然全压腰椎上了。" },
+  { name:"婴儿式腰背放松", time:"60 秒", how:"跪坐，双手往前伸，额头贴地，屁股往脚跟方向坐，自然深呼吸。", feel:"腰背松开就行，不强求拉伸感。", dont:"憋气硬撑。这是放松，呼吸慢下来让腰自己沉。" }
+];
+
+var shost = document.getElementById("stretch");
+S.forEach(function(s){
+  shost.insertAdjacentHTML("beforeend",
+    '<div class="card sc">'+
+      '<div class="card-head"><h2>'+s.name+'</h2><span class="badge">'+s.time+'</span></div>'+
+      '<ul><li><b>怎么做：</b>'+s.how+'</li><li><b>该有感觉：</b>'+s.feel+'</li></ul>'+
+      '<div class="err"><b>别做错：</b>'+s.dont+'</div>'+
     '</div>'
   );
 });
