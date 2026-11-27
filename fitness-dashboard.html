@@ -196,6 +196,7 @@ tr:last-child td{border-bottom:0}
     <button class="tab" data-view="body">体重围度</button>
     <button class="tab" data-view="progress">动作进步</button>
     <button class="tab" data-view="backup">备份</button>
+    <button class="tab" data-view="sync">同步</button>
   </nav>
 
   <main>
@@ -204,6 +205,7 @@ tr:last-child td{border-bottom:0}
     <section id="view-body" class="hidden"></section>
     <section id="view-progress" class="hidden"></section>
     <section id="view-backup" class="hidden"></section>
+    <section id="view-sync" class="hidden"></section>
   </main>
 </div>
 <div id="toast"></div>
@@ -669,6 +671,7 @@ function renderBody(){
     db.body.push(rec);
     db.body.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
     save(); render(); toast("已保存 " + date);
+    queuePush();
   });
 }
 
@@ -821,6 +824,219 @@ function download(filename, text, mime){
   setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 400);
 }
 
+
+/* ============ 云同步（Supabase，复用作战板的项目） ============ */
+var SYNC = {
+  url: "https://tdjgntdlwclyswhnkjie.supabase.co",
+  key: "sb_publishable_m6dCCULLILrnbFLPa4MqXA_DMRhpL_A",
+  client: null, session: null, busy: false, tried: false,
+  emailDraft: "", passDraft: "", msg: "", msgBad: false
+};
+
+function syncMsg(t, bad){ SYNC.msg = t || ""; SYNC.msgBad = !!bad; }
+
+function loadSupabase(cb){
+  if(window.supabase){ cb(); return; }
+  var sc = document.createElement("script");
+  sc.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+  sc.onload = function(){ cb(); };
+  sc.onerror = function(){ cb(new Error("加载 supabase-js 失败，检查网络")); };
+  document.head.appendChild(sc);
+}
+
+function initClient(cb){
+  if(SYNC.client){ cb(); return; }
+  loadSupabase(function(err){
+    if(err){ cb(err); return; }
+    try{
+      SYNC.client = window.supabase.createClient(SYNC.url, SYNC.key, {
+        auth: { persistSession: true, autoRefreshToken: true }
+      });
+      cb();
+    }catch(e){ cb(e); }
+  });
+}
+
+function restoreSession(cb){
+  initClient(function(err){
+    if(err){ cb(err); return; }
+    SYNC.client.auth.getSession().then(function(r){
+      SYNC.session = (r && r.data) ? r.data.session : null;
+      cb();
+    }).catch(function(e){ cb(e); });
+  });
+}
+
+function docNow(){
+  return { profile: db.profile, sessions: db.sessions, body: db.body,
+           meta: { lastExport: db.meta.lastExport || null } };
+}
+
+function mergeDocs(local, cloud, cloudWins){
+  var S = {}, B = {};
+  function putS(x, win){
+    if(!x || !x.date || !x.type) return;
+    var k = x.date + "|" + x.type;
+    if(!S[k] || win) S[k] = x;
+  }
+  function putB(x, win){
+    if(!x || !x.date) return;
+    if(!B[x.date] || win) B[x.date] = x;
+  }
+  (local.sessions || []).forEach(function(x){ putS(x, false); });
+  (cloud.sessions || []).forEach(function(x){ putS(x, cloudWins); });
+  (local.body || []).forEach(function(x){ putB(x, false); });
+  (cloud.body || []).forEach(function(x){ putB(x, cloudWins); });
+  return {
+    profile: Object.assign({}, local.profile || {}, cloud.profile || {}),
+    sessions: Object.keys(S).map(function(k){ return S[k]; })
+      .sort(function(a,b){ return a.date < b.date ? -1 : (a.date > b.date ? 1 : 0); }),
+    body: Object.keys(B).map(function(k){ return B[k]; })
+      .sort(function(a,b){ return a.date < b.date ? -1 : (a.date > b.date ? 1 : 0); })
+  };
+}
+
+function fetchCloud(){
+  return SYNC.client.from("fitness_state")
+    .select("data,updated_at")
+    .eq("user_id", SYNC.session.user.id)
+    .maybeSingle()
+    .then(function(r){
+      if(r.error) throw new Error(r.error.message);
+      return (r.data && r.data.data) ? r.data.data : { sessions: [], body: [] };
+    });
+}
+
+function pushCloud(doc){
+  return SYNC.client.from("fitness_state")
+    .upsert({ user_id: SYNC.session.user.id, data: doc, updated_at: new Date().toISOString() },
+            { onConflict: "user_id" })
+    .then(function(r){ if(r.error) throw new Error(r.error.message); return true; });
+}
+
+function doSync(dir){
+  if(SYNC.busy) return;
+  if(!SYNC.session){ toast("先在「同步」页登录"); return; }
+  SYNC.busy = true; syncMsg("同步中…", false); renderSync();
+  var cloudWins = (dir === "pull");
+  fetchCloud().then(function(cloud){
+    var merged = mergeDocs(docNow(), cloud, cloudWins);
+    db.sessions = merged.sessions;
+    db.body = merged.body;
+    if(merged.profile && merged.profile.startWeight != null) db.profile = merged.profile;
+    save();
+    return pushCloud(docNow()).then(function(){
+      var now = new Date();
+      db.meta.lastSync = fd(now);
+      save();
+      SYNC.busy = false;
+      render();
+      syncMsg((cloudWins ? "已从云端拉取并合并" : "已推送到云端") + " · " + now.toTimeString().slice(0,5), false);
+      renderSync();
+    });
+  }).catch(function(e){
+    SYNC.busy = false;
+    syncMsg("同步失败：" + (e && e.message ? e.message : e), true);
+    renderSync();
+  });
+}
+
+var autoTimer = null;
+function queuePush(){
+  if(!SYNC.session) return;
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(function(){ doSync("push"); }, 2500);
+}
+
+function renderSync(){
+  var el = document.getElementById("view-sync");
+  if(!el) return;
+  var logged = !!SYNC.session;
+  var last = db.meta.lastSync ? ("上次同步：" + esc(db.meta.lastSync)) : "还没有同步过";
+  var hint = '<div class="note" style="margin-top:12px">' +
+    (SYNC.msg ? '<b style="color:' + (SYNC.msgBad ? "#f87171" : "var(--accent)") + '">' + esc(SYNC.msg) + '</b><br>' : "") +
+    (logged ? last + '　｜　自动同步：每次保存后 3 秒推一次云端' : "登录后两台设备打开这个页面，点「拉取」就能拿到另一台的数据。") +
+    '</div>';
+
+  var body;
+  if(!logged){
+    body = '<div class="card"><h2>登录（用作战板同一个账号）</h2>' +
+      '<div class="row" style="margin-bottom:12px">' +
+        '<div><label>邮箱</label><input type="email" id="sy-email" value="' + esc(SYNC.emailDraft) + '" placeholder="you@example.com" autocomplete="username"></div>' +
+        '<div><label>密码</label><input type="password" id="sy-pass" value="' + esc(SYNC.passDraft) + '" placeholder="作战板的登录密码" autocomplete="current-password"></div>' +
+      '</div>' +
+      '<button class="btn" id="sy-login">登录并拉取</button>' +
+      '<div class="note" style="margin-top:10px">第一次用？先去 Supabase 后台建表（见下），密码就是你在作战板「设置密码」时用的那个。</div>' +
+      hint + '</div>';
+  }else{
+    body = '<div class="card"><h2>已连接</h2>' +
+      '<div class="note">账号：<b>' + esc(SYNC.session.user.email || "") + '</b><br>' + last + '</div>' +
+      '<div class="row" style="margin:14px 0">' +
+        '<button class="btn" id="sy-pull"' + (SYNC.busy ? " disabled" : "") + '>从云端拉取（合并）</button>' +
+        '<button class="btn ghost" id="sy-push"' + (SYNC.busy ? " disabled" : "") + '>推送到云端</button>' +
+        '<button class="btn ghost" id="sy-out">退出登录</button>' +
+      '</div>' + hint + '</div>';
+  }
+
+  el.innerHTML =
+    '<div class="card"><h2>手机 ↔ 电脑 自动同步</h2><div class="note">' +
+      '数据存在你自己的 Supabase 项目里（和作战板同一个项目、同一个账号）。两台设备各登录一次，之后谁保存谁推送，另一台打开时点一下「拉取」就并过来。<br>' +
+      '云端只存你账号名下的那一行，别人看不到。' +
+    '</div></div>' + body +
+    '<div class="card"><h2>第一次要做的两件事</h2><div class="note">' +
+      '① <b>建表</b>：打开 <a href="https://supabase.com/dashboard/project/tdjgntdlwclyswhnkjie/sql/new" target="_blank" rel="noopener">Supabase SQL Editor</a>，把下面这段粘进去点 Run（只用做一次）：' +
+      '<pre style="white-space:pre-wrap;background:#12161d;border:1px solid var(--line);border-radius:8px;padding:10px;margin:10px 0;font-size:11.5px;line-height:1.6;overflow:auto">' +
+      esc("create table if not exists public.fitness_state (\n" +
+          "  user_id uuid primary key references auth.users(id) on delete cascade,\n" +
+          "  data jsonb not null default '{}'::jsonb,\n" +
+          "  updated_at timestamptz not null default now()\n" +
+          ");\n" +
+          "alter table public.fitness_state enable row level security;\n" +
+          "create policy \"own read\" on public.fitness_state for select using (auth.uid() = user_id);\n" +
+          "create policy \"own insert\" on public.fitness_state for insert with check (auth.uid() = user_id);\n" +
+          "create policy \"own update\" on public.fitness_state for update using (auth.uid() = user_id) with check (auth.uid() = user_id);\n" +
+          "grant select, insert, update, delete on public.fitness_state to authenticated;") +
+      '</pre>' +
+      '② <b>登录</b>：上面填作战板的邮箱和密码，点「登录并拉取」。' +
+    '</div></div>';
+
+  var loginBtn = document.getElementById("sy-login");
+  if(loginBtn) loginBtn.addEventListener("click", function(){
+    var em = (document.getElementById("sy-email").value || "").trim();
+    var pw = document.getElementById("sy-pass").value || "";
+    SYNC.emailDraft = em; SYNC.passDraft = pw;
+    if(!em || !pw){ syncMsg("邮箱和密码都要填", true); renderSync(); return; }
+    syncMsg("登录中…", false); renderSync();
+    initClient(function(err){
+      if(err){ syncMsg(err.message, true); renderSync(); return; }
+      SYNC.client.auth.signInWithPassword({ email: em, password: pw }).then(function(r){
+        if(r.error){ syncMsg("登录失败：" + r.error.message, true); renderSync(); return; }
+        SYNC.session = r.data.session;
+        SYNC.passDraft = "";
+        db.meta.syncEmail = em; save();
+        doSync("pull");
+      }).catch(function(e){ syncMsg("登录失败：" + (e.message || e), true); renderSync(); });
+    });
+  });
+  var pullBtn = document.getElementById("sy-pull");
+  if(pullBtn) pullBtn.addEventListener("click", function(){ doSync("pull"); });
+  var pushBtn = document.getElementById("sy-push");
+  if(pushBtn) pushBtn.addEventListener("click", function(){ doSync("push"); });
+  var outBtn = document.getElementById("sy-out");
+  if(outBtn) outBtn.addEventListener("click", function(){
+    if(SYNC.client) SYNC.client.auth.signOut();
+    SYNC.session = null; syncMsg("已退出登录", false); renderSync();
+  });
+
+  if(!SYNC.tried && navigator.onLine && db.meta.syncEmail){
+    SYNC.tried = true;
+    restoreSession(function(err){
+      if(!err && SYNC.session){ doSync("push"); }
+      else if(!err){ renderSync(); }
+    });
+  }
+}
+
 /* ============ 路由 ============ */
 var current = "overview";
 function render(){
@@ -829,6 +1045,7 @@ function render(){
   renderBody();
   renderProgress();
   renderBackup();
+  renderSync();
   var cwNow = weekOf(todayStr());
   var startedNow = pd(todayStr()) >= pd(PLAN_START);
   var dayNow = Math.floor((pd(todayStr()) - pd(PLAN_START)) / 86400000) + 1;
