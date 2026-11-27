@@ -833,6 +833,17 @@ var SYNC = {
   emailDraft: "", passDraft: "", msg: "", msgBad: false
 };
 
+function syncErr(e){
+  var m = String((e && e.message) || e || "");
+  if(/Invalid login credentials/i.test(m)) return "邮箱或密码不对。第一次用请先去作战板底部点「设置密码」，或在那边用邮件链接登录过一次再设密码。";
+  if(/Email not confirmed/i.test(m)) return "邮箱还没确认：去收件箱点 Supabase 发的那封确认邮件，再回来登录。";
+  if(/relation .*fitness_state.* does not exist|Could not find the table/i.test(m)) return "数据库里还没有 fitness_state 表：把「第一次要做的两件事」里的 SQL 在 Supabase SQL Editor 跑一遍。";
+  if(/row-level security|violates row-level/i.test(m)) return "RLS 拒绝了写入：确认建表时那三条 policy 都执行成功。";
+  if(/Failed to fetch|NetworkError|ERR_NETWORK/i.test(m)) return "连不上 Supabase：检查网络/代理，再试一次。";
+  if(/Invalid API key|JWT/i.test(m)) return "密钥无效：看板里的 publishable key 和项目不匹配。";
+  return m;
+}
+
 function syncMsg(t, bad){ SYNC.msg = t || ""; SYNC.msgBad = !!bad; }
 
 function loadSupabase(cb){
@@ -936,7 +947,7 @@ function doSync(dir){
     });
   }).catch(function(e){
     SYNC.busy = false;
-    syncMsg("同步失败：" + (e && e.message ? e.message : e), true);
+    syncMsg("同步失败：" + syncErr(e), true);
     renderSync();
   });
 }
@@ -1010,12 +1021,12 @@ function renderSync(){
     initClient(function(err){
       if(err){ syncMsg(err.message, true); renderSync(); return; }
       SYNC.client.auth.signInWithPassword({ email: em, password: pw }).then(function(r){
-        if(r.error){ syncMsg("登录失败：" + r.error.message, true); renderSync(); return; }
+        if(r.error){ syncMsg("登录失败：" + syncErr(r.error), true); renderSync(); return; }
         SYNC.session = r.data.session;
         SYNC.passDraft = "";
         db.meta.syncEmail = em; save();
         doSync("pull");
-      }).catch(function(e){ syncMsg("登录失败：" + (e.message || e), true); renderSync(); });
+      }).catch(function(e){ syncMsg("登录失败：" + syncErr(e), true); renderSync(); });
     });
   });
   var pullBtn = document.getElementById("sy-pull");
